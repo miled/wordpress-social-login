@@ -1,0 +1,52 @@
+div.social_connect_ui img {
+  border: 0px;
+  height: 32px;
+  width: 32px;
+}
+
+.social_connect_wordpress_form input {
+  height: 18px;
+}
+
+img#social_connect_comment_via_provider  {
+  width: 16px;
+  height: 16px;
+}
+
+img.social_connect_already_connected_logo {
+  float:left; 
+  padding-right: 10px;
+}
+
+div.social_connect_wordpress_form {
+  display:none;
+}
+
+div.social_connect_already_connected_form {
+  display:none;
+}
+
+div.social_connect_facebook_auth {
+  display:none;
+}
+
+div.social_connect_twitter_auth {
+  display:none;
+}
+
+div.social_connect_google_auth {
+  display:none;
+}
+
+div.social_connect_yahoo_auth {
+  display:none;
+}
+
+div.social_connect_openid_auth {
+  display:none;
+}
+
+div.social_connect_wordpress_auth {
+  display:none;
+}
+
