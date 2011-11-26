@@ -49,6 +49,7 @@ if ( ! function_exists ('email_exists') ){
 require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/wp-load.php' );
 
 define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/' . basename( dirname( __FILE__ ) ) ); 
+define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' ); 
 
 /**
  * Include required files

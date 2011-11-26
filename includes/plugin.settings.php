@@ -125,7 +125,7 @@ function wsl_render_settings()
 		$provider_callback_url      = "" ;
 
 		if( isset( $item["callback"] ) && $item["callback"] ){
-			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider . '</span>';
+			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
 		}
 
 		$nb_provider                ++;
@@ -192,11 +192,7 @@ function wsl_render_settings()
 				<?php if ( $provider_callback_url ) : ?>
 					<p>- Provide this URL as the <b>Callback URL</b> for your application: <br /><?php echo $provider_callback_url ?></p>
 				<?php endif; ?> 
-
-				<?php if ( ! $provide_email ) { ?>
-					<p><b style="color:#CB4B16;">Note:</b> <?php echo $provider_name; ?> do not provide users email. A random generated email will be used for theme instead. eg. <em>564564654651@<?php echo strtolower( $provider_id ); ?></em></p>
-				<?php } ?> 
-
+ 
 		   </div>
 		</div>   
 	</div> 
