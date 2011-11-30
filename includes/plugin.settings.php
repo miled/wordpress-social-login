@@ -89,6 +89,20 @@ function wsl_render_settings()
 		<br />
 		<strong>WordPress Social Login</strong> = <a href="http://wordpress.org/extend/plugins/social-connect/" target='_blank'>Social Connect Plugin</a> + <a href="http://hybridauth.sourceforge.net/" target='_blank'>HybridAuth Library</a> + Hack and rework.
 	</p>
+
+	<br />
+	<p style="margin-left:25px;margin:10px;">
+		<b>Important:</b>
+	</p>
+	<ul style="list-style:circle inside;margin-left:25px;">
+		<li>This plugin is still in <strong>Alpha Stage</strong> and as such, should be used for <strong>testing only</strong> until a real stable release come to life,</li>
+		<li>This plugin is tested on a <strong>default</strong> installation of WordPress without any extra add-ons,</li>
+		<li>This plugin is for peoples who don't fancy the idea of having a middleman webservice for this purpose. If not, then most likely this plugin is not the right one for you!</li>
+		<li>As an open source project and alpha stage plugin, We Appreciate Your Feedback!</li>
+		<li>Also to get <strong>help and support</strong>, join us on the <a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a> or email me at <b>hybridauth@gmail.com</b></li>
+	</ul> 
+	
+	<br />
 	
 	<br />
 

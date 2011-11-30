@@ -145,7 +145,7 @@ HR {
     <td align="center"><br /><br /><h3>Something bad happen!</h3><br /></td> 
   </tr>
   <tr>
-    <td align="center">&nbsp;<?php echo $message ; ?><pre style="text-align:left;"><?php print_r( $config ); print_r( $e ); ?></td> 
+    <td align="center">&nbsp;<?php echo $message ; ?></td> 
   </tr>
 </table> 
 <?php 

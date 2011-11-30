@@ -2,8 +2,8 @@
 /*
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
-Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo, LinkedIn, MySpace, Foursquare and AOL. <strong>WordPress Social Login</strong> = <strong>Social Connect Plugin</strong> + <strong>HybridAuth Library</strong> + Hack and rework.
-Version: 1.0.1
+Description: This plugin is still in <strong>Alpha Stage</strong> and as such, should be used for <strong>testing only</strong> until a real stable release come to life!! This plugin allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo, LinkedIn, MySpace, Foursquare and AOL. <strong>WordPress Social Login</strong> = <strong>Social Connect Plugin</strong> + <strong>HybridAuth Library</strong> + Hack and rework.
+Version: 1.1.3
 Author: Miled
 Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 License: GPL2
@@ -11,7 +11,7 @@ License: GPL2
 
 /**
  * Check technical requirements before activating the plugin.
- * Wordpress 3.0 or newer required
+ * Wordpress 3.0 or newer required, 3.1 would be better
  * PHP 5.2 or newer
  * CURL Required
  */
@@ -28,7 +28,7 @@ function wsl_activate()
 			die( sprintf( __( "WordPress Social Login requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> to be installed." ) ) ); 
 		} 
 
-		if ( version_compare( PHP_VERSION, '5.2', '<' ) ){
+		if ( version_compare( PHP_VERSION, '5.2.0', '<' ) ){
 			die( sprintf( __( "WordPress Social Login requires WordPress 5.2 or newer." ) ) );
 		}
 	}
