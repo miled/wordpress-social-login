@@ -1,0 +1,189 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+"http://www.w3.org/TR/html4/loose.dtd">
+<html>
+  <head> 
+	<meta charset="utf-8">
+	<title>Social Login Plugin | User Guide</title> 
+	<style> 
+	body { 
+		margin: 50px;
+		margin-top: 25px;
+		font: 13px/20px normal Helvetica, Arial, sans-serif; 
+	}
+	h1, h2, h3 {
+		color: #444; 
+		font-size: 19px; 
+		margin: 0 0 14px 0;
+	} 
+	h1 {
+		border-bottom: 1px solid #D0D0D0; 
+		padding: 14px 15px 10px 15px;
+	} 
+	h2 {
+		font-size: 16px;
+	} 
+	h3 {
+		font-size: 14px;
+	} 
+	pre {
+		font-family: Consolas, Monaco, Courier New, Courier, monospace;
+		font-size: 12px;
+		background-color: #f9f9f9;
+		border: 1px solid #D0D0D0;
+		color: #002166;
+		display: block;
+		margin: 14px 0 14px 0;
+		padding: 12px 10px 12px 10px;
+	}
+
+	#body{
+		margin: 0 15px 0 15px;
+	}
+ 
+	#container{
+		margin: 10px;
+		border: 1px solid #CCCCCC; 
+	} 
+	code {
+		background-color: #FEE9CC;
+		color: rgba(0, 0, 0, 0.75);
+		padding: 1px 3px;
+	}
+	li { 
+		line-height: 27px;
+	} 
+	hr { 
+		border-color: #EEEEEE;
+		border-style: none none solid;
+		border-width: 0 0 1px;
+		margin: 20px 0 19px;
+	}
+	img{
+		border: 1px solid #EEEEEE; 
+		padding: 5px;
+	}
+	</style>
+</head>
+<body>
+
+<div id="container">
+	<h1>Social Login Plugin <small>for WordPress 3.2</small></h1>
+
+	<div id="body">
+		<p>
+			<h2>Overview</h2>
+
+			<div > 
+			<p>This plugin allow your visitors to register, login and comment with their accounts on social networks and identities providers such as Facebook, Twitter, Foursquare and Google. </p>
+			 
+			<p><strong>PLEASE NOTE: </strong></p>
+			<ul>
+			<li>This plugin is still in <strong>alpha stage</strong> and as such, should be used <strong>only for testing</strong> purposes.</li>
+			<li>This plugin is made and tested on a default wordpress installation 3.2.1 without any extra add-ons,</li> 
+			</ul>
+			<p><strong>Currenty Supported Providers:</strong></p>
+			<ul>
+			<li>Facebook</li>
+			<li>Google</li>
+			<li>Yahoo</li>
+			<li>Twitter</li>
+			<li>Windows Live</li>
+			<li>Myspace</li>
+			<li>Foursquare</li>
+			<li>Linkedin</li>
+			<li>AOL</li>
+			</ul>
+			<p>Basically this plugin can be extended to support as many providers such as Gowalla, Last.fm, Vimeo, Viadeo, Tumblr, QQ, Sina, Murmur, Plurk and maybe more.</p>
+			</div>
+		</p>
+
+		<hr />
+
+		<p> 
+			<h2>Get Help and Support</h2> 
+			
+			If you run into any issue, or have a feature request, then the best way to reach me is at <b>hybridauth@gmail.com</b> or on <a href="https://groups.google.com/forum/#%21forum/hybridauth-plugins">https://groups.google.com/forum/#!forum/hybridauth-plugins</a>
+			
+			<br />
+			<br />
+			Note: This is free software. Please be patient. Polite and descriptive questions will be given priority.
+		</p>
+
+		<hr />
+ 
+		<p>
+			<h2>1. Configure</h2> 
+
+			<ol>
+				<li>Download, Unzip and drop the extention on <b>/wp-content/plugins/</b> directory,</li>
+				<li>As admistration, activate the plugin through the 'Plugins' menu in WordPress,</li> 
+				<li>Run <b>Plugin Diagnostics</b> to check some requirements,</li>
+				<li>Then setup the providers you want to use
+					<ul>
+						<li>To correctly setup these Identity Providers please carefully follow the help section on <b>Allow users to sign on with {provider}?</b>.</li>
+						<li>If a <b>Provider Satus</b> is set to <b style="color: red;">NO</b> then users will not be able to login with this provider on you website.</li>
+					</li>
+				</li>
+			</ol>
+			
+			<div style="text-align: center;"><img src="../screenshot-3.png" ></div>
+		</p>
+
+		<hr />
+
+		<p>
+			<h2>2. Comment view</h2> 
+			
+			When you finish configuring the extention, any enabled provider icon will appear after on top of the comment form. under <b>Leave a Reply</b> message.
+		</p>
+
+		<div style="text-align: center;"><img src="../screenshot-1.png" ></div>
+
+		<hr />
+
+		<p>
+			<h2>3. Admin view</h2> 
+			
+			Same as Comment view.
+		</p>
+
+		<div style="text-align: center;"><img src="../screenshot-2.png" ></div>
+
+		<hr />
+
+		<p>
+			<h2>4. Login flow</h2> 
+			
+			When a user click an icon, a popup will apprear where it will be redirected to the provider authentication web page.
+			If he grant access for your website, he will redirected back to your website.
+			
+			<ul>
+				<li>If the user do not exist, this extension will try to create a new accout for him</li>
+				<li>Else, if an account does exist for him, then i will automatically logged in to the website.</li>
+			</ul>
+			
+			Also the user profil name, email, descrition and as much information as possible will be automatically imported.
+			Importing the user image/avatar is planned tho.
+		</p> 
+		
+		<p>
+			And that is it!
+		</p>
+		 
+	</div> 
+</div>
+
+<script type="text/javascript">
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</script>
+<script type="text/javascript">
+try {
+var pageTracker = _gat._getTracker("UA-11037160-1");
+pageTracker._trackPageview();
+} catch(err) {}</script>
+<script type="text/javascript"> var sc_project=7312365; var sc_invisible=1; var sc_security="30da00f3"; </script>
+<script type="text/javascript" src="http://www.statcounter.com/counter/counter.js"></script> 
+
+</body>
+</html>

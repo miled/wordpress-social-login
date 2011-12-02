@@ -11,7 +11,7 @@ function wsl_render_login_form()
 		$provider_id     = @ $item["provider_id"];
 		$provider_name   = @ $item["provider_name"];
 
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/icons/';
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/';
  
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			?>

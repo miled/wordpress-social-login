@@ -1,36 +1,6 @@
 <?php
 	session_start();
 
-	// Rewrite Diagnostics ?
-	if( isset( $_GET["testing"] ) ){
-		require_once( dirname( dirname( dirname( dirname( __FILE__ ) ) ) ) . '/wp-load.php' );
-
-		$testing = "";
-		$msg = "";
-		$testing = $_REQUEST['testing'];
-
-		if ( $testing == "http://www.example.com" ) {
-			$msg = "<b style='color:green;'>Test was successful!</b><br/><br/> The rewrite rules on your server appear to be setup correctly for WordPress Social Login to work.";
-		}
-		else { 
-			$msg = sprintf( '<b style="color:red;">Test was successful!</b><br/><br/> Expected "http://www.example.com", received "%s".', $testing );
-		}
-?> 
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html>
-<head>
-</head>
-<body>
-	<div class="wrap">
-		<h2>WordPress Social Login Diagnostics</h2>
-		<p><?php echo $msg; ?></p>
-	</div>  
-</body>
-</html>
-<?php
-		die( );
-	} // end Rewrite Diagnostics
-
 	// let display a loading message. should be better than a white screen
 	if( isset( $_GET["provider"] ) && ! isset( $_GET["redirect_to_provider"] )){
 		// selected provider 
@@ -38,7 +8,7 @@
 ?>
 <table width="100%" border="0">
   <tr>
-    <td align="center" height="200px" valign="middle"><img src="assets/img/icons/loading.gif" /></td>
+    <td align="center" height="200px" valign="middle"><img src="assets/img/loading.gif" /></td>
   </tr>
   <tr>
     <td align="center"><br /><h3>Loading...</h3><br /></td> 
@@ -139,14 +109,14 @@ HR {
 </style>
 <table width="100%" border="0">
   <tr>
-    <td align="center"><br /><br /><img src="assets/img/icons/alert.png" /></td>
+    <td align="center"><br /><br /><img src="assets/img/alert.png" /></td>
   </tr>
   <tr>
     <td align="center"><br /><br /><h3>Something bad happen!</h3><br /></td> 
   </tr>
   <tr>
     <td align="center">&nbsp;<?php echo $message ; ?></td> 
-  </tr>
+  </tr> 
 </table> 
 <?php 
 			// diplay error and RIP

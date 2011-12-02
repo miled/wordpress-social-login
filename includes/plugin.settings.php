@@ -36,7 +36,7 @@ function wsl_render_settings()
 }
 #wsl_setup_form ul li {
     color: #555555;
-    font-size: 12px;
+    font-size: 13px;
     margin-bottom: 10px;
     padding: 0;
 }
@@ -75,6 +75,9 @@ function wsl_render_settings()
 #footer {
     display:none; 
 }
+#wsl_setup_form p {
+	font-size: 14px;
+}
 </style> 
 <form method="post" id="wsl_setup_form" action="options.php">
 
@@ -82,45 +85,59 @@ function wsl_render_settings()
 	
 	<h1 style="margin-bottom: 15px;">WordPress Social Login Settings</h1>  
 
-	<h4 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Overview</h4> 
+	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Overview</h3> 
 	<p style="margin-left:25px;margin:10px;">
-		WordPress Social Login plugin allow your visitors to comment and login with social networks and identities providers such as Twitter, Facebook, Google, Yahoo, LinkedIn, MySpace, Foursquare and AOL. 
-	
-		<br />
-		<strong>WordPress Social Login</strong> = <a href="http://wordpress.org/extend/plugins/social-connect/" target='_blank'>Social Connect Plugin</a> + <a href="http://hybridauth.sourceforge.net/" target='_blank'>HybridAuth Library</a> + Hack and rework.
+		This plugin allow your visitors to register, login and comment with their accounts on social networks and identities providers such as Facebook, Twitter, Foursquare and Google.
 	</p>
+	<p style="margin-left:25px;margin:10px;">
+		Currenty Supported Providers are :  
+		Facebook,
+		Google,
+		Yahoo,
+		Twitter,
+		Windows Live,
+		Myspace,
+		Foursquare,
+		Linkedin,
+		and AOL.  
+	</p> 
 
 	<br />
-	<p style="margin-left:25px;margin:10px;">
-		<b>Important:</b>
+	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Important to know</h3> 
+	<p style="margin-left:25px;margin:10px;"> 
+		Well, it's quite a story :
 	</p>
 	<ul style="list-style:circle inside;margin-left:25px;">
+		<li>This plugin is an <strong>Open Source</strong> project made on top of an open source Library for an open source CMS,</li>
 		<li>This plugin is still in <strong>Alpha Stage</strong> and as such, should be used for <strong>testing only</strong> until a real stable release come to life,</li>
-		<li>This plugin is tested on a <strong>default</strong> installation of WordPress without any extra add-ons,</li>
-		<li>This plugin is for peoples who don't fancy the idea of having a middleman webservice for this purpose. If not, then most likely this plugin is not the right one for you!</li>
-		<li>As an open source project and alpha stage plugin, We Appreciate Your Feedback!</li>
-		<li>Also to get <strong>help and support</strong>, join us on the <a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a> or email me at <b>hybridauth@gmail.com</b></li>
+		<li>This plugin is tested only on a <strong>default</strong> wordpress installation without any extra add-ons or tweak,</li>
+		<li>This plugin is for peoples who don't fancy the idea of having a middleman webservice for this purpose. If not, then most likely this plugin is not the right fit for you!</li>
+		<li>Basically this plugin can be extended to support many others providers such as Gowalla, Last.fm, Vimeo, Viadeo, Tumblr, QQ, Sina and maybe more, but one thing at a time,</li> 
+		<li>As an open source project and alpha stage plugin, We Appreciate Your <b>Feedback</b>. So far, working with the wordpress community is no fun :D, no jk :)</li> 
+		<li>If you run into any issue, or have a feature request, then the best way to reach me is at <b>hybridauth@gmail.com</b> or on <a href="https://groups.google.com/forum/#%21forum/hybridauth-plugins">https://groups.google.com/forum/#!forum/hybridauth-plugins</a></li>
 	</ul> 
 	
 	<br />
 	
 	<br />
 
-	<h4 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Rewrite Diagnostics</h4>
-	<p style="margin-left:25px;margin:10px;">
-		Click on the link below to confirm your URL rewriting and query string parameter passing are setup correctly on your server. If you see a "Test was successful" message after clicking the link then you are good to go. If you see a 404 error or some other error then you need to update rewrite rules or ask your service provider to configure your server settings such that the below URL works correctly
+	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Not scared yet? Let's get started!</h3>
+	<p style="margin-left:25px;margin:10px;text-align:center;"> 
 		<br />
-		<br />
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/callback.php?testing=http://www.example.com' target='_blank'>Test server redirection settings</a>
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/help/index.html#settings' target='_blank'>Read the plugin user guide</a>
+		
+		&nbsp;&nbsp;&nbsp; 
+		
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/diagnostics.php?url=http://www.example.com' target='_blank'>Run the plugin diagnostics</a>
 	</p>
 
 	<br />
 	
-	<h4 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Providers setup</h4> 
+	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Providers setup</h3> 
 
 	<ul style="list-style:circle inside;margin-left:25px;">
 		<li style="color: #000000;font-size: 14px;">To correctly setup these Identity Providers please carefully follow the help section of each one.</li>
-		<li style="color: #000000;font-size: 14px;">If <b>Provider Adapter Satus</b> is set to <b style="color:red">Disabled</b> then users will not be able to login with this provider on you website.</li>
+		<li style="color: #000000;font-size: 14px;">If a <b>Provider Satus</b> is set to <b style="color:red">NO</b> then users will not be able to login with that provider on you website.</li>
 	</ul>
 
 <?php
@@ -142,17 +159,17 @@ function wsl_render_settings()
 			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
 		}
 
-		$nb_provider                ++;
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 ?> 
-	<h4 style="margin-left:18px;"><?php echo $nb_provider ?> - <?php echo $provider_name ?></h4> 
+	<h3 style="margin-left:30px;"><img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;" /> <?php echo $provider_name ?></h3> 
 	<div> 
 		<div class="cfg">
 		   <div class="cgfparams">
 			  <ul>
-				 <li><label><?php echo $provider_name ?> Adapter Satus</label>
+				 <li><label>Allow users to sign on with <?php echo $provider_name ?>?</label>
 					<select name="<?php echo 'wsl_settings_' . $provider_id . '_enabled' ?>">
-						<option value="1" <?php if(   get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo "selected"; ?> >Enabled</option>
-						<option value="0" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo "selected"; ?> >Disabled</option>
+						<option value="1" <?php if(   get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo "selected"; ?> >Yes</option>
+						<option value="0" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo "selected"; ?> >No</option>
 					</select>
 				</li>
 				
