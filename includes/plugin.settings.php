@@ -83,46 +83,49 @@ function wsl_render_settings()
 
 	<?php settings_fields( 'wsl-settings-group' ); ?>
 	
-	<h1 style="margin-bottom: 15px;">WordPress Social Login Settings</h1>  
+	<h2 style="margin-bottom: 15px;">WordPress Social Login Settings</h2>  
 
 	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Overview</h3> 
-	<p style="margin-left:25px;margin:10px;">
-		This plugin allow your visitors to register, login and comment with their accounts on social networks and identities providers such as Facebook, Twitter, Foursquare and Google.
+	<p style="margin-left:25px;margin:10px;"> 
+		This plugin allow your visitors to login and comment usiing their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, and AOL.
 	</p>
-	<p style="margin-left:25px;margin:10px;">
-		Currenty Supported Providers are :  
-		Facebook,
-		Google,
-		Yahoo,
-		Twitter,
-		Windows Live,
-		Myspace,
-		Foursquare,
-		Linkedin,
-		and AOL.  
-	</p> 
+	<p style="margin-left:25px;margin:10px;"> 
+		This plugin's purposes are to:
+	</p>
+
+	<ul style="list-style:circle inside;margin-left:25px;">
+		<li>Provide an alternative to existing commercial and proprietary services,</li>
+		<li>If you are a designer or a web developer then you can improve, extend and customize it to your heart's content.</li> 
+	</ul>
 
 	<br />
+
 	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Important to know</h3> 
 	<p style="margin-left:25px;margin:10px;"> 
-		Well, it's quite a story :
+		Well, it's quite a story, please bear with me :
 	</p>
 	<ul style="list-style:circle inside;margin-left:25px;">
 		<li>This plugin is an <strong>Open Source</strong> project made on top of an open source Library for an open source CMS,</li>
 		<li>This plugin is still in <strong>Alpha Stage</strong> and as such, should be used for <strong>testing only</strong> until a real stable release come to life,</li>
 		<li>This plugin is tested only on a <strong>default</strong> wordpress installation without any extra add-ons or tweak,</li>
-		<li>This plugin is for peoples who don't fancy the idea of having a middleman webservice for this purpose. If not, then most likely this plugin is not the right fit for you!</li>
-		<li>Basically this plugin can be extended to support many others providers such as Gowalla, Last.fm, Vimeo, Viadeo, Tumblr, QQ, Sina and maybe more, but one thing at a time,</li> 
+		<li>Basically this plugin can be extended to support many others providers such as Gowalla, Last.fm, Vimeo, Viadeo, Tumblr, QQ, Sina and maybe more,</li> 
 		<li>As an open source project and alpha stage plugin, We Appreciate Your <b>Feedback</b>. So far, working with the wordpress community is no fun :D, no jk :)</li> 
-		<li>If you run into any issue, or have a feature request, then the best way to reach me is at <b>hybridauth@gmail.com</b> or on <a href="https://groups.google.com/forum/#%21forum/hybridauth-plugins">https://groups.google.com/forum/#!forum/hybridauth-plugins</a></li>
-	</ul> 
+		<li>If you run into any issue, or have a feature request, the best way to reach me is at <b>hybridauth@gmail.com</b> or on <a href="https://groups.google.com/forum/#%21forum/hybridauth-plugins">https://groups.google.com/forum/#!forum/hybridauth-plugins</a></li>
+		<li>
+			<b>Custom integration:</b>
+			<p style="margin-left:25px;margin:10px;">
+				WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms. If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
+			</p>
+
+			<pre style="width: 400px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+		</li>
+	</ul>
 	
-	<br />
-	
-	<br />
+	<br /> 
 
 	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Not scared yet? Let's get started!</h3>
 	<p style="margin-left:25px;margin:10px;text-align:center;"> 
+		<br />
 		<br />
 		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/help/index.html#settings' target='_blank'>Read the plugin user guide</a>
 		
@@ -132,7 +135,7 @@ function wsl_render_settings()
 	</p>
 
 	<br />
-	
+ 
 	<h3 style="border-bottom: 1px solid #CCCCCC;margin:10px;">Providers setup</h3> 
 
 	<ul style="list-style:circle inside;margin-left:25px;">
@@ -158,6 +161,8 @@ function wsl_render_settings()
 		if( isset( $item["callback"] ) && $item["callback"] ){
 			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
 		}
+
+		$setupsteps = 0;
 
 		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 ?> 
@@ -194,36 +199,50 @@ function wsl_render_settings()
 			  </ul> 
 		   </div>
 		   <div class="cgftip">
-				<?php if ( $provider_new_app_link  ) : ?>
-					<p>In order to set up <?php echo $provider_name ?>, <b>you need to register your website with <?php echo $provider_name ?></b></p>
+				<?php if ( $provider_new_app_link  ) : ?> 
+					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a> and <b>create a new application</b>.</p>
+
+					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Fill out any required fields such as the application name and description.</p>
+
+					<?php if ( $provider_id == "google" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> On the <b>"Create Client ID"</b> popup switch to advanced settings by clicking on <b>(more options)</b>.</p>
+					<?php endif; ?>	
+
+					<?php if ( $provider_callback_url ) : ?>
+						<p>
+							<?php echo "<b>" . ++$setupsteps . "</b>." ?> Provide this URL as the Callback URL for your application:
+							<br />
+							<?php echo $provider_callback_url ?>
+						</p>
+					<?php endif; ?> 
+
+					<?php if ( $provider_id == "MySpace" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>External Url</b> and <b>External Callback Validation</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>
+					<?php endif; ?> 
+
+					<?php if ( $provider_id == "Live" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>
+					<?php endif; ?> 
+
+					<?php if ( $provider_id == "Facebook" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Site Url</b> field. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
+					<?php endif; ?>	
+
+					<?php if ( $provider_id == "LinkedIn" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Integration URL</b> field. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Application Type</b> to <em style="color:#CB4B16;">Web Application</em>.</p> 
+					<?php endif; ?>	
+
+					<?php if ( $provider_id == "Twitter" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Application Website</b> and <b>Application Callback URL</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Application Type</b> to <em style="color:#CB4B16;">Browser</em>.</p> 
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Default Access Type</b> to <em style="color:#CB4B16;">Read, Write, & Direct Messages</em>.</p> 
+					<?php endif; ?>	
 					
-					<p>- Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a></p>
-
-					<?php if ( $provider_id == "myspace" ) : ?>
-						<p>- Make sure to put your correct website adress in the "External Url" and "External Callback Validation" fields. This adresse must match with the current hostname "<em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>".</p>
-					<?php endif; ?> 
-
-					<?php if ( $provider_id == "live" ) : ?>
-						<p>- Make sure to put your correct website adress in the "Redirect Domain" field. This adresse must match with the current hostname "<em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>".</p>
-					<?php endif; ?> 
-
-					<?php if ( $provider_id == "facebook" ) : ?>
-						<p>- Make sure to put your correct website adress in the "Site Url" field. This adresse must match with the current hostname "<em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>".</p>
-						<p>- Once you have registered, copy the created application ID and Secret into this setup page.</p> 
-					<?php elseif ( $provider_id == "google" ) : ?>
-						<p>- On the <b>"Create Client ID"</b> popup switch to advanced settings by clicking on <b>(more options)</b>.</p>
-						<p>- Once you have registered, copy the created application client ID and client secret into this setup page.</p> 
-					<?php else: ?>	
-						<p>- Once you have registered, copy the created application consumer key and Secret into this setup page.</p> 
-					<?php endif; ?>
+					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Once you have registered, copy and past the created application credentials into this setup page.</p>  
 				<?php else: ?>	
-					<p>- No registration required for OpenID based providers</p> 
+					<p>No registration required for OpenID based providers</p> 
 				<?php endif; ?> 
-
-				<?php if ( $provider_callback_url ) : ?>
-					<p>- Provide this URL as the <b>Callback URL</b> for your application: <br /><?php echo $provider_callback_url ?></p>
-				<?php endif; ?> 
- 
 		   </div>
 		</div>   
 	</div> 

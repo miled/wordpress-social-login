@@ -2,23 +2,22 @@
 $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY( 
 		"provider_id"       => "Facebook",
-		"provider_name"     => "Facebook",
+		"provider_name"     => "Facebook", 
 		"require_client_id" => TRUE, 
-		"new_app_link"      => "https://www.facebook.com/developers/apps.php", 
+		"new_app_link"      => "https://www.facebook.com/developers/", 
 	)
 	,
 	ARRAY(
 		"provider_id"       => "Google",
 		"provider_name"     => "Google",
 		"callback"          => TRUE,
-		"require_client_id" => TRUE, 
+		"require_client_id" => TRUE,
 		"new_app_link"      => "https://code.google.com/apis/console/", 
 	) 
 	,
 	ARRAY( 
 		"provider_id"       => "Twitter",
-		"provider_name"     => "Twitter",
-		"callback"          => TRUE, 
+		"provider_name"     => "Twitter", 
 		"new_app_link"      => "https://dev.twitter.com/apps", 
 	)
 	,
@@ -45,9 +44,8 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	,
 	ARRAY( 
 		"provider_id"       => "LinkedIn",
-		"provider_name"     => "LinkedIn",
-		"callback"          => TRUE, 
-		"new_app_link"      => "https://www.linkedin.com/secure/developer?newapp=", 
+		"provider_name"     => "LinkedIn", 
+		"new_app_link"      => "https://www.linkedin.com/secure/developer", 
 	)
 	,
 	ARRAY( 

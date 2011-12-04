@@ -4,7 +4,10 @@ function wsl_render_login_form()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
 	// display "Or connect with" message, or not.. ?
-	echo "<b>Connect with:</b><div style='padding:10px;'>";
+?>
+	<span id="wp-social-login-connect-with">Connect with:</span>
+	<div id="wp-social-login-connect-options">
+<?php 
 
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
@@ -24,15 +27,10 @@ function wsl_render_login_form()
 
 	// provide popup url for hybridauth callback
 	?>
-		<input id="wsl_popup_base_url" type="hidden" value="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/callback.php?" />
-	<?php
-
-	?>
+		<input id="wsl_popup_base_url" type="hidden" value="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/authenticate.php?" />
 		<input type="hidden" id="wsl_login_form_uri" value="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" />
-	<?php
-
-	// eh um not a designer 
-	echo "</div>";
+	</div>
+<?php
 }
 
 function wsl_render_login_form_login()
@@ -43,6 +41,17 @@ function wsl_render_login_form_login()
 add_action( 'login_form', 'wsl_render_login_form_login' );
 add_action( 'register_form', 'wsl_render_login_form_login' );
 add_action( 'after_signup_form', 'wsl_render_login_form_login' );
+add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
+
+
+function wsl_shortcode_handler ($args)
+{
+	if ( ! is_user_logged_in () ){
+		wsl_render_login_form();
+	}
+}
+
+add_shortcode ( 'wordpress_social_login', 'wsl_shortcode_handler' );
 
 function wsl_render_comment_form()
 {
@@ -65,3 +74,19 @@ function wsl_add_javascripts()
 
 add_action( 'login_head', 'wsl_add_javascripts' );
 add_action( 'wp_head', 'wsl_add_javascripts' );
+
+function wsl_add_stylesheets(){
+	if( ! wp_style_is( 'wsl_css', 'registered' ) ) {
+		wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
+	}
+
+	if ( did_action( 'wp_print_styles' ) ) {
+		wp_print_styles( 'wsl_css' ); 
+	}
+	else{
+		wp_enqueue_style( "social_connect" ); 
+	}
+}
+
+add_action( 'login_head', 'wsl_add_stylesheets' );
+add_action( 'wp_head', 'wsl_add_stylesheets' );

@@ -5,14 +5,17 @@ Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: 1.1.3
 
-Allow your visitors to register, login and comment with their accounts on social networks and identities providers such as Facebook, Twitter, Foursquare and Google. [Note:This plugin is still in Alpha Stage!!]
+Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [Alpha Stage!!] 
 
 == Description ==
 
-This plugin is allow your visitors to comment and login with social networks and identities providers such as Twitter, Facebook, Google, Yahoo, LinkedIn, MySpace, Foursquare and AOL. 
+This plugin allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google.
+
+Currenty Supported Providers are : Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, and AOL. 
 
 Credits:
-- Social Connect : http://wordpress.org/extend/plugins/social-connect/
+
+- Social Connect plugin : http://wordpress.org/extend/plugins/social-connect/
 - HybridAuth Open Source Library: http://hybridauth.sourceforge.net/
 - Social icon set: http://www.wpzoom.com/wpzoom/500-free-icons-wpzoom-social-networking-icon-set/
 
@@ -23,6 +26,13 @@ Credits:
 3. Visit the "Settings | WP Social Login" administration page to configure social media providers.
 
 == Frequently Asked Questions ==
+= Do I need to add template tags to my theme? =
+
+WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms.
+
+If you want to add the social login widget to another location in your theme, you can insert the following code in that location: 
+
+`<?php do_action( 'wordpress_social_login' ); ?>`
 
 = Where can I report bugs & get support? =
 

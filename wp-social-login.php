@@ -2,12 +2,15 @@
 /*
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
-Description: This plugin allow your visitors to register, login and comment with their accounts on social networks and identities providers such as Facebook, Twitter, Foursquare and Google. [<strong>Note</strong>:This plugin is still in Alpha Stage!!] 
+Description: Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [Alpha Stage!!] 
 Version: 1.1.3
 Author: Miled
 Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 License: GPL2
 */
+
+session_start(); 
+$_SESSION["wsl::plugin"] = "WordPress Social Login 1.1.3"; 
 
 /**
  * Check technical requirements before activating the plugin.
@@ -28,7 +31,7 @@ function wsl_activate()
 			die( sprintf( __( "WordPress Social Login requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> to be installed." ) ) ); 
 		} 
 
-		if ( version_compare( PHP_VERSION, '5.2.0', '<' ) ){
+		if ( version_compare( PHP_VERSION, '5.2', '<' ) ){
 			die( sprintf( __( "WordPress Social Login requires WordPress 5.2 or newer." ) ) );
 		}
 	}
@@ -56,8 +59,8 @@ define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN
  **/ 
 require_once(dirname (__FILE__) . '/includes/hybridauth.settings.php'); 
 require_once(dirname (__FILE__) . '/includes/plugin.settings.php'); 
-require_once(dirname (__FILE__) . '/includes/ui.php'); 
- 
+require_once(dirname (__FILE__) . '/includes/ui.php');  
+
 // ------------------------
 
 function wsl_process_login()
@@ -121,19 +124,19 @@ function wsl_process_login()
 			$hybridauth_user_profile = $adapter->getUserProfile();
 		}
 		else{
-			throw new Exception( 'User inconnected!' );
+			throw new Exception( 'User not connected with ' . $provider . '!' );
 		}
 
-		$user_login = $provider . "_" . md5( $hybridauth_user_profile->identifier ) ;
+		$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
 		$user_email = $hybridauth_user_profile->email;
 
 		// generate an email if none
 		if( ! $user_email ){
-			$user_email = $user_login . "@example.com";
+			$user_email = $user_login . "@" . strtolower( $provider );
 		}
 	}
 	catch( Exception $e ){
-		die( $e->getMessage() ); 
+		die( "Unspecified error. #" . $e->getCode() ); 
 	}
 
 	// Get user by meta
@@ -169,8 +172,6 @@ function wsl_process_login()
 
 		// Create a new user
 		$user_id = wp_insert_user( $userdata );
-
-		print_r( $user_id );
 
 		// update user metadata
 		if( $user_id && is_integer( $user_id ) ){

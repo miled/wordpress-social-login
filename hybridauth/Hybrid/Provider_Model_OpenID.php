@@ -70,7 +70,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 			'contact/city/home'      ,
 			'contact/country/home'   , 
 
-			'media/image/default'    ,
+			// 'media/image/default'    ,
 		);
 
 		# redirect the user to the provider authentication url
