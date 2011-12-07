@@ -169,9 +169,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		$parameters = array();
 
 		if( is_array( $status ) ){
-			if( isset( $status[0] ) && ! empty( $status[0] ) ) $parameters["message"] = $status[0]; // status content
-			if( isset( $status[1] ) && ! empty( $status[1] ) ) $parameters["link"]    = $status[1]; // item link
-			if( isset( $status[2] ) && ! empty( $status[2] ) ) $parameters["picture"] = $status[2]; // picture link
+			$parameters = $status; 
 		}
 		else{
 			$parameters["message"] = $status; 

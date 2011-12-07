@@ -59,37 +59,30 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_name"     => "AOL", 
 		"new_app_link"      => NULL, 
 	)
+	,
+	ARRAY( 
+		"provider_id"       => "LastFM",
+		"provider_name"     => "Last.FM", 
+		"new_app_link"      => "http://www.lastfm.com/api/account", 
+	)
+	,
+	ARRAY( 
+		"provider_id"       => "Identica",
+		"provider_name"     => "Identica", 
+		"new_app_link"      => "http://identi.ca/settings/oauthapps/new", 
+	)
+	,
+	ARRAY( 
+		"provider_id"       => "Gowalla",
+		"provider_name"     => "Gowalla", 
+		"require_client_id" => TRUE,
+		"callback"          => TRUE,
+		"new_app_link"      => "http://gowalla.com/api/keys", 
+	)
+	,
+	ARRAY( 
+		"provider_id"       => "Tumblr",
+		"provider_name"     => "Tumblr", 
+		"new_app_link"      => "http://www.tumblr.com/oauth/apps", 
+	)
 );
-
-function wsl_admin_menu()
-{
-	add_options_page('WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_render_settings' );
-	
-	add_action( 'admin_init', 'wsl_register_setting' );
-}
-
-add_action('admin_menu', 'wsl_admin_menu' );
-
-function wsl_register_setting()
-{
-	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
-
-	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-		$provider_id          = @ $item["provider_id"]; 
-		$require_client_id    = @ $item["require_client_id"];
-		$require_registration = @ $item["new_app_link"];
-
-		register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_enabled' );  
-
-		if ( $require_registration ){ // require application?
-			if ( $require_client_id ){ // key or id ?
-				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' ); 
-			}
-			else{
-				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' ); 
-			}
-
-			register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_secret' ); 
-		}
-	}
-}
