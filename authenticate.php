@@ -5,6 +5,8 @@
 	if( isset( $_GET["provider"] ) && ! isset( $_GET["redirect_to_provider"] )){
 		// selected provider 
 		$provider = @ trim( strip_tags( $_GET["provider"] ) ); 
+
+		$_SESSION["HA::STORE"] = ARRAY(); 
 ?>
 <table width="100%" border="0">
   <tr>
@@ -18,7 +20,7 @@
   </tr> 
 </table>
 <script> 
-	setTimeout( function(){window.location.href = window.location.href + "&redirect_to_provider=ture"}, 750 );
+	setTimeout( function(){window.location.href = window.location.href + "&redirect_to_provider=true"}, 750 );
 </script>
 <?php
 		die();
@@ -63,6 +65,11 @@
 				$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
 			}
 
+			// if facebook
+			if( strtolower( $provider ) == "facebook" ){
+				$config["providers"][$provider]["display"] = "popup";
+			}
+
 			// create an instance for Hybridauth
 			$hybridauth = new Hybrid_Auth( $config );
 
@@ -102,6 +109,13 @@ function init() {
 				case 3 : $message = "Unknown or disabled provider."; break;
 				case 4 : $message = "Missing provider application credentials."; break;
 				case 5 : $message = "Authentification failed. The user has canceled the authentication or the provider refused the connection."; break; 
+				case 6 : $message = "User profile request failed. Most likely the user is not connected to the provider and he should to authenticate again."; 
+					     if( is_object( $adapter ) ) $adapter->logout();
+					     break;
+				case 7 : $message = "User not connected to the provider."; 
+					     if( is_object( $adapter ) ) $adapter->logout();
+					     break;
+				case 8 : $message = "Provider does not support this feature."; break;
 			}
 ?>
 <style> 
@@ -131,7 +145,7 @@ HR {
     <td align="center"> 
 		<div style="padding: 5px;margin: 5px;background: none repeat scroll 0 0 #F5F5F5;border-radius:3px;">
 			<div id="bug_report">
-				<form method="post" action="http://hybridauth.sourceforge.net/reports/index.php?product=wp-plugin&v=1.1.6">
+				<form method="post" action="http://hybridauth.sourceforge.net/reports/index.php?product=wp-plugin&v=1.1.7">
 					<table width="90%" border="0">
 						<tr>
 							<td align="left" valign="top"> 
@@ -152,7 +166,7 @@ HR {
 						<tr>
 							<td align="center" valign="top"> 
 								<hr /> 
-								&nbsp;<b>This plugin is still in alpha</b><br /><br /><b style="color:#cc0000;">But you can make it better by sending the generated error report to the developer!</b>
+								&nbsp;<b>This plugin is still on beta</b><br /><br /><b style="color:#cc0000;">But you can make it better by sending the generated error report to the developer!</b>
 								<br />
 								<br />
 								<input type="submit" style="width: 300px;height: 33px;" value="Send the error report" /> 

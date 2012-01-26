@@ -3,18 +3,23 @@ Contributors: miled
 Tags:  twitter, facebook, google, yahoo, linkedin, myspace, foursquare, aol, gowalla, last.fm, tumblr, login, register, comment, social, social networks, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.1.6
+Stable tag: 1.1.8
 
-Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [Alpha Stage!!] 
+Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [BETA PLUGIN!] 
 
 == Description ==
- 
+
 This plugin incorporate social networks login/registration integration into your web site. Users will be able to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Tumblr and AOL.
 
 Credits:
 
-- Social Connect plugin : http://wordpress.org/extend/plugins/social-connect/
-- HybridAuth Open Source Library: http://hybridauth.sourceforge.net/ 
+- Social Connect authors : http://wordpress.org/extend/plugins/social-connect/
+- HybridAuth Library: http://hybridauth.sourceforge.net/ 
+
+Special thanks to:
+
+* [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
+* [Macky Franklin](http://www.mackyfranklin.com) for all the great help
 
 == Installation ==
 
@@ -28,16 +33,14 @@ Credits:
 
 WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms.
 
-If you want to add the social login widget to another location in your theme, you can insert the following code in that location: 
+If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
 
 `<?php do_action( 'wordpress_social_login' ); ?>`
 
 = Where can I report bugs & get support? =
 
-As an open source project and alpha stage plugin, We Appreciate Your Feedback! 
-
-Also to get **help and support**, join us on the [discussion group](https://groups.google.com/forum/#!forum/hybridauth-plugins) or email me at &lt;hybridauth (at) gmail (dot) com&gt;
-
+As an open source project and beta stage plugin, We Appreciate Your Feedback! 
+ 
 == Screenshots ==
 
 1. **Comment** - Buttons for 3rd party services are also provided on the comment form.
@@ -45,6 +48,11 @@ Also to get **help and support**, join us on the [discussion group](https://grou
 3. **Setup** - To correctly setup these Identity Providers please carefully follow the help section of each one.
 
 == Changelog ==
+
+= 1.1.7 =
+
+* Hotfixes some minor issuees
+* add Insights
 
 = 1.1.6 =
 

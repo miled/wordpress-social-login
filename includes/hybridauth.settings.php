@@ -84,5 +84,11 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_id"       => "Tumblr",
 		"provider_name"     => "Tumblr", 
 		"new_app_link"      => "http://www.tumblr.com/oauth/apps", 
-	)
+	),
+	ARRAY( 
+		"provider_id"       => "Goodreads",
+		"provider_name"     => "Goodreads", 
+		"callback"          => TRUE,
+		"new_app_link"      => "http://www.goodreads.com/api", 
+	)	
 );

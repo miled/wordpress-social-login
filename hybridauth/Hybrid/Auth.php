@@ -14,7 +14,7 @@
  */
 class Hybrid_Auth 
 {
-	public static $version = "2.0.10";
+	public static $version = "2.0.11-dev";
 
 	public static $config  = array();
 
@@ -144,7 +144,7 @@ class Hybrid_Auth
 
 			// try to provide the previous if any
 			// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
-			if ( version_compare( PHP_VERSION, '5.3.0', '>=' ) ) {  
+			if ( version_compare( PHP_VERSION, '5.3.0', '>=' ) && ($p instanceof Exception) ) { 
 				throw new Exception( $m, $c, $p );
 			}
 			else{
@@ -362,7 +362,7 @@ class Hybrid_Auth
 			$protocol = 'http://';
 		}
 
-		$url = $protocol . $_SERVER['HTTP_HOST'];
+		$url = $protocol . $_SERVER['SERVER_NAME'];
 
 		// use port if non default
 		$url .= 

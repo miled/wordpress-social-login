@@ -63,17 +63,25 @@ function wsl_process_login()
 			throw new Exception( 'User not connected with ' . $provider . '!' );
 		}
 
-		$user_email = $hybridauth_user_profile->email;
-		$user_image = $hybridauth_user_profile->photoURL;
+		$user_email = $hybridauth_user_profile->email; 
 	}
 	catch( Exception $e ){
 		die( "Unspecified error. #" . $e->getCode() ); 
 	}
 
-	// Get user by meta
-	$user_id = wsl_get_user_by_meta( $provider, $hybridauth_user_profile->identifier );
+	$user_id = null;
 
-	// if user metadata found
+	// if the user email is verified, then try to map to legacy account if exist
+	if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
+		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
+	}
+
+	// try to get user by meta if not
+	if( ! $user_id ){
+		$user_id = (int) wsl_get_user_by_meta( $provider, $hybridauth_user_profile->identifier ); 
+	}
+
+	// if user found
 	if( $user_id ){
 		$user_data  = get_userdata( $user_id );
 		$user_login = $user_data->user_login;
@@ -140,9 +148,17 @@ function wsl_process_login()
 		}
 	}
 
-	if( ! empty( $user_image ) ){
-		update_user_meta ( $user_id, 'wsl_user_image', $user_image );
+	$user_age = $hybridauth_user_profile->age;
+
+	// not that precise you say... well welcome to my world
+	if( ! $user_age && (int) $hybridauth_user_profile->birthYear ){
+		$user_age = (int) date("Y") - (int) $hybridauth_user_profile->birthYear;
 	}
+
+	update_user_meta ( $user_id, 'wsl_user'       , $provider );
+	update_user_meta ( $user_id, 'wsl_user_gender', $hybridauth_user_profile->gender );
+	update_user_meta ( $user_id, 'wsl_user_age'   , $user_age );
+	update_user_meta ( $user_id, 'wsl_user_image' , $hybridauth_user_profile->photoURL );
 
 	wp_set_auth_cookie( $user_id );
 

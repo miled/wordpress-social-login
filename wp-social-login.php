@@ -2,16 +2,16 @@
 /*
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
-Description: Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [Alpha Stage!!] 
-Version: 1.1.6
+Description: Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [BETA Stage!!] 
+Version: 1.1.8
 Author: Miled
 Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 License: GPL2
 */
 
-session_start(); 
+@ session_start(); 
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login 1.1.6"; 
+$_SESSION["wsl::plugin"] = "WordPress Social Login 1.1.8"; 
 
 /**
  * Check technical requirements before activating the plugin.
@@ -21,12 +21,34 @@ $_SESSION["wsl::plugin"] = "WordPress Social Login 1.1.6";
  */
 function wsl_activate()
 {
-	if ( ! function_exists( 'register_post_status' ) || ! function_exists( 'curl_version' ) || version_compare( PHP_VERSION, '5.2', '<' ) ) {
-		deactivate_plugins( basename( dirname( __FILE__ ) ) . '/' . basename( __FILE__ ) );
+	if ( ! function_exists ('register_post_status') )
+	{
+		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+		die( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin." );
+	}
 
-		if ( ! function_exists( 'register_post_status' ) ){
-			die( sprintf( __( "WordPress Social Login requires WordPress 3.0 or newer." ) ) );
-		}
+	if ( ! session_id() )
+	{
+		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+		die( "This plugin requires the <a href='http://www.php.net/manual/en/book.session.php'>PHP Sessions</a> to be enabled." );
+	}
+
+	if ( ! function_exists ( 'curl_version' ) )
+	{
+		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+		die( "This plugin requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> be installed." );
+	}
+
+	if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) )
+	{
+		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+		die( "This plugin requires the <a href='http://php.net/'>PHP 5.2</a> be installed." ); 
+	}
+
+	if ( extension_loaded('oauth') )
+	{
+		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+		die( "This plugin requires the <a href='http://php.net/manual/en/book.oauth.php'>PHP PECL OAuth extension</a> be disabled." ); 
 	}
 
 	do_action( 'wsl_activate' );

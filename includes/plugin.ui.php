@@ -9,6 +9,8 @@ function wsl_render_login_form()
 		$wsl_settings_connect_with_label = "Connect with:";
 	}
 ?>
+
+<!-- wsl_render_login_form, WordPress Social Login Plugin, B8 -->
 	<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>
 	<div id="wp-social-login-connect-options">
 <?php 
@@ -53,6 +55,8 @@ function wsl_render_login_form()
 		<input type="hidden" id="wsl_login_form_uri" value="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" />
 	</div>
 	<span id="wp-social-login-connecting-to"></span>
+<!-- /wsl_render_login_form -->
+
 <?php
 }
 
