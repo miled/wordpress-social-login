@@ -13,14 +13,14 @@
 		<?php 
 			$sql = "SELECT meta_value, count( * ) as items FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user' group by meta_value order by items desc ";
 
-			$rs = $wpdb->get_results( $sql );  
+			$rs1 = $wpdb->get_results( $sql );  
 			
 			$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 		?>
 		<h3 style="border-bottom:1px solid #ccc"> By provider</h3>
 		<table width="60%">
 			<?php
-				foreach( $rs as $item ){
+				foreach( $rs1 as $item ){
 					if( ! $item->meta_value ) $item->meta_value = "Unknown";
 				?>
 					<tr>
@@ -31,7 +31,7 @@
 							<?php echo $item->items; ?>
 						</td>
 					</tr>
-				<?
+				<?php
 				}
 			?>
 		</table>
@@ -58,7 +58,7 @@
 							<?php echo $item->items; ?>
 						</td>
 					</tr>
-				<?
+				<?php
 				}
 			?>
 		</table>
@@ -85,11 +85,42 @@
 							<?php echo $item->items; ?>
 						</td>
 					</tr>
-				<?
+				<?php
 				}
 			?>
 		</td>
 		</tr>
 		</table>
 	</table>
+	
+    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+    <script type="text/javascript">
+      google.load("visualization", "1", {packages:["corechart"]});
+      google.setOnLoadCallback(drawChart);
+      function drawChart() {
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Providers');
+        data.addColumn('number', 'Users'); 
+        data.addRows([ 
+		<?php 
+			$nb_users = 0; 
+			foreach( $rs1 as $item ){
+				$nb_users += (int) $item->items;
+				if( ! $item->meta_value ) $item->meta_value = "Unknown";
+			?>
+				[ '<?php echo $item->meta_value; ?>', <?php echo $item->items; ?> ], 
+			<?php
+			}
+		?> 
+			[ "Total", <?php echo $nb_users; ?> ]
+        ]);
+
+        var options = {};
+
+        var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
+        chart.draw(data, options);
+      }
+    </script>
+	<div id="chart_div" style="width: 900px; height: 500px;"></div>
+
 </center>

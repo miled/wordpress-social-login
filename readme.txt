@@ -3,23 +3,40 @@ Contributors: miled
 Tags:  twitter, facebook, google, yahoo, linkedin, myspace, foursquare, aol, gowalla, last.fm, tumblr, login, register, comment, social, social networks, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.1.8
+Stable tag: 1.1.9
 
-Allow your visitors to login and comment with social networks and identities providers such as Facebook, Twitter and Google. [BETA PLUGIN!] 
+Allow your visitors to login and comment with social networks and identities providers such as Facebook, Google, Yahoo, Twitter and more. 
 
 == Description ==
 
-This plugin incorporate social networks login/registration integration into your web site. Users will be able to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Tumblr and AOL.
+Using <strong>WordPress Social Login</strong>, your blog's users will be able to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Goodreads, Tumblr and AOL.
 
-Credits:
+<strong>WordPress Social Login is:</strong>
+<ul>
+ <li>Open Source,</li> 
+ <li>Free, Unlimited,</li> 
+ <li>White label, Customizable,</li> 
+ <li>Social sign on solution,</li> 
+ <li>With data kept in house</li> 
+</ul>  
+
+<strong>Getting started is as simple as :</strong>
+<ol>
+ <li>Install WordPress Social Login plugin,</li> 
+ <li>Setup the social networks you want to use,</li>  
+ <li>Customize the way you want it to look and behave.</li>  
+</ol> 
+	
+<strong>Credits:</strong>
 
 - Social Connect authors : http://wordpress.org/extend/plugins/social-connect/
 - HybridAuth Library: http://hybridauth.sourceforge.net/ 
 
-Special thanks to:
+<strong>Special thanks to:</strong>
 
 * [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
 * [Macky Franklin](http://www.mackyfranklin.com) for all the great help
+* [Pat Anvil](http://patanvil.com) for adding Goodreads
 
 == Installation ==
 
@@ -39,8 +56,8 @@ If you want to add the social login widget to another location in your theme, yo
 
 = Where can I report bugs & get support? =
 
-As an open source project and beta stage plugin, We Appreciate Your Feedback! 
- 
+As an open source project and beta stage plugin, We Appreciate Your Feedback! Also to get **help and support**, join us on the [discussion group](https://groups.google.com/forum/#!forum/hybridauth-plugins)
+
 == Screenshots ==
 
 1. **Comment** - Buttons for 3rd party services are also provided on the comment form.
@@ -48,6 +65,14 @@ As an open source project and beta stage plugin, We Appreciate Your Feedback!
 3. **Setup** - To correctly setup these Identity Providers please carefully follow the help section of each one.
 
 == Changelog ==
+
+= 1.1.9 =
+
+* some fixes and small iprovements
+
+= 1.1.8 =
+
+* add goodreads
 
 = 1.1.7 =
 

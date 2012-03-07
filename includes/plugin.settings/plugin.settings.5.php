@@ -45,8 +45,8 @@
     <h3 style="margin: 0 0 5px;">Need Help?</h3>
 
 	<p style="line-height: 19px;" align="justify">
-		If you are still new to things, we recommend that you read the <a href="options-general.php?page=wordpress-social-login&wslp=2">Plugin User Guide</a> 
-		and to make sure your server settings meet this <a href="options-general.php?page=wordpress-social-login&amp;wslp=3">Plugin Requirements</a>.
+		If you are still new to things, we recommend that you read the <b><a href="options-general.php?page=wordpress-social-login&wslp=2">Plugin User Guide</a></b>
+		and to make sure your server settings meet this <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=3">Plugin Requirements</a></b>.
 	</p>
 </div> 
 
@@ -54,7 +54,7 @@
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
 	<p style="line-height: 19px;">
-		If you run into any issue, feel free to contact me at <b>hybridauth@gmail.com</b>
+		If you run into any issue, please join us on the <b><a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
 	</p>
 </div>
 
@@ -71,7 +71,7 @@
   <tr>
     <td width="135" align="right"><strong>Connect with caption :</strong></td>
     <td>
-    
+
 <?php 
 	$wsl_settings_connect_with_label = get_option( 'wsl_settings_connect_with_label' );
 
@@ -103,7 +103,26 @@
 		</select> 
     </td>
   </tr>
- 
+  
+  <tr>
+
+<?php 
+	$wsl_settings_redirect_url = get_option( 'wsl_settings_redirect_url' );
+
+	if( empty( $wsl_settings_redirect_url ) ){
+		$wsl_settings_redirect_url = site_url();
+	}
+?>
+    <td align="right" valign="top"><strong>Redirect URL :</strong></td>
+    <td>
+		<input type="text" name="wsl_settings_redirect_url" value="<?php echo $wsl_settings_redirect_url; ?>" class="inputgnrc" style="width: 400px;">
+		<br />
+		<small>
+			Where should users be redirected to after registring? (<b>By default its set to your blog's homepage</b>)
+		</small>
+    </td>
+  </tr>
+
   <tr>
     <td>&nbsp;</td>
     <td><input type="submit" class="button-primary" value="Save" /> </td>

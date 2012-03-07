@@ -128,7 +128,9 @@ class Hybrid_Auth
 		$_SESSION["HA::VERSION"]        = Hybrid_Auth::$version; 
 
 		// almost done, check for errors then move on
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(), stated. Hybrid_Auth has been called from: " . Hybrid_Auth::getCurrentUrl() ); 
+		Hybrid_Logger::info( "Enter Hybrid_Auth::initialize()"); 
+		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth used version: " . Hybrid_Auth::$version ); 
+		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth called from: " . Hybrid_Auth::getCurrentUrl() ); 
 		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump used config: ", serialize( $config ) );
 		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump current session: ", serialize( $_SESSION ) ); 
 		Hybrid_Logger::info( "Hybrid_Auth initialize: check if any error is stored on the endpoint..." );
@@ -295,6 +297,28 @@ class Hybrid_Auth
 		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
 			if( Hybrid_Auth::isConnectedWith( $idpid ) ){
 				$idps[] = $idpid;
+			}
+		}
+
+		return $idps;
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	* Return array listing all enabled providers as well as a flag if you are connected.
+	*/ 
+	public static function getProviders()
+	{
+		$idps = array();
+
+		foreach( Hybrid_Auth::$config["providers"] as $idpid => $params ){
+			if($params['enabled']) {
+				$idps[$idpid] = array( 'connected' => false );
+
+				if( Hybrid_Auth::isConnectedWith( $idpid ) ){
+					$idps[$idpid]['connected'] = true;
+				}
 			}
 		}
 

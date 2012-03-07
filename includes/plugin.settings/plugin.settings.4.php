@@ -47,39 +47,19 @@
     <h3 style="margin: 0 0 5px;">Need Help?</h3>
 
 	<p style="line-height: 19px;" align="justify">
-		If you are still new to things, we recommend that you read the <a href="options-general.php?page=wordpress-social-login&wslp=2">Plugin User Guide</a> 
-		and to make sure your server settings meet this <a href="options-general.php?page=wordpress-social-login&amp;wslp=3">Plugin Requirements</a>.
+		If you are still new to things, we recommend that you read the <b><a href="options-general.php?page=wordpress-social-login&wslp=2">Plugin User Guide</a></b>
+		and to make sure your server settings meet this <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=3">Plugin Requirements</a></b>.
 	</p>
 </div> 
 
-<div style="clear:both" class="wsl_notice wsl_aside">
+<div style="clear:both" class="wsl_donate wsl_aside">
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
 	<p style="line-height: 19px;">
-		If you run into any issue, feel free to contact me at <b>hybridauth@gmail.com</b>
+		If you run into any issue, please join us on the <b><a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
 	</p>
 </div>
  
-<div style="clear:both;padding-bottom: 0;" class="wsl_donate wsl_aside">
-    <h3 style="margin: 0 0 5px;">Donate</h3>
-
-	<p style="line-height: 19px;">
-		If you like this plugin and find it useful, help keep this plugin free and actively developed 
-
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_donations">
-		<input type="hidden" name="business" value="hybridauth@gmail.com">
-		<input type="hidden" name="lc" value="US">
-		<input type="hidden" name="item_name" value="HybridAuth Project">
-		<input type="hidden" name="no_note" value="0">
-		<input type="hidden" name="currency_code" value="USD">
-		<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-		<img alt="" border="0" src="https://www.paypalobjects.com/fr_XC/i/scr/pixel.gif" width="1" height="1">
-		</form>
-	</p>
-</div> 
-
 <form method="post" id="wsl_setup_form" action="options.php"> 
 
 	<?php settings_fields( 'wsl-settings-group' ); ?>
@@ -186,7 +166,7 @@ Except for OpenID providers, each social network and identities provider will re
 					<?php if ( $provider_id == "Twitter" ) : ?>
 						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Application Website</b> and <b>Application Callback URL</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
 						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Application Type</b> to <em style="color:#CB4B16;">Browser</em>.</p> 
-						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Default Access Type</b> to <em style="color:#CB4B16;">Read, Write, & Direct Messages</em>.</p> 
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Default Access Type</b> to <em style="color:#CB4B16;">Read</em>.</p> 
 					<?php endif; ?>	
 					
 					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Once you have registered, copy and past the created application credentials into this setup page.</p>  
