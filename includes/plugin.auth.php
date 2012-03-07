@@ -91,36 +91,10 @@ function wsl_process_login()
 		$user_id = (int) wsl_get_user_by_meta( $provider, $hybridauth_user_profile->identifier ); 
 	}
 
-    // try to check whether the active session is registered
-	if ( !$user_id ) { 
-        if( is_user_logged_in() ) {
-            // the user is logged in, link the provider to the current user
-            $user = wp_get_current_user();
-
-            if ( $user->ID ) {
-                $user_id = (int) $user->ID;
-
-                $userdata = array(
-                    'ID'            => $user_id,
-                    'first_name'    => $hybridauth_user_profile->firstName,
-                    'last_name'     => $hybridauth_user_profile->lastName,
-                    'user_nicename' => $hybridauth_user_profile->displayName,
-                    'display_name'  => $hybridauth_user_profile->displayName,
-                    'user_url'      => $hybridauth_user_profile->profileURL,
-                    'description'   => $hybridauth_user_profile->description
-                );
-
-                // Update user data
-                $user_id = wp_update_user( $userdata );
-            }
-        }
-    }
-
 	// if user found
 	if( $user_id ){
 		$user_data  = get_userdata( $user_id );
 		$user_login = $user_data->user_login;
-        update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier ); 
 	}
 
 	// Create new user and associate provider identity
