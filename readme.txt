@@ -1,6 +1,6 @@
 === WordPress Social Login ===
 Contributors: miled
-Tags:  twitter, facebook, google, yahoo, linkedin, myspace, foursquare, aol, gowalla, last.fm, tumblr, login, register, comment, social, social networks, social login
+Tags:  twitter, facebook, google, yahoo, linkedin, myspace, foursquare, aol, gowalla, last.fm, tumblr, login, register, comment, social, social networks, social login, skyrock
 Requires at least: 3.0
 Tested up to: 3.2.1
 Stable tag: 1.1.9
