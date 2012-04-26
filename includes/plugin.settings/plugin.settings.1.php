@@ -123,7 +123,7 @@
 ?>
 
 <p style="margin:10px;font-size: 14px;line-height: 22px;" align="justify">
-	<strong>WordPress Social Login</strong> allow your visitors to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Tumblr and AOL. 
+	<strong>WordPress Social Login</strong> allow your visitors to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Tumblr, Skyrock and AOL. 
 </p>
  
 <div style="margin-top:20px;">
