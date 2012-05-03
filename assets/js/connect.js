@@ -11,7 +11,7 @@ jQuery.noConflict();
 			window.open(
 				popupurl+"provider="+provider,
 				"hybridauth_social_sing_on", 
-				"location=1,status=0,scrollbars=0,width=800,height=600"
+				"location=1,status=0,scrollbars=0,width=1000,height=600"
 			); 
 		});
 	});

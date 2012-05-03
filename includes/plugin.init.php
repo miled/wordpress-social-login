@@ -6,7 +6,7 @@ function wsl_admin_menu()
 	add_action( 'admin_init', 'wsl_register_setting' );
 }
 
-add_action('admin_menu', 'wsl_admin_menu' );
+add_action('admin_menu', 'wsl_admin_menu' ); 
 
 function wsl_register_setting()
 {

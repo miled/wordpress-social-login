@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-*  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
 /**
@@ -82,7 +82,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		// refresh tokens if needed 
 		$this->refreshToken();  
 
-		$response = $this->api->api( "https://www.google.com/m8/feeds/contacts/default/full?alt=json" ); 
+		$response = $this->api->api( "https://www.google.com/m8/feeds/contacts/default/full?alt=json&max-results=500" ); 
 
 		if( ! $response ){
 			return ARRAY();

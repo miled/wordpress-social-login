@@ -56,7 +56,7 @@
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
 	<p style="line-height: 19px;">
-		If you run into any issue, please join us on the <b><a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
+		If you run into any issue, please join us on the <b><a href="options-general.php?page=wordpress-social-login&wslp=8">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
 	</p>
 </div>
  
@@ -67,15 +67,22 @@
 <p style="margin:10px;line-height: 22px;" align="justify">
 Except for OpenID providers, each social network and identities provider will require that you create an external application linking your Web site to theirs apis. These external applications ensures that users are logging into the proper Web site and allows identities providers to send the user back to the correct Web site after successfully authenticating their Accounts.
 </p>
-	
+
+<p style="margin:10px;line-height: 22px;" align="justify">
+<b>Important:</b>
+</p>
 <ul style="list-style:circle inside;margin-left:30px;">
 	<li style="color: #000000;font-size: 14px;">To correctly setup these Identity Providers please carefully follow the help section of each one.</li>
-	<li style="color: #000000;font-size: 14px;">If a <b>Provider Satus</b> is set to <b style="color:red">NO</b> then users will not be able to login with that provider on you website.</li>
+	<li style="color: #000000;font-size: 14px;">If the <b>Allow users to sign on with provider?</b> is set to <b style="color:red">NO</b> then users will not be able to login with that provider on you website.</li>
+	<li style="color: #000000;font-size: 14px;">Some social networks like Twitter and LinkedIn does NOT give out their user's email. A random email will then be generated for them.</li>
+	<li style="color: #000000;font-size: 14px;">WSL will try to link existing blog accounts to social network users profiles by matching their verified emails. Currently this only works for Facebook, Google, Yahaoo and Foursquare.</li>
 </ul>
 
 <br />
 
 <?php 
+	$nbprovider = 0;
+	
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ):
 		$provider_id                = @ $item["provider_id"];
 		$provider_name              = @ $item["provider_name"];
@@ -92,11 +99,11 @@ Except for OpenID providers, each social network and identities provider will re
 			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
 		}
 
-		$setupsteps = 0;
+		$setupsteps = 0; 
 
 		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 ?> 
-	<h3 style="margin-left:30px;"><img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;" /> <?php echo $provider_name ?></h3> 
+	<h3 style="margin-left:30px;"><img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php echo ++$nbprovider ?>. <?php echo $provider_name ?></h3> 
 	<div> 
 		<div class="cfg">
 		   <div class="cgfparams">
@@ -164,15 +171,10 @@ Except for OpenID providers, each social network and identities provider will re
 					<?php endif; ?>	
 
 					<?php if ( $provider_id == "Twitter" ) : ?>
-						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Application Website</b> and <b>Application Callback URL</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
-						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Application Type</b> to <em style="color:#CB4B16;">Browser</em>.</p> 
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Application Website</b> and <b>Application Callback URL</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>  
 						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Set the <b>Default Access Type</b> to <em style="color:#CB4B16;">Read</em>.</p> 
 					<?php endif; ?>	
 					
-					<?php if ( $provider_id == "Skyrock" ) : ?>
-						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Application URL</b> field. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
-					<?php endif; ?>	
-
 					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Once you have registered, copy and past the created application credentials into this setup page.</p>  
 				<?php else: ?>	
 					<p>No registration required for OpenID based providers</p> 
@@ -187,10 +189,10 @@ Except for OpenID providers, each social network and identities provider will re
 ?>
 	<br /> 
 	<div style="margin-left:30px;">
-		Thanks for scrolling this far down! now click the big button to complete the installation.
+		<b>Thanks for scrolling this far down!</b> Now click the save button to complete the setup.
 		<br />
 		<br />
-		<input type="submit" class="inputsave" value="Save" /> 
+		<input type="submit" class="button-primary" value="Save Changes" /> 
 	</div> 
 </div>
 

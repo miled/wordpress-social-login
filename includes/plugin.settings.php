@@ -11,7 +11,7 @@ function wsl_render_settings()
 
 	$wslp = @ (int) $_REQUEST["wslp"];
 
-	if( $wslp < 1 || $wslp > 7 ){
+	if( $wslp < 1 || $wslp > 8 ){
 		$wslp = 1;
 	}
 
@@ -29,6 +29,7 @@ function wsl_check_requirements()
 		|| ! function_exists('curl_init')
 		|| ! function_exists('json_decode')
 		||   extension_loaded('oauth')  
+		||   ini_get('register_globals') == 1
 	)
 	return false;
 	

@@ -56,13 +56,24 @@ Except few, each provider will require that you create an external application l
 <br />
 
 <h3>6. Custom integration</h3> 
-<p style="margin-left:25px;margin:10px;"> 
-	WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms. 
-
-	<br /> 
-	<br /> 
-	If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
-
-	<pre style="width: 400px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+<p style="margin-left:25px;margin:10px;">  
+WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms. 
 </p>
+
+<ul style="list-style: disc inside none; margin-left: 25px;"> 
+	
+	<li>If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
+	<pre style="width: 400px; background-color: rgb(255, 255, 224); border: 1px solid rgb(230, 219, 85); border-radius: 3px 3px 3px 3px; padding: 10px; margin-top: 15px; margin-left: 10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+	<br>
+	</li> 
+
+	<li>Also, if you are a developer or designer then you can customize it to your heart's content: 
+		<ul style="list-style: circle inside none; margin-left: 25px; margin-top: 10px;">
+			<li>The default css styles are found at <strong>/wordpress-social-login/assets/css/style.css</strong></li> 
+			<li>Social icons are found at <strong>/wordpress-social-login/assets/img/32x32/</strong></li> 
+			<li>The widget view can be found at <strong>/wordpress-social-login/includes/plugin.ui.php</strong>, function <strong>wsl_render_login_form()</strong></li> 
+			<li>The popup and loading screens are found at <strong>/wordpress-social-login/authenticate.php</strong></li> 
+		</ul>
+	</li> 
+</ul>
 </div>

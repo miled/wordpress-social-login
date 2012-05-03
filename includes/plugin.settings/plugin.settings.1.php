@@ -55,8 +55,8 @@
 <div style="clear:both" class="wsl_notice wsl_aside">
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
-	<p style="line-height: 19px;">
-		If you run into any issue, please join us on the <b><a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
+	<p style="line-height: 19px;" align="justify">
+		If you run into any issue, please join us on the <b><a href="options-general.php?page=wordpress-social-login&wslp=8">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
 	</p>
 </div>
 
@@ -87,22 +87,10 @@
 ?>
 
 <div style="clear:both;padding-bottom: 0;" class="wsl_donate wsl_aside">
-    <h3 style="margin: 0 0 5px;">Donate</h3>
+    <h3 style="margin: 0 0 5px;">Contribute</h3>
 
-	<p style="line-height: 19px;">
-		If you like this plugin and find it useful, help keep this plugin actively developed 
-
-		<form action="https://www.paypal.com/cgi-bin/webscr" method="post">
-		<input type="hidden" name="cmd" value="_donations">
-		<input type="hidden" name="business" value="hybridauth@gmail.com">
-		<input type="hidden" name="lc" value="US">
-		<input type="hidden" name="item_name" value="HybridAuth Project">
-		<input type="hidden" name="no_note" value="0">
-		<input type="hidden" name="currency_code" value="USD">
-		<input type="hidden" name="bn" value="PP-DonationsBF:btn_donate_LG.gif:NonHostedGuest">
-		<input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_LG.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
-		<img alt="" border="0" src="https://www.paypalobjects.com/fr_XC/i/scr/pixel.gif" width="1" height="1">
-		</form>
+	<p style="line-height: 19px;" align="justify">
+		<b>WordPress Social Login</b> project welcomes submissions. The main repository is hosted at <b><a href="https://github.com/hybridauth/WordPress-Social-Login">https://github.com/hybridauth/WordPress-Social-Login</a></b>.
 	</p>
 </div> 
 
@@ -123,7 +111,7 @@
 ?>
 
 <p style="margin:10px;font-size: 14px;line-height: 22px;" align="justify">
-	<strong>WordPress Social Login</strong> allow your visitors to login and comment using their accounts on Facebook, Google, Yahoo, Twitter, Windows Live, Myspace, Foursquare, Linkedin, Gowalla, Last.fm, Tumblr, Skyrock and AOL. 
+	<strong>WordPress Social Login</strong> allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
 </p>
  
 <div style="margin-top:20px;">

@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-*  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
 /**
@@ -18,18 +18,20 @@ class Hybrid_Providers_Tumblr extends Hybrid_Provider_Model_OAuth1
 		parent::initialize();
 
 		// provider api end-points
-		$this->api->api_base_url      = "http://www.tumblr.com/";
+		$this->api->api_base_url      = "http://api.tumblr.com/v2/";
 		$this->api->authorize_url     = "http://www.tumblr.com/oauth/authorize";
 		$this->api->request_token_url = "http://www.tumblr.com/oauth/request_token";
 		$this->api->access_token_url  = "http://www.tumblr.com/oauth/access_token";
+
+		$this->api->curl_auth_header  = false;
 	}
+
 
    /**
 	* load the user profile from the IDp api client
 	*/
 	function getUserProfile()
-	{
-		$this->api->decode_json=false;
+	{ 
 		$response = $this->api->get( 'http://www.tumblr.com/api/authenticate' );
 
 		// check the last HTTP status code returned
@@ -38,66 +40,47 @@ class Hybrid_Providers_Tumblr extends Hybrid_Provider_Model_OAuth1
 			throw new Exception( "User profile request failed! {$this->providerId} returned an error: " . $this->errorMessageByStatus( $this->api->http_code ), 6 );
 		}
 
-		try{ 
-			$response = @ new SimpleXMLElement( $response ); 
+		try{  
+			$profile = $this->api->get( 'user/info' );
 
-			// the easy way (well 4 me at least)
-			$xml2array = @ $this->xml2array( $response );
+			foreach ( $profile->response->user->blogs as $blog ) {
+				if( $blog->primary ){
+					$bloghostname = explode( '://', $blog->url );
+					$bloghostname = substr( $bloghostname[1], 0, -1);
 
-			$this->user->profile->identifier    = @ (string) $xml2array["children"]["tumblelog"][0]["attr"]["url"]; 
-			$this->user->profile->displayName  	= @ (string) $xml2array["children"]["tumblelog"][0]["attr"]["name"];
-			$this->user->profile->profileURL 	= @ (string) $xml2array["children"]["tumblelog"][0]["attr"]["url"]; 
-			$this->user->profile->webSiteURL 	= @ (string) $xml2array["children"]["tumblelog"][0]["attr"]["url"]; 
-			$this->user->profile->photoURL   	= @ (string) $xml2array["children"]["tumblelog"][0]["attr"]["avatar-url"]; 
+					// store the user primary blog base hostname
+					$this->token( "primary_blog" , $bloghostname );
+
+					$this->user->profile->identifier 	= $blog->url;
+					$this->user->profile->displayName	= $profile->response->user->name;
+					$this->user->profile->profileURL	= $blog->url;
+					$this->user->profile->webSiteURL	= $blog->url;
+
+					$avatar = $this->api->get( 'blog/'. $this->token( "primary_blog" ) .'/avatar' );
+
+					$this->user->profile->photoURL 		= $avatar->response->avatar_url;
+
+					break; 
+				}
+			} 
 		}
 		catch( Exception $e ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an error while requesting the user profile.", 6 );
-		}
-
+		}	
+	
 		return $this->user->profile;
  	}
 
    	/**
-	* load the current logged in user contacts list from the IDp api client  
-	*/
-	function getUserContacts() 
-	{
-		throw new Exception( "Provider does not support this feature.", 8 ); 
-	}
-
-   	/**
-	* return the user activity stream  
-	*/
-	function getUserActivity( $stream ) 
-	{
-		throw new Exception( "Provider does not support this feature.", 8 ); 
-	}
-
-   	/**
-	* return the user activity stream  
+	* post to tumblr
 	*/ 
 	function setUserStatus( $status )
 	{
-		throw new Exception( "Provider does not support this feature.", 8 ); 
-	}
+		$parameters = array( 'type' => "text", 'body' => $status ); 
+		$response  = $this->api->post( "blog/" . $this->token( "primary_blog" ) . '/post', $parameters );  
 
-   /**
-	* Utility function, convert xml to array
-	*/
-	public function xml2array($xml) { 
-		$arXML=array(); 
-		$arXML['name']=trim($xml->getName()); 
-		$arXML['value']=trim((string)$xml); 
-		$t=array(); 
-		foreach($xml->attributes() as $name => $value){ 
-			$t[$name]=trim($value); 
+		if ( $response->meta->status != 201 ){
+			throw new Exception( "Update user status failed! {$this->providerId} returned an error. " . $this->errorMessageByStatus( $response->meta->status ) );
 		} 
-		$arXML['attr']=$t; 
-		$t=array(); 
-		foreach($xml->children() as $name => $xmlchild) { 
-			$t[$name][]=$this->xml2array($xmlchild); //FIX : For multivalued node 
-		} 
-		$arXML['children']=$t; 
-		return($arXML); 
 	}
 }

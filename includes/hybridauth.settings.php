@@ -29,6 +29,12 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	)
 	,
 	ARRAY( 
+		"provider_id"       => "Yahoo",
+		"provider_name"     => "Yahoo!", 
+		"new_app_link"      => NULL, 
+	)
+	,
+	ARRAY( 
 		"provider_id"       => "MySpace",
 		"provider_name"     => "MySpace", 
 		"new_app_link"      => "http://www.developer.myspace.com/", 
@@ -49,15 +55,17 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	)
 	,
 	ARRAY( 
-		"provider_id"       => "Yahoo",
-		"provider_name"     => "Yahoo!", 
+		"provider_id"       => "AOL",
+		"provider_name"     => "AOL", 
 		"new_app_link"      => NULL, 
 	)
 	,
 	ARRAY( 
-		"provider_id"       => "AOL",
-		"provider_name"     => "AOL", 
-		"new_app_link"      => NULL, 
+		"provider_id"       => "Vkontakte",
+		"provider_name"     => "Vkontakte", 
+		"callback"          => TRUE,
+		"require_client_id" => TRUE,
+		"new_app_link"      => "http://vk.com/developers.php", 
 	)
 	,
 	ARRAY( 
@@ -84,18 +92,68 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_id"       => "Tumblr",
 		"provider_name"     => "Tumblr", 
 		"new_app_link"      => "http://www.tumblr.com/oauth/apps", 
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Goodreads",
 		"provider_name"     => "Goodreads", 
 		"callback"          => TRUE,
 		"new_app_link"      => "http://www.goodreads.com/api", 
-	)
-	,
+	), 
+	// ARRAY( 
+		// "provider_id"       => "Wordpress",
+		// "provider_name"     => "Wordpress", 
+		// "new_app_link"      => NULL, 
+	// ),
+	// ARRAY( 
+		// "provider_id"       => "Livejournal",
+		// "provider_name"     => "Livejournal", 
+		// "new_app_link"      => NULL, 
+	// ),
+	// ARRAY( 
+		// "provider_id"       => "Blogger",
+		// "provider_name"     => "Blogger", 
+		// "new_app_link"      => NULL, 
+	// ),
+	ARRAY( 
+		"provider_id"       => "Stackoverflow",
+		"provider_name"     => "Stackoverflow", 
+		"new_app_link"      => NULL, 
+	),
+	ARRAY( 
+		"provider_id"       => "Github",
+		"provider_name"     => "Github", 
+		"require_client_id" => TRUE,
+		"callback"          => TRUE,
+		"new_app_link"      => "https://github.com/account/applications/new", 
+	),
+	ARRAY( 
+		"provider_id"       => "500px",
+		"provider_name"     => "px500", 
+		"new_app_link"      => "http://developers.500px.com/", 
+	),
+	// ARRAY( 
+		// "provider_id"       => "Flickr",
+		// "provider_name"     => "Flickr", 
+		// "new_app_link"      => NULL, 
+	// ),
 	ARRAY( 
 		"provider_id"       => "Skyrock",
 		"provider_name"     => "Skyrock", 
 		"new_app_link"      => "https://www.skyrock.com/developer/application", 
-	)
+	),
+	ARRAY( 
+		"provider_id"       => "Mixi",
+		"provider_name"     => "Mixi", 
+		"new_app_link"      => NULL, 
+	),
+	// ARRAY( 
+		// "provider_id"       => "Hyves",
+		// "provider_name"     => "Hyves", 
+		// "new_app_link"      => NULL, 
+	// ),
+	ARRAY( 
+		"provider_id"       => "Steam",
+		"provider_name"     => "Steam", 
+		"new_app_link"      => NULL, 
+	),
 );

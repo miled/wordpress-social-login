@@ -107,5 +107,17 @@ session_start();
 ?>
 	</p>
 
+	<h5>7. PHP Register Globals</h5> 
+	<p>
+<?php 
+	if( ini_get('register_globals') == 1 ) {
+		echo "<b style='color:red;'>FAIL!</b><br />>REGISTER_GLOBALS = ON. This feature has been DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0.. [http://php.net/manual/en/security.globals.php]";
+	}
+	else{ 
+		echo "<b style='color:green;'>OK!</b><br />REGISTER_GLOBALS = OFF. [http://php.net/manual/en/security.globals.php]";
+	} 
+?>
+	</p>
+
 </body>
 </html>

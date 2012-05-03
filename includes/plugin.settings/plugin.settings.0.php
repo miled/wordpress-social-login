@@ -103,6 +103,7 @@
 	<a class="nav-tab <?php if( $wslp == 5 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=5">Customize</a>   
 	<a class="nav-tab <?php if( $wslp == 7 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=7">Insights</a>   
 	<a class="nav-tab <?php if( $wslp == 3 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=3">Diagnostics</a> 
+	<a class="nav-tab <?php if( $wslp == 8 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=8">Support</a>  
 	<a class="nav-tab <?php if( $wslp == 2 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=2">Help</a> 
 </h2>
 

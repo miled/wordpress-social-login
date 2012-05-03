@@ -54,7 +54,7 @@
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
 	<p style="line-height: 19px;">
-		If you run into any issue, please join us on the <b><a href="https://groups.google.com/forum/#!forum/hybridauth-plugins">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
+		If you run into any issue, please join us on the <b><a href="options-general.php?page=wordpress-social-login&wslp=8">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
 	</p>
 </div>
 
@@ -118,11 +118,11 @@
 		<input type="text" name="wsl_settings_redirect_url" value="<?php echo $wsl_settings_redirect_url; ?>" class="inputgnrc" style="width: 400px;">
 		<br />
 		<small>
-			Where should users be redirected to after registring? (<b>By default its set to your blog's homepage</b>)
+			Where should users be redirected to after registring? (<b>By default its the blog homepage</b>)
 		</small>
     </td>
   </tr>
-
+ 
   <tr>
     <td>&nbsp;</td>
     <td><input type="submit" class="button-primary" value="Save" /> </td>

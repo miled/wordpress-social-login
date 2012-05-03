@@ -81,7 +81,7 @@ function wsl_process_login()
 	$user_id = null;
 
 	// if the user email is verified, then try to map to legacy account if exist
-	// > Currently only Facebook, Google, Yhaoo and Foursquare do provide the verified user email.
+	// > Currently only Facebook, Google, Yahaoo and Foursquare do provide the verified user email.
 	if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
 		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
 	}

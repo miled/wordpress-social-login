@@ -12,7 +12,7 @@ function wsl_render_login_form()
 
 <!--
    wsl_render_login_form
-   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> )
+   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> )-030520122240
    http://wordpress.org/extend/plugins/wordpress-social-login/
 -->
 	<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>

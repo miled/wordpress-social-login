@@ -1,8 +1,8 @@
 <?php
 /*!
 * HybridAuth
-* http://hybridauth.sourceforge.net | https://github.com/hybridauth/hybridauth
-*  (c) 2009-2011 HybridAuth authors | hybridauth.sourceforge.net/licenses.html
+* http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
 /**
@@ -45,6 +45,17 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 
 		$this->api = new Facebook( ARRAY( 'appId' => $this->config["keys"]["id"], 'secret' => $this->config["keys"]["secret"] ) ); 
 
+		if ( $this->token("access_token") ) { 
+			$access_token = $this->api->extendedAccessToken( $this->token("access_token") );
+
+			if( $access_token ){
+				$this->token("access_token", $access_token );
+				$this->api->setAccessToken( $access_token );
+			}
+
+			$this->api->setAccessToken( $this->token("access_token") );
+		}
+
 		$this->api->getUser();
 	}
 
@@ -80,10 +91,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		// set user as logged in
 		$this->setUserConnected();
 
-		// try to detect the access token for facebook
-		if( isset( $_SESSION["fb_" . $this->api->getAppId() . "_access_token" ] ) ){
-			$this->token( "access_token", $_SESSION["fb_" . $this->api->getAppId() . "_access_token" ] );
-		}
+		// store facebook access token 
+		$this->token( "access_token", $this->api->getAccessToken() );
 	}
 
 	/**
@@ -247,7 +256,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 			if( ! empty( $ua->text ) ){
 				$ua->user->identifier   = (array_key_exists("id",$item["from"]))?$item["from"]["id"]:"";
 				$ua->user->displayName  = (array_key_exists("name",$item["from"]))?$item["from"]["name"]:"";
-				$ua->user->profileURL   = (property_exists($ua->user,'identifier'))?$ua->user->identifier:"";
+				$ua->user->profileURL   = "https://www.facebook.com/profile.php?id=" . $ua->user->identifier;
 				$ua->user->photoURL     = "https://graph.facebook.com/" . $ua->user->identifier . "/picture?type=square";
 
 				$activities[] = $ua;
