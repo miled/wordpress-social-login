@@ -8,6 +8,7 @@ function wsl_render_login_form()
 	if( empty( $wsl_settings_connect_with_label ) ){
 		$wsl_settings_connect_with_label = "Connect with:";
 	}
+ 	$wsl_settings_connect_with_label = apply_filters('wp_sl_connect_with_label', $wsl_settings_connect_with_label);
 ?>
 
 <!--
@@ -39,7 +40,7 @@ function wsl_render_login_form()
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			?>
 			<a href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
-				<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
+				<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo apply_filters('wp_sl_user_' . strtolower( $provider_id ) . '_image', $assets_base_url . strtolower( $provider_id ) . '.png') ?>" />
 			</a>
 			<?php
 
