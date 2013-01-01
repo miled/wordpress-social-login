@@ -33,8 +33,11 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 
 		// include LightOpenID lib
 		require_once Hybrid_Auth::$config["path_libraries"] . "OpenID/LightOpenID.php"; 
-
-		$this->api = new LightOpenID( parse_url( Hybrid_Auth::$config["base_url"], PHP_URL_HOST) ); 
+		
+		// An error was occurring when proxy wasn't set. Not sure where proxy was meant to be set/initialized.
+		Hybrid_Auth::$config['proxy'] = isset(Hybrid_Auth::$config['proxy'])?Hybrid_Auth::$config['proxy']:'';
+		
+		$this->api = new LightOpenID( parse_url( Hybrid_Auth::$config["base_url"], PHP_URL_HOST), Hybrid_Auth::$config["proxy"] ); 
 	}
 
 	// --------------------------------------------------------------------
@@ -86,12 +89,12 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 	{
 		# if user don't garant acess of their data to your site, halt with an Exception
 		if( $this->api->mode == 'cancel'){
-			throw new Exception( "Authentification failed! User has canceled authentication!", 5 );
+			throw new Exception( "Authentication failed! User has canceled authentication!", 5 );
 		}
 
 		# if something goes wrong
 		if( ! $this->api->validate() ){
-			throw new Exception( "Authentification failed. Invalid request recived!", 5 );
+			throw new Exception( "Authentication failed. Invalid request recived!", 5 );
 		}
 
 		# fetch recived user data

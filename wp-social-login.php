@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 1.1.9
+Version: 1.2.3
 Author: Miled
 Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 License: GPL2
@@ -11,7 +11,7 @@ License: GPL2
 
 @ session_start(); 
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login 1.2.0"; 
+$_SESSION["wsl::plugin"] = "WordPress Social Login 1.2.3"; 
 
 /**
  * Check technical requirements before activating the plugin.
@@ -43,12 +43,6 @@ function wsl_activate()
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
 		die( "This plugin requires the <a href='http://php.net/'>PHP 5.2</a> be installed." ); 
-	}
-
-	if ( extension_loaded('oauth') )
-	{
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		die( "This plugin requires the <a href='http://php.net/manual/en/book.oauth.php'>PHP PECL OAuth extension</a> be disabled." ); 
 	}
 
 	do_action( 'wsl_activate' );
@@ -94,3 +88,4 @@ require_once( dirname (__FILE__) . '/includes/plugin.init.php'         );
 require_once( dirname (__FILE__) . '/includes/plugin.settings.php'     ); 
 require_once( dirname (__FILE__) . '/includes/plugin.auth.php'         );  
 require_once( dirname (__FILE__) . '/includes/plugin.ui.php'           );  
+

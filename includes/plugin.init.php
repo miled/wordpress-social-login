@@ -8,6 +8,13 @@ function wsl_admin_menu()
 
 add_action('admin_menu', 'wsl_admin_menu' ); 
 
+function wsl_admin_menu_sidebar() {
+	
+	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_render_settings' ); 
+}
+ 
+add_action('admin_menu', 'wsl_admin_menu_sidebar');
+
 function wsl_register_setting()
 {
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
@@ -34,7 +41,11 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_connect_with_label' ); 
 	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_social_icon_set' ); 
 	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_users_avatars' ); 
+	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_use_popup' ); 
 	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_redirect_url' ); 
+	register_setting( 'wsl-settings-group-customize'  , 'wsl_settings_users_notification' ); 
 
 	register_setting( 'wsl-settings-group-development', 'wsl_settings_development_mode_enabled' ); 
 }
+ 
+ 

@@ -1,9 +1,11 @@
 === WordPress Social Login ===
 Contributors: miled
-Tags:  facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, gowalla, last.fm, goodreads, tumblr, aol, vkontakte, stackoverflow, github, 500px, skyrock, mixi.jp, steam, login, register, comment, social, social networks, social login
+Tags:  facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, gowalla, last.fm, instagram, goodreads, tumblr, aol, vkontakte, stackoverflow, github, 500px, skyrock, mixi.jp, steam, login, register, comment, social, social networks, social login
 Requires at least: 3.0
 Tested up to: 3.2.1
-Stable tag: 1.2.0
+Stable tag: 1.2.3 
+License: MIT License
+License URI: http://www.opensource.org/licenses/MIT
 
 WordPress Social Login allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
 
@@ -40,6 +42,7 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
  <li>Tumblr</li>  
  <li>Gowalla</li>  
  <li>Last.fm</li>  
+ <li>Instagram</li>  
  <li>Goodreads</li>  
  <li>AOL</li>  
  <li>Vkontakte</li>  
@@ -49,6 +52,9 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
  <li>Skyrock</li>  
  <li>Mixi.jp</li>  
  <li>Steam</li>  
+ <li>Mail.ru</li>  
+ <li>Yandex</li>  
+ <li>Odnoklassniki</li>  
 </ol> 
 	
 <strong>Credits:</strong>
@@ -61,7 +67,8 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
 * [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
 * [Macky Franklin](http://www.mackyfranklin.com) for all the great help
 * [Pat Anvil](http://patanvil.com) for adding Goodreads
-* [Nicolas Quiénot](https://github.com/niQo) for adding Skyrock
+* [Nicolas Quienot](https://github.com/niQo) for adding Skyrock
+* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki
 
 == Installation ==
 
@@ -87,9 +94,21 @@ If you want to add the social login widget to another location in your theme, yo
 
 == Changelog ==
 
+= 1.2.3 =
+
+* Update Hybridauth Library to 2.1.1-dev (fix fb login issue and others stuff)
+* remove PHP PECL OAuth extension conflict
+
+= 1.2.2 =
+
+* add Mail.ru, Yandex and Odnoklassniki
+* add more customization options
+* improve user guide
+* a bunch of fixes and small improvements
+
 = 1.1.9 =
 
-* some fixes and small iprovements
+* some fixes and small improvements
 
 = 1.1.8 =
 

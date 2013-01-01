@@ -100,9 +100,9 @@ function wsl_process_login()
 	// Create new user and associate provider identity
 	else{
 		// generate a valid user login
-		$user_login = str_replace( ' ', '_', strtolower( $hybridauth_user_profile->displayName ) );
+		$user_login = trim( str_replace( ' ', '_', strtolower( $hybridauth_user_profile->displayName ) ) );
 
-		if( ! validate_username( $user_login ) ){
+		if( empty( $user_login ) || ! validate_username( $user_login ) ){
 			$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
 		}
 
@@ -130,7 +130,9 @@ function wsl_process_login()
 			{
 				$user_email = md5(uniqid(wp_rand(10000,99000)))."@example.com";
 			} while( email_exists( $user_email ) );
-		}
+		} 
+
+		$user_login = sanitize_user ($user_login, true);
 
 		$userdata = array(
 			'user_login'    => $user_login,
@@ -138,8 +140,7 @@ function wsl_process_login()
 
 			'first_name'    => $hybridauth_user_profile->firstName,
 			'last_name'     => $hybridauth_user_profile->lastName,
-			'user_nicename' => $hybridauth_user_profile->displayName,
-			'display_name'  => $hybridauth_user_profile->displayName,
+			'display_name'  => (!empty ($hybridauth_user_profile->displayName) ? $hybridauth_user_profile->displayName : $user_login),
 			'user_url'      => $hybridauth_user_profile->profileURL,
 			'description'   => $hybridauth_user_profile->description,
 
@@ -149,9 +150,19 @@ function wsl_process_login()
 		// Create a new user
 		$user_id = wp_insert_user( $userdata );
 
+        // Send notifications
+		if ( get_option( 'wsl_settings_users_notification' ) ){
+			if ( get_option( 'wsl_settings_users_notification' ) == 1 ){
+				wsl_admin_notification( $user_id, $provider );
+			} 
+		}
+
 		// update user metadata
 		if( $user_id && is_integer( $user_id ) ){
-			update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier ); 
+			update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier );
+		}
+		else if (is_wp_error($user_id)) { //- http://wordpress.org/support/topic/plugin-wordpress-social-login-error-with-vkontake-provider?replies=1#post-2796109
+			echo $user_id->get_error_message();
 		}
 		else{
 			die( "An error occurred while creating a new user!" );
@@ -186,4 +197,30 @@ function wsl_get_user_by_meta( $provider, $user_uid )
 	$sql = "SELECT user_id FROM $wpdb->usermeta WHERE meta_key = '%s' AND meta_value = '%s'";
 
 	return $wpdb->get_var( $wpdb->prepare( $sql, $provider, $user_uid ) );
+}
+
+/**
+* send a notification to blog administrator when a new user register using WSL
+* again borrowed from http://wordpress.org/extend/plugins/oa-social-login/
+*/
+function wsl_admin_notification( $user_id, $provider )
+{
+    //Get the user details
+	$user = new WP_User($user_id);
+	$user_login = stripslashes($user->user_login);
+
+	// The blogname option is escaped with esc_html on the way into the database
+	// in sanitize_option we want to reverse this for the plain text arena of emails.
+	$blogname = wp_specialchars_decode(get_option('blogname'), ENT_QUOTES);
+
+	$message  = sprintf(__('New user registration on your site: %s'), $blogname) . "\r\n\r\n";
+	$message .= sprintf(__('Username: %s'), $user_login) . "\r\n";
+	$message .= sprintf(__('Provider: %s'), $provider) . "\r\n";
+	$message .= sprintf(__('Profile: %s'), $user->user_url) . "\r\n";
+	$message .= sprintf(__('Email: %s'), $user->user_email) . "\r\n";
+	$message .= "\r\n--\r\n";
+	$message .= "WordPress Social Login\r\n";
+	$message .= "http://wordpress.org/extend/plugins/wordpress-social-login/\r\n";
+
+	@wp_mail(get_option('admin_email'), '[WordPress Social Login] '.sprintf(__('[%s] New User Registration'), $blogname), $message);
 }

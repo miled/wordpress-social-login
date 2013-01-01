@@ -86,7 +86,7 @@
 </style> 
 
 <h2 style="padding-bottom: 10px;">WordPress Social Login 
-	<span class="wsl_label_notice">Beta</span>
+	<span class="wsl_label_notice">A Forever Beta Plugin</span>
 	
 <?php
 	if( get_option( 'wsl_settings_development_mode_enabled' ) ){
@@ -101,9 +101,8 @@
 	<a class="nav-tab <?php if( $wslp == 1 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=1">Overview</a>
 	<a class="nav-tab <?php if( $wslp == 4 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=4">Providers setup</a> 
 	<a class="nav-tab <?php if( $wslp == 5 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=5">Customize</a>   
-	<a class="nav-tab <?php if( $wslp == 7 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=7">Insights</a>   
-	<a class="nav-tab <?php if( $wslp == 3 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=3">Diagnostics</a> 
-	<a class="nav-tab <?php if( $wslp == 8 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=8">Support</a>  
+	<a class="nav-tab <?php if( $wslp == 6 ) echo "nav-tab-active"; ?>" href="options-general.php?page=wordpress-social-login&wslp=6">Insights</a>   
+	<a class="nav-tab <?php if( $wslp == 3 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=3">Diagnostics</a>  
 	<a class="nav-tab <?php if( $wslp == 2 ) echo "nav-tab-active"; ?>" style="float:right" href="options-general.php?page=wordpress-social-login&wslp=2">Help</a> 
 </h2>
 

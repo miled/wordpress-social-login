@@ -40,7 +40,7 @@ class Hybrid_Storage
 	{
 		$key = strtolower( $key );  
 
-		if( isset( $_SESSION["HA::STORE"][$key] ) ){ 
+		if( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][$key] ) ){ 
 			return unserialize( $_SESSION["HA::STORE"][$key] );  
 		}
 
@@ -63,7 +63,7 @@ class Hybrid_Storage
 	{
 		$key = strtolower( $key );  
 
-		if( isset( $_SESSION["HA::STORE"][$key] ) ){ 
+		if( isset( $_SESSION["HA::STORE"], $_SESSION["HA::STORE"][$key] ) ){
 			unset( $_SESSION["HA::STORE"][$key] );
 		} 
 	}

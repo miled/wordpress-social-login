@@ -75,6 +75,11 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 			$this->api->access_token_expires_in = $this->token( "expires_in" );
 			$this->api->access_token_expires_at = $this->token( "expires_at" ); 
 		}
+
+		// Set curl proxy if exist
+		if( isset( Hybrid_Auth::$config["proxy"] ) ){
+			$this->api->curl_proxy = Hybrid_Auth::$config["proxy"];
+		}
 	}
 
 	// --------------------------------------------------------------------
@@ -99,7 +104,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 
 		// check for errors
 		if ( $error ){ 
-			throw new Exception( "Authentification failed! {$this->providerId} returned an error: $error", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an error: $error", 5 );
 		}
 
 		// try to authenicate user
@@ -114,7 +119,7 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 
 		// check if authenticated
 		if ( ! $this->api->access_token ){ 
-			throw new Exception( "Authentification failed! {$this->providerId} returned an invalid access token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
 		}
 
 		// store tokens

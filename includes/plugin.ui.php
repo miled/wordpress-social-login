@@ -12,7 +12,7 @@ function wsl_render_login_form()
 
 <!--
    wsl_render_login_form
-   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> )-030520122240
+   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> ) 
    http://wordpress.org/extend/plugins/wordpress-social-login/
 -->
 	<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>
@@ -34,22 +34,49 @@ function wsl_render_login_form()
 			$social_icon_set .= "/";
 		}
 
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
-
+		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
+		$current_page_url = 'http';
+		if ($_SERVER["HTTPS"] == "on") {$current_page_url .= "s";}
+		$current_page_url .= "://";
+		if ($_SERVER["SERVER_PORT"] != "80") {
+		$current_page_url .= $_SERVER["SERVER_NAME"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+		} else {
+		$current_page_url .= $_SERVER["SERVER_NAME"].$_SERVER["REQUEST_URI"];
+		} 
+ 
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
-			?>
-			<a href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
-				<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
-			</a>
-			<?php
+			if( get_option( 'wsl_settings_use_popup' ) == 1 || ! get_option( 'wsl_settings_use_popup' ) ){
+				?>
+				<a href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
+					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
+				</a>
+				<?php
+			}
+			elseif( get_option( 'wsl_settings_use_popup' ) == 2 ){ 
+				?>
+				<a href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/authenticate.php?provider=<?php echo $provider_id ?>&redirect_to=<?php echo urlencode($current_page_url) ?>" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" >
+					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
+				</a>
+				<?php 
+			}
 
-			$nok = false;
-		}
+			$nok = false; 
+		} 
 	} 
 
 	if( $nok ){
 		?>
-		<p style="background-color: #FFFFE0;border:1px solid #E6DB55;padding:5px;">No provider registered!<br />Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.</p>
+		<p style="background-color: #FFFFE0;border:1px solid #E6DB55;padding:5px;">
+			<strong style="color:red;">WordPress Social Login is not configured yet!</strong>
+			<br />
+			Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.
+			<br />
+			For more information please refer to the plugin <a href="http://hybridauth.sourceforge.net/userguide/Plugin_WordPress_Social_Login.html">online user guide</a> 
+			or contact us at <a href="http://hybridauth.sourceforge.net/">hybridauth.sourceforge.net</a>
+		</p>
+		<style>
+			#wp-social-login-connect-with{display:none;}
+		</style>
 		<?php
 	}
 
@@ -57,8 +84,7 @@ function wsl_render_login_form()
 	?>
 		<input id="wsl_popup_base_url" type="hidden" value="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/authenticate.php?" />
 		<input type="hidden" id="wsl_login_form_uri" value="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" />
-	</div>
-	<span id="wp-social-login-connecting-to"></span>
+	</div> 
 <!-- /wsl_render_login_form -->
 
 <?php
@@ -95,6 +121,10 @@ add_action( 'comment_form_top', 'wsl_render_comment_form' );
 
 function wsl_add_javascripts()
 {
+	if( get_option( 'wsl_settings_use_popup' ) != 1 ){
+		return null;
+	}
+	
 	if( ! wp_script_is( 'wsl_js', 'registered' ) ) {
 		wp_register_script( "wsl_js", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/connect.js" );
 	}
@@ -129,17 +159,16 @@ add_action( 'wp_head', 'wsl_add_stylesheets' );
  * Improved by <jlnd>
  * http://wordpress.org/support/profile/jlnd
  *
+ * fix by <seand11>, <kekrug>
+ * http://wordpress.org/support/topic/plugin-wordpress-social-login-avatars-getting-cached-and-users-seeing-other-avatars-as-their-own
+ *
  * thanks a million
  */
 function wsl_user_custom_avatar($avatar, $id_or_email, $size, $default, $alt) {
 	global $comment;
 
 	if( get_option ('wsl_settings_users_avatars') && !empty ($avatar)) {
-		//Check if we are in a comment
-		if (!is_null ($comment) && !empty ($comment->user_id)) {
-			$user_id = $comment->user_id;
-		}
-		elseif(!empty ($id_or_email)) {
+		if(!empty ($id_or_email)) {
 			if ( is_numeric($id_or_email) ) {
 				$user_id = (int) $id_or_email;
 			}
@@ -150,6 +179,12 @@ function wsl_user_custom_avatar($avatar, $id_or_email, $size, $default, $alt) {
 				$user_id = (int) $id_or_email->user_id;
 			}
 		}
+
+		//Check if we are in a comment
+		if (!is_null ($comment) && !empty ($comment->user_id)) {
+			$user_id = $comment->user_id;
+		}
+
 		// Get the thumbnail provided by WordPress Social Login
 		if ($user_id) {
 			if (($user_thumbnail = get_user_meta ($user_id, 'wsl_user_image', true)) !== false) {
@@ -162,9 +197,8 @@ function wsl_user_custom_avatar($avatar, $id_or_email, $size, $default, $alt) {
 		}
 	}
 
-	// No avatar found.  Return unfiltered.
+	// No avatar found. Return unfiltered.
 	return $avatar;
 }
 
 add_filter ( 'get_avatar', 'wsl_user_custom_avatar', 10, 5);
-

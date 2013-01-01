@@ -55,11 +55,11 @@
 <div style="clear:both" class="wsl_donate wsl_aside">
     <h3 style="margin: 0 0 5px;">Need Support?</h3>
 
-	<p style="line-height: 19px;">
-		If you run into any issue, please join us on the <b><a href="options-general.php?page=wordpress-social-login&wslp=8">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b>
-	</p>
-</div>
- 
+	<p style="line-height: 19px;" align="justify">
+		If you run into any issue, join us on the <b><a href="https://groups.google.com/d/forum/hybridauth-plugins" target="_blank">discussion group</a></b> or feel free to contact me at <b><a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></b> 
+	</p> 
+</div> 
+
 <form method="post" id="wsl_setup_form" action="options.php"> 
 
 	<?php settings_fields( 'wsl-settings-group' ); ?>
@@ -74,7 +74,8 @@ Except for OpenID providers, each social network and identities provider will re
 <ul style="list-style:circle inside;margin-left:30px;">
 	<li style="color: #000000;font-size: 14px;">To correctly setup these Identity Providers please carefully follow the help section of each one.</li>
 	<li style="color: #000000;font-size: 14px;">If the <b>Allow users to sign on with provider?</b> is set to <b style="color:red">NO</b> then users will not be able to login with that provider on you website.</li>
-	<li style="color: #000000;font-size: 14px;">Some social networks like Twitter and LinkedIn does NOT give out their user's email. A random email will then be generated for them.</li>
+	<li style="color: #000000;font-size: 14px;">To enable russian, cyrillic or arabic usernames, you might need <a target="_blank" href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/">WordPress Special Characters in Usernames</a> plugin.</li>
+	<li style="color: #000000;font-size: 14px;">Some social networks like Twitter do NOT give out their user's email. A random email will then be generated for them.</li>
 	<li style="color: #000000;font-size: 14px;">WSL will try to link existing blog accounts to social network users profiles by matching their verified emails. Currently this only works for Facebook, Google, Yahaoo and Foursquare.</li>
 </ul>
 
@@ -104,6 +105,14 @@ Except for OpenID providers, each social network and identities provider will re
 		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 ?> 
 	<h3 style="margin-left:30px;"><img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php echo ++$nbprovider ?>. <?php echo $provider_name ?></h3> 
+	
+	<?php if ( in_array( $provider_id, array( "Twitter", "Identica", "Tumblr", "Goodreads", "500px", "Vkontakte", "Gowalla", "Steam" ) ) ) : ?>
+		<small>
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+			<b  style="color:#CB4B16;">Note:</b> The <b><?php echo $provider_name ?></b> API do not return a user's email address. A random email will then be generated instead.
+		</small>
+	<?php endif; ?>
+
 	<div> 
 		<div class="cfg">
 		   <div class="cgfparams">
@@ -139,15 +148,26 @@ Except for OpenID providers, each social network and identities provider will re
 				<?php if ( $provider_new_app_link  ) : ?> 
 					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a> and <b>create a new application</b>.</p>
 
-					<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Fill out any required fields such as the application name and description.</p>
+					<?php if ( $provider_id == "Google" ) : ?>
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> On the <b>Dashboard sidebar</b> click on <b>API Access</b> then Click <em style="color:#CB4B16;">"Create an OAuth 2.0 client ID..."</em>.</p> 
+					<?php endif; ?>	 
 
-					<?php if ( $provider_id == "google" ) : ?>
-						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> On the <b>"Create Client ID"</b> popup switch to advanced settings by clicking on <b>(more options)</b>.</p>
+					<?php if ( $provider_id == "Google" ) : ?>  
+							</p>
+							<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> On the <b>"Create Client ID"</b> popup :
+							<br />&nbsp;&nbsp; - Enter a product name (the name of your website will do).
+							<br />&nbsp;&nbsp; - Enter the URL for a logo if you like.
+							<br />&nbsp;&nbsp; - Click Next.
+							<br />&nbsp;&nbsp; - Select <em style="color:#CB4B16;">"Web application"</em> as the application type.
+							<br />&nbsp;&nbsp; - Then switch to advanced settings by clicking on <b>(more options)</b>
+							.</p>
+					<?php else: ?>	
+						<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Fill out any required fields such as the application name and description.</p> 
 					<?php endif; ?>	
 
 					<?php if ( $provider_callback_url ) : ?>
 						<p>
-							<?php echo "<b>" . ++$setupsteps . "</b>." ?> Provide this URL as the Callback URL for your application:
+							<?php echo "<b>" . ++$setupsteps . "</b>." ?> Provide this URL as the <b>Callback URL</b> for your application:
 							<br />
 							<?php echo $provider_callback_url ?>
 						</p>
@@ -180,9 +200,15 @@ Except for OpenID providers, each social network and identities provider will re
 					<p>No registration required for OpenID based providers</p> 
 				<?php endif; ?> 
 		   </div>
-		</div>   
+		</div>  
 	</div> 
+
 	<br style="clear:both;"/> 
+
+	<div style="width:860px;padding:4px;"> 
+		<input type="submit" class="button-primary"  style="float:right;" value="Save" /> 
+	</div> 
+	
 	<br />
 <?php
 	endforeach;

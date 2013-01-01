@@ -9,7 +9,7 @@
 	
 	<br />
 	<br />
-	<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/diagnostics.php?url=http://www.example.com' target='_blank'>Run the plugin diagnostics</a>
+	<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/diagnostics.php' target='_blank'>Run the plugin diagnostics</a>
 </p>
 
 <br />

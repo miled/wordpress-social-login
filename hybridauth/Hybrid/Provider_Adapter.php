@@ -2,7 +2,7 @@
 /*!
 * HybridAuth
 * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html
 */
 
 /**
@@ -90,7 +90,7 @@ class Hybrid_Provider_Adapter
 	// --------------------------------------------------------------------
 
 	/**
-	* Hybrid_Provider_Adapter::login(), prepare the user session and the authentification request
+	* Hybrid_Provider_Adapter::login(), prepare the user session and the authentication request
 	* for index.php
 	*/
 	function login()
