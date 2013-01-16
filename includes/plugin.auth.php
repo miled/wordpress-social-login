@@ -147,8 +147,11 @@ function wsl_process_login()
 			'user_pass'     => wp_generate_password()
 		);
 
-		// Create a new user
-		$user_id = wp_insert_user( $userdata );
+		// allow creation of new user via filter or Create a new user old way
+		$user_id = apply_filters('wp_sl_user_sign_up', $userdata);
+		if(!$user_id || !is_integer( $user_id ) ){
+			$user_id = wp_insert_user( $userdata );
+		}
 
         // Send notifications
 		if ( get_option( 'wsl_settings_users_notification' ) ){
