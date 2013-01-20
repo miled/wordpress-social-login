@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 1.2.3
+Version: 1.2.4
 Author: Miled
 Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 License: GPL2
@@ -11,7 +11,9 @@ License: GPL2
 
 @ session_start(); 
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login 1.2.3"; 
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.0.0"; // i know
+
+$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
 
 /**
  * Check technical requirements before activating the plugin.
@@ -25,24 +27,6 @@ function wsl_activate()
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
 		die( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin." );
-	}
-
-	if ( ! session_id() )
-	{
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		die( "This plugin requires the <a href='http://www.php.net/manual/en/book.session.php'>PHP Sessions</a> to be enabled." );
-	}
-
-	if ( ! function_exists ( 'curl_version' ) )
-	{
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		die( "This plugin requires the <a href='http://www.php.net/manual/en/intro.curl.php'>PHP libcurl extension</a> be installed." );
-	}
-
-	if ( ! version_compare( PHP_VERSION, '5.2.0', '>=' ) )
-	{
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		die( "This plugin requires the <a href='http://php.net/'>PHP 5.2</a> be installed." ); 
 	}
 
 	do_action( 'wsl_activate' );
@@ -82,10 +66,57 @@ require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/wp-load.php'
 define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/' . basename( dirname( __FILE__ ) ) ); 
 define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' ); 
 
-/* Includes */ 
-require_once( dirname (__FILE__) . '/includes/hybridauth.settings.php' ); 
-require_once( dirname (__FILE__) . '/includes/plugin.init.php'         ); 
-require_once( dirname (__FILE__) . '/includes/plugin.settings.php'     ); 
-require_once( dirname (__FILE__) . '/includes/plugin.auth.php'         );  
-require_once( dirname (__FILE__) . '/includes/plugin.ui.php'           );  
+/* includes */ 
+
+# Settings
+require_once( dirname (__FILE__) . '/modules/settings/wsl.providers.php' );
+require_once( dirname (__FILE__) . '/modules/settings/wsl.database.php' );
+require_once( dirname (__FILE__) . '/modules/settings/wsl.initialization.php' );
+require_once( dirname (__FILE__) . '/modules/settings/wsl.compatibilities.php' );
+
+# Services
+require_once( dirname (__FILE__) . '/modules/services/wsl.authentication.php' );
+require_once( dirname (__FILE__) . '/modules/services/wsl.mail.notification.php' );
+require_once( dirname (__FILE__) . '/modules/services/wsl.user.avatar.php' );
+
+# UIs
+require_once( dirname (__FILE__) . '/modules/admin/wsl.ui.php' );
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.auth.widget.php' );
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.complete.registration.php' );
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.bouncer.disclaimer.php' );
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.bouncer.passcode.php' );
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.notices.php' );
+
+# hooks
+register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

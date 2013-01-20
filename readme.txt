@@ -2,10 +2,10 @@
 Contributors: miled
 Tags:  facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, gowalla, last.fm, instagram, goodreads, tumblr, aol, vkontakte, stackoverflow, github, 500px, skyrock, mixi.jp, steam, login, register, comment, social, social networks, social login
 Requires at least: 3.0
-Tested up to: 3.2.1
-Stable tag: 1.2.3 
+Tested up to: 3.5
+Stable tag: 1.2.4
 License: MIT License
-License URI: http://www.opensource.org/licenses/MIT
+License URI: http://opensource.org/licenses/MIT
 
 WordPress Social Login allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
 
@@ -20,7 +20,7 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
  <li>White label, Customizable,</li> 
  <li>Social sign on solution,</li> 
  <li>With data kept in house</li> 
-</ul>  
+</ul>
 
 <strong>Getting started is as simple as :</strong>
 <ol>
@@ -31,30 +31,29 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
 
 <strong>Supported services :</strong>
 <ol>
- <li>Facebook</li>  
- <li>Google</li>  
- <li>Yahoo</li>  
- <li>Twitter</li>  
- <li>Windows Live</li>  
+ <li>Facebook</li>
+ <li>Google</li>
+ <li>Yahoo</li>
+ <li>Twitter</li>
+ <li>Windows Live</li>
  <li>Myspace</li>  
  <li>Foursquare</li>  
  <li>Linkedin</li>  
- <li>Tumblr</li>  
- <li>Gowalla</li>  
- <li>Last.fm</li>  
- <li>Instagram</li>  
- <li>Goodreads</li>  
- <li>AOL</li>  
- <li>Vkontakte</li>  
- <li>Stackoverflow</li>  
- <li>Github</li>  
- <li>500px</li>  
- <li>Skyrock</li>  
- <li>Mixi.jp</li>  
- <li>Steam</li>  
- <li>Mail.ru</li>  
- <li>Yandex</li>  
- <li>Odnoklassniki</li>  
+ <li>Tumblr</li>
+ <li>Last.fm</li>
+ <li>Instagram</li>
+ <li>Goodreads</li>
+ <li>AOL</li>
+ <li>Vkontakte</li>
+ <li>Stackoverflow</li>
+ <li>Github</li>
+ <li>500px</li>
+ <li>Skyrock</li>
+ <li>Mixi.jp</li>
+ <li>Steam</li>
+ <li>Mail.ru</li>
+ <li>Yandex</li>
+ <li>Odnoklassniki</li>
 </ol> 
 	
 <strong>Credits:</strong>
@@ -78,21 +77,34 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
 
 == Frequently Asked Questions ==
 
-= Do I need to add template tags to my theme? =
+= Where do I find the plugin Documentation & FAQ ? =
 
-WordPress Social Login will attempts to work with the default WordPress comment, login and registration forms.
-
-If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
-
-`<?php do_action( 'wordpress_social_login' ); ?>`
+The user guide and frequently asked questions can be found at http://bit.ly/TYy2CM
 
 == Screenshots ==
 
 1. **Comment** - Buttons for 3rd party services are also provided on the comment form.
 2. **Login** - On the login and registration form, buttons for 3rd party services are provided.
 3. **Setup** - To correctly setup these Identity Providers please carefully follow the help section of each one.
+4. **Customize** - WordPress Social Login customization form
 
 == Changelog ==
+
+= 2.0.0 = 
+* Manage WSL users, more options are to come
+* Import WSL users contact list from Google Gmail, Facebook, Live and LinkedIn
+* An entirely reworked user interface
+* Improving the documentation and guides
+* Introducing a new module, and the long awaited, The bouncer
+* And even more customization options are now available
+
+= 1.2.4 =
+
+* WSL admin ui Relooking
+* Code refactoring
+* add Widget display on advanced settings
+* RIP Gowalla
+* WordPress Social Login is now licenced under The MIT License only (should be GPL compatible) 
 
 = 1.2.3 =
 

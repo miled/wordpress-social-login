@@ -4,7 +4,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_id"       => "Facebook",
 		"provider_name"     => "Facebook", 
 		"require_client_id" => TRUE, 
-		"new_app_link"      => "https://www.facebook.com/developers/", 
+		"new_app_link"      => "https://developers.facebook.com/apps", 
 	)
 	,
 	ARRAY(
@@ -86,15 +86,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_id"       => "Identica",
 		"provider_name"     => "Identica", 
 		"new_app_link"      => "http://identi.ca/settings/oauthapps/new", 
-	)
-	,
-	ARRAY( 
-		"provider_id"       => "Gowalla",
-		"provider_name"     => "Gowalla", 
-		"require_client_id" => TRUE,
-		"callback"          => TRUE,
-		"new_app_link"      => "http://gowalla.com/api/keys", 
-	)
+	) 
 	,
 	ARRAY( 
 		"provider_id"       => "Tumblr",
@@ -106,22 +98,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_name"     => "Goodreads", 
 		"callback"          => TRUE,
 		"new_app_link"      => "http://www.goodreads.com/api", 
-	), 
-	// ARRAY( 
-		// "provider_id"       => "Wordpress",
-		// "provider_name"     => "Wordpress", 
-		// "new_app_link"      => NULL, 
-	// ),
-	// ARRAY( 
-		// "provider_id"       => "Livejournal",
-		// "provider_name"     => "Livejournal", 
-		// "new_app_link"      => NULL, 
-	// ),
-	// ARRAY( 
-		// "provider_id"       => "Blogger",
-		// "provider_name"     => "Blogger", 
-		// "new_app_link"      => NULL, 
-	// ),
+	),  
 	ARRAY( 
 		"provider_id"       => "Stackoverflow",
 		"provider_name"     => "Stackoverflow", 
