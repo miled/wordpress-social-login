@@ -9,7 +9,8 @@ function wsl_database_migration_hook () {
 
 add_action( 'plugins_loaded', 'wsl_database_migration_process' );
 
-function wsl_database_migration_process(){ 
+function wsl_database_migration_process()
+{ 
     global $wpdb;
     global $divebook_db_table_dive_version;
 	

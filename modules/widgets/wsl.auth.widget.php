@@ -6,13 +6,26 @@ function wsl_render_login_form()
 		return;
 	}
 
+	// HOOKABLE: want to generate your own widget? fine, but Bouncer rules tho
+	if( apply_filters( 'wsl_hook_alter_render_login_form', null ) ){
+		return;
+	} 
+
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
-	$wsl_settings_connect_with_label = get_option( 'wsl_settings_connect_with_label' );
-
-	if( empty( $wsl_settings_connect_with_label ) ){
-		$wsl_settings_connect_with_label = "Connect with:";
+	if( empty( $social_icon_set ) ){
+		$social_icon_set = "wpzoom/";
 	}
+	else{
+		$social_icon_set .= "/";
+	}
+
+	// HOOKABLE: allow use of other icon sets
+	if( ! ( $assets_base_url = apply_filters( 'wsl_hook_social_icon_set', $assets_base_url ) ) ){
+		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
+	}
+
+	$wsl_settings_connect_with_label = get_option( 'wsl_settings_connect_with_label' );
 ?>
 <!--
    wsl_render_login_form
@@ -38,18 +51,8 @@ function wsl_render_login_form()
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
 		$provider_id     = @ $item["provider_id"];
-		$provider_name   = @ $item["provider_name"];
+		$provider_name   = @ $item["provider_name"]; 
 
-		$social_icon_set = get_option( 'wsl_settings_social_icon_set' );
-
-		if( empty( $social_icon_set ) ){
-			$social_icon_set = "wpzoom/";
-		}
-		else{
-			$social_icon_set .= "/";
-		}
-
-		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
 		$current_page_url = 'http';
 		if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {$current_page_url .= "s";}
 		$current_page_url .= "://";
@@ -202,6 +205,11 @@ function wsl_render_login_form()
 			return;
 		}
 
+		// HOOKABLE: allow users to generate their own
+		if( apply_filters( 'wsl_hook_profile_widget', null ) ){
+			return;
+		}
+
 		# if ob_start()/ob_end_clean() dont work for you then i can do nothing for you
 		ob_start();
 
@@ -214,16 +222,23 @@ function wsl_render_login_form()
 
 		$linked_accounts = wsl_get_user_linked_accounts_by_user_id( $user_id );
 
-		// if not WSL, then nothing to show, yet
+		// if not WSL user, then nothing to show, yet
 		if( ! $linked_accounts ){
 			return;
 		}
+
+		if( empty( $social_icon_set ) ){
+			$social_icon_set = "wpzoom/";
+		}
+		else{
+			$social_icon_set .= "/";
+		}
+
+		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
 	?>
 	<h3>Social networks</h3> 
-	<table class="form-table"> 
-		<tr> 
-		<tr> 
-			<th><label>Identities</label></th>  
+	<table class="form-table">  
+		<tr>  
 			<td valign="top">
 				<table id="wsl-user-profile-injected-table-b">
 					<tr>
@@ -233,13 +248,21 @@ function wsl_render_login_form()
 					<?php
 						foreach( $linked_accounts AS $item ){  
 							$identity = $item->profileurl;
+							$photourl = $item->photourl;
 							
 							if( ! $identity ){
 								$identity = $item->identifier;
 							}
 					?>
 						<tr>
-							<td><?php echo ucfirst( $item->provider ); ?></td>
+							<td>
+								<?php if( $photourl ) { ?>
+									<img src="<?php echo $photourl ?>" style="vertical-align: top;width:16px;height:16px;" > 
+								<?php } else { ?>
+									<img src="<?php echo $assets_base_url . strtolower(  $item->provider ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" />
+								<?php } ?> 
+								<?php echo ucfirst( $item->provider ); ?>
+							</td>
 							<td><?php echo $identity; ?></td> 
 						</tr>
 					<?php 
@@ -250,12 +273,11 @@ function wsl_render_login_form()
 		</tr> 
 		</tr> 
 	<?php
-		// Bouncer :: Allow authentication 
-		if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 1 ){
+		// Bouncer :: Allow authentication && Linking accounts is enabled
+		if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 1 && get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) == 1 ){ 
 			$list_connected_providers = wsl_get_list_connected_providers();
 	?>	
-		<tr> 
-			<th></th>  
+		<tr>    
 			<td valign="top">
 				<b>Add more identities</b>
 				<br />
@@ -274,15 +296,6 @@ function wsl_render_login_form()
 
 						if( $dispaly ){ 
 							$social_icon_set = get_option( 'wsl_settings_social_icon_set' );
-
-							if( empty( $social_icon_set ) ){
-								$social_icon_set = "wpzoom/";
-							}
-							else{
-								$social_icon_set .= "/";
-							}
-
-							$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
 
 							$current_page_url = admin_url("profile.php");
 
@@ -304,7 +317,6 @@ function wsl_render_login_form()
 		if( $list_connected_providers ){
 	?>
 		<tr> 
-			<th></th> 
 			<td>
 				<b>Currently connected to:</b> 
 				<?php echo implode( ', ', $list_connected_providers ); ?>
@@ -315,9 +327,7 @@ function wsl_render_login_form()
 	?>
 
 	</table>
-	<?php 
-		print_r( $connectedproviders );
-	// $_SESSION["HA::STORE"] = ARRAY();
+	<?php
 		$html = ob_get_contents();
 
 		ob_end_clean();
@@ -326,7 +336,11 @@ function wsl_render_login_form()
 	}
 
 	function wsl_render_login_form_admin_head_user_profile()
-	{
+	{ 
+		// HOOKABLE:
+		if( apply_filters( 'wsl_hook_alter_render_login_form_admin_head_user_profile', null ) ){
+			return;
+		}
 	?> 
 		<style> 
 			#wsl-user-profile-injected-table-b
@@ -398,6 +412,16 @@ function wsl_render_login_form()
 		$rs  = $wpdb->get_results( $sql );
 
 		return $rs;
+	}
+
+	function wsl_get_user_linked_accounts_field_by_id( $id, $field )
+	{
+		global $wpdb;
+
+		$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wslusersprofiles` where id = '$id'";
+		$rs  = $wpdb->get_results( $sql );
+
+		return $rs[0]->data_field;
 	}
 
 	function wsl_get_user_by_meta_key_and_user_id( $meta_key, $user_id )

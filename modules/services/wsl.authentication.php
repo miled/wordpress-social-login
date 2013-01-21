@@ -11,7 +11,11 @@ function wsl_process_login()
 
 	// dont be silly
 	if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" && ! is_user_logged_in() ){
-		return wsl_render_notices_pages( "You must be logged in to link your account!" );
+		return wsl_render_notices_pages( "Bouncer say don't be silly!" );
+	}
+
+	if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" && get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) != 1 ){
+		return wsl_render_notices_pages( "Bouncer say this makes no sense." );
 	}
 
 	// Bouncer :: Allow authentication 
@@ -30,6 +34,14 @@ function wsl_process_login()
 		if ( strpos( $redirect_to, 'wp-admin') && ! is_user_logged_in() ){
 			$redirect_to = get_option( 'wsl_settings_redirect_url' ); 
 		}
+
+		if ( strpos( $redirect_to, 'wp-login.php') ){
+			$redirect_to = get_option( 'wsl_settings_redirect_url' ); 
+		}
+	}
+
+	if( get_option( 'wsl_settings_redirect_url' ) != site_url() ){
+		$redirect_to = get_option( 'wsl_settings_redirect_url' );
 	}
 
 	if( empty( $redirect_to ) ){
@@ -39,7 +51,10 @@ function wsl_process_login()
 	if( empty( $redirect_to ) ){
 		$redirect_to = site_url();
 	}
-
+	// print_r( get_option( 'wsl_settings_redirect_url' ) );
+	// print_r( $_REQUEST[ 'redirect_to' ] );
+ 
+// die( " ==> $redirect_to" );
 	try{
 		# Hybrid_Auth already used?
 		if ( class_exists('Hybrid_Auth', false) ) {
@@ -96,49 +111,52 @@ function wsl_process_login()
 			$request_user_email      = "";
 
 		# {{{ linking new accounts
-			// if user is linking account
-			// . we DO import contacts
-			// . we DO store the user profile
-			// 
-			// . we DONT create another entry on user table 
-			// . we DONT create nor update his data on usermeata table 
-			if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" ){
-				global $current_user; 
+			// Bouncer :: Accounts Linking is enabled
+			if( get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) == 1 ){ 
+				// if user is linking account
+				// . we DO import contacts
+				// . we DO store the user profile
+				// 
+				// . we DONT create another entry on user table 
+				// . we DONT create nor update his data on usermeata table 
+				if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" ){
+					global $current_user; 
 
-				get_currentuserinfo(); 
-				$user_id = $current_user->ID;
+					get_currentuserinfo(); 
+					$user_id = $current_user->ID;
 
-				// launch contact import if enabled
-				wsl_import_user_contacts( $provider, $adapter, $user_id );
+					// launch contact import if enabled
+					wsl_import_user_contacts( $provider, $adapter, $user_id );
 
-				// store user hybridauth user profile if needed
-				wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
+					// store user hybridauth user profile if needed
+					wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
 
-				wp_safe_redirect( $redirect_to );
+					wp_safe_redirect( $redirect_to );
 
-				exit();
-			} 
-			
-			// check if connected user is linked account
-			$linked_account = wsl_get_user_linked_account_by_provider_and_identifier( $provider, $hybridauth_user_profile->identifier );
+					exit();
+				} 
 
-			// if linked account found, we connect the actual user 
-			if( $linked_account ){
-				if( count( $linked_account ) > 1 ){
-					return wsl_render_notices_pages( "This $provider is linked to many accounts!" );
+				// check if connected user is linked account
+				$linked_account = wsl_get_user_linked_account_by_provider_and_identifier( $provider, $hybridauth_user_profile->identifier );
+
+				// if linked account found, we connect the actual user 
+				if( $linked_account ){
+					if( count( $linked_account ) > 1 ){
+						return wsl_render_notices_pages( "This $provider is linked to many accounts!" );
+					}
+
+					$user_id = $linked_account[0]->user_id;
+
+					if( ! $user_id ){
+						return wsl_render_notices_pages( "Something wrong!" );
+					}
+
+					wp_set_auth_cookie( $user_id );
+
+					wp_safe_redirect( $redirect_to );
+
+					exit();
 				}
-
-				$user_id = $linked_account[0]->user_id;
-
-				if( ! $user_id ){
-					return wsl_render_notices_pages( "Something wrong!" );
-				}
-
-				wp_set_auth_cookie( $user_id );
-
-				wp_safe_redirect( $redirect_to );
-
-				exit();
 			}
 		# }}} linking new accounts
 
@@ -351,12 +369,17 @@ function wsl_process_login()
 			# toDo
 		}
 
-		// Create a new user
-		$user_id = wp_insert_user( $userdata );
+		// HOOKABLE: change the user data
+		if( apply_filters( 'wsl_hook_process_login_userdata', $userdata ) ){
+			$userdata = apply_filters( 'wsl_hook_process_login_userdata', $userdata );
+		}
 
-        // Send notifications 
-		if ( get_option( 'wsl_settings_users_notification' ) == 1 ){
-			wsl_admin_notification( $user_id, $provider );
+		// HOOKABLE: delegate user insert
+		$user_id = apply_filters( 'wsl_hook_process_login_insert_user', $userdata );
+
+		// Create a new user
+		if( ! $user_id || ! is_integer( $user_id ) ){
+			$user_id = wp_insert_user( $userdata );
 		}
 
 		// update user metadata
@@ -368,6 +391,11 @@ function wsl_process_login()
 		}
 		else{
 			die( "An error occurred while creating a new user!" );
+		}
+
+		// Send notifications 
+		if ( get_option( 'wsl_settings_users_notification' ) == 1 ){
+			wsl_admin_notification( $user_id, $provider );
 		}
 	}
 
@@ -388,6 +416,9 @@ function wsl_process_login()
 
 	// store user hybridauth user profile if needed
 	wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
+
+	// HOOKABLE: any last words?
+	apply_filters( 'wsl_hook_process_login_success', $user_id );
 
 	wp_set_auth_cookie( $user_id );
 

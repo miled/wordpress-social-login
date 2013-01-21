@@ -53,7 +53,7 @@ function init() {
 	<div id="login">
 		<?php
 			if( ! isset( $_REQUEST["user_email"] ) ){ 
-				?><p class="message"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_message' ); ?></p><?php
+				?><p class="message"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_notice' ); ?></p><?php
 			}
 			else{
 				if( $request_user_login_exists ){
@@ -73,7 +73,7 @@ function init() {
 				} 
 			} 
 		?>
-		<form method="post" action="http://www.hybridauth.com/cms/wordpress/wp-login.php" id="loginform" name="loginform"> 
+		<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="loginform" name="loginform"> 
 			<p>
 			<label for="user_login"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_username' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
 			</p>

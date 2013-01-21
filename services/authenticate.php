@@ -65,11 +65,23 @@ html {
 			// load wp-load.php
 			require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/../wp-load.php' );
 
+			// Bouncer :: Accounts Linking is enabled
+			if( get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) != 1 && isset( $_REQUEST["link"] ) ){
+				wp_die( "Bouncer say you are doin it wrong." );
+			}
+
+			if( ! isset( $_REQUEST["link"] ) && is_user_logged_in() ){
+				global $current_user;
+				get_currentuserinfo(); 
+
+				wp_die( "You are already logged in as <b>{$current_user->display_name}</b>." );
+			}
+
 			# Hybrid_Auth already used?
 			if ( class_exists('Hybrid_Auth', false) ) {
-				wp_die( "Error!! Another plugin seems to be using HybridAuth Library and made WordPress Social Login unusable. We recommand to find this plugin and to kill it with fire!" ); 
+				wp_die( "Error! Another plugin seems to be using HybridAuth Library and made WordPress Social Login unusable. We recommand to find this plugin and to kill it with fire!" ); 
 			}
-			
+
 			// load hybridauth
 			require_once( dirname(__FILE__) . "/../hybridauth/Hybrid/Auth.php" );
 
@@ -82,10 +94,15 @@ html {
 			}
 
 			$config = array();
-			$config["base_url"]  = plugins_url() . '/wordpress-social-login/hybridauth/';
+			$config["base_url"]  = strtolower( plugins_url() ) . '/wordpress-social-login/hybridauth/'; 
 			$config["providers"] = array();
 			$config["providers"][$provider] = array();
 			$config["providers"][$provider]["enabled"] = true;
+
+			// check base_url
+			if( ! strstr( $config["base_url"], "http://" ) && ! strstr( $config["base_url"], "https://" ) ){
+				throw new Exception( 'Invalid base_url: ' . plugins_url(), 9 );
+			}
 
 			// provider application id ?
 			if( get_option( 'wsl_settings_' . $provider . '_app_id' ) ){
@@ -158,11 +175,7 @@ function init() {
 
 				if( isset( $_REQUEST[ 'redirect_to' ] ) ){
 					$redirect_to = urldecode( $_REQUEST[ 'redirect_to' ] );
-				} 
-
-				if ( strpos( $redirect_to, 'wp-login') ){
-					$redirect_to = site_url();
-				} 
+				}
 ?>
 <html>
 <head>
@@ -195,13 +208,18 @@ function init() {
 		}
 		catch( Exception $e ){
 			$message = "Unspecified error!"; 
+			$hint    = ""; 
 
 			switch( $e->getCode() ){
 				case 0 : $message = "Unspecified error."; break;
 				case 1 : $message = "Hybriauth configuration error."; break;
 				case 2 : $message = "Provider not properly configured."; break;
 				case 3 : $message = "Unknown or disabled provider."; break;
-				case 4 : $message = "Missing provider application credentials."; break;
+				case 4 : $message = "Missing provider application credentials."; 
+						 $hint    = "<b>What does this error mean ?</b>";
+						 $hint   .= "<br />Most likely, you didn't setup the correct application credentials for this provider. These credentials are required in order for <b>$provider</b> users to access your website and for WordPress Social Login to work.";
+						 $hint   .= '<br />Instructions for use can be found in the <a href="http://hybridauth.sourceforge.net/wsl/configure.html" target="_blank">User Manual</a>.';
+				         break;
 				case 5 : $message = "Authentification failed. The user has canceled the authentication or the provider refused the connection."; break; 
 				case 6 : $message = "User profile request failed. Most likely the user is not connected to the provider and he should to authenticate again."; 
 					     if( is_object( $adapter ) ) $adapter->logout();
@@ -210,8 +228,10 @@ function init() {
 					     if( is_object( $adapter ) ) $adapter->logout();
 					     break;
 				case 8 : $message = "Provider does not support this feature."; break;
-			} 
-			
+				
+				case 9 : $message = $e->getMessage(); break;
+			}
+
 			@ session_destroy();
 ?>
 <!DOCTYPE html>
@@ -253,11 +273,20 @@ html {
   </tr>
   <tr>
     <td align="center">
-		<p style="line-height: 1;padding: 8px;background-color: #FFEBE8;border:1px solid #CC0000;border-radius: 3px;padding: 10px;text-align:center;">
-			<?php echo $message ; ?>
+		<p style="line-height: 20px;padding: 8px;background-color: #FFEBE8;border:1px solid #CC0000;border-radius: 3px;padding: 10px;text-align:center;">
+			<?php echo $message ; ?> 
 		</p>
 	</td> 
   </tr> 
+  <?php if( $hint ) { ?>
+  <tr>
+    <td align="center">
+		<p style="line-height: 25px;padding: 8px;border-top:1px solid #ccc;padding: 10px;text-align:left;"> 
+			<?php echo $hint ; ?>
+		</p>
+	</td> 
+  </tr> 
+  <?php } ?>
   
 <?php 
 	// Development mode on?

@@ -15,12 +15,12 @@
 			<label for="name">WSL Widget</label>
 		</h3>
 		<div class="inside"> 
-			<p>
-				Here you can enable or disable new users registrations on your website through WSL. If <b>Allow authentication</b> is disabled, WordPress Social Login Widget will be removed from comments area, login and register forms.
+			<p> 
+				Here you can tell Bouncer if you are accepting new users registration and authentication into your website or not any more. Note that Bouncer only works for WSL and will not interfere with users authenticating through the regulars wordpress Login and Register pages with their usernames and passwords (to to achieve that kind of restrictions, you may need to use another plugin(s) in combination with WSL).
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
-				<td width="200" align="right"><strong>Accept new registrations :</strong></td>
+				<td width="200" align="right"><strong>Accept new registration :</strong></td>
 				<td> 
 					<select name="wsl_settings_bouncer_registration_enabled">
 						<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 1 ) echo "selected"; ?> value="1">Yes</option>
@@ -47,7 +47,7 @@
 		</h3>
 		<div class="inside"> 
 			<p>
-				Some social networks like Twitter and LinkedIn do not provide their user's email. When <b>Email Validation</b> is enabled, users will be invited to provide their email address. If disabled then a random email will be then generated for them instead.
+				Some social networks like Twitter and LinkedIn do not provide their user's email. When <b>Email Validation</b> is enabled, Bouncer will ask your users to provide their email address and username. If <b>Email Validation</b> is disabled then a random email will be then generated for them instead.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -125,7 +125,7 @@
 			<p>
 				When enabled, new regsitred users will only be able to authenticate and comment but not to access or edit their profile information.
 				Basically they will have "No role for this site". Note: Improving this feature is planned but low priority. 
-				<span style="color:#CB4B16;"><b>Note</b></span>: If <b>Moderation</b> is enabled then <b>Membership level</b> will be ignore.
+				<span style="color:#CB4B16;"><b>Note</b></span>: If <b>Moderation</b> is enabled then <b>Membership level</b> will be ignored.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -148,7 +148,7 @@
 		<div class="inside"> 
 			<p>
 				Here you can define the default role for new users authenticating through WSL. The <code>Administrator</code> and <code>Editor</code> roles are not available for safety reasons. For more information about wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table</a>.  
-				<span style="color:#CB4B16;"><b>Note</b></span>: If <b>Moderation</b> is enabled then this option will be ignore.
+				<span style="color:#CB4B16;"><b>Note</b></span>: If <b>Moderation</b> is enabled then this option will be ignored.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>

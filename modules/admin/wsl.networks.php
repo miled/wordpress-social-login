@@ -1,5 +1,11 @@
 <?php
 	global $wpdb;
+	
+	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
+		$provider_id = $_REQUEST["enable"];
+
+		update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
+	}
 ?>
 
 <script>
@@ -53,6 +59,8 @@
  
 <?php 
 	$nbprovider = 0;
+
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 	
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ):
 		$provider_id                = @ $item["provider_id"];
@@ -66,13 +74,15 @@
 
 		$provider_callback_url      = "" ;
 
+		if( ! ( ( isset( $item["default_network"] ) && $item["default_network"] ) || get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) ){
+			continue;
+		}
+
 		if( isset( $item["callback"] ) && $item["callback"] ){
 			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
 		}
 
-		$setupsteps = 0; 
-
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+		$setupsteps = 0;  
 ?>  
 		<div class="stuffbox" id="namediv">
 			<h3>
@@ -83,7 +93,7 @@
 			<div class="inside">
 				<table class="form-table editcomment">
 					<tbody>
-						<tr valign="top">
+						<tr>
 							<td style="width:110px">Enabled:</td>
 							<td>
 								<select 
@@ -129,15 +139,22 @@
 				</p>
 				<?php endif; ?> 
 				<br />
-				<div class="wsl_div_settings_help_<?php echo $provider_id; ?>" style="display:none;"> 
+				<div
+					class="wsl_div_settings_help_<?php echo $provider_id; ?>" 
+					style="<?php if( isset( $_REQUEST["enable"] ) && ! isset( $_REQUEST["settings-updated"] ) && $_REQUEST["enable"] == $provider_id ) echo "-"; // <= lolz ?>display:none;" 
+				> 
 					<hr class="wsl" />
-					<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials. 
-					This application will link your website <code><?php echo $_SERVER["SERVER_NAME"] ?></code> to <code><?php echo $provider_name ?> API</code> and these credentials are needed in order for <b><?php echo $provider_name ?></b> users to access your website. 
-					<br />
-					These credentials may also differ in format, name and content depending on the social network.
-					<br />
-					<br />
-					To enable authentication with this provider and to register a new <b><?php echo $provider_name ?> API Application</b>, carefully follow the steps:<br />
+					<?php if ( $provider_new_app_link  ) : ?> 
+						<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials. 
+						This application will link your website <code><?php echo $_SERVER["SERVER_NAME"] ?></code> to <code><?php echo $provider_name ?> API</code> and these credentials are needed in order for <b><?php echo $provider_name ?></b> users to access your website. 
+						<br />
+						These credentials may also differ in format, name and content depending on the social network.
+						<br />
+						<br />
+						To enable authentication with this provider and to register a new <b><?php echo $provider_name ?> API Application</b>, carefully follow the steps:<br />
+					<?php else: ?>  
+							<p><b>Done.</b> Nothing more required for <b><?php echo $provider_name ?></b>.</p> 
+					<?php endif; ?>  
 					<div class="wsl_div_settings_help_<?php echo $provider_id; ?>" style="margin-left:40px;">
 						<?php if ( $provider_new_app_link  ) : ?> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a> and <b>create a new application</b>.</p>
@@ -189,8 +206,6 @@
 								<?php endif; ?> 
 								
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Once you have registered, copy and past the created application credentials into this setup page.</p>  
-						<?php else: ?>  
-								<p>No registration required for OpenID based providers</p> 
 						<?php endif; ?> 
 						
 						<?php if ( $provider_id == "Facebook" ) : ?>
@@ -220,6 +235,7 @@
 							</table> 
 							<hr />
 						<?php endif; ?> 
+						<?php if ( $provider_new_app_link  ) : ?> 
 							<p>
 								<b>And that's it!</b> 
 								<br />
@@ -229,7 +245,8 @@
 									<a class="button-primary" href="http://www.youtube.com/results?search_query=<?php echo $provider_name ?> API create application " target="_blank">Youtube</a>
 									and if nothing works c) 
 									<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=help ">ask for support</a>.
-							</p>
+							</p> 
+						<?php endif; ?> 
 					</div>  
 
 				</div>  
@@ -240,6 +257,36 @@
 <?php
 	endforeach;
 ?>
+
+<table width="100%" border="0">
+  <tr>
+    <td width="120" valign="top"><input type="submit" class="button-primary" value="Save Settings" /></td>
+  </tr> 
+  <tr> 
+    <td align="left">
+		<p>And you could add even more of them, <b>Just Click</b> and we will guide you through :</p>
+		<?php 
+			$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/icondock/';
+
+			foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+				$provider_id                = @ $item["provider_id"];
+				$provider_name              = @ $item["provider_name"];
+				$provider_cat               = @ $item["cat"];
+
+				if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
+					// echo "$provider_name;";
+					?>
+						<a href="options-general.php?page=wordpress-social-login&wslp=networks&enable=<?php echo $provider_id ?>#wslsettings"><img src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" /></a>
+					<?php
+				}
+			} 
+		?> 
+	</td>
+  </tr> 
+</table>
+
+<a name="wslsettings"></name> 
+
 </div>
 
 </td>
@@ -262,7 +309,7 @@
 						</p>
 						<p style="line-height: 19px;" align="justify">
 							If you run into any issue then refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help">Help & Support</a></b> to konw how to reach me.
-						</p>
+						</p> 
 					</div>
 				</div> 
 			</div>
@@ -419,13 +466,6 @@
 </tr>
 </table>
 
-</div>
- 
-<div style="margin-left:30px;">
-	<b>Thanks for scrolling this far down!</b> Now click the save button to complete the setup.
-	<br />
-	<br />
-	<input type="submit" class="button-primary" value="Save Settings" /> 
 </div>
 
 </form>

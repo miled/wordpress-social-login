@@ -8,7 +8,8 @@ function wsl_admin_menu()
 
 add_action('admin_menu', 'wsl_admin_menu' ); 
 
-function wsl_admin_menu_sidebar() {
+function wsl_admin_menu_sidebar()
+{
 	
 	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_render_settings' ); 
 }

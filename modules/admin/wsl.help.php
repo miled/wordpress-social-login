@@ -9,7 +9,7 @@
 	
 	<h3>Troubleshooting</h3>
 	<p>
-		If you run into any issue, you can access the <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">WSL Diagnostics</a></b> tabs to check the <b style="color:red">Plugin Requirements</b> or to enable the <b style="color:red">Development mode</b>. 
+		If you run into any issue, you can access the <b><a class="button-primary" href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">WSL Diagnostics</a></b> tabs to check the <b style="color:red">Plugin Requirements</b> or to enable the <b style="color:red">Development mode</b>. 
 	</p>
 
 	<hr />
@@ -23,11 +23,13 @@
 		<li><b>Wordpress support forum</b>: <a href="http://wordpress.org/support/plugin/wordpress-social-login" target="_blank">http://wordpress.org/support/plugin/wordpress-social-login</a></li> 
 		<li><b>Email</b>: <a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></li> 
 	</ul>
- 
+
 <pre class="wslpre" style="margin-left:20px;">
 Please note: 
 
-if I did not answer your question or I took too long to, then its either :
+Include your <a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'>website information</a> when posting support requests.
+
+If I did not answer your question or I took too long to, then its either :
    * I'm too busy or hibernating irl,
    * It has been asked before on the wordpress support forum, 
    * I didn't understand it, 

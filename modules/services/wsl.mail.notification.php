@@ -1,5 +1,4 @@
 <?php
-
 /**
 * send a notification to blog administrator when a new user register using WSL
 * again borrowed from http://wordpress.org/extend/plugins/oa-social-login/

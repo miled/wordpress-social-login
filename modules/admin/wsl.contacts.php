@@ -1,8 +1,3 @@
-<?php
-	global $wpdb;
-
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
-?> 
 <div style="margin:20px;margin-top:20px;"> 
 <?php
 	if( isset( $_REQUEST["uid"] ) && (int) $_REQUEST["uid"] ){
@@ -119,7 +114,7 @@
 	<tbody id="the-list">
 <?php 
 	$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` order by rand() limit 10"; 
-	
+
 	if( $user_id ){
 		$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '$user_id'"; 
 	}
@@ -142,13 +137,23 @@
 			<tr class="<?php if( ++$i % 2 ) echo "alternate" ?>"> 
 				<td><img src="<?php $provider = wsl_get_contact_data_by_user_id( "provider", $contact_id); echo $assets_base_url . strtolower( $provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $provider ?></td> 
 				<td>
-					<?php $wsl_user_image = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $user_id); if( $wsl_user_image ) { ?>
-						<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $wsl_user_image ?>" > 
-					<?php } else { ?>
-						<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
-					<?php } ?> 
-					<strong><a href="user-edit.php?user_id=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong> 
-					(<?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?>)
+					<?php 
+						// check if user exists
+						if( wsl_get_user_by_meta_key_and_user_id( "wsl_user", $user_id) ){
+					?>
+						<?php $wsl_user_image = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $user_id); if( $wsl_user_image ) { ?>
+							<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $wsl_user_image ?>" > 
+						<?php } else { ?>
+							<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
+						<?php } ?> 
+						<strong><a href="user-edit.php?user_id=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong> 
+						(<?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?>)
+					<?php 
+						}
+						else{
+							echo "User removed";
+						}
+					?>
 					<br>
 				</td>
 				<td>
@@ -176,38 +181,9 @@
 				</td> 
 			</tr> 
 <?php  
-		}// have users?
+		}
 	} 
 ?> 
 	</tbody>
 </table>
 </div>
-
-<?php
-	/* function wsl_get_user_by_meta_key_and_user_id( $meta_key, $user_id ){
-		global $wpdb;
-		
-		$sql = "SELECT meta_value FROM `{$wpdb->prefix}usermeta` where meta_key = '$meta_key' and user_id = '$user_id'";
-		$rs  = $wpdb->get_results( $sql );
-
-		return $rs[0]->meta_value;
-	}
-
-	function wsl_get_user_data_by_user_id( $field, $user_id ){
-		global $wpdb;
-		
-		$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}users` where ID = '$user_id'";
-		$rs  = $wpdb->get_results( $sql );
-
-		return $rs[0]->data_field;
-	} */
-
-	function wsl_get_contact_data_by_user_id( $field, $contact_id ){
-		global $wpdb;
-		
-		$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wsluserscontacts` where ID = '$contact_id'";
-		$rs  = $wpdb->get_results( $sql );
-
-		return $rs[0]->data_field;
-	}
-?>

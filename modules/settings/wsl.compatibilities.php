@@ -31,12 +31,20 @@ function wsl_check_compatibilities()
 		update_option( 'wsl_settings_bouncer_authentication_enabled', 1 );
 	}
 
+	if( ! get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) ){ 
+		update_option( 'wsl_settings_bouncer_linking_accounts_enabled', 2 );
+	}
+
 	if( ! get_option( 'wsl_settings_bouncer_email_validation_enabled' ) ){ 
 		update_option( 'wsl_settings_bouncer_email_validation_enabled', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_email_validation_text_notice' ) ){ 
 		update_option( 'wsl_settings_bouncer_email_validation_text_notice', "Almost there, we just need your email address and username" );
+	}
+
+	if( get_option( 'wsl_settings_bouncer_email_validation_text_message' ) ){ 
+		update_option( 'wsl_settings_bouncer_email_validation_text_notice', get_option( 'wsl_settings_bouncer_email_validation_text_message' ) );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_email_validation_text_submit_button' ) ){ 
@@ -116,7 +124,7 @@ function wsl_check_compatibilities()
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce', "Sorry, you cannot register on this website." );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce', "Bouncer says no." );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) ){ 
@@ -124,7 +132,7 @@ function wsl_check_compatibilities()
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce', "Sorry, you cannot register on this website." );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce', "Bouncer say he refuses." );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_profile_enabled' ) ){ 
@@ -132,7 +140,7 @@ function wsl_check_compatibilities()
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce', "Sorry, you cannot register on this website." );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce', "Bouncer say only Mundo can go where he pleases!" );
 	}
 
 	# contacts import
