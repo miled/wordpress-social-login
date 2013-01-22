@@ -1,7 +1,7 @@
 <?php
 global $wsl_database_migration_version;
 
-$wsl_database_migration_version = 3;
+$wsl_database_migration_version = 4;
 
 function wsl_database_migration_hook () {
     wsl_database_migration_process();
@@ -10,17 +10,17 @@ function wsl_database_migration_hook () {
 add_action( 'plugins_loaded', 'wsl_database_migration_process' );
 
 function wsl_database_migration_process()
-{ 
+{
     global $wpdb;
-    global $divebook_db_table_dive_version;
+    global $wsl_database_migration_version;
 	
     $wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
     $wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
     $installed_ver    = get_option( "wsl_database_migration_version" );
 
-    if( $installed_ver != $divebook_db_table_dive_version || $wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name ) {
+    if( $installed_ver != $wsl_database_migration_version ) { 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
-		
+
 		$sql = "CREATE TABLE " . $wsluserscontacts . " (
 					id int(11) NOT NULL AUTO_INCREMENT,
 					user_id int(11) NOT NULL,
@@ -35,35 +35,35 @@ function wsl_database_migration_process()
 		dbDelta( $sql );
 
 		$sql = "CREATE TABLE " . $wslusersprofiles . " ( 
-					`id` int(11) NOT NULL AUTO_INCREMENT,
-					`user_id` int(11) NOT NULL,
-					`provider` varchar(255) NOT NULL,
-					`object_sha` varchar(255) NOT NULL COMMENT 'to check if hybridauth user profile object has changed from last time, if yes we update the user profile here ',
-					`identifier` varchar(255) NOT NULL,
-					`profileurl` varchar(255) NOT NULL,
-					`websiteurl` varchar(255) NOT NULL,
-					`photourl` varchar(255) NOT NULL,
-					`displayname` varchar(255) NOT NULL,
-					`description` varchar(255) NOT NULL,
-					`firstname` varchar(255) NOT NULL,
-					`lastname` varchar(255) NOT NULL,
-					`gender` varchar(255) NOT NULL,
-					`language` varchar(255) NOT NULL,
-					`age` varchar(255) NOT NULL,
-					`birthday` varchar(255) NOT NULL,
-					`birthmonth` varchar(255) NOT NULL,
-					`birthyear` varchar(255) NOT NULL,
-					`email` varchar(255) NOT NULL,
-					`emailverified` varchar(255) NOT NULL,
-					`phone` varchar(255) NOT NULL,
-					`address` varchar(255) NOT NULL,
-					`country` varchar(255) NOT NULL,
-					`region` varchar(255) NOT NULL,
-					`city` varchar(255) NOT NULL,
-					`zip` varchar(255) NOT NULL,
-					PRIMARY KEY (`id`)
-				)"; 
-		dbDelta( $sql );
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`user_id` int(11) NOT NULL,
+				`provider` varchar(255) NOT NULL,
+				`object_sha` varchar(255) NOT NULL COMMENT 'to check if hybridauth user profile object has changed from last time, if yes we update the user profile here ',
+				`identifier` varchar(255) NOT NULL,
+				`profileurl` varchar(255) NOT NULL,
+				`websiteurl` varchar(255) NOT NULL,
+				`photourl` varchar(255) NOT NULL,
+				`displayname` varchar(255) NOT NULL,
+				`description` varchar(255) NOT NULL,
+				`firstname` varchar(255) NOT NULL,
+				`lastname` varchar(255) NOT NULL,
+				`gender` varchar(255) NOT NULL,
+				`language` varchar(255) NOT NULL,
+				`age` varchar(255) NOT NULL,
+				`birthday` varchar(255) NOT NULL,
+				`birthmonth` varchar(255) NOT NULL,
+				`birthyear` varchar(255) NOT NULL,
+				`email` varchar(255) NOT NULL,
+				`emailverified` varchar(255) NOT NULL,
+				`phone` varchar(255) NOT NULL,
+				`address` varchar(255) NOT NULL,
+				`country` varchar(255) NOT NULL,
+				`region` varchar(255) NOT NULL,
+				`city` varchar(255) NOT NULL,
+				`zip` varchar(255) NOT NULL,
+				PRIMARY KEY (`id`)
+			)"; 
+		dbDelta( $sql ); 
 
 		update_option( "wsl_database_migration_version", $wsl_database_migration_version );
 	}
