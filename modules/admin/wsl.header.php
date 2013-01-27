@@ -1,3 +1,19 @@
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Display Admin Tabs
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+?>
+
 <style> 
 h1 {
     color: #333333;
@@ -123,52 +139,10 @@ a.thumbnail:hover {
 }
 #wsl-w-panel-updates-tr {
     display:none;  
-}
-
-<?php
-	if( $wslp == "overview" ){
-		?>
-h1 {
-	padding-top: 36px;
-    margin-bottom: 18px;
-    font-size: 81px;
-    font-weight: bold;
-    letter-spacing: -1px;
-    line-height: 1;
-	text-align: center;
-	width: 100%;
 } 
-.wsl-about-text{ 
-    font-size: 30px;
-    line-height: 36px;
-    -margin-left: 5%;
-    -margin-right: 5%;
-	text-align: center;
-    font-weight: 300;
-    
-	
-	color: #5e5e5e;
-	font-size: 24px;
-	margin-left: 40px;
-	
-	margin-bottom: 10px;
+.hideinside {
+    /* display:none; */
 } 
-.wsl-about-text-info{  
-	color: #6a6a6a ; 
-    font-size: 13px;
-    line-height: 18px;
-	font-weight: bold;
-	font-weight: 300;
-	margin-top: 0px;
-	
-	text-align: center;
- 
-	margin-bottom: 40px;
-	margin-left: 40px;
-}  
-		<?php
-	}
-?>
 </style>
 
 <div class="wsldiv">
@@ -184,20 +158,11 @@ h1 {
 		}
 	?>
 </h1>
-
-<?php
-	if( $wslp == "overview" ){
-		?>
-			<hr style="width:70%;margin-left:16%;" />
-			<p class="wsl-about-text">The definitive toolkit to engage your websites vistors and customers on a social level</p>
-			<p class="wsl-about-text-info">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. </p>
-		<?php
-	}
-?>
+ 
 <h2 class="nav-tab-wrapper">
 	&nbsp;
 <?php
-	foreach( $tabs as $name => $settings ){
+	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_MODULES_CONFIG as $name => $settings ){
 		if(  $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) ){
 			?>
 				<a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php echo $settings["label"] ?></a> 

@@ -1,8 +1,22 @@
 <?php
-/**
- * Display custom avatars
- * borrowed from http://wordpress.org/extend/plugins/oa-social-login/
- *
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/** 
+* Displaying the user avatar when available on the comment section
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
+/** 
+ * wsl_user_custom_avatar is borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
  * thanks a million mate
  */
 function wsl_user_custom_avatar($avatar, $id_or_email, $size, $default, $alt)
@@ -59,3 +73,5 @@ function wsl_user_custom_avatar($avatar, $id_or_email, $size, $default, $alt)
 }
 
 add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
+
+// --------------------------------------------------------------------

@@ -1,3 +1,19 @@
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Goingtobe/wannabe Share module
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+?>
+
 <div style="margin:20px;margin-top:20px;"> 
 	<div class="metabox-holder columns-2" id="post-body">
 	<div  id="post-body-content"> 

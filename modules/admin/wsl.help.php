@@ -1,3 +1,19 @@
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Documentation and shit
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+?>
+
 <div class="wslgn"> 
 	<h3>Documentation</h3>
 	<p>

@@ -1,21 +1,35 @@
-<?php   
-	if ( isset( $_REQUEST['xhrurl'] ) ) {
-		$testing = @ $_REQUEST['xhrurl'];
-		
-		if ( $testing == "http://www.example.com" ) {
-			echo "<b style='color:green;'>OK!</b><br />The rewrite rules on your server appear to be setup correctly for this plugin to work.";
-		}
-		else{ 
-			echo sprintf( '<b style="color:red;">FAIL!</b><br />Expected "http://www.example.com", received "%s".', $testing );
-		} 
-		
-		die();
-	} 
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
 
-	session_start(); 
+/**
+* WordPress Social Login Requirements Test
+*/
+
+// --------------------------------------------------------------------
+
+if ( isset( $_REQUEST['xhrurl'] ) ) {
+	$testing = @ $_REQUEST['xhrurl'];
+	
+	if ( $testing == "http://www.example.com" ) {
+		echo "<b style='color:green;'>OK!</b><br />The rewrite rules on your server appear to be setup correctly for this plugin to work.";
+	}
+	else{ 
+		echo sprintf( '<b style="color:red;">FAIL!</b><br />Expected "http://www.example.com", received "%s".', $testing );
+	} 
+	
+	die();
+} 
+
+session_start(); 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
 <head>
+	<meta name="robots" content="NOINDEX, NOFOLLOW">
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>WordPress Social Login Requirements Test</title>
 	<style>
@@ -25,15 +39,22 @@
 </head>
 <body>
 	<h1 style="text-align:center;">WordPress Social Login Requirements Test</h1>
-	
+
 	<p>
-		Minimum system requirements are: 
+		<b>Important</b>: 
+	</p>	
+	<ul style="margin-left:40px;margin-top:0px;">
+		<li>Please include your <a href="siteinfo.php" target="_blank"><b>Website Information</b></a> when posting support requests.</li>
+		<li>Make sure to check out <b>WSL</b> <a href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank"><b>frequently asked questions</b></a>.</li> 
+	</ul>
+	<p>
+		<b>WordPress Social Login requirements are</b>: 
 	</p>
 	<ul style="margin-left:40px;margin-top:0px;">
 		<li>PHP >= 5.2.0 installed</li> 
 		<li>WSL Endpoint URLs reachable</li>
 		<li>PHP's default SESSION handling</li>
-		<li>PHP/CURL Extension enabled</li> 
+		<li>PHP/cURL/SSL Extension enabled</li> 
 		<li>PHP/JSON Extension enabled</li> 
 		<li>PHP/REGISTER_GLOBALS Off</li> 
 		<li>jQuery installed on WordPress backoffice</li> 
@@ -98,7 +119,15 @@
  
 		
 		<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding:5px;font-size: 12px;">  
-			If you see an error <strong>"Warning: session_start..."</strong>, then 
+			Most likely an issue with PHP SESSION. The plugin has been made to work with PHP's default SESSION handling (sometimes this occur when the php session is disabled, renamed or when having permissions issues).
+			<br /><br />
+			If you are using a reverse proxy like Varnish it is possible that WordPress's default user cookies are being stripped. If this is the case, please review your VCL file. You may need to configure this file to allow the needed cookies.
+			<br /><br />
+			This problem has also been encountered with WP Engine. 
+			
+			<hr />
+		
+			If you see an error <strong>"Warning: session_start..."</strong> on the top of this page or in the Error log file, then 
 
 			there is a problem with your PHP server that will prevent this plugin from working with PHP sessions. Sometimes PHP session do not work because of a file permissions problem. The solution is to make a trouble ticket with your web host.
 			
@@ -117,14 +146,28 @@
 ?>
 	</p>
 
-	<h5>4. CURL Extension</h5> 
+	<h5>4. cURL Extension</h5> 
 	<p>
 <?php 
 	if ( function_exists('curl_init') ) {
-		echo "<b style='color:green;'>OK!</b><br />PHP Curl extension installed. [http://www.php.net/manual/en/intro.curl.php]";
+		echo "<b style='color:green;'>OK!</b><br />PHP cURL extension installed. [http://www.php.net/manual/en/intro.curl.php]";
+?>
+	</p>
+
+	<h5>4. cURL / SSL </h5> 
+	<p>
+<?php 
+		$curl_version = curl_version();
+
+		if ( $curl_version['features'] & CURL_VERSION_SSL ) {
+			echo "<b style='color:green;'>OK!</b><br />PHP cURL/SSL Supported. [http://www.php.net/manual/en/intro.curl.php]";
+		}
+		else{ 
+			echo "<b style='color:red;'>FAIL!</b><br />PHP cURL/SSL Not supported. [http://www.php.net/manual/en/intro.curl.php]";
+		}
 	}
 	else{ 
-		echo "<b style='color:red;'>FAIL!</b><br />PHP Curl extension not installed. [http://www.php.net/manual/en/intro.curl.php]";
+		echo "<b style='color:red;'>FAIL!</b><br />PHP cURL extension not installed. [http://www.php.net/manual/en/intro.curl.php]";
 	}
 ?>
 	</p>

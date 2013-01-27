@@ -1,7 +1,24 @@
-<?php 
-	$sql = "SELECT meta_value, user_id FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user'";
-	$rs1 = $wpdb->get_results( $sql );  
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Wannabe Users Manager module
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+
+// --------------------------------------------------------------------
+
+$sql = "SELECT meta_value, user_id FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user'";
+$rs1 = $wpdb->get_results( $sql );  
 ?> 
+
 <div style="margin:20px;margin-top:20px;">
 	<!--
 	<p class="search-box">

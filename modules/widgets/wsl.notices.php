@@ -1,5 +1,21 @@
 <?php
-// similar to wp_die, but with (will have) more features or wp_die not defined
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Kill WordPress execution and display HTML message with error message. 
+* similar to wp_die, but with (will have) more features or wp_die not defined
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
 function wsl_render_notices_pages( $message ) 
 {
 	?>
@@ -45,3 +61,5 @@ html {
 	
 	die();
 }
+
+// --------------------------------------------------------------------

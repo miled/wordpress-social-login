@@ -1,3 +1,19 @@
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* WSL Diagnostics module
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+?>
+
 <div style="margin-left:20px;">
 <form method="post" id="wsl_setup_form" action="options.php">  
 <?php settings_fields( 'wsl-settings-group-development' ); ?>
@@ -18,7 +34,7 @@
 	<li>PHP >= 5.2.0 installed</li> 
 	<li>WSL Endpoint URLs reachable</li>
 	<li>PHP's default SESSION handling</li>
-	<li>PHP/CURL Extension enabled</li> 
+	<li>PHP/CURL/SSL Extension enabled</li> 
 	<li>PHP/JSON Extension enabled</li> 
 	<li>PHP/REGISTER_GLOBALS Off</li> 
 	<li>jQuery installed on WordPress backoffice</li> 
@@ -29,7 +45,7 @@
 	<br />
 	<br />
 	<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'>Run the plugin requirements test</a> 
-	<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'>System Info</a> 
+	<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'>Website Information</a>.
 </p> 
 
 <br />

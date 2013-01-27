@@ -1,11 +1,27 @@
 <?php
-	global $wpdb;
-	
-	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
-		$provider_id = $_REQUEST["enable"];
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
 
-		update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
-	}
+/**
+* Social networks configuration and setup
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+
+// --------------------------------------------------------------------
+
+global $wpdb;
+
+if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
+	$provider_id = $_REQUEST["enable"];
+
+	update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
+}
 ?>
 
 <script>
@@ -78,12 +94,21 @@
 			continue;
 		}
 
+		// default endpoint_url
+		$endpoint_url = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
+
+		// overwrite endpoint_url if need'd
+		if( get_option( 'wsl_settings_base_url' ) ){
+			$endpoint_url = strtolower( get_option( 'wsl_settings_base_url' ) . '/hybridauth/' );
+		}
+
 		if( isset( $item["callback"] ) && $item["callback"] ){
-			$provider_callback_url  = '<span style="color:green">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL	 . '?hauth.done=' . $provider_id . '</span>';
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
 		}
 
 		$setupsteps = 0;  
 ?>  
+		<a name="setup<?php echo strtolower( $provider_id ) ?>"></a> 
 		<div class="stuffbox" id="namediv">
 			<h3>
 				<label for="name">
@@ -273,10 +298,14 @@
 				$provider_name              = @ $item["provider_name"];
 				$provider_cat               = @ $item["cat"];
 
+				if( isset( $item["default_network"] ) && $item["default_network"] ){
+					continue;
+				}
+
 				if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 					// echo "$provider_name;";
 					?>
-						<a href="options-general.php?page=wordpress-social-login&wslp=networks&enable=<?php echo $provider_id ?>#wslsettings"><img src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" /></a>
+						<a href="options-general.php?page=wordpress-social-login&wslp=networks&enable=<?php echo $provider_id ?>#setup<?php echo strtolower( $provider_id ) ?>"><img src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" /></a>
 					<?php
 				}
 			} 
@@ -285,7 +314,7 @@
   </tr> 
 </table>
 
-<a name="wslsettings"></name> 
+<a name="wslsettings"></a> 
 
 </div>
 

@@ -1,26 +1,58 @@
 <?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Here's where the dragon resides.
+*
+* Authenticate users via social networks. 
+*
+* to sum things up, here is how stuff works :
+*
+*	[icons links]                                  A wild visitor appear and click on a provider icon, that will redirect him to services/authenticate.php;
+*		=> [services/authenticate.php]             services/authenticate.php will attempt to authenticate him throught Hybridauth Library;
+*			=> [Hybridauth] <=> [Provider]         Hybridauth and the Provider will have some little chat on their own;
+*				=> [services/authenticate.php]     If the visitor consent and agrees to authenticate, then horray for you;
+*					=> [wp-login.php]              authenticate.php will then redirect the user to back wp-login.php where wsl_process_login() is fired;
+*						=> [callback URL]          If things goes as expected, the wsl_process_login will log the user on your website and redirect him (again lolz) there.
+*
+* when wsl_process_login() is triggered, it will attempt to reconize the user.
+* If he exist on the database as WSL user, then fine we cut things short.
+* If not, attempt to reconize users based on his email (this only when users authenticate through Facebook, Google, Yahoo or Foursquare as these provides verified emails). 
+* Otherwise create new account for him.
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
 function wsl_process_login()
 {
 	if( ! isset( $_REQUEST[ 'action' ] ) ){
 		return null;
 	}
 
-	if( $_REQUEST[ 'action' ] !=  "wordpress_social_login" && $_REQUEST[ 'action' ] !=  "wordpress_social_link" ){
+	if( $_REQUEST[ 'action' ] != "wordpress_social_login" && $_REQUEST[ 'action' ] !=  "wordpress_social_link" ){
 		return null;
 	}
 
 	// dont be silly
-	if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" && ! is_user_logged_in() ){
-		return wsl_render_notices_pages( "Bouncer say don't be silly!" );
+	if(  $_REQUEST[ 'action' ] == "wordpress_social_link" && ! is_user_logged_in() ){
+		return wsl_render_notices_pages( __("Bouncer say don't be silly!", 'wordpress-social-login') );
 	}
 
-	if(  $_REQUEST[ 'action' ] ==  "wordpress_social_link" && get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) != 1 ){
-		return wsl_render_notices_pages( "Bouncer say this makes no sense." );
+	if(  $_REQUEST[ 'action' ] == "wordpress_social_link" && get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) != 1 ){
+		return wsl_render_notices_pages( __("Bouncer say this makes no sense.", 'wordpress-social-login') );
 	}
 
 	// Bouncer :: Allow authentication 
 	if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 ){
-		return wsl_render_notices_pages( "WSL is disabled!" ); 
+		return wsl_render_notices_pages( __("WSL is disabled!", 'wordpress-social-login') ); 
 	}
 
 	if ( isset( $_REQUEST[ 'redirect_to' ] ) && $_REQUEST[ 'redirect_to' ] != '' ){
@@ -51,14 +83,11 @@ function wsl_process_login()
 	if( empty( $redirect_to ) ){
 		$redirect_to = site_url();
 	}
-	// print_r( get_option( 'wsl_settings_redirect_url' ) );
-	// print_r( $_REQUEST[ 'redirect_to' ] );
- 
-// die( " ==> $redirect_to" );
+
 	try{
 		# Hybrid_Auth already used?
 		if ( class_exists('Hybrid_Auth', false) ) {
-			return wsl_render_notices_pages( "Error: Another plugin seems to be using HybridAuth Library and made WordPress Social Login unusable. We recommand to find this plugin and to kill it with fire!" ); 
+			return wsl_render_notices_pages( __("Error: Another plugin seems to be using HybridAuth Library and made WordPress Social Login unusable. We recommand to find this plugin and to kill it with fire!", 'wordpress-social-login') ); 
 		} 
 
 		// load hybridauth
@@ -72,8 +101,7 @@ function wsl_process_login()
 			throw new Exception( 'Unknown or disabled provider' );
 		}
 
-		$config = array();
-		$config["base_url"]  = plugins_url() . '/' . basename( dirname( __FILE__ ) ) . '/hybridauth/';
+		$config = array(); 
 		$config["providers"] = array();
 		$config["providers"][$provider] = array();
 		$config["providers"][$provider]["enabled"] = true;
@@ -142,13 +170,13 @@ function wsl_process_login()
 				// if linked account found, we connect the actual user 
 				if( $linked_account ){
 					if( count( $linked_account ) > 1 ){
-						return wsl_render_notices_pages( "This $provider is linked to many accounts!" );
+						return wsl_render_notices_pages( __("This $provider is linked to many accounts!", 'wordpress-social-login') );
 					}
 
 					$user_id = $linked_account[0]->user_id;
 
 					if( ! $user_id ){
-						return wsl_render_notices_pages( "Something wrong!" );
+						return wsl_render_notices_pages( __("Something wrong!", 'wordpress-social-login') );
 					}
 
 					wp_set_auth_cookie( $user_id );
@@ -226,7 +254,7 @@ function wsl_process_login()
 			if( ! $hybridauth_user_id ){
 				// Bouncer :: Accept new registrations
 				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
-					return wsl_render_notices_pages( "registration is now closed!" ); 
+					return wsl_render_notices_pages( __("registration is now closed!", 'wordpress-social-login') ); 
 				}
 
 				// Bouncer :: Email Validation // require emails!
@@ -248,8 +276,8 @@ function wsl_process_login()
 
 		$user_email = $hybridauth_user_profile->email; 
 	}
-	catch( Exception $e ){
-		die( "Unspecified error. #" . $e->getCode() ); 
+	catch( Exception $e ){ 
+		return wsl_render_notices_pages( sprintf( __("Unspecified error. #%d", 'wordpress-social-login'), $e->getCode() ) ); 
 	}
 
 	$user_id = null;
@@ -386,12 +414,15 @@ function wsl_process_login()
 		if( $user_id && is_integer( $user_id ) ){
 			update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier );
 		}
-		else if (is_wp_error($user_id)) { //- http://wordpress.org/support/topic/plugin-wordpress-social-login-error-with-vkontake-provider?replies=1#post-2796109
+		else if (is_wp_error($user_id)) {
 			echo $user_id->get_error_message();
 		}
 		else{
-			die( "An error occurred while creating a new user!" );
+			return wsl_render_notices_pages( __("An error occurred while creating a new user!", 'wordpress-social-login') );
 		}
+
+		// HOOKABLE: any action to fire right after a user created on database
+		apply_filters( 'wsl_hook_process_register_success', $user_id );
 
 		// Send notifications 
 		if ( get_option( 'wsl_settings_users_notification' ) == 1 ){
@@ -399,6 +430,7 @@ function wsl_process_login()
 		}
 	}
 
+	// calculate user age
 	$user_age = $hybridauth_user_profile->age;
 
 	// not that precise you say... well welcome to my world
@@ -406,6 +438,7 @@ function wsl_process_login()
 		$user_age = (int) date("Y") - (int) $hybridauth_user_profile->birthYear;
 	}
 
+	// update some stuff
 	update_user_meta ( $user_id, 'wsl_user'       , $provider );
 	update_user_meta ( $user_id, 'wsl_user_gender', $hybridauth_user_profile->gender );
 	update_user_meta ( $user_id, 'wsl_user_age'   , $user_age );
@@ -420,6 +453,7 @@ function wsl_process_login()
 	// HOOKABLE: any last words?
 	apply_filters( 'wsl_hook_process_login_success', $user_id );
 
+	// That's it. create a session for user_id and redirect him to redirect_to
 	wp_set_auth_cookie( $user_id );
 
 	wp_safe_redirect( $redirect_to );
@@ -429,103 +463,4 @@ function wsl_process_login()
 
 add_action( 'init', 'wsl_process_login' );
 
-function wsl_get_user_by_meta( $provider, $user_uid )
-{
-	global $wpdb;
-
-	$sql = "SELECT user_id FROM `{$wpdb->prefix}usermeta` WHERE meta_key = '%s' AND meta_value = '%s'";
-
-	return $wpdb->get_var( $wpdb->prepare( $sql, $provider, $user_uid ) );
-}
-
-function wsl_get_user_data_by_id( $field, $user_id )
-{
-	global $wpdb;
-
-	$sql = "SELECT %s FROM `{$wpdb->prefix}users` WHERE ID = '%s'";
-
-	return $wpdb->get_var( $wpdb->prepare( $sql, $field, $user_id ) );
-}
-
-function wsl_get_user_linked_account_by_provider_and_identifier( $provider, $identifier )
-{
-	global $wpdb;
-
-	$sql = "SELECT * FROM `{$wpdb->prefix}wslusersprofiles` where provider = '$provider' and identifier = '$identifier'";
-	$rs  = $wpdb->get_results( $sql );
-
-	return $rs;
-}
-
-function wsl_store_hybridauth_user_data( $user_id, $provider, $profile )
-{
-	global $wpdb;
-
-	$sql = "SELECT id, object_sha FROM `{$wpdb->prefix}wslusersprofiles` where user_id = '$user_id' and provider = '$provider'";
-	$rs  = $wpdb->get_results( $sql );
-
-	$profile_sha = sha1( serialize( $profile ) );
-
-	// if $profile didnt change, no need for update
-	if( $rs && $rs[0]->object_sha == $profile_sha ){
-		return;
-	}
-
-	$table_data = array(
-		"user_id"    => $user_id,
-		"provider"   => $provider,
-		"object_sha" => $profile_sha
-	);
-
-	foreach( $profile as $key => $value ) {
-		$table_data[ strtolower($key) ] = (string) $value;
-	}
-
-	// if $profile updated we re/store on database
-	if( $rs && $rs[0]->object_sha != $profile_sha ){
-		$wpdb->update( "{$wpdb->prefix}wslusersprofiles", $table_data, array( "id" => $rs[0]->id ) ); 
-	}
-	else{
-		$wpdb->insert( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
-	}
-}
-
-function wsl_import_user_contacts( $provider, $adapter, $user_id )
-{
-	// Contacts import
-	if(
-		get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ||
-		get_option( 'wsl_settings_contacts_import_google' )   == 1 && strtolower( $provider ) == "google"   ||
-		get_option( 'wsl_settings_contacts_import_twitter' )  == 1 && strtolower( $provider ) == "twitter"  ||
-		get_option( 'wsl_settings_contacts_import_live' )     == 1 && strtolower( $provider ) == "live"     ||
-		get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 && strtolower( $provider ) == "linkedin" 
-	){
-		global $wpdb;
-
-		// grab the user's friends list
-		$user_contacts = $adapter->getUserContacts();
-
-		// update contact only one time per provider, this behaviour may change depend on the feedback reviced
-		if( $user_contacts ){
-			$sq = "SELECT id FROM `{$wpdb->prefix}wsluserscontacts` where user_id = '$user_id' and provider = '$provider' limit 1";
-			$rs = $wpdb->get_results( $sq );
-
-			if( ! $rs ){
-				foreach( $user_contacts as $contact ){
-					$wpdb->insert(
-						"{$wpdb->prefix}wsluserscontacts", 
-							array( 
-								"user_id" 		=> $user_id,
-								"provider" 		=> $provider,
-								"identifier" 	=> $contact->identifier,
-								"full_name" 	=> $contact->displayName,
-								"email" 		=> $contact->email,
-								"profile_url" 	=> $contact->profileURL,
-								"photo_url" 	=> $contact->photoURL,
-							)
-						); 
-				}
-			}
-		}
-	} 
-}
+// --------------------------------------------------------------------

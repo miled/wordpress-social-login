@@ -1,4 +1,20 @@
 <?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Authentication widgets generator
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
 function wsl_render_login_form()
 {
 	// Bouncer :: Allow authentication 
@@ -65,14 +81,14 @@ function wsl_render_login_form()
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			if( get_option( 'wsl_settings_use_popup' ) == 1 ){
 				?>
-				<a href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
+				<a rel="nofollow" href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
 					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
 				</a>
 				<?php
 			}
 			elseif( get_option( 'wsl_settings_use_popup' ) == 2 ){ 
 				?>
-				<a href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/services/authenticate.php?provider=<?php echo $provider_id ?>&redirect_to=<?php echo urlencode($current_page_url) ?>" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" >
+				<a rel="nofollow" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/services/authenticate.php?provider=<?php echo $provider_id ?>&redirect_to=<?php echo urlencode($current_page_url) ?>" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" >
 					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
 				</a>
 				<?php 
@@ -108,6 +124,8 @@ function wsl_render_login_form()
 <?php
 }
 
+// --------------------------------------------------------------------
+
 # {{{ render widget
 	function wsl_render_login_form_login()
 	{
@@ -115,6 +133,8 @@ function wsl_render_login_form()
 	}
 
 	add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
+
+// --------------------------------------------------------------------
 
 	// display on comment area
 	function wsl_render_comment_form()
@@ -128,6 +148,8 @@ function wsl_render_login_form()
 
 	add_action( 'comment_form_top', 'wsl_render_comment_form' );
 
+// --------------------------------------------------------------------
+
 	// display on login form
 	function wsl_render_login_form_login_form()
 	{
@@ -139,6 +161,8 @@ function wsl_render_login_form()
 	add_action( 'login_form', 'wsl_render_login_form_login_form' );  
 	add_action ('bp_before_account_details_fields', 'wsl_render_login_form_login_form'); 
 	add_action ('bp_before_sidebar_login_form', 'wsl_render_login_form_login_form');
+
+// --------------------------------------------------------------------
 
 	// display on login & register form
 	function wsl_render_login_form_login_on_register_and_login()
@@ -152,6 +176,8 @@ function wsl_render_login_form()
 	add_action( 'after_signup_form', 'wsl_render_login_form_login_on_register_and_login' );
 # }}}
 
+// --------------------------------------------------------------------
+
 # {{{ shortcode, js and css injectors
 	function wsl_shortcode_handler($args)
 	{
@@ -161,6 +187,8 @@ function wsl_render_login_form()
 	}
 
 	add_shortcode ( 'wordpress_social_login', 'wsl_shortcode_handler' );
+
+// --------------------------------------------------------------------
 
 	function wsl_add_javascripts()
 	{
@@ -179,6 +207,8 @@ function wsl_render_login_form()
 	add_action( 'login_head', 'wsl_add_javascripts' );
 	add_action( 'wp_head', 'wsl_add_javascripts' );
 
+// --------------------------------------------------------------------
+
 	function wsl_add_stylesheets(){
 		if( ! wp_style_is( 'wsl_css', 'registered' ) ) {
 			wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
@@ -195,6 +225,8 @@ function wsl_render_login_form()
 	add_action( 'login_head', 'wsl_add_stylesheets' );
 	add_action( 'wp_head', 'wsl_add_stylesheets' );
 # }}}
+
+// --------------------------------------------------------------------
 
 # {{{ linking new accounts 
 	// render a new widget on wp-admin/profile.php to permit linking profiles 
@@ -235,15 +267,15 @@ function wsl_render_login_form()
 		}
 
 		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
-	?>
-	<h3>Social networks</h3> 
+	?> 
+	<h3><?php _e("Social networks", 'wordpress-social-login') ?></h3> 
 	<table class="form-table">  
 		<tr>  
 			<td valign="top">
 				<table id="wsl-user-profile-injected-table-b">
 					<tr>
-						<th width="80">Provider</th>
-						<th>Identity</th> 
+						<th width="80"><?php _e("Provider", 'wordpress-social-login') ?></th>
+						<th><?php _e("Identity", 'wordpress-social-login') ?></th> 
 					</tr>
 					<?php
 						foreach( $linked_accounts AS $item ){  
@@ -279,7 +311,7 @@ function wsl_render_login_form()
 	?>	
 		<tr>    
 			<td valign="top">
-				<b>Add more identities</b>
+				<b><?php _e("Add more identities", 'wordpress-social-login') ?></b>
 				<br />
 				<?php
 					foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
@@ -318,7 +350,7 @@ function wsl_render_login_form()
 	?>
 		<tr> 
 			<td>
-				<b>Currently connected to:</b> 
+				<b><?php _e("Currently connected to:", 'wordpress-social-login') ?></b> 
 				<?php echo implode( ', ', $list_connected_providers ); ?>
 			</td> 
 		</tr> 
@@ -384,6 +416,8 @@ function wsl_render_login_form()
 	<?php
 	}
 
+// --------------------------------------------------------------------
+
 	function wsl_get_list_connected_providers()
 	{
 		// load hybridauth
@@ -404,6 +438,8 @@ function wsl_render_login_form()
 		return Hybrid_Auth::getConnectedProviders(); 
 	}
 
+// --------------------------------------------------------------------
+
 	function wsl_get_user_linked_accounts_by_user_id( $user_id )
 	{
 		global $wpdb;
@@ -413,6 +449,8 @@ function wsl_render_login_form()
 
 		return $rs;
 	}
+
+// --------------------------------------------------------------------
 
 	function wsl_get_user_linked_accounts_field_by_id( $id, $field )
 	{
@@ -424,6 +462,8 @@ function wsl_render_login_form()
 		return $rs[0]->data_field;
 	}
 
+// --------------------------------------------------------------------
+
 	function wsl_get_user_by_meta_key_and_user_id( $meta_key, $user_id )
 	{
 		global $wpdb;
@@ -433,6 +473,8 @@ function wsl_render_login_form()
 
 		return $rs[0]->meta_value;
 	}
+
+// --------------------------------------------------------------------
 
 	function wsl_get_user_data_by_user_id( $field, $user_id )
 	{
@@ -446,3 +488,5 @@ function wsl_render_login_form()
 
 	add_action( 'admin_head-profile.php', 'wsl_render_login_form_admin_head_user_profile' ); 
 # }}} linking new accounts
+
+// --------------------------------------------------------------------

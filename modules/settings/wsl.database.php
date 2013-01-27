@@ -1,13 +1,41 @@
 <?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Functions & utililies related to wsl database installation and migrations
+*
+* After WSl activated, wsl_database_migration_process will attempt to create or upgrade the required database
+* tables.
+*
+* Currently there is 2 tables used by WSL :
+*	- wslusersprofiles:  where sotred the users profile as provided by Hybridauth
+*	- wsluserscontacts:  where sotred the users contact list as provided by Hybridauth
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
 global $wsl_database_migration_version;
 
 $wsl_database_migration_version = 4;
 
-function wsl_database_migration_hook () {
+// --------------------------------------------------------------------
+
+function wsl_database_migration_hook ()
+{
     wsl_database_migration_process();
 }
 
 add_action( 'plugins_loaded', 'wsl_database_migration_process' );
+
+// --------------------------------------------------------------------
 
 function wsl_database_migration_process()
 {
@@ -70,3 +98,5 @@ function wsl_database_migration_process()
 
     add_option( "wsl_database_migration_version", $wsl_database_migration_version );
 }
+
+// --------------------------------------------------------------------

@@ -1,8 +1,24 @@
 <?php
-	// wsl welcome panel
-	// if new user or wsl updated, then we display wsl welcome panel
-	if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGIN_VERSION ){ 
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* WSL Admin welcome panel
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+
+// --------------------------------------------------------------------
+
+// if new user or wsl updated, then we display wsl welcome panel
+if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGIN_VERSION ){ 
 ?>
+
 <!-- 
 	if you want to know if a UI was made by devloper, then here is a tip: he will always use tables
 
@@ -40,8 +56,8 @@
 					<li>An entirely reworked user interface,</li> 
 					<li>Improving the documentation and guides,</li> 
 					<li>Introducing a new module, and the long awaited, <a href="http://hybridauth.sourceforge.net/wsl/bouncer.html" target="_blank">The bouncer</a>,</li> 
-					<li>And even more customization options are now available.</li>  
-				</ul> 
+					<li>Twitch.tv joins WSL, richer Steam user profiles, and more.</li>
+				</ul>
 			</td>
 		</tr>
 		<tr id="wsl-w-panel-updates-tr">
@@ -52,7 +68,7 @@
 	</table> 
 </div>
 <?php 
-	}
+}
 ?>
 <script>
 	// check for new versions and updates

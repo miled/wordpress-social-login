@@ -1,9 +1,9 @@
 === WordPress Social Login ===
 Contributors: miled
-Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam
+Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 1.2.4
+Stable tag: 2.0.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -34,7 +34,7 @@ The coming release « the definitive social toolkit » will brings even more excit
 
 
 <strong>Supported Providers</strong> <br>
-Facebook , Google , Yahoo , Twitter , Windows Live , Myspace , Foursquare , Linkedin , Tumblr , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Steam , Mail.ru , Yandex and Odnoklassniki. 
+Facebook , Google , Yahoo , Twitter , Windows Live , Myspace , Foursquare , Linkedin , Tumblr , Steam , Twitch.tv , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Mail.ru , Yandex and Odnoklassniki. 
 
 <strong>Special thanks to:</strong>
 
@@ -46,13 +46,13 @@ Facebook , Google , Yahoo , Twitter , Windows Live , Myspace , Foursquare , Link
 
 == Installation ==
 
-= How to install the hard way =
+= the hard way =
 
 1. Download, Unzip and drop the extention on /wp-content/plugins/ directory,
 1. As admistration, activate the plugin through the 'Plugins' menu in WordPress,
 1. Goto the Settings > WP Social Login to get started.
 
-= How to install the easy way =
+= the easy way =
 
 1. As admistration, goto 'Plugins' then Click on 'Add New',
 2. Search for 'WordPress Social Login' then Click on 'Install Now',
@@ -76,13 +76,14 @@ The user guide and frequently asked questions can be found at http://bit.ly/TYy2
 
 == Changelog ==
 
-= 2.0.0 = 
-* Manage WSL users, more options are to come
-* Import WSL users contact list from Google Gmail, Facebook, Live and LinkedIn
-* An entirely reworked user interface
-* Improving the documentation and guides
-* Introducing a new module, and the long awaited, The bouncer
-* And even more customization options are now available
+= 2.0.3 = 
+
+* Managing WSL users,
+* Import WSL users contact list from Google Gmail, Facebook, Live and LinkedIn,
+* An entirely reworked user interface,
+* Improving the documentation and guides,
+* Introducing a new module, and the long awaited, The bouncer,
+* Twitch.tv joins WSL, richer Steam user profiles, and more.
 
 = 1.2.4 =
 

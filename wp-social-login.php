@@ -3,17 +3,49 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 1.2.4
+Version: 2.0.3
 Author: Miled
-Author URI: http://wordpress.org/extend/plugins/wordpress-social-login/
-License: GPL2
+Author URI: http://hybridauth.sourceforge.net
+License: MIT License
+Text Domain: wordpress-social-login
+Domain Path: languages
 */
+
+/*
+Copyright (C) 2013 Mohamed Mrassi and other contributors
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+"Software"), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
 
 @ session_start(); 
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.0.2"; // i know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.0.3"; // i know
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
+
+// --------------------------------------------------------------------
 
 /**
  * Check technical requirements before activating the plugin.
@@ -26,13 +58,15 @@ function wsl_activate()
 	if ( ! function_exists ('register_post_status') )
 	{
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		die( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin." );
+		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login') );
 	}
 
 	do_action( 'wsl_activate' );
 }
 
 register_activation_hook( __FILE__, 'wsl_activate' );
+
+// --------------------------------------------------------------------
 
 /**
  * Add a settings link to the Plugins page
@@ -45,7 +79,7 @@ function wsl_add_settings_link( $links, $file )
 	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 	if ( $file == $this_plugin ){
-		$settings_link = '<a href="options-general.php?page=wordpress-social-login">Settings</a>';
+		$settings_link = '<a href="options-general.php?page=wordpress-social-login">' . __("Settings") . '</a>';
 		array_unshift( $links, $settings_link );
 	}
 
@@ -53,6 +87,8 @@ function wsl_add_settings_link( $links, $file )
 }
 
 add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 ); 
+
+// --------------------------------------------------------------------
 
 /**
  * This file only need to be included for versions before 3.1.
@@ -64,32 +100,42 @@ if ( ! function_exists ('email_exists') ){
 
 require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/wp-load.php' );
 
-define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/' . basename( dirname( __FILE__ ) ) ); 
-define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' ); 
+// --------------------------------------------------------------------
 
-/* includes */ 
+/* Constants */ 
+
+define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, dirname( __FILE__ ) 									);
+define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) ) 				);
+define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, plugins_url() . '/' . basename( dirname( __FILE__ ) ) );
+define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' 	);
+
+/* includes */
 
 # Settings
-require_once( dirname (__FILE__) . '/modules/settings/wsl.providers.php' );              // list of provider supported by hybridauth library
-require_once( dirname (__FILE__) . '/modules/settings/wsl.database.php' );               // functions & utililies related to wsl database installation and migrations
-require_once( dirname (__FILE__) . '/modules/settings/wsl.initialization.php' );         // check wsl requirements and register wsl settings 
-require_once( dirname (__FILE__) . '/modules/settings/wsl.compatibilities.php' );        // check and upgrade compatibilities from old wsl versions 
+require_once( dirname (__FILE__) . '/modules/settings/wsl.providers.php' 			); // List of provider supported by hybridauth library
+require_once( dirname (__FILE__) . '/modules/settings/wsl.modules.php'              ); // List of WSL admin moduldes
+require_once( dirname (__FILE__) . '/modules/settings/wsl.database.php'             ); // Functions & utililies related to wsl database installation and migrations
+require_once( dirname (__FILE__) . '/modules/settings/wsl.initialization.php'       ); // Check wsl requirements and register wsl settings 
+require_once( dirname (__FILE__) . '/modules/settings/wsl.compatibilities.php'      ); // Check and upgrade compatibilities from old wsl versions 
 
 # Services
-require_once( dirname (__FILE__) . '/modules/services/wsl.authentication.php' );         // 
-require_once( dirname (__FILE__) . '/modules/services/wsl.mail.notification.php' );      // 
-require_once( dirname (__FILE__) . '/modules/services/wsl.user.avatar.php' );            // 
-require_once( dirname (__FILE__) . '/modules/services/wsl.user.data.php' );              // 
+require_once( dirname (__FILE__) . '/modules/services/wsl.authentication.php'       ); // Authenticate users via social networks. 
+require_once( dirname (__FILE__) . '/modules/services/wsl.mail.notification.php'    ); // Email notifications to send. so far only the admin one is implemented
+require_once( dirname (__FILE__) . '/modules/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
+require_once( dirname (__FILE__) . '/modules/services/wsl.user.data.php'            ); // User data functions (database related)
 
-# UIs
-require_once( dirname (__FILE__) . '/modules/admin/wsl.admin.ui.php' );                  // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.auth.widget.php' );             // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.complete.registration.php' );   // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.bouncer.disclaimer.php' );      // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.bouncer.passcode.php' );        // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.bouncer.welcome.php' );         // 
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.notices.php' );                 // 
+# WSL Admin UIs
+require_once( dirname (__FILE__) . '/modules/admin/wsl.admin.ui.php'                ); // The 10 LOC in charge of displaying WSL Admin GUInterfaces
 
-/* hooks */ 
+# WSL Widgets or so we call them
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (yep where the icons are displayed)
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.complete.registration.php' ); // Page for users completing their registration (currently used only by Bouncer::Email Validation
+require_once( dirname (__FILE__) . '/modules/widgets/wsl.notices.php'               ); // Kill WordPress execution and display HTML message with error message. in similar fashion to wp_die
+
+// --------------------------------------------------------------------
+
+/* hooks */
 
 register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
+
+// --------------------------------------------------------------------

@@ -1,3 +1,19 @@
+<?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* Widget Customization
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit; 
+?>
+
 <form method="post" id="wsl_setup_form" action="options.php"> 
 <?php settings_fields( 'wsl-settings-group-customize' ); ?> 
 
@@ -110,7 +126,7 @@
 				<textarea style="width:100%;height:120px;margin-top:6px;" name="wsl_settings_authentication_widget_css"><?php echo get_option( 'wsl_settings_authentication_widget_css' );  ?></textarea>
 				<br />
 				The basic widget markup is the following:
-<pre style="background-color: #eaffdc;border:1px solid #60cf4e; border-radius: 3px;padding: 10px;margin-top:5px;margin-bottom:0px;">
+<pre style="background-color: #eaffdc;border:1px solid #60cf4e; border-radius: 3px;padding: 10px;margin-top:5px;margin-bottom:0px;"> 
 &lt;span id=&quot;<code>wp-social-login-connect-with</code>&quot;&gt;{connect_with_caption}&lt;/span&gt;
 &lt;div id=&quot;<code>wp-social-login-connect-options</code>&quot;&gt;
 	&lt;a class=&quot;<code>wsl_connect_with_provider</code>&quot;&gt;&lt;img src=&quot;{provider_icon_facebook}&quot; /&gt;
@@ -163,11 +179,13 @@
 						<h4 style="cursor: default;border-bottom:1px solid #ccc;">Custom integration</h4>
 
 						<p style="margin:10px;"> 
-							If you want to add the social login widget to another location in your theme, you can insert the following code in that location:
-							<pre style="width: 380px;background-color: #eaffdc;border:1px solid #60cf4e; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+							If you want to add the social login widget to another location in your theme, you can insert the following code in that location: 
+							<pre style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+							Or, for posts and pages:
+							<pre style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</pre> 
 						</p> 
 						<p style="margin:10px;"> 
-						Also, if you are a developer or designer then you can customize it to your heart's content then refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help">Help & Support</a></b>.
+						Also, if you are a developer or designer then you can customize it to your heart's content then refer to <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">User Guide</a></b>.
 						</p>
 
 						<h4 style="cursor: default;border-bottom:1px solid #ccc;">Widget preview</h4>
@@ -175,12 +193,12 @@
 						<p style="margin:10px;"> 
 							This is a preview of what should be on the comments area. <strong>Do not test it here!</strong>
 						</p>
-
-						<div style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-left:10px;">
+ 
+						<div style="width: 380px;background-color: #FFEBE8;border:1px solid #CC0000; border-radius: 3px;padding: 10px;margin-left:10px;">
 						<?php 
 							wsl_render_login_form()
 						?>
-						</div>
+						</div> 
 					</div> 
 				</div> 
 			</div> 

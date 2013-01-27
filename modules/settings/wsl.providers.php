@@ -1,4 +1,31 @@
 <?php
+/*!
+* WordPress Social Login
+*
+* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*/
+
+/**
+* List of supported providers by Hybridauth Library 
+*
+* Here are defined a 24 idp or so. If you need even more of the Hybridauth additional providers, 
+* then you need to download additional providers package at http://hybridauth.sf.net/download.html
+* and then copy needed additional providers to the library.
+*
+* For instance, to get Identica provider working you need to copy 'hybridauth-identica/Providers/Identica.php' 
+* to 'plugins/wordpress-social-login/hybridauth/Hybrid/Providers/Identica.php' and then add it to 
+* $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG.
+*
+* After that you just need to configure your application ID, private and secret keys at the plugin
+* configuration pages.
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
 $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY( 
 		"provider_id"       => "Facebook",
@@ -178,6 +205,15 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "gamers",
 	),
 	ARRAY( 
+		"provider_id"       => "TwitchTV",
+		"provider_name"     => "Twitch.tv", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "http://www.twitch.tv/settings?section=applications", 
+
+		"cat"               => "gamers",
+	),
+	ARRAY( 
 		"provider_id"       => "Mailru",
 		"provider_name"     => "Mailru", 
 		"require_client_id" => true,
@@ -205,3 +241,5 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "socialnetworks",
 	),
 );
+
+// --------------------------------------------------------------------
