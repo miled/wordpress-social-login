@@ -7,7 +7,7 @@
 */
 
 /**
-* Documentation and shit
+* Documentation and stuff
 */
 
 // Exit if accessed directly
@@ -15,58 +15,57 @@ if ( !defined( 'ABSPATH' ) ) exit;
 ?>
 
 <div class="wslgn"> 
-	<h3>Documentation</h3>
+	<h3><?php _e("Documentation", 'wordpress-social-login') ?></h3>
 	<p>
-		The complete <b>User Guide</b> and <b>Frequently asked questions</b> can be found at
-		<a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">http://hybridauth.sourceforge.net/wsl/index.html</a>
+		<?php _e('The complete <b>User Guide</b> and <b>Frequently asked questions</b> can be found at
+		<a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">http://hybridauth.sourceforge.net/wsl/index.html</a>', 'wordpress-social-login') ?>
 	</p>
 
 	<hr />
 	
-	<h3>Troubleshooting</h3>
+	<h3><?php _e("Troubleshooting", 'wordpress-social-login') ?></h3>
 	<p>
-		If you run into any issue, you can access the <b><a class="button-primary" href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">WSL Diagnostics</a></b> tabs to check the <b style="color:red">Plugin Requirements</b> or to enable the <b style="color:red">Development mode</b>. 
+		<?php _e('If you run into any issue, you can access the <b><a class="button-primary" href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">WSL Diagnostics</a></b> tabs to check the <b style="color:red">Plugin Requirements</b> or to enable the <b style="color:red">Development mode</b>', 'wordpress-social-login') ?>. 
 	</p>
 
 	<hr />
 	
-	<h3>Support</h3>
+	<h3><?php _e("Support", 'wordpress-social-login') ?></h3>
 	<p>
-		To get help and support, here is where you can reach me:
+		<?php _e("To get help and support, here is where you can reach me", 'wordpress-social-login') ?>:
 	</p>
 	
 	<ul style="margin-left:40px;">
-		<li><b>Wordpress support forum</b>: <a href="http://wordpress.org/support/plugin/wordpress-social-login" target="_blank">http://wordpress.org/support/plugin/wordpress-social-login</a></li> 
-		<li><b>Email</b>: <a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a></li> 
+		<li><?php _e('<b>Wordpress support forum</b>: <a href="http://wordpress.org/support/plugin/wordpress-social-login" target="_blank">http://wordpress.org/support/plugin/wordpress-social-login</a>', 'wordpress-social-login') ?></li> 
+		<li><?php _e('<b>Email</b>: <a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a>', 'wordpress-social-login') ?></li> 
 	</ul>
 
 <pre class="wslpre" style="margin-left:20px;">
-Please note: 
+<?php _e("Please note", 'wordpress-social-login') ?>: 
 
-Include your <a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'>website information</a> when posting support requests.
+<?php _e(sprintf('Include your <a class="button-primary" href="%s/services/siteinfo.php" target="_blank">website information</a> when posting support requests', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL), 'wordpress-social-login') ?>.
 
-If I did not answer your question or I took too long to, then its either :
-   * I'm too busy or hibernating irl,
-   * It has been asked before on the wordpress support forum, 
-   * I didn't understand it, 
-   * also, be friendly, questions and requests containing hi, hello and thanks can make
-     a diffrence :P 
+<?php _e("If I did not answer your question or I took too long to, then its either", 'wordpress-social-login') ?> :
+   * <?php _e("I'm too busy or hibernating irl", 'wordpress-social-login') ?>,
+   * <?php _e("It has been asked before on the wordpress support forum", 'wordpress-social-login') ?>, 
+   * <?php _e("I didn't understand it", 'wordpress-social-login') ?>, 
+   * <?php _e("also, be friendly, questions and requests containing hi, hello and thanks can make<br />     a diffrence :P ", 'wordpress-social-login') ?>
 </pre>   
 	
 	<br />
 	<hr />
 	
-	<h3>Credits</h3>
+	<h3><?php _e("Credits", 'wordpress-social-login') ?></h3>
 	<p>
-		WordPress Social Login was created by <a href="http://profiles.wordpress.org/miled/" target="_blank">Mohamed Mrassi</a> (a.k.a Miled) and <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>. 
-		Many other people have also contributed with <br />constructive discussions, support and by submitting patches.
+		<?php _e('WordPress Social Login was created by <a href="http://profiles.wordpress.org/miled/" target="_blank">Mohamed Mrassi</a> (a.k.a Miled) and <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>.
+		<?php _e("Many other people have also contributed with <br />constructive discussions, support and by submitting patches", 'wordpress-social-login') ?>.
 	</p>
  
 	<hr />
 	
-	<h3>License</h3>
+	<h3><?php _e("License", 'wordpress-social-login') ?></h3>
 	<p>
-		<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)
+		<?php _e("<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)", 'wordpress-social-login') ?>
 	</p>
 <pre class="wslpre" style="margin-left:20px;">
 	Copyright (C) 2011-2013 Mohamed Mrassi and contributors

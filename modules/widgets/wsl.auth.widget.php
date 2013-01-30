@@ -158,7 +158,7 @@ function wsl_render_login_form()
 		} 
 	}
 
-	add_action( 'login_form', 'wsl_render_login_form_login_form' );  
+	add_action( 'login_form', 'wsl_render_login_form_login_form' );
 	add_action ('bp_before_account_details_fields', 'wsl_render_login_form_login_form'); 
 	add_action ('bp_before_sidebar_login_form', 'wsl_render_login_form_login_form');
 

@@ -149,11 +149,12 @@ a.thumbnail:hover {
 
 <h1>
 	WordPress Social Login 
+	
 	<small><?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?></small>
 	<?php
 		if( get_option( 'wsl_settings_development_mode_enabled' ) ){
 			?>
-				<span style="color:red;-font-size: 14px;">(Development mode is enabled!)</span>
+				<span style="color:red;-font-size: 14px;">(<?php _e("Development mode is enabled!", 'wordpress-social-login') ?>)</span>
 			<?php
 		}
 	?>
