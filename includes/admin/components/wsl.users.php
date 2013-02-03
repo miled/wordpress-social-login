@@ -15,39 +15,32 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
+wsl_admin_welcome_panel();
+
 $sql = "SELECT meta_value, user_id FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user'";
 $rs1 = $wpdb->get_results( $sql );  
 ?> 
 
-<div style="margin:20px;margin-top:20px;">
-	<!--
-	<p class="search-box">
-		<label for="user-search-input" class="screen-reader-text">Search Users:</label>
-		<input type="search" value="" name="s" id="user-search-input">
-		<input type="submit" value="Search Users" class="button" id="search-submit" name="">
-	</p>
-	<br />
-	<br /> 
-	--> 
+<div style="margin-top:20px;">
 	<table cellspacing="0" class="wp-list-table widefat fixed users">
 		<thead>
 			<tr> 
-				<th width="100"><span>Providers</span></th>  
-				<th><span>Username</span></th> 
-				<th><span>Full Name</span></th> 
-				<th><span>Email</span></th> 
-				<th><span>Profile Url</span></th> 
-				<th width="100"><span>Nb. Contacts</span></th> 
+				<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
+				<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
+				<th width="100"><span><?php _wsl_e("Nb. Contacts", 'wordpress-social-login') ?></span></th> 
 			</tr>
 		</thead> 
 		<tfoot>
 			<tr> 
-				<th><span>Providers</span></th>  
-				<th><span>Username</span></th> 
-				<th><span>Full Name</span></th> 
-				<th><span>Email</span></th> 
-				<th><span>Profile Url</span></th> 
-				<th><span>Nb. Contacts</span></th> 
+				<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
+				<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
+				<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
+				<th width="100"><span><?php _wsl_e("Nb. Contacts", 'wordpress-social-login') ?></span></th> 
 			</tr>
 		</tfoot> 
 		<tbody data-wp-lists="list:user" id="the-list">
@@ -55,7 +48,7 @@ $rs1 = $wpdb->get_results( $sql );
 				// have users?
 				if( ! $rs1 ){
 					?>
-						<tr class="no-items"><td colspan="6" class="colspanchange">No users found.</td></tr>
+						<tr class="no-items"><td colspan="6" class="colspanchange"><?php _wsl_e("No users found", 'wordpress-social-login') ?>.</td></tr>
 					<?php
 				}
 				else{
@@ -92,9 +85,9 @@ $rs1 = $wpdb->get_results( $sql );
 						</td>
 						<td><?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?></td>
 						<td>
-							<?php $user_email = wsl_get_user_data_by_user_id( "user_email", $user_id); if( $user_email ) { ?>
-								<?php if( ! strstr( $user_email, "@example.com" ) ) { ?>
-									<a href="mailto:<?php echo $user_email ?>"><?php echo $user_email ?></a>
+							<?php $user_wsl_email = wsl_get_user_data_by_user_id( "user_wsl_email", $user_id); if( $user_wsl_email ) { ?>
+								<?php if( ! strstr( $user_wsl_email, "@example.com" ) ) { ?>
+									<a href="mailto:<?php echo $user_wsl_email ?>"><?php echo $user_wsl_email ?></a>
 								<?php } else { ?>
 									-
 								<?php } ?>
@@ -113,7 +106,7 @@ $rs1 = $wpdb->get_results( $sql );
 								$rs  = $wpdb->get_results( $sql );
 
 								if( $rs && $rs[0]->counts ){
-									echo '<b style="color:#CB4B16;">' . $rs[0]->counts . '</b><br /><a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id . '">Show List</a>';
+									echo '<b style="color:#CB4B16;">' . $rs[0]->counts . '</b><br /><a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id . '">' . _wsl__("Show List", 'wordpress-social-login') .'</a>';
 								}
 								else{
 									echo "0";

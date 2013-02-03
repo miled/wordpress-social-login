@@ -49,34 +49,31 @@ ul {
 </style>
 
 <div class="wsldiv">
-	<h1>WordPress Social Login - FAIL!</h1>
+	<h1><?php _e("WordPress Social Login - FAIL!", 'wordpress-social-login') ?></h1>
 
 	<hr />
 	
 	<p> 
-		Despite the efforts, the plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and other <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>, put into <b>WordPress Social Login</b> in terms of reliability, portability, 
-		<br />
-		and maintenance. <b style='color:red;'>Your server failed the requirements check for this plugin!</b>
+		<?php _e('Despite the efforts, the plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and other <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>, put into <b>WordPress Social Login</b> in terms of reliability, portability, <br />and maintenance', 'wordpress-social-login') ?>.
+		<b style="color:red;"><?php _e('Your server failed the requirements check for this plugin!', 'wordpress-social-login') ?></b>
 	</p> 
 	<p> 
-		These requirements are usually met by default by most "modern" web hosting providers, however some complications may 
-		<br />
-		occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>.  
+		<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may <br />occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
 	</p> 
 	<p> 
-		To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow:
+		<?php _e("To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow", 'wordpress-social-login') ?>:
 		
 		<br />
 		<br />
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'>Run the plugin requirements test</a> 
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'>System Information</a> 
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'><?php _e("System Information", 'wordpress-social-login') ?></a> 
 	</p> 
  
 	<br /> 
 	<hr />
  
 	<p>
-		<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)
+		<?php _e("<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)", 'wordpress-social-login') ?>
 	</p> 
 
 <pre class="wslpre">

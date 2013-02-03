@@ -18,7 +18,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_render_notices_pages( $message ) 
 {
-	?>
+	// HOOKABLE: 
+	do_action( 'wsl_hook_alter_render_notices_pages', $message );
+?>
 <!DOCTYPE html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
@@ -57,8 +59,8 @@ html {
 </div> 
 </body>
 </html> 
-	<?php
-	
+<?php
+
 	die();
 }
 

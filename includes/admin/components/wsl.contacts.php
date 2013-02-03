@@ -12,9 +12,13 @@
 
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit; 
+
+// --------------------------------------------------------------------
+
+wsl_admin_welcome_panel();
 ?>
 
-<div style="margin:20px;margin-top:20px;"> 
+<div> 
 <?php
 	if( isset( $_REQUEST["uid"] ) && (int) $_REQUEST["uid"] ){
 		$user_id = (int) $_REQUEST["uid"];
@@ -29,58 +33,58 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _e("Settings", 'wordpress-social-login') ?></label>
+			<label for="name"><?php _wsl_e("Settings", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
 			<p>
-				<?php _e("<b>WordPress Social Login</b> is now introducing <b>Contacts Import</b> as a new feature. When enabled, users authenticating through WordPress Social Login will be asked for the authorisation to import their contact list. Note that some social networks do not provide certains of their users information like contacts emails, photos and or profile urls", 'wordpress-social-login') ?>.
+				<?php _wsl_e("<b>WordPress Social Login</b> is now introducing <b>Contacts Import</b> as a new feature. When enabled, users authenticating through WordPress Social Login will be asked for the authorisation to import their contact list. Note that some social networks do not provide certains of their users information like contacts emails, photos and or profile urls", 'wordpress-social-login') ?>.
 			</p>
-			<h4><?php _e("Enable contacts import for", 'wordpress-social-login') ?> :</h4> 
+			<h4><?php _wsl_e("Enable contacts import for", 'wordpress-social-login') ?> :</h4> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;border-bottom:1px solid #ccc">   
 			  <tr>
 				<td align="right"><strong>Facebook :</strong></td>
 				<td>
 					<select name="wsl_settings_contacts_import_facebook" <?php if( ! get_option( 'wsl_settings_Facebook_enabled' ) ) echo "disabled" ?> >
-						<option <?php if( get_option( 'wsl_settings_contacts_import_facebook' ) == 1 ) echo "selected"; ?> value="1"><?php _e("Enabled", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_contacts_import_facebook' ) == 2 ) echo "selected"; ?> value="2"><?php _e("Disabled", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_contacts_import_facebook' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_contacts_import_facebook' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td> 
 				<td align="right" style="border-left:1px solid #ccc" ><strong>Google :</strong></td>
 				<td>
 					<select name="wsl_settings_contacts_import_google" <?php if( ! get_option( 'wsl_settings_Google_enabled' ) ) echo "disabled" ?> >
-						<option <?php if( get_option( 'wsl_settings_contacts_import_google' ) == 1 ) echo "selected"; ?> value="1"><?php _e("Enabled", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_contacts_import_google' ) == 2 ) echo "selected"; ?> value="2"><?php _e("Disabled", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_contacts_import_google' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_contacts_import_google' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td> 
 				<td align="right" style="border-left:1px solid #ccc" ><strong>Twitter :</strong></td>
 				<td>
 					<select name="wsl_settings_contacts_import_twitter" <?php if( ! get_option( 'wsl_settings_Twitter_enabled' ) ) echo "disabled" ?> >
-						<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 1 ) echo "selected"; ?> value="1"><?php _e("Enabled", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 2 ) echo "selected"; ?> value="2"><?php _e("Disabled", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td>
 				<td align="right" style="border-left:1px solid #ccc" ><strong>Windows Live :</strong></td>
 				<td>
 					<select name="wsl_settings_contacts_import_live" <?php if( ! get_option( 'wsl_settings_Live_enabled' ) ) echo "disabled" ?> >
-						<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 1 ) echo "selected"; ?> value="1"><?php _e("Enabled", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 2 ) echo "selected"; ?> value="2"><?php _e("Disabled", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td>
 				<td align="right" style="border-left:1px solid #ccc" ><strong>LinkedIn :</strong></td>
 				<td>
 					<select name="wsl_settings_contacts_import_linkedin" <?php if( ! get_option( 'wsl_settings_LinkedIn_enabled' ) ) echo "disabled" ?> >
-						<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 ) echo "selected"; ?> value="1"><?php _e("Enabled", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 2 ) echo "selected"; ?> value="2"><?php _e("Disabled", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td>
 			  </tr> 
 			</table>  
 			<p>
-				<b  style="color:#CB4B16;"><?php _e("Notes", 'wordpress-social-login') ?>:</b> 
+				<b  style="color:#CB4B16;"><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
 				<ul style="margin-left:40px;margin-top:0px;">
-					<li><?php _e('To enable contacts import from these social network, you need first to enabled them on the <a href="options-general.php?page=wordpress-social-login&wslp=networks"><b>Networks</b></a> tab and register the required application', 'wordpress-social-login') ?>.</li> 
-					<li><?php _e("<b>WSL</b> will try to import as much information about a user contacts as he was able to pull from the social networks APIs.", 'wordpress-social-login') ?></li> 
-					<li><?php _e('All contacts data are sotred into your database on the table: <code>`wsluserscontacts`</code>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('To enable contacts import from these social network, you need first to enabled them on the <a href="options-general.php?page=wordpress-social-login&wslp=networks"><b>Networks</b></a> tab and register the required application', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e("<b>WSL</b> will try to import as much information about a user contacts as he was able to pull from the social networks APIs.", 'wordpress-social-login') ?></li> 
+					<li><?php _wsl_e('All contacts data are sotred into your database on the table: <code>`wsluserscontacts`</code>', 'wordpress-social-login') ?>.</li> 
 				</ul> 
 			</p> 
 		</div>
@@ -88,7 +92,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 	<br style="clear:both;" />
 	<div style="margin-left:5px;margin-top:-20px;"> 
-		<input type="submit" class="button-primary" value="<?php _e("Save Settings", 'wordpress-social-login') ?>" /> 
+		<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" /> 
 	</div>
 
 	</div> 
@@ -97,34 +101,34 @@ if ( !defined( 'ABSPATH' ) ) exit;
 	
 	<br  style="clear:both;" />
 	<hr /> 
-	<h3><?php _e("Users contacts list preview", 'wordpress-social-login') ?></h3>
+	<h3><?php _wsl_e("Users contacts list preview", 'wordpress-social-login') ?></h3>
 <?php
 	} // if( isset( $_REQUEST["uid"] ) && (int) $_REQUEST["uid"] ){ 
 	
 	if( $user_id ){
 		$display_name = wsl_get_user_data_by_user_id( "display_name", $user_id );
 ?> 
-	<h3><?php echo sprintf( __("%s contact's list", 'wordpress-social-login'), $display_name ) ?></h3>
+	<h3><?php echo sprintf( _wsl__("%s contact's list", 'wordpress-social-login'), $display_name ) ?></h3>
 <?php
 	}
 ?> 
 <table cellspacing="0" class="wp-list-table widefat fixed users">
 	<thead>
 		<tr> 
-			<th width="100"><span><?php _e("Provider", 'wordpress-social-login') ?></span></th>
-			<th><span><?php _e("User", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Name", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Email", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
+			<th width="100"><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>
+			<th><span><?php _wsl_e("User", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Email", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
 		</tr>
 	</thead> 
 	<tfoot>
 		<tr> 
-			<th><span><?php _e("Provider", 'wordpress-social-login') ?></span></th>
-			<th><span><?php _e("User", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Name", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Email", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>
+			<th><span><?php _wsl_e("User", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Email", 'wordpress-social-login') ?></span></th> 
+			<th><span><?php _wsl_e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
 		</tr>
 	</tfoot> 
 	<tbody id="the-list">
@@ -140,7 +144,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 	// have contacts?
 	if( ! $rs1 ){
 		?>
-			<tr class="no-items"><td colspan="5" class="colspanchange"><?php _e("No contacts found", 'wordpress-social-login') ?>.</td></tr>
+			<tr class="no-items"><td colspan="5" class="colspanchange"><?php _wsl_e("No contacts found", 'wordpress-social-login') ?>.</td></tr>
 		<?php
 	}
 	else{

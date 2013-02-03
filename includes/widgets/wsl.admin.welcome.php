@@ -7,18 +7,29 @@
 */
 
 /**
-* WSL Admin welcome panel
+* WSL welcome panel
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-// if new user or wsl updated, then we display wsl welcome panel
-if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGIN_VERSION ){ 
-?>
+function wsl_admin_welcome_panel()
+{
+	if( isset( $_REQUEST["wsldwp"] ) && (int) $_REQUEST["wsldwp"] ){
+		$wsldwp = (int) $_REQUEST["wsldwp"];
 
+		update_option( "wsl_settings_welcome_panel_enabled", wsl_version() );
+
+		return;
+	}
+
+	// if new user or wsl updated, then we display wsl welcome panel
+	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_version() ){ 
+		return;
+	}
+?> 
 <!-- 
 	if you want to know if a UI was made by devloper, then here is a tip: he will always use tables
 
@@ -38,8 +49,10 @@ if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGI
 			</td>
 			<td width="40" valign="top"></td>
 			<td width="260" valign="top">
-				<b><?php _e("Get Started", 'wordpress-social-login') ?></b>
-
+				<br />
+				<p>
+					<b><?php _e("Get Started", 'wordpress-social-login') ?></b>
+				</p>
 				<ul style="margin-left:25px;">
 					<li><?php _e('<a href="http://hybridauth.sourceforge.net/wsl/configure.html" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
 					<li><?php _e('<a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
@@ -48,15 +61,16 @@ if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGI
 				</ul>
 			</td>
 			<td width="" valign="top">
-				<b><?php _e( sprintf( "What's New  WSL %s", $WORDPRESS_SOCIAL_LOGIN_VERSION ), 'wordpress-social-login') ?></b>
-
+				<br />
+				<p>
+					<b><?php _e( sprintf( "What's New  WSL %s", wsl_version() ), 'wordpress-social-login') ?></b>
+				</p>
 				<ul style="margin-left:25px;">
-					<li><?php _e("Managing WSL users", 'wordpress-social-login') ?>,</li> 
-					<li><?php _e("Import WSL users contact list from Google Gmail, Facebook, Live and LinkedIn", 'wordpress-social-login') ?>,</li>  
-					<li><?php _e("An entirely reworked user interface", 'wordpress-social-login') ?>,</li> 
-					<li><?php _e("Improving the documentation and guides", 'wordpress-social-login') ?>,</li> 
-					<li><?php _e('Introducing a new module, and the long awaited, <a href="http://hybridauth.sourceforge.net/wsl/bouncer.html" target="_blank">The bouncer</a>', 'wordpress-social-login') ?>,</li> 
-					<li><?php _e("Twitch.tv joins WSL, richer Steam user profiles, and more", 'wordpress-social-login') ?>.</li>
+					<li><?php _e('In a similar way to WordPress plugins, WSL now have <a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a>', 'wordpress-social-login') ?>,</li>  
+					<li><?php _e('<b>Email Validation</b> is replaced with <b>Profile Completion</b>', 'wordpress-social-login') ?>,</li>
+					<li><?php _e('<b>User Moderation</b> made compatible with <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin', 'wordpress-social-login') ?>,</li> 
+					<li><?php _e('WSL is now made extensible, so make sure to check out the <a href="http://hybridauth.sourceforge.net/wsl/developer.html" target="_blank">Developer API</a>', 'wordpress-social-login') ?>,</li>
+					<li><?php _e('A number of enhancements and new options now available', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>
 		</tr>
@@ -69,8 +83,5 @@ if( get_option( 'wsl_settings_welcome_panel_enabled' ) != $WORDPRESS_SOCIAL_LOGI
 </div>
 <?php 
 }
-?>
-<script>
-	// check for new versions and updates
-	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
-</script> 
+
+// --------------------------------------------------------------------

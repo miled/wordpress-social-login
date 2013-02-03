@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;  
+if ( !defined( 'ABSPATH' ) ) exit;
 ?>
 
 <div>  
@@ -29,18 +29,18 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _e("Advanced Settings", 'wordpress-social-login') ?></label>
+			<label for="name"><?php _wsl_e("Advanced Settings", 'wordpress-social-login') ?></label>
 		</h3>
 
 		<div class="inside"> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tbody>
 			  <tr>
-				<td width="200" align="right" valign="top"><strong><?php _e("WSL Base URL", 'wordpress-social-login') ?> :</strong></td>
+				<td width="200" align="right" valign="top"><strong><?php _wsl_e("WSL Base URL", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
 				<input type="text" name="wsl_settings_base_url" value="<?php echo get_option( 'wsl_settings_base_url' ); ?>" class="inputgnrc"> 
 				<br />
-				<?php _e("eg: <code>http://www.example.com/wp-content/plugins/wordpress-social-login</code> without '/',. Keep it empty to rest to default.", 'wordpress-social-login') ?>
+				<?php _wsl_e("eg: <code>http://www.example.com/wp-content/plugins/wordpress-social-login</code> without '/',. Keep it empty to rest to default.", 'wordpress-social-login') ?>
 				</td>
 			  </tr> 
 			</tbody>

@@ -112,7 +112,7 @@ a.thumbnail:hover {
 }
 .wsl_connect_with_provider {  
 	text-decoration:none; 
-	cursor:wait;
+	cursor:not-allowed;
 } 
 #wsl-w-panel {
     background: linear-gradient(to top, #F5F5F5, #FAFAFA) repeat scroll 0 0 #F5F5F5;
@@ -143,13 +143,61 @@ a.thumbnail:hover {
 .hideinside {
     /* display:none; */
 } 
+
+.wp-editor-textarea{
+  width:98%;
+  padding:1%;
+  font-family:"Trebuchet MS", Arial, verdana, sans-serif;
+}
+.wp-editor-textarea textarea{
+  height:100px;
+}
+
+.wp-editor-textarea input {
+    width: auto !important;
+}
+
+#wsl_i18n_pre {
+    height: 800px; 
+    overflow-x: hidden;
+    overflow-y: scroll;
+}  
+#wsl_i18n {
+	width:530px; 
+	display:none;
+    padding: 10px; 
+	border: 1px solid #ddd; 
+	background-color: #fff;  
+	float:left;
+	margin-left: 20px;
+	padding: 0 10px 10px; 
+} 
+#wsl_i18n_form {
+	width:420px; 
+	display:none;
+	padding: 10px; 
+	border: 1px solid #ddd; 
+	background-color: #fff;
+	float:left; 
+}
+#wsl_i18n_cla {
+	display:none;
+	padding: 10px;  
+	border: 1px solid #ddd; 
+	background-color: #fff; 
+	
+	width: 50%;
+	margin: 0px auto;
+	margin-top:50px;
+}
 </style>
 
+<a name="wsltop"></a>
 <div class="wsldiv">
 
 <h1>
 	WordPress Social Login 
-	
+
 	<small><?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?></small>
 	<?php
 		if( get_option( 'wsl_settings_development_mode_enabled' ) ){
@@ -163,12 +211,21 @@ a.thumbnail:hover {
 <h2 class="nav-tab-wrapper">
 	&nbsp;
 <?php
-	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_MODULES_CONFIG as $name => $settings ){
-		if(  $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) ){
-			?>
-				<a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php echo $settings["label"] ?></a> 
-			<?php
+// print_r( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS );
+	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $name => $settings ){
+		// print_r( $name );
+		// print_r( $settings );
+		// print_r( "<hr>");
+		if( $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) ){
+			if( isset( $settings["admin-url"] ) ){
+				?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="<?php echo $settings["admin-url"] ?>"><?php echo $settings["label"] ?></a><?php
+			}
+			else{
+				?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php echo $settings["label"] ?></a><?php
+			}
 		}
 	} 
 ?>
 </h2>
+
+<div id="wsl_admin_tab_content">

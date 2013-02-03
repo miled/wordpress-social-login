@@ -41,7 +41,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); 
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.0.4"; // i know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.0"; // i know
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
 
@@ -98,39 +98,79 @@ if ( ! function_exists ('email_exists') ){
 	require_once( ABSPATH . WPINC . '/registration.php' );
 }
 
-require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/wp-load.php' );
+// --------------------------------------------------------------------
+
+/* Localization */ 
+
+if ( function_exists ('load_plugin_textdomain') ){
+	load_plugin_textdomain ( 'wordpress-social-login', false, WORDPRESS_SOCIAL_LOGIN_REL_PATH . '/languages/' );
+}
 
 // --------------------------------------------------------------------
 
+function _wsl_e($text, $domain)
+{
+	global $WORDPRESS_SOCIAL_LOGIN_TEXTS; 
+
+	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $text ) ) ] = $text;
+
+	return _e($text, $domain);
+}
+
+// --------------------------------------------------------------------
+
+function _wsl__($text, $domain)
+{
+	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
+
+	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $text ) ) ] = $text;
+
+	return __($text, $domain);
+}
+
+// --------------------------------------------------------------------
+
+function wsl_version()
+{
+	global $WORDPRESS_SOCIAL_LOGIN_VERSION;
+
+	return $WORDPRESS_SOCIAL_LOGIN_VERSION;
+}
+
+// -------------------------------------------------------------------- 
+
 /* Constants */ 
 
-define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, dirname( __FILE__ ) 									);
+define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, WP_PLUGIN_DIR . '/wordpress-social-login'             );
 define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) ) 				);
-define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, plugins_url() . '/' . basename( dirname( __FILE__ ) ) );
+define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, WP_PLUGIN_URL . '/wordpress-social-login'             );
 define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' 	);
 
 /* includes */
 
 # Settings
-require_once( dirname (__FILE__) . '/modules/settings/wsl.providers.php' 			); // List of provider supported by hybridauth library
-require_once( dirname (__FILE__) . '/modules/settings/wsl.modules.php'              ); // List of WSL admin moduldes
-require_once( dirname (__FILE__) . '/modules/settings/wsl.database.php'             ); // Functions & utililies related to wsl database installation and migrations
-require_once( dirname (__FILE__) . '/modules/settings/wsl.initialization.php'       ); // Check wsl requirements and register wsl settings 
-require_once( dirname (__FILE__) . '/modules/settings/wsl.compatibilities.php'      ); // Check and upgrade compatibilities from old wsl versions 
+require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php' 			 ); // List of provider supported by hybridauth library 
+require_once( dirname (__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utililies related to wsl database installation and migrations
+require_once( dirname (__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check wsl requirements and register wsl settings, list of components and admin tabs
+require_once( dirname (__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade compatibilities from old wsl versions 
 
 # Services
-require_once( dirname (__FILE__) . '/modules/services/wsl.authentication.php'       ); // Authenticate users via social networks. 
-require_once( dirname (__FILE__) . '/modules/services/wsl.mail.notification.php'    ); // Email notifications to send. so far only the admin one is implemented
-require_once( dirname (__FILE__) . '/modules/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
-require_once( dirname (__FILE__) . '/modules/services/wsl.user.data.php'            ); // User data functions (database related)
-
-# WSL Admin UIs
-require_once( dirname (__FILE__) . '/modules/admin/wsl.admin.ui.php'                ); // The 10 LOC in charge of displaying WSL Admin GUInterfaces
+require_once( dirname (__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. 
+require_once( dirname (__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Email notifications to send. so far only the admin one is implemented
+require_once( dirname (__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
+require_once( dirname (__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
 
 # WSL Widgets or so we call them
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (yep where the icons are displayed)
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.complete.registration.php' ); // Page for users completing their registration (currently used only by Bouncer::Email Validation
-require_once( dirname (__FILE__) . '/modules/widgets/wsl.notices.php'               ); // Kill WordPress execution and display HTML message with error message. in similar fashion to wp_die
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (yep where the icons are displayed)
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Page for users completing their registration (currently used only by Bouncer::Email Validation
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.notices.php'               ); // Kill WordPress execution and display HTML message with error message. in similar fashion to wp_die
+
+# WSL Admin UIs
+if( is_admin() ){
+	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The 10 LOC in charge of displaying WSL Admin GUInterfaces
+	require_once( dirname (__FILE__) . '/includes/widgets/wsl.admin.localize.php'    ); // Users invitational to help us localize WordPress Social Login
+	require_once( dirname (__FILE__) . '/includes/widgets/wsl.admin.welcome.php'     ); // WSL welcome panel
+}
 
 // --------------------------------------------------------------------
 

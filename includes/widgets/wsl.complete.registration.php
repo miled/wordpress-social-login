@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login )
 {
+	print_r( "$provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login" );
+
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// check posted user email & login
@@ -35,17 +37,54 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 	if( empty( $request_user_login ) ) $request_user_login_validate = false;
 	if( empty( $request_user_email ) ) $request_user_email_validate = false;
 
-	if(
-			( empty( $hybridauth_user_email ) && ! isset( $_REQUEST["user_email"] ) )
-		||
-			$request_user_login_exists
-		||
-			$request_user_email_exists
-		||
-			! $request_user_login_validate
-		||
-			! $request_user_email_validate
-	){ 
+	if( empty( $request_user_login ) ) $request_user_login = $hybridauth_user_login;
+	if( empty( $request_user_email ) ) $request_user_email = $hybridauth_user_email;
+
+	$shall_pass = true;
+	$shall_pass_errors = array();
+
+	// well until brain become able to compute again..
+	if( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 ){
+		if( ! $request_user_email ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid' ) ] = true;
+		}
+
+		if( ! $request_user_email_validate ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid' ) ] = true;
+		}
+
+		if( $request_user_email_exists ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_exists' ) ] = true;
+		}
+	}
+
+	if( get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1 ){
+		if( ! $request_user_login ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid' ) ] = true;
+		}
+
+		if( ! $request_user_login_validate ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid' ) ] = true;
+		}
+
+		if( $request_user_login_exists ){
+			$shall_pass = false;
+
+			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_exists' ) ] = true;
+		}
+	}
+
+	if( ! $shall_pass ){
 ?> 
 <!DOCTYPE html>
 <head>
@@ -57,7 +96,8 @@ body.login{background:0 repeat scroll 0 0 #fbfbfb;min-width:0}body,#wpbody,.form
 </style>
 <script>
 function init() {
-	document.getElementById('user_email').focus();
+	if( document.getElementById('user_login') ) document.getElementById('user_login').focus()
+	if( document.getElementById('user_email') ) document.getElementById('user_email').focus()
 }
 </script>
 <body class="login" onload="init();">
@@ -68,50 +108,45 @@ function init() {
 -->
 	<div id="login">
 		<?php
-			if( ! isset( $_REQUEST["user_email"] ) ){ 
-				?><p class="message"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_notice' ); ?></p><?php
+			if( ! isset( $_REQUEST["bouncer_profile_completion"] ) ){ 
+				?><p class="message"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_notice' ); ?></p><?php
 			}
-			else{
-				if( $request_user_login_exists ){
-					?><p class="error"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_username_exists' ); ?></p><?php
-				} 
-
-				if( ! $request_user_login_validate ){
-					?><p class="error"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_username_invalid' ); ?></p><?php
-				} 
-
-				if( $request_user_email_exists ){
-					?><p class="error"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_email_exists' ); ?></p><?php
-				} 
-
-				if( ! $request_user_email_validate ){
-					?><p class="error"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_email_invalid' ); ?></p><?php
-				} 
+			elseif( $shall_pass_errors ){ 
+				foreach( $shall_pass_errors as $k => $v ){
+					?><p class="error"><?php echo $k; ?></p><?php
+				}
 			} 
 		?>
 		<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="loginform" name="loginform"> 
+			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1 ){ ?>
 			<p>
-			<label for="user_login"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_username' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
+			<label for="user_login"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_username' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
 			</p>
+			<?php } ?>
+
+			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 ){ ?>
 			<p>
-			<label for="user_email"><?php echo get_option( 'wsl_settings_bouncer_email_validation_text_email' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
+			<label for="user_email"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_email' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
 			</p>
+			<?php } ?>
+
 			<table width="100%" border="0">
 				<tr>
 					<td valign="bottom">
 						<span class="info">
 							<img src="<?php echo $assets_base_url . strtolower( $provider ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" />
-							<?php echo get_option( 'wsl_settings_bouncer_email_validation_text_connected_with' ); ?> <b><?php echo ucfirst($provider) ?></b>.
+							<?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_connected_with' ); ?> <b><?php echo ucfirst($provider) ?></b>.
 						</span>
 					</td>
 					<td>
-						<input type="submit" value="<?php echo get_option( 'wsl_settings_bouncer_email_validation_text_submit_button' ); ?>" class="button button-primary button-large" id="wp-submit" name="wp-submit"> 
+						<input type="submit" value="<?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_submit_button' ); ?>" class="button button-primary button-large" id="wp-submit" name="wp-submit"> 
 					</td>
 				</tr>
 			</table>
 			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
 			<input type="hidden" id="action" name="action" value="wordpress_social_login">
+			<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 		</form>
 	</div> 
 </body>
@@ -120,7 +155,7 @@ function init() {
 		die();
 	}
 
-	return array( $request_user_login, $request_user_email );
+	return array( $shall_pass, $request_user_login, $request_user_email );
 }
 
 // --------------------------------------------------------------------

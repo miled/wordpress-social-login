@@ -25,7 +25,10 @@ function wsl_render_login_form()
 	// HOOKABLE: want to generate your own widget? fine, but Bouncer rules tho
 	if( apply_filters( 'wsl_hook_alter_render_login_form', null ) ){
 		return;
-	} 
+	}
+
+	// HOOKABLE: 
+	do_action( 'wsl_hook_render_login_form_start', $message );
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
@@ -42,6 +45,25 @@ function wsl_render_login_form()
 	}
 
 	$wsl_settings_connect_with_label = get_option( 'wsl_settings_connect_with_label' );
+
+	$current_page_url = 'http'; 
+	if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {
+		$current_page_url .= "s";
+	}
+	$current_page_url .= "://";
+	if ($_SERVER["SERVER_PORT"] != "80") {
+		$current_page_url .= $_SERVER["HTTP_HOST"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
+	}
+	else {
+		$current_page_url .= $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
+	} 
+
+	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticate&";
+
+	// overwrite endpoint_url if need'd
+	if( get_option( 'wsl_settings_hide_wp_login' ) == 1 ){
+		$authenticate_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/services/authenticate.php?";
+	}
 ?>
 <!--
    wsl_render_login_form
@@ -50,7 +72,8 @@ function wsl_render_login_form()
 -->
 <?php 
 	$wsl_settings_authentication_widget_css = get_option( 'wsl_settings_authentication_widget_css' );
-	
+
+	// if not empty and not the default
 	if( ! empty( $wsl_settings_authentication_widget_css ) ){
 ?>
 <style>
@@ -69,26 +92,19 @@ function wsl_render_login_form()
 		$provider_id     = @ $item["provider_id"];
 		$provider_name   = @ $item["provider_name"]; 
 
-		$current_page_url = 'http';
-		if (isset($_SERVER["HTTPS"]) && ($_SERVER["HTTPS"] == "on")) {$current_page_url .= "s";}
-		$current_page_url .= "://";
-		if ($_SERVER["SERVER_PORT"] != "80") {
-		$current_page_url .= $_SERVER["HTTP_HOST"].":".$_SERVER["SERVER_PORT"].$_SERVER["REQUEST_URI"];
-		} else {
-		$current_page_url .= $_SERVER["HTTP_HOST"].$_SERVER["REQUEST_URI"];
-		} 
+		$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $current_page_url );
 
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			if( get_option( 'wsl_settings_use_popup' ) == 1 ){
 				?>
-				<a rel="nofollow" href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" provider="<?php echo $provider_id ?>">
+				<a rel="nofollow" href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" data-provider="<?php echo $provider_id ?>">
 					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
 				</a>
 				<?php
 			}
 			elseif( get_option( 'wsl_settings_use_popup' ) == 2 ){ 
 				?>
-				<a rel="nofollow" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/services/authenticate.php?provider=<?php echo $provider_id ?>&redirect_to=<?php echo urlencode($current_page_url) ?>" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" >
+				<a rel="nofollow" href="<?php echo esc_url( $authenticate_url ) ?>" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider" >
 					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
 				</a>
 				<?php 
@@ -101,12 +117,7 @@ function wsl_render_login_form()
 	if( $nok ){
 		?>
 		<p style="background-color: #FFFFE0;border:1px solid #E6DB55;padding:5px;">
-			<strong style="color:red;">WordPress Social Login is not configured yet!</strong>
-			<br />
-			Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.
-			<br />
-			For more information please refer to the plugin <a href="http://hybridauth.sourceforge.net/userguide/Plugin_WordPress_Social_Login.html">online user guide</a> 
-			or contact us at <a href="http://hybridauth.sourceforge.net/">hybridauth.sourceforge.net</a>
+			<?php _e( '<strong style="color:red;">WordPress Social Login is not configured yet!</strong><br />Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.<br />For more information please refer to the plugin <a href="http://hybridauth.sourceforge.net/userguide/Plugin_WordPress_Social_Login.html">online user guide</a> or contact us at <a href="http://hybridauth.sourceforge.net/">hybridauth.sourceforge.net</a>' , 'wordpress-social-login') ?> 
 		</p>
 		<style>
 			#wp-social-login-connect-with{display:none;}
@@ -115,13 +126,19 @@ function wsl_render_login_form()
 	}
 
 	// provide popup url for hybridauth callback
+	if( get_option( 'wsl_settings_use_popup' ) == 1 ){
 	?>
-		<input id="wsl_popup_base_url" type="hidden" value="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/services/authenticate.php?" />
-		<input type="hidden" id="wsl_login_form_uri" value="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" />
+		<input id="wsl_popup_base_url" type="hidden" value="<?php echo esc_url( $authenticate_url ) ?>" />
+		<input type="hidden" id="wsl_login_form_uri" value="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" />
+	<?php
+	}
+	?>
 	</div> 
-<!-- /wsl_render_login_form -->
-
+<!-- /wsl_render_login_form -->  
 <?php
+
+	// HOOKABLE: 
+	do_action( 'wsl_hook_render_login_form_end', $message );
 }
 
 // --------------------------------------------------------------------
@@ -368,7 +385,7 @@ function wsl_render_login_form()
 	}
 
 	function wsl_render_login_form_admin_head_user_profile()
-	{ 
+	{
 		// HOOKABLE:
 		if( apply_filters( 'wsl_hook_alter_render_login_form_admin_head_user_profile', null ) ){
 			return;
@@ -486,7 +503,7 @@ function wsl_render_login_form()
 		return $rs[0]->data_field;
 	}
 
-	add_action( 'admin_head-profile.php', 'wsl_render_login_form_admin_head_user_profile' ); 
+	add_action( 'admin_head-profile.php', 'wsl_render_login_form_admin_head_user_profile' );  
 # }}} linking new accounts
 
 // --------------------------------------------------------------------

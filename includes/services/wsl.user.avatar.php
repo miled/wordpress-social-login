@@ -21,7 +21,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
  */
 function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
 {
-	//Check if we are in a comment
+	//Check if avatars are enabled
 	if( get_option ( 'wsl_settings_users_avatars' ) )
 	{
 		//Current comment
@@ -73,58 +73,5 @@ function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
 }
 
 add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
-
-// --------------------------------------------------------------------
-
-/**
- * Hook to display custom avatars (Buddypress specific)
- * borrowed as well
- */
-function wsl_user_custom_avatar_bp ($text, $args)
-{
-	//Check if avatars are enabled
-	if( get_option ( 'wsl_settings_users_avatars' ) )
-	{
-		//Check arguments
-		if (is_array ($args))
-		{
-			//User Object
-			if (!empty ($args ['object']) AND strtolower ($args ['object']) == 'user')
-			{
-				//User Identifier
-				if (!empty ($args ['item_id']) AND is_numeric ($args ['item_id']))
-				{
-					//Retrieve user
-					if (($user_data = get_userdata ($args ['item_id'])) !== false)
-					{
-						$user_thumbnail = get_user_meta ( $args ['item_id'], 'wsl_user_image', true );
-
-						//Retrieve Avatar
-						if ( $user_thumbnail )
-						{
-							//Thumbnail retrieved
-							if (strlen (trim ($user_thumbnail)) > 0)
-							{
-								//Build Image tags
-								$img_alt = ""; // meh
-
-								$img_class = ('class="' . (!empty ($args ['class']) ? ($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
-								$img_width = (!empty ($args ['width']) ? 'width="' . $args ['width'] . '" ' : '');
-								$img_height = (!empty ($args ['height']) ? 'height="' . $args ['height'] . '" ' : '');
-
-								//Replace
-								$text = preg_replace ('#<img[^>]+>#i', '<img src="' . $user_thumbnail . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $text);
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-
-	return $text;
-}
-
-add_filter ('bp_core_fetch_avatar_', 'wsl_user_custom_avatar_bp', 10, 2);
 
 // --------------------------------------------------------------------

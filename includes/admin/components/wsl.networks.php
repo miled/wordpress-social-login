@@ -15,6 +15,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
+wsl_admin_welcome_panel();
+
+// --------------------------------------------------------------------
+
 global $wpdb;
 
 if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
@@ -37,6 +41,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 		}
 		else{
 			jQuery('.wsl_tr_settings_' + idp).hide();
+			jQuery('.wsl_div_settings_help_' + idp).hide();
 		}
 		
 		return false;
@@ -111,7 +116,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 		<a name="setup<?php echo strtolower( $provider_id ) ?>"></a> 
 		<div class="stuffbox" id="namediv">
 			<h3>
-				<label for="name">
+				<label for="name" class="wp-neworks-label">
 					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php echo $provider_name ?>
 				</label>
 			</h3>
@@ -119,7 +124,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 				<table class="form-table editcomment">
 					<tbody>
 						<tr>
-							<td style="width:110px">Enabled:</td>
+							<td style="width:110px"><?php _wsl_e("Enabled", 'wordpress-social-login') ?>:</td>
 							<td>
 								<select 
 									name="<?php echo 'wsl_settings_' . $provider_id . '_enabled' ?>" 
@@ -136,21 +141,21 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 						<?php if ( $provider_new_app_link ){ ?>
 							<?php if ( $require_client_id ){ // key or id ? ?>
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
-									<td>Application ID:</td>
+									<td><?php _wsl_e("Application ID", 'wordpress-social-login') ?>:</td>
 									<td><input type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_id' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_id' ); ?>" ></td>
-									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')">Where do I get this info?</a></td>
+									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr> 
 							<?php } else { ?>
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
-									<td>Application Key:</td>
+									<td><?php _wsl_e("Application Key", 'wordpress-social-login') ?>:</td>
 									<td><input type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_key' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_key' ); ?>" ></td>
-									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')">Where do I get this info?</a></td>
+									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>  
 							<?php }; ?>	 
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
-									<td>Application Secret:</td>
+									<td><?php _wsl_e("Application Secret", 'wordpress-social-login') ?>:</td>
 									<td><input type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_secret' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_secret' ); ?>" ></td>
-									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')">Where do I get this info?</a></td>
+									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>
 						<?php } // if require registration ?> 
 					</tbody>
@@ -159,8 +164,11 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 				<br />
 				<hr />
 				<p style="margin-left:12px;margin-bottom:0px;"> 
-					<b  style="color:#CB4B16;">Note:</b> 
-					<b><?php echo $provider_name ?></b> do not provide their user's email address and by default a random email will then be generated for them instead. To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer" target="_blank">Bouncer</a></b> and enable <b>Email Validation</b>.
+					<b  style="color:#CB4B16;"><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
+					
+					<?php _wsl_e(sprintf( "<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", $provider_name ), 'wordpress-social-login') ?>. 
+					
+					<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Email Validation</b>', 'wordpress-social-login') ?>.
 				</p>
 				<?php endif; ?> 
 				<br />
@@ -170,15 +178,19 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 				> 
 					<hr class="wsl" />
 					<?php if ( $provider_new_app_link  ) : ?> 
-						<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials. 
-						This application will link your website <code><?php echo $_SERVER["SERVER_NAME"] ?></code> to <code><?php echo $provider_name ?> API</code> and these credentials are needed in order for <b><?php echo $provider_name ?></b> users to access your website. 
+						<?php _wsl_e('<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials', 'wordpress-social-login') ?>. 
+						
+						<?php _wsl_e( sprintf( 'This application will link your website <code>%s</code> to <code>%s API</code> and these credentials are needed in order for <b>%s</b> users to access your website', $_SERVER["SERVER_NAME"], $provider_name, $provider_name ), 'wordpress-social-login') ?>. 
 						<br />
-						These credentials may also differ in format, name and content depending on the social network.
+						
+						<?php _wsl_e("These credentials may also differ in format, name and content depending on the social network.", 'wordpress-social-login') ?> 
 						<br />
 						<br />
-						To enable authentication with this provider and to register a new <b><?php echo $provider_name ?> API Application</b>, carefully follow the steps:<br />
+						
+						<?php _wsl_e(sprintf( 'To enable authentication with this provider and to register a new <b>%s API Application</b>, carefully follow the steps', $provider_name ), 'wordpress-social-login') ?>
+						:<br />
 					<?php else: ?>  
-							<p><b>Done.</b> Nothing more required for <b><?php echo $provider_name ?></b>.</p> 
+							<p><?php _wsl_e(sprintf('<b>Done.</b> Nothing more required for <b>%s</b>', $provider_name), 'wordpress-social-login') ?>.</p> 
 					<?php endif; ?>  
 					<div class="wsl_div_settings_help_<?php echo $provider_id; ?>" style="margin-left:40px;">
 						<?php if ( $provider_new_app_link  ) : ?> 
@@ -262,14 +274,10 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 						<?php endif; ?> 
 						<?php if ( $provider_new_app_link  ) : ?> 
 							<p>
-								<b>And that's it!</b> 
+								<b><?php _wsl_e("And that's it!", 'wordpress-social-login') ?></b> 
 								<br />
-								If for some reason you still can't figure it out, first try to 
-									a) <a class="button-primary" href="https://www.google.com/search?q=<?php echo $provider_name ?> API create application" target="_blank">Google it</a>, 
-									then check it on b) 
-									<a class="button-primary" href="http://www.youtube.com/results?search_query=<?php echo $provider_name ?> API create application " target="_blank">Youtube</a>
-									and if nothing works c) 
-									<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=help ">ask for support</a>.
+								<?php _wsl_e( sprintf( 'If for some reason you still can\'t figure it out, first try to a) <a class="button-primary" href="https://www.google.com/search?q=%s API create application" target="_blank">Google it</a>, then check it on b) <a class="button-primary" href="http://www.youtube.com/results?search_query=%s API create application " target="_blank">Youtube</a> and if nothing works c) <a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=help">ask for support</a>', $provider_name, $provider_name ), 'wordpress-social-login') ?>
+								.
 							</p> 
 						<?php endif; ?> 
 					</div>  
@@ -289,10 +297,11 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
   </tr> 
   <tr> 
     <td align="left">
-		<p>And you could add even more of them, <b>Just Click</b> and we will guide you through :</p>
+		<p><?php _wsl_e("And you could add even more of them, <b>Just Click</b> and we will guide you through", 'wordpress-social-login') ?> :</p>
 		<?php 
 			$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/icondock/';
 
+			$nb_used = count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG );
 			foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
 				$provider_id                = @ $item["provider_id"];
 				$provider_name              = @ $item["provider_name"];
@@ -303,12 +312,17 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 				}
 
 				if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
-					// echo "$provider_name;";
 					?>
 						<a href="options-general.php?page=wordpress-social-login&wslp=networks&enable=<?php echo $provider_id ?>#setup<?php echo strtolower( $provider_id ) ?>"><img src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" /></a>
 					<?php
+
+					$nb_used--;
 				}
-			} 
+			}
+
+			if( $nb_used == count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG ) ){
+				_wsl_e("Well! none left.", 'wordpress-social-login');
+			}
 		?> 
 	</td>
   </tr> 
@@ -325,7 +339,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 
 <div class="postbox " id="linksubmitdiv"> 
 	<div class="inside">
-		<div id="submitlink" class="submitbox"> <h3 style="cursor: default;">Why, hello there</h3>
+		<div id="submitlink" class="submitbox"> <h3 style="cursor: default;"><?php _wsl_e("Why, hello there", 'wordpress-social-login') ?></h3>
 			<div id="minor-publishing"> 
 
 				<div style="display:none;"><input type="submit" value="Save" class="button" id="save" name="save"></div>
@@ -333,11 +347,10 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 				<div id="misc-publishing-actions">
 					<div class="misc-pub-section"> 
 						<p style="line-height: 19px;font-size: 13px;" align="justify">
-							If you are still new to things, we recommend that you read the <b><a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">Plugin User Guide</a></b>
-							and to make sure your server settings meet this <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">Plugin Requirements</a></b>.
+							<?php _wsl_e('If you are still new to things, we recommend that you read the <b><a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">Plugin User Guide</a></b> and to make sure your server settings meet this <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=diagnostics">Plugin Requirements</a></b>', 'wordpress-social-login') ?>.
 						</p>
 						<p style="line-height: 19px;" align="justify">
-							If you run into any issue then refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help">Help & Support</a></b> to konw how to reach me.
+							<?php _wsl_e('If you run into any issue then refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help">Help & Support</a></b> to konw how to reach me', 'wordpress-social-login') ?>.
 						</p> 
 					</div>
 				</div> 
@@ -365,26 +378,26 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 	$total_users_wsl  = (int) $rs2[0]->items;
 	$users_conversion = ( 100 * $total_users_wsl ) / $total_users;
 
-	if( $total_users_wsl ){
+	if( $total_users_wsl && wsl_is_component_enabled( "basicinsights" ) ){
 ?> 
 <div class="postbox " id="linksubmitdiv"> 
 	<div class="inside">
 		<div id="submitlink" class="submitbox"> 
-			<h3 style="cursor: default;">Insights</h3>
+			<h3 style="cursor: default;"><?php _wsl_e("Insights", 'wordpress-social-login') ?></h3>
 			<div id="minor-publishing">  
 				<div id="misc-publishing-actions"> 
 
 					<div style="padding:20px;padding-top:0px;"> 
-						<h4 style="border-bottom:1px solid #ccc"> Conversions</h4>
+						<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("Conversions", 'wordpress-social-login') ?></h4>
 						<table width="90%"> 
 							<tr>
-								<td width="60%">WP users</td><td><?php echo $total_users; ?></td>
+								<td width="60%"><?php _wsl_e("WP users", 'wordpress-social-login') ?></td><td><?php echo $total_users; ?></td>
 							<tr>
 							</tr>
-								<td>WSL users</td><td><?php echo $total_users_wsl; ?></td>
+								<td><?php _wsl_e("WSL users", 'wordpress-social-login') ?></td><td><?php echo $total_users_wsl; ?></td>
 							<tr>
 							</tr>
-								<td>Conversions</td><td style="border-top:1px solid #ccc">+<b><?php echo number_format($users_conversion, 2, '.', ''); ?> %</b></td>
+								<td><?php _wsl_e("Conversions", 'wordpress-social-login') ?></td><td style="border-top:1px solid #ccc">+<b><?php echo number_format($users_conversion, 2, '.', ''); ?></b> %</td>
 							</tr>
 						</table>
 						
@@ -395,7 +408,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 
 							$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 						?> 
-						<h4 style="border-bottom:1px solid #ccc"> By provider</h4>
+						<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By provider", 'wordpress-social-login') ?></h4>
 						<table width="90%">
 							<?php 
 								foreach( $rs1 as $item ){
@@ -413,7 +426,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 								}
 							?> 
 							</tr>
-								<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo $total_users_wsl; ?></b> WSL users</td>
+								<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo $total_users_wsl; ?></b> <?php _wsl_e("WSL users", 'wordpress-social-login') ?></td>
 							</tr>
 						</table>
 
@@ -422,7 +435,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 
 							$rs = $wpdb->get_results( $sql ); 
 						?>
-						<h4 style="border-bottom:1px solid #ccc">By gender</h4>
+						<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By gender", 'wordpress-social-login') ?></h4>
 						<table width="90%">
 							<?php
 								foreach( $rs as $item ){
@@ -446,7 +459,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 
 							$rs = $wpdb->get_results( $sql ); 
 						?>
-						<h4 style="border-bottom:1px solid #ccc">By age</h4>
+						<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By age", 'wordpress-social-login') ?></h4>
 						<table width="90%">
 							<?php
 								$t_ages = 0;
@@ -475,7 +488,7 @@ if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 						</td>
 						</tr>
 						</tr>
-							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo number_format($a_ages, 1, '.', ''); ?></b> yrs in average</td>
+							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo number_format($a_ages, 1, '.', ''); ?></b> <?php _wsl_e("yrs in average", 'wordpress-social-login') ?></td>
 						</tr> 
 						</table>
 					</div> 
