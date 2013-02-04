@@ -698,13 +698,7 @@ function wsl_process_login_hybridauth_authenticate( $provider, $redirect_to )
 					}
 					while( ! $shall_pass );
 				}
-				
-				// print_r( array( $shall_pass, $request_user_login, $request_user_email ) );
-				
-				// die( "oop");
 			}  
-			
-			die( "oops 2 ");
 		# }}} module Bouncer
 		}
 		else{
@@ -903,14 +897,14 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	// store user hybridauth user profile if needed
 	wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
 
-	// Bouncer :: User Moderation : E-mail Confirmation — Yield to Theme My Login plugin
+	// Bouncer :: User Moderation : E-mail Confirmation ï¿½ Yield to Theme My Login plugin
 	if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 101 ){
 		$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=activation";
 
 		@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
 	}
 
-	// Bouncer :: User Moderation : Admin Approval — Yield to Theme My Login plugin
+	// Bouncer :: User Moderation : Admin Approval ï¿½ Yield to Theme My Login plugin
 	elseif( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 102 ){
 		$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=approval";
 	}
