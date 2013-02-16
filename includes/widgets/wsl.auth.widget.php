@@ -100,7 +100,7 @@ function wsl_render_login_form()
 
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			// HOOKABLE: allow use of other icon sets
-			$provider_icon_markup = apply_filters( 'wsl_later_hook_provider_icon_markup', $provider_id );
+			$provider_icon_markup = apply_filters( 'wsl_alter_hook_provider_icon_markup', $provider_id );
 
 			$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' ) ;
 
