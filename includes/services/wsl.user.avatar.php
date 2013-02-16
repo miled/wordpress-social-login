@@ -62,9 +62,9 @@ function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
 		{
 			$user_thumbnail = get_user_meta ( $user_id, 'wsl_user_image', true );
 
-			if ( $user_thumbnail ) 
+			if ( $user_thumbnail )
 			{
-				return '<img alt="-" src="' . $user_thumbnail . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />'; 
+				return '<img src="' . $user_thumbnail . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />'; 
 			}
 		}
 	}

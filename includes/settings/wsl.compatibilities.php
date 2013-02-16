@@ -7,6 +7,15 @@
 */
 
 /**
+* Check and upgrade compatibilities from old WSL versions
+*/
+
+// Exit if accessed directly
+if ( !defined( 'ABSPATH' ) ) exit;
+
+// --------------------------------------------------------------------
+
+/**
 * Check and upgrade compatibilities from old WSL versions 
 *
 * Here we attempt to:
@@ -16,12 +25,6 @@
 * Side note: the things here are not optimal and the list is kind of long. If you have any 
 * better idea on how to tackle this issue, please don't hesitate to share it!
 */
-
-// Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
-
-// --------------------------------------------------------------------
-
 function wsl_check_compatibilities()
 {
 	# widget settings / customize
@@ -86,87 +89,55 @@ function wsl_check_compatibilities()
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_notice' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_notice', __("Almost there, we just need to check a couple of things", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_notice', _wsl__("Almost there, we just need to check a couple of things", 'wordpress-social-login') );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_submit_button' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_submit_button', __("Continue", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_submit_button', _wsl__("Continue", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_email' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_email', __("E-mail", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_email', _wsl__("E-mail", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_username' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_username', __("Username", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_username', _wsl__("Username", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid', __("E-mail is not valid!", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid', _wsl__("E-mail is not valid!", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid', __("Username is not valid!", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid', _wsl__("Username is not valid!", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_email_exists' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_email_exists', __("That E-mail is already registered!", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_email_exists', _wsl__("That E-mail is already registered!", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_username_exists' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_username_exists', __("That Username is already registered!", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_username_exists', _wsl__("That Username is already registered!", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_text_connected_with' ) ){
-		update_option( 'wsl_settings_bouncer_profile_completion_text_connected_with', __("You are now connected via", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_profile_completion_text_connected_with', _wsl__("You are now connected via", 'wordpress-social-login') );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) ){ 
 		update_option( 'wsl_settings_bouncer_new_users_moderation_level', 1 );
-	} 
+	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) ){ 
 		update_option( 'wsl_settings_bouncer_new_users_membership_default_role', "default" );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_enabled' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_passcode_enabled', 2 );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_enabled' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_passcode_enabled', 2 );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_text_passcode' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_passcode_text_passcode', __("Passcode", 'wordpress-social-login') );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_text_notice' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_passcode_text_notice', __("Please provide the Passcode", 'wordpress-social-login') );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_text_error' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_passcode_text_error', __("Passcode is not valid!", 'wordpress-social-login') );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_passcode_text_submit_button' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_passcode_text_submit_button', __("Continue", 'wordpress-social-login') );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_new_users_agreement_enabled' ) ){ 
-		update_option( 'wsl_settings_bouncer_new_users_agreement_enabled', 2 );
-	} 
-
-	if( ! get_option( 'wsl_settings_bouncer_agreement_text_submit_button' ) ){
-		update_option( 'wsl_settings_bouncer_agreement_text_submit_button', __("I Agree", 'wordpress-social-login') );
-	} 
+	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) ){ 
 		update_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled', 2 );
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce', __("Bouncer says no.", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce', _wsl__("Bouncer says no.", 'wordpress-social-login') );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) ){ 
@@ -174,7 +145,7 @@ function wsl_check_compatibilities()
 	} 
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce', __("Bouncer say he refuses.", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce', _wsl__("Bouncer say he refuses.", 'wordpress-social-login') );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_profile_enabled' ) ){ 
@@ -182,7 +153,7 @@ function wsl_check_compatibilities()
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ) ){
-		update_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce', __("Bouncer say only Mundo can go where he pleases!", 'wordpress-social-login') );
+		update_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce', _wsl__("Bouncer say only Mundo can go where he pleases!", 'wordpress-social-login') );
 	}
 
 	# contacts import

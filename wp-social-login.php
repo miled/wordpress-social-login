@@ -12,7 +12,7 @@ Domain Path: languages
 */
 
 /*
-Copyright (C) 2013 Mohamed Mrassi and other contributors
+Copyright (C) 2013 Mohamed Mrassi and contributors
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
@@ -41,24 +41,30 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); 
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.0"; // i know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.2"; // i know
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
+
+// -------------------------------------------------------------------- 
+
+/* Constants */ 
+
+define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, WP_PLUGIN_DIR . '/wordpress-social-login'          );
+define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) )             );
+define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, WP_PLUGIN_URL . '/wordpress-social-login'          );
+define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' );
 
 // --------------------------------------------------------------------
 
 /**
- * Check technical requirements before activating the plugin.
- * Wordpress 3.0 or newer required, 3.1 would be better
- * PHP 5.2 or newer
- * CURL Required
- */
+* Check technical requirements before activating the plugin. 
+* Wordpress 3.0 or newer required
+*/
 function wsl_activate()
 {
-	if ( ! function_exists ('register_post_status') )
-	{
+	if ( ! function_exists ('register_post_status') ){
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
-		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login') );
+		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
 	}
 
 	do_action( 'wsl_activate' );
@@ -69,17 +75,19 @@ register_activation_hook( __FILE__, 'wsl_activate' );
 // --------------------------------------------------------------------
 
 /**
- * Add a settings link to the Plugins page
- * http://www.whypad.com/posts/wordpress-add-settings-link-to-plugins-page/785/
- */
+* Add a settings link to the Plugins page
+*
+* http://www.whypad.com/posts/wordpress-add-settings-link-to-plugins-page/785/
+*/
 function wsl_add_settings_link( $links, $file )
-{ 
+{
 	static $this_plugin;
 
 	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
 	if ( $file == $this_plugin ){
-		$settings_link = '<a href="options-general.php?page=wordpress-social-login">' . __("Settings") . '</a>';
+		$settings_link = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+
 		array_unshift( $links, $settings_link );
 	}
 
@@ -91,9 +99,9 @@ add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 );
 // --------------------------------------------------------------------
 
 /**
- * This file only need to be included for versions before 3.1.
- * Deprecated since version 3.1, the functions are included by default
- */
+* This file only need to be included for versions before 3.1.
+* Deprecated since version 3.1, the functions are included by default
+*/
 if ( ! function_exists ('email_exists') ){
 	require_once( ABSPATH . WPINC . '/registration.php' );
 }
@@ -102,34 +110,69 @@ if ( ! function_exists ('email_exists') ){
 
 /* Localization */ 
 
+/**
+* Loads the plugin's translated strings.
+*
+* http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
+*/
 if ( function_exists ('load_plugin_textdomain') ){
+	// B. Please. It's on purpose.
 	load_plugin_textdomain ( 'wordpress-social-login', false, WORDPRESS_SOCIAL_LOGIN_REL_PATH . '/languages/' );
 }
 
 // --------------------------------------------------------------------
 
+/**
+* _e() wrapper
+*
+* This function is used for the localization widget to generate translations per page. 
+* If you are using Poedit for example you could search for texts by _wsl_e and _wsl__ instead
+*
+* If you are new to wp/i18n, then check out this video youtube.com/watch?v=aGN-hbMCPMg
+*
+* And PLEASE, if you translated something on wsl then consider shareing it by droping an email
+* even if it's one word or one sentence.
+*/
 function _wsl_e($text, $domain)
 {
 	global $WORDPRESS_SOCIAL_LOGIN_TEXTS; 
 
-	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $text ) ) ] = $text;
+	$local = __($text, $domain);
 
-	return _e($text, $domain);
+	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $local ) ) ] = $text;
+
+	echo $local;
 }
 
 // --------------------------------------------------------------------
 
+/**
+* __() wrapper
+* 
+* This function is used for the localization widget to generate translations per page. 
+* If you are using Poedit for example you could search for texts by _wsl_e and _wsl__ instead
+*
+* If you are new to wp/i18n, then check out this video youtube.com/watch?v=aGN-hbMCPMg
+*
+* And PLEASE, if you translated something on wsl then consider shareing it by droping an email
+* even if it's one word or one sentence.
+*/
 function _wsl__($text, $domain)
 {
 	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
 
-	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $text ) ) ] = $text;
+	$local = __($text, $domain);
 
-	return __($text, $domain);
+	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $local ) ) ] = $text;
+
+	return $local;
 }
 
 // --------------------------------------------------------------------
 
+/**
+* Return the current used WSL version
+*/
 function wsl_version()
 {
 	global $WORDPRESS_SOCIAL_LOGIN_VERSION;
@@ -138,13 +181,6 @@ function wsl_version()
 }
 
 // -------------------------------------------------------------------- 
-
-/* Constants */ 
-
-define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, WP_PLUGIN_DIR . '/wordpress-social-login'             );
-define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) ) 				);
-define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, WP_PLUGIN_URL . '/wordpress-social-login'             );
-define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' 	);
 
 /* includes */
 
@@ -167,9 +203,7 @@ require_once( dirname (__FILE__) . '/includes/widgets/wsl.notices.php'          
 
 # WSL Admin UIs
 if( is_admin() ){
-	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The 10 LOC in charge of displaying WSL Admin GUInterfaces
-	require_once( dirname (__FILE__) . '/includes/widgets/wsl.admin.localize.php'    ); // Users invitational to help us localize WordPress Social Login
-	require_once( dirname (__FILE__) . '/includes/widgets/wsl.admin.welcome.php'     ); // WSL welcome panel
+	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The LOC in charge of displaying WSL Admin GUInterfaces 
 }
 
 // --------------------------------------------------------------------
