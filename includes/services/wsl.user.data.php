@@ -231,3 +231,10 @@ function wsl_get_user_data_by_user_id( $field, $user_id )
 }
 
 // --------------------------------------------------------------------
+
+function wsl_delete_userprofiles($user_id) {
+    global $wpdb;
+    $sql = "DELETE FROM `{$wpdb->prefix}wslusersprofiles` where user_id = '$user_id'";
+    $rs  = $wpdb->get_results( $sql );
+}
+add_action( 'delete_user', 'wsl_delete_userprofiles');
