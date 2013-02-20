@@ -232,9 +232,26 @@ function wsl_get_user_data_by_user_id( $field, $user_id )
 
 // --------------------------------------------------------------------
 
-function wsl_delete_userprofiles($user_id) {
+function wsl_delete_userprofiles( $user_id )
+{
     global $wpdb;
+
     $sql = "DELETE FROM `{$wpdb->prefix}wslusersprofiles` where user_id = '$user_id'";
-    $rs  = $wpdb->get_results( $sql );
+    $wpdb->query( $sql );
 }
-add_action( 'delete_user', 'wsl_delete_userprofiles');
+
+add_action( 'delete_user', 'wsl_delete_userprofiles' );
+
+// --------------------------------------------------------------------
+
+function wsl_delete_usercontacts( $user_id )
+{
+    global $wpdb;
+
+    $sql = "DELETE FROM `{$wpdb->prefix}wsluserscontacts` where user_id = '$user_id'";
+    $wpdb->query( $sql );
+}
+
+add_action( 'delete_user', 'wsl_delete_usercontacts' );
+
+// --------------------------------------------------------------------

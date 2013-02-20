@@ -1,16 +1,19 @@
 /* Based on http://wordpress.org/extend/plugins/social-connect/ */
-(function() {
-	jQuery(".wsl_connect_with_provider").click(function(){
-		popupurl = jQuery("#wsl_popup_base_url").val();
-		provider = jQuery(this).attr("data-provider");
 
-		window.open(
-			popupurl+"provider="+provider,
-			"hybridauth_social_sing_on", 
-			"location=1,status=0,scrollbars=0,width=1000,height=600"
-		); 
+(function($){ 
+	$(function(){
+		$(".wsl_connect_with_provider").click(function(){
+			popupurl = $("#wsl_popup_base_url").val();
+			provider = $(this).attr("data-provider");
+
+			window.open(
+				popupurl+"provider="+provider,
+				"hybridauth_social_sing_on", 
+				"location=1,status=0,scrollbars=0,width=1000,height=600"
+			); 
+		});
 	});
-})();
+})(jQuery);
 
 window.wsl_wordpress_social_login = function(config) {
 	jQuery('#loginform').unbind('submit.simplemodal-login');

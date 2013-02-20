@@ -31,6 +31,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 			require_once Hybrid_Auth::$config["path_libraries"] . "Facebook/facebook.php";
 		}
 
+		BaseFacebook::$CURL_OPTS[CURLOPT_SSL_VERIFYPEER] = false;
+
 		$this->api = new Facebook( ARRAY( 'appId' => $this->config["keys"]["id"], 'secret' => $this->config["keys"]["secret"] ) ); 
 
 		if ( $this->token("access_token") ) {
