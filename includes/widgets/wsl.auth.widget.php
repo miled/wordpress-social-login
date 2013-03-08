@@ -100,7 +100,20 @@ function wsl_render_login_form()
 
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
 			// HOOKABLE: allow use of other icon sets
-			$provider_icon_markup = apply_filters( 'wsl_alter_hook_provider_icon_markup', $provider_id );
+			/*
+			For Example, include the following in your functions.php file to use fontawesome icons
+			
+			function my_wsl_use_fontawesome_icons($provider_id, $provider_name ) {
+			?>
+				<a rel="nofollow" href="javascript:void(0);" title="Connect with <?php echo $provider_name ?>" class="wsl_connect_with_provider btn <?php echo strtolower( $provider_id ) ?>" data-provider="<?php echo $provider_id ?>">
+					<span><i class="<?php echo strtolower( $provider_id ) ?> icon-<?php echo strtolower( $provider_id ) ?>"></i> Connect with <?php echo $provider_name ?></span>
+				</a>
+			<?php		
+			}
+			add_filter ('wsl_alter_hook_provider_icon_markup', 'my_wsl_use_fontawesome_icons', 10, 2);
+			
+			*/
+			$provider_icon_markup = apply_filters( 'wsl_alter_hook_provider_icon_markup', $provider_id, $provider_name );
 
 			$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' ) ;
 
