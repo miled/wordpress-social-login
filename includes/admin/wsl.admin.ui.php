@@ -292,6 +292,7 @@ a.thumbnail:hover {
 }  
 #wsl_i18n {
 	width:530px; 
+	width: 560px;
 	display:none;
 	padding: 10px; 
 	border: 1px solid #ddd; 
@@ -302,6 +303,7 @@ a.thumbnail:hover {
 } 
 #wsl_i18n_form {
 	width:420px; 
+	width:340px; 
 	display:none;
 	padding: 10px; 
 	border: 1px solid #ddd; 
@@ -659,41 +661,37 @@ function wsl_admin_localize_widget()
 		</div> 
 </div> 
 <div id="wsl_i18n_form"> 
-	<h3 style="margin:0px;"><?php _wsl_e( "Help us localize WordPress Social Login", 'wordpress-social-login' ) ?></h3> 
+	<h3 style="margin:0px;"><?php _wsl_e( "Help us translate this page into your language", 'wordpress-social-login' ) ?></h3> 
 
 	<hr />
 
-	<p><?php _wsl_e( "You can <b>translate as much you pleases</b> as much <b>as you want</b>. You don't have to translate everything in this page, but every word counts. Ignore any string you want or aleardy translated. You could also use this tool to fix any typo you may find or to improve the current language expressions", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "Your name allows us to recognize your contributions and bypass manual review, especially when you've been contributing in the past. So do supply some unique string, even if it's not your real name", 'wordpress-social-login' ) ?>.</p>
+	<p><?php _wsl_e( "You can <b>translate as much you please as much as you want</b>. You don't have to translate everything in this page. Ignore any string you want or aleardy translated. You could also use this tool to fix any typo you may find or to improve the current language expressions", 'wordpress-social-login' ) ?>.</p>
 
 	<p><?php _wsl_e( "All the texts on this page are automatically extracted and generated on the form beside. If the translation tool has scapped something you may consider as irrelevant, please leave that particular field empty", 'wordpress-social-login' ) ?>.</p>
 
-	<p><?php _wsl_e( "Your contributions will be sent to the WordPress Social Login website for inclusion in future versions", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "Thanks!", 'wordpress-social-login' ) ?></p>
+	<p><?php _wsl_e( "Your contributions will be sent to the WordPress Social Login website for inclusion in future versions", 'wordpress-social-login' ) ?>.</p> 
 </div>
 <div id="wsl_i18n">  
 	<pre id="wsl_i18n_pre"></pre> 
 	<hr />
 	<table width="100%" cellspacing="2" cellpadding="5" border="0"> 
 		<tbody>
-			<tr>
-			<td align="right"><strong><?php _wsl_e( "Your Name", 'wordpress-social-login' ) ?>:</strong> (<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
+		  <tr>
+			<td align="right"><strong><?php _wsl_e( "Target Language", 'wordpress-social-login' ) ?></strong></td>
 			<td> 
-			<input name="wsl_i18n_name" type="text" value="<?php echo htmlentities( $current_user->display_name . " - " . get_bloginfo('name') ); ?>" class="inputgnrc" style="width:300px;"> 
-			</td>
-		  </tr>
-			<tr>
-			<td align="right"><strong><?php _wsl_e( "Comment", 'wordpress-social-login' ) ?>:</strong> (<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
-			<td> 
-			<textarea name="wsl_i18n_comment" style="width:300px;height:40px;"></textarea>
+				<select name="wsl_i18n_locale" style="width:400px;"><option value="en">English (enhancement)</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="ar">Arabic</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn_IN">Bengali (India)</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh_CN">Chinese (Simplified)</option><option value="zh_TW">Chinese (Traditional)</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy_NL">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu_IN">Gujarati</option><option value="he">Hebrew</option><option value="hi_IN">Hindi</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="id">Indonesian</option><option value="ga_IE">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="kn">Kannada</option><option value="ko">Korean</option><option value="ku">Kurdish</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="mk">Macedonian</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="nb_NO">Norwegian (Bokmal)</option><option value="nn_NO">Norwegian (Lengadocian)</option><option value="oc">Occitan (Lengadocian)</option><option value="pl">Polish</option><option value="pt_BR">Portuguese (Brazilian)</option><option value="pt_PT">Portuguese (Portugal)</option><option value="pa_IN">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sr">Serbian</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="es_AR">Spanish (Argentina)</option><option value="sv_SE">Swedish</option><option value="te">Telgu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option></select>
 			</td>
 		  </tr> 
 		  <tr>
-			<td align="right"><strong><?php _wsl_e( "Target Language", 'wordpress-social-login' ) ?>:</strong></td>
+			<td align="right"><strong><?php _wsl_e( "Your Name", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
 			<td> 
-				<select name="wsl_i18n_locale" style="width:300px;"><option value="en">English (enhancement)</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="ar">Arabic</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn_IN">Bengali (India)</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh_CN">Chinese (Simplified)</option><option value="zh_TW">Chinese (Traditional)</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy_NL">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu_IN">Gujarati</option><option value="he">Hebrew</option><option value="hi_IN">Hindi</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="id">Indonesian</option><option value="ga_IE">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="kn">Kannada</option><option value="ko">Korean</option><option value="ku">Kurdish</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="mk">Macedonian</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="nb_NO">Norwegian (Bokmal)</option><option value="nn_NO">Norwegian (Lengadocian)</option><option value="oc">Occitan (Lengadocian)</option><option value="pl">Polish</option><option value="pt_BR">Portuguese (Brazilian)</option><option value="pt_PT">Portuguese (Portugal)</option><option value="pa_IN">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sr">Serbian</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="es_AR">Spanish (Argentina)</option><option value="sv_SE">Swedish</option><option value="te">Telgu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option></select>
+			<input name="wsl_i18n_name" type="text" value="<?php echo htmlspecialchars( $current_user->display_name . " <" . get_bloginfo('admin_email') . ">" ); ?>" class="inputgnrc" style="width:400px;"> 
+			</td>
+		  </tr>
+			<tr>
+			<td align="right"><strong><?php _wsl_e( "Thanks!", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
+			<td> 
+			<textarea name="wsl_i18n_comment" style="width:400px;height:60px;"><?php _wsl_e( "Include here your address information and I will send you a Postcard to anywhere in the world!", 'wordpress-social-login' ) ?></textarea>
 			</td>
 		  </tr> 
 		</tbody>

@@ -41,7 +41,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); 
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.2"; // i know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.3"; // i know
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
 

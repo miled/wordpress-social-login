@@ -140,7 +140,7 @@ function wsl_render_login_form()
 	// provide popup url for hybridauth callback
 	if( get_option( 'wsl_settings_use_popup' ) == 1 ){
 	?>
-		<input id="wsl_popup_base_url" type="hidden" value="<?php echo esc_url( $authenticate_url ) ?>" />
+		<input id="wsl_popup_base_url" type="hidden" value="<?php echo esc_url( $authenticate_base_url ) ?>" />
 		<input type="hidden" id="wsl_login_form_uri" value="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" />
 	<?php
 	}
