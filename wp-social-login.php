@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.0.3
+Version: 2.1.3
 Author: Miled
 Author URI: http://hybridauth.sourceforge.net
 License: MIT License
@@ -12,38 +12,68 @@ Domain Path: languages
 */
 
 /*
-Copyright (C) 2013 Mohamed Mrassi and contributors
-
-Permission is hereby granted, free of charge, to any person obtaining
-a copy of this software and associated documentation files (the
-"Software"), to deal in the Software without restriction, including
-without limitation the rights to use, copy, modify, merge, publish,
-distribute, sublicense, and/or sell copies of the Software, and to
-permit persons to whom the Software is furnished to do so, subject to
-the following conditions:
-
-The above copyright notice and this permission notice shall be
-included in all copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-*/
+****************************************************************************************************
+* Hi and thanks for taking the time to check out WSL code.
+*
+* Please, don't hesitate to:
+*
+*	- Report bugs and issues.
+*	- Contribute: Code, Reviews, Ideas and Design.
+*	- Point out stupidity, smells and inconsistencies in the code.
+*	- Criticize.
+*
+*
+* If you want to contribute, please consider these general guide lines:
+*
+*	- Don't hesitate to delete code that doesn't make sense or looks redundant.
+*	- Feel free to create new functions and files when needed.
+*	- Use 'if' and 'foreach' as little as possible.
+*	- No 'switch'. No 'for'.
+*	- Avoid over-commenting.
+*
+*
+* Coding Style :
+*
+* - Redable code.
+* - Same name convention of wordpress: these long long self explanatory functions and variables.
+* - Use tabs(8 chars): as devlopers we read and look at code 1/3 of the day and using clear 
+* 	indentations could make life a bit easier.
+*
+**********
+* License
+****************************************************************************
+*	Copyright (C) 2011-2013 Mohamed Mrassi and contributors
+*
+*	Permission is hereby granted, free of charge, to any person obtaining
+*	a copy of this software and associated documentation files (the
+*	"Software"), to deal in the Software without restriction, including
+*	without limitation the rights to use, copy, modify, merge, publish,
+*	distribute, sublicense, and/or sell copies of the Software, and to
+*	permit persons to whom the Software is furnished to do so, subject to
+*	the following conditions:
+*
+*	The above copyright notice and this permission notice shall be
+*	included in all copies or substantial portions of the Software.
+*
+*	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+*	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+*	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+*	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+*	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+*	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+*	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+****************************************************************************/
 
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-@ session_start(); 
+@ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.3"; // i know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.3"; // I know
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; 
+$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; // a useless piece of data stored for checking some stuff
 
 // -------------------------------------------------------------------- 
 
@@ -94,7 +124,7 @@ function wsl_add_settings_link( $links, $file )
 	return $links;
 }
 
-add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 ); 
+add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 );
 
 // --------------------------------------------------------------------
 

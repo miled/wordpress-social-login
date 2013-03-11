@@ -3,21 +3,19 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*   (c) 2013 Mohamed Mrassi and other contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
-* Here's where the dragon resides.
+* .. Here's where the dragon resides ..
 *
-* Authenticate users via social networks. 
+* Authenticate users via social networks. to sum things up, here is how stuff works:
 *
-* to sum things up, here is how stuff works when a wild visitor appear and click on a provider icon:
-*
-*	[icons links]                                  icons will redirect the user to wp-login.php;
+*	[icons links]                                  A wild visitor appear and click on one of these providers icons which will redirect him to wp-login.php 
 *		=> [wp-login.php]                          wp-login.php will call wsl_process_login() and attempt to authenticate the user throught Hybridauth Library;
 *			=> [Hybridauth] <=> [Provider]         Hybridauth and the Provider will have some little chat on their own;
-*				=> [services/authenticate.php]     If the visitor consent and agrees to authenticate, then horray for you;
-*					=> [wp-login.php]              authenticate.php will then redirect the user to back wp-login.php where wsl_process_login() is fired;
+*				=> [Provider]                      If the visitor consent and agrees to authenticate, then horray for you;
+*					=> [wp-login.php]              Provider will then redirect the user to back wp-login.php where wsl_process_login() is fired;
 *						=> [callback URL]          If things goes as expected, the wsl_process_login will log the user on your website and redirect him (again lolz) there.
 *
 * when wsl_process_login() is triggered, it will attempt to reconize the user.
@@ -136,8 +134,8 @@ function wsl_process_login_auth()
 
 		// overwrite endpoint_url if need'd
 		if( get_option( 'wsl_settings_base_url' ) ){
-			$endpoint_url = strtolower( get_option( 'wsl_settings_base_url' ) ) . '/hybridauth/';
-			$callback_url = strtolower( get_option( 'wsl_settings_base_url' ) ) . '/services/authenticate.php?' . $_SERVER['QUERY_STRING'];
+			$endpoint_url = ''; // fixme!
+			$callback_url = ''; // fixme!
 		}
 
 		// check hybridauth_base_url
@@ -465,10 +463,10 @@ function wsl_process_login_reauth()
 	do_action( "wsl_hook_process_login_before_start" );
 
 	// HOOKABLE: 
-	$redirect_to = apply_filters("wsl_process_login_get_redirect_to", wsl_process_login_get_redirect_to() ) ;
+	$redirect_to = apply_filters("wsl_hook_process_login_alter_redirect_to", wsl_process_login_get_redirect_to() ) ;
 
 	// HOOKABLE: 
-	$provider = apply_filters("wsl_process_login_get_provider", wsl_process_login_get_provider() ) ;
+	$provider = apply_filters("wsl_hook_process_login_alter_provider", wsl_process_login_get_provider() ) ;
 
 	// authenticate user via a social network ( $provider )
 	list( 
@@ -856,15 +854,15 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	}
 
 	// HOOKABLE: change the user data
-	if( apply_filters( 'wsl_hook_process_login_userdata', $userdata ) ){
-		$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata );
+	if( apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile ) ){
+		$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
 	}
 
 	// HOOKABLE: any action to fire right before a user created on database
-	do_action( 'wsl_hook_process_login_before_insert_user', $user_id );
+	do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
 	// HOOKABLE: delegate user insert to a custom function
-	$user_id = apply_filters( 'wsl_hook_process_login_alter_insert_user', $userdata );
+	$user_id = apply_filters( 'wsl_hook_process_login_alter_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
 	// Create a new user
 	if( ! $user_id || ! is_integer( $user_id ) ){
@@ -888,7 +886,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	}
 
 	// HOOKABLE: any action to fire right after a user created on database
-	do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id );
+	do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $hybridauth_user_profile );
 
 	return array( 
 		$user_id,
@@ -936,14 +934,14 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	// otherwise, let him go..
 	else{
 		// HOOKABLE: 
-		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $hybridauth_user_profile );
+		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
 		// That's it. create a session for user_id and redirect him to redirect_to
 		wp_set_auth_cookie( $user_id );
 	}
 
 	// HOOKABLE: 
-	do_action( "wsl_hook_process_login_before_redirect", $user_id, $hybridauth_user_profile );
+	do_action( "wsl_hook_process_login_before_redirect", $user_id, $provider, $hybridauth_user_profile );
 
 	wp_safe_redirect( $redirect_to );
 
@@ -961,7 +959,7 @@ function wsl_process_login_authenticate_wp_user_linked_account( $user_id, $provi
 	wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
 
 	// HOOKABLE: 
-	do_action( "wsl_hook_process_login_linked_account_before_redirect", $user_id, $hybridauth_user_profile );
+	do_action( "wsl_hook_process_login_linked_account_before_redirect", $user_id, $provider, $hybridauth_user_profile );
 
 	wp_safe_redirect( $redirect_to );
 

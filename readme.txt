@@ -3,7 +3,7 @@ Contributors: miled
 Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 3.5
-Stable tag: 2.0.3
+Stable tag: 2.1.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -76,6 +76,13 @@ The user guide and frequently asked questions can be found at http://bit.ly/TYy2
 
 == Changelog ==
 
+= 2.1.3 = 
+
+* In a similar way to WordPress plugins, WSL uses Components,
+* Email Validation is replaced with Profile Completion,
+* User Moderation made compatible with Theme My Login plugin,
+* A number of enhancements and new options now available but who care
+
 = 2.0.3 = 
 
 * Managing WSL users,
@@ -92,3 +99,7 @@ The user guide and frequently asked questions can be found at http://bit.ly/TYy2
 * add Widget display on advanced settings
 * RIP Gowalla
 * WordPress Social Login is now licenced under The MIT License only (should be GPL compatible) 
+
+= 0.0.0 =
+
+* I'm too old to remember
