@@ -142,13 +142,21 @@ function wsl_component_bouncer_setup()
 					<select name="wsl_settings_bouncer_new_users_membership_default_role">
 						<optgroup label="<?php _wsl_e("Safe", 'wordpress-social-login') ?>:">
 							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default" ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
-							<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
-							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber" ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
+							<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 							
 						</optgroup>
 
-						<optgroup label="<?php _wsl_e("Be careful with these", 'wordpress-social-login') ?>:">  
-							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author" ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
-							<option value="contributor" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "contributor" ) echo "selected"; ?> ><?php _wsl_e("Contributor", 'wordpress-social-login') ?></option> 
+						<optgroup label="<?php _wsl_e("Be careful with these because you may be automatically giving someone ELEVATED roles/capabilities", 'wordpress-social-login') ?>:">
+						
+						<?php
+						global $wp_roles;
+						foreach ($wp_roles->role_names as $role_key => $role_name){
+						?>
+						
+							<option value="<?php echo $role_key ?>"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == $role_key ) echo "selected"; ?> ><?php _wsl_e($role_name, 'wordpress-social-login') ?></option> 						
+						
+						<?php	
+						}				
+						?>
 						</optgroup>
 					</select>  
 				</td>
