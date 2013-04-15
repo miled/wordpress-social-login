@@ -240,6 +240,13 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "socialnetworks",
 	),
+        ARRAY(
+                "provider_id"       => "Latch",
+                "provider_name"     => "Latch",
+                "new_app_link"      => null,
+
+                "cat"               => "misc",
+        ),
 );
 
 // --------------------------------------------------------------------
