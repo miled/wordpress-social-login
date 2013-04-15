@@ -18,9 +18,14 @@ function wsl_component_networks_addmore()
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 ?>
+<div class="postbox " id="linksubmitdiv"> 
+	<div class="inside">
+		<div id="submitlink" class="submitbox"> <h3 style="cursor: default;"><?php _wsl_e("Add more providers", 'wordpress-social-login') ?></h3>
+ 
+
 <table width="100%" border="0"> 
   <tr> 
-    <td align="left">
+	<td align="left">
 		<p><?php _wsl_e("And you could add even more of them, <b>Just Click</b> and we will guide you through", 'wordpress-social-login') ?> :</p>
 		<?php 
 			$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/icondock/';
@@ -50,7 +55,12 @@ function wsl_component_networks_addmore()
 		?> 
 	</td>
   </tr> 
-</table>
+</table> 
+
+		</div>
+	</div> 
+</div>
+
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_component_networks_addmore_end" );	

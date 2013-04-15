@@ -37,8 +37,6 @@ function wsl_component_networks()
 					<div id="post-body-content">
 						<?php
 							wsl_component_networks_setup();
-
-							wsl_component_networks_addmore();
 						?>
 						<a name="wslsettings"></a> 
 					</div>
@@ -47,6 +45,8 @@ function wsl_component_networks()
 				<td width="400">
 					<?php
 						wsl_component_networks_whyhello();
+
+						wsl_component_networks_addmore();
 
 						wsl_component_networks_basicinsights();
 					?>

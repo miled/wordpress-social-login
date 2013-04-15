@@ -34,7 +34,7 @@ function wsl_component_networks_basicinsights()
 	<div class="inside">
 		<div id="submitlink" class="submitbox"> 
 			<h3 style="cursor: default;"><?php _wsl_e("Insights", 'wordpress-social-login') ?></h3>
-			<div id="minor-publishing">  
+
 				<div id="misc-publishing-actions">
 					<div style="padding:20px;padding-top:0px;"> 
 						<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("Conversions", 'wordpress-social-login') ?></h4>
@@ -138,8 +138,7 @@ function wsl_component_networks_basicinsights()
 						<tr>
 							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo number_format($a_ages, 1, '.', ''); ?></b> <?php _wsl_e("yrs in average", 'wordpress-social-login') ?></td>
 						</tr>
-						</table>
-					</div>
+						</table> 
 				</div> 
 			</div> 
 		</div>

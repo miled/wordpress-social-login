@@ -497,6 +497,11 @@ function wsl_process_login_reauth()
 		= wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email );
 	}
 
+	// There was a bug when *_create_wp_user returned WP_Error, so just in case
+	if( ! is_integer( $user_id ) ){
+		return wsl_render_notices_pages( _wsl__("Invalid user_id returned by create_wp_user.", 'wordpress-social-login') );
+	}
+
 	// finally create a wp session for the user
 	return wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile );
 }
@@ -854,9 +859,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	}
 
 	// HOOKABLE: change the user data
-	if( apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile ) ){
-		$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
-	}
+	$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
 
 	// HOOKABLE: any action to fire right before a user created on database
 	do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $hybridauth_user_profile );
@@ -873,12 +876,15 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	if( $user_id && is_integer( $user_id ) ){
 		update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier );
 	}
-	else if (is_wp_error($user_id)) {
-		echo $user_id->get_error_message();
-	}
-	else{
+
+	// do not continue without user_id or we'll edit god knows what
+	else {
+		if( is_wp_error( $user_id ) ){
+			return wsl_render_notices_pages( _wsl__("An error occurred while creating a new user!" . $user_id->get_error_message(), 'wordpress-social-login') );
+		}
+
 		return wsl_render_notices_pages( _wsl__("An error occurred while creating a new user!", 'wordpress-social-login') );
-	} 
+	}
 
 	// Send notifications 
 	if ( get_option( 'wsl_settings_users_notification' ) == 1 ){
@@ -899,6 +905,11 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile )
 {
+	// There was a bug when this function received non-integer user_id and updated random users, let's be safe
+	if( !is_integer( $user_id ) ){
+		return wsl_render_notices_pages( _wsl__("Invalid user_id", 'wordpress-social-login') );
+	}
+
 	// calculate user age
 	$user_age = $hybridauth_user_profile->age;
 
@@ -908,10 +919,19 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	}
 
 	// update some stuff
-	update_user_meta ( $user_id, 'wsl_user'       , $provider );
-	update_user_meta ( $user_id, 'wsl_user_gender', $hybridauth_user_profile->gender );
-	update_user_meta ( $user_id, 'wsl_user_age'   , $user_age );
-	update_user_meta ( $user_id, 'wsl_user_image' , $hybridauth_user_profile->photoURL );
+	$newdata['user_id']     = $user_id; //not to be changed
+	$newdata['user']        = $provider;
+	$newdata['user_gender'] = $hybridauth_user_profile->gender;
+	$newdata['user_age']    = $user_age;
+	$newdata['user_image']  = $hybridauth_user_profile->photoURL;
+
+	// HOOKABLE: 
+	$newdata = apply_filters( 'wsl_hook_process_login_alter_update_userdata', $newdata, $hybridauth_user_profile, $provider );
+
+	update_user_meta ( $user_id, 'wsl_user'       , $newdata['user'] );
+	update_user_meta ( $user_id, 'wsl_user_gender', $newdata['user_gender'] );
+	update_user_meta ( $user_id, 'wsl_user_age'   , $newdata['user_age'] );
+	update_user_meta ( $user_id, 'wsl_user_image' , $newdata['user_image'] );
 
 	// launch contact import if enabled
 	wsl_import_user_contacts( $provider, $adapter, $user_id );

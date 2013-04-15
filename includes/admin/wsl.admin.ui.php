@@ -689,9 +689,9 @@ function wsl_admin_localize_widget()
 			</td>
 		  </tr>
 			<tr>
-			<td align="right"><strong><?php _wsl_e( "Thanks!", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
+			<td align="right"><strong><?php _wsl_e( "Comment", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
 			<td> 
-			<textarea name="wsl_i18n_comment" style="width:400px;height:60px;"><?php _wsl_e( "Include here your address information and I will send you a Postcard to anywhere in the world!", 'wordpress-social-login' ) ?></textarea>
+			<textarea name="wsl_i18n_comment" style="width:400px;height:60px;"></textarea>
 			</td>
 		  </tr> 
 		</tbody>
