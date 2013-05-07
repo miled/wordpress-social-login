@@ -702,8 +702,8 @@ function wsl_process_login_hybridauth_authenticate( $provider, $redirect_to )
 				}
 			}
 
-			// if user do not exist
-			if( ! $hybridauth_user_id ){
+			// if user does not exist
+			if( ! email_exists($hybridauth_user_email) ){
 				// Bouncer :: Accept new registrations
 				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
 					return wsl_render_notices_pages( _wsl__("registration is now closed!", 'wordpress-social-login') ); 
