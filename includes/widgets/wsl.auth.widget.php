@@ -250,7 +250,7 @@ function wsl_add_stylesheets()
 		wp_print_styles( 'wsl_css' ); 
 	}
 	else{
-		wp_enqueue_style( "social_connect" ); 
+		wp_enqueue_style( 'wsl_css' ); 
 	}
 }
 
