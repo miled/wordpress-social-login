@@ -160,8 +160,7 @@ function wsl_render_login_form()
 	// Close and return buffer via PHP - Output Control function.
 	// This stops the output from being dumped to document immediately at function runtime,
 	// which is often at the top of a page or post instead of at the correct position where a shortcode is placed.
-	$output = ob_get_clean();
-	return $output;
+	return ob_get_clean();
 }
 
 // --------------------------------------------------------------------
@@ -186,7 +185,7 @@ function wsl_render_comment_form()
 {
 	if( comments_open() && ! is_user_logged_in() ) {
 		if( ! get_option( 'wsl_settings_widget_display' ) || get_option( 'wsl_settings_widget_display' ) == 1 || get_option( 'wsl_settings_widget_display' ) == 2 ){
-			wsl_render_login_form();
+			echo wsl_render_login_form();
 		}
 	}
 }
@@ -199,7 +198,7 @@ add_action( 'comment_form_top', 'wsl_render_comment_form' );
 function wsl_render_login_form_login_form()
 {
 	if( get_option( 'wsl_settings_widget_display' ) == 1 || get_option( 'wsl_settings_widget_display' ) == 3 ){
-		wsl_render_login_form();
+		echo wsl_render_login_form();
 	} 
 }
 
@@ -213,7 +212,7 @@ add_action ('bp_before_sidebar_login_form', 'wsl_render_login_form_login_form');
 function wsl_render_login_form_login_on_register_and_login()
 {
 	if( get_option( 'wsl_settings_widget_display' ) == 1 ){
-		wsl_render_login_form();
+		echo wsl_render_login_form();
 	} 
 }
 
