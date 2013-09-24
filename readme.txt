@@ -1,6 +1,6 @@
 === WordPress Social Login ===
 Contributors: miled
-Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, myspace, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam, twitch.tv
+Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 2.1.3
@@ -30,7 +30,7 @@ Depending on the audience you're targeting, you can choose from a wide variety o
 WordPress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
 
 <strong>Even more features are planned</strong> <br>
-The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users managment to contacts import and export, social sharing, tweet comments, tweet to download, and more.
+The coming release ï¿½ the definitive social toolkit ï¿½ will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users managment to contacts import and export, social sharing, tweet comments, tweet to download, and more.
 
 
 <strong>Supported Providers</strong> <br>
