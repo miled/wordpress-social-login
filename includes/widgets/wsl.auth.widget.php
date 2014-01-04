@@ -231,8 +231,8 @@ function wsl_add_javascripts()
 		wp_register_script( "wsl_js", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/connect.js" );
 	}
 
-	wp_print_scripts( "jquery" );
-	wp_print_scripts( "wsl_js" );
+	wp_enqueue_script( "jquery" );
+	wp_enqueue_script( "wsl_js" );
 }
 
 add_action( 'login_head', 'wsl_add_javascripts' );
@@ -246,12 +246,7 @@ function wsl_add_stylesheets()
 		wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
 	}
 
-	if ( did_action( 'wp_print_styles' ) ) {
-		wp_print_styles( 'wsl_css' ); 
-	}
-	else{
-		wp_enqueue_style( "social_connect" ); 
-	}
+	wp_enqueue_style( "wsl_css" ); 
 }
 
 add_action( 'login_head', 'wsl_add_stylesheets' );
