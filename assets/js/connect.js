@@ -2,7 +2,7 @@
 
 (function($){ 
 	$(function(){
-		$(".wsl_connect_with_provider").click(function(){
+		$(document).on("click", "a.wsl_connect_with_provider", function(){
 			popupurl = $("#wsl_popup_base_url").val();
 			provider = $(this).attr("data-provider");
 
