@@ -203,10 +203,6 @@ function wsl_component_networks_setup()
 										</p>
 								<?php endif; ?> 
 
-								<?php if ( $provider_id == "MySpace" ) : ?>
-										<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>External Url</b> and <b>External Callback Validation</b> fields. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>
-								<?php endif; ?> 
-
 								<?php if ( $provider_id == "Live" ) : ?>
 										<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>
 								<?php endif; ?> 
