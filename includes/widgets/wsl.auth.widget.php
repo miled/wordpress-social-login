@@ -17,6 +17,11 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_render_login_form()
 {
+	// This allows for output redirection or a kind of "echo=off" feature similar to wp_login_form.
+	// All output to stdout by 'wsl_render_login_form' is captured and returned by the function.
+	// After buffer is returned, it can be output at the correct time / position of function instantiation.
+	ob_start();
+	
 	if ( is_user_logged_in() && ! is_admin() ){
 		return;
 	}
@@ -88,7 +93,7 @@ function wsl_render_login_form()
 ?>
 	<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>
 	<div id="wp-social-login-connect-options">
-<?php 
+<?php
 	$nok = true;
 
 	// display provider icons
@@ -148,9 +153,14 @@ function wsl_render_login_form()
 	</div> 
 <!-- /wsl_render_login_form -->  
 <?php
-
 	// HOOKABLE: 
 	do_action( 'wsl_render_login_form_end' );
+	
+	// All output to stdout by 'wsl_render_login_form' has finished.
+	// Close and return buffer via PHP - Output Control function.
+	// This stops the output from being dumped to document immediately at function runtime,
+	// which is often at the top of a page or post instead of at the correct position where a shortcode is placed.
+	return ob_get_clean();
 }
 
 // --------------------------------------------------------------------
@@ -159,7 +169,11 @@ function wsl_render_login_form()
 
 function wsl_render_login_form_login()
 {
-	wsl_render_login_form(); 
+	// Captured stdout buffer from 'wsl_render_login_form' is returned on instantiation.
+	// It is now output to screen satisfying appropriate behavior for 'do_action()' calls.
+	// Since output is returned, other registrations (such as shortcodes) can display returned
+	// output at the correct time and position in the document for when the shortcode is triggered.
+	echo wsl_render_login_form();
 }
 
 add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
@@ -171,7 +185,7 @@ function wsl_render_comment_form()
 {
 	if( comments_open() && ! is_user_logged_in() ) {
 		if( ! get_option( 'wsl_settings_widget_display' ) || get_option( 'wsl_settings_widget_display' ) == 1 || get_option( 'wsl_settings_widget_display' ) == 2 ){
-			wsl_render_login_form();
+			echo wsl_render_login_form();
 		}
 	}
 }
@@ -184,7 +198,7 @@ add_action( 'comment_form_top', 'wsl_render_comment_form' );
 function wsl_render_login_form_login_form()
 {
 	if( get_option( 'wsl_settings_widget_display' ) == 1 || get_option( 'wsl_settings_widget_display' ) == 3 ){
-		wsl_render_login_form();
+		echo wsl_render_login_form();
 	} 
 }
 
@@ -198,7 +212,7 @@ add_action ('bp_before_sidebar_login_form', 'wsl_render_login_form_login_form');
 function wsl_render_login_form_login_on_register_and_login()
 {
 	if( get_option( 'wsl_settings_widget_display' ) == 1 ){
-		wsl_render_login_form();
+		echo wsl_render_login_form();
 	} 
 }
 
@@ -213,7 +227,7 @@ add_action( 'after_signup_form', 'wsl_render_login_form_login_on_register_and_lo
 function wsl_shortcode_handler($args)
 {
 	if ( ! is_user_logged_in () ){
-		wsl_render_login_form();
+		return wsl_render_login_form();
 	}
 }
 
