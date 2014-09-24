@@ -11,20 +11,6 @@
 */
 
 // --------------------------------------------------------------------
-
-if ( isset( $_REQUEST['xhrurl'] ) ) {
-	$testing = @ $_REQUEST['xhrurl'];
-	
-	if ( $testing == "http://www.example.com" ) {
-		echo "<b style='color:green;'>OK!</b><br />The rewrite rules on your server appear to be setup correctly for this plugin to work.";
-	}
-	else{ 
-		echo sprintf( '<b style="color:red;">FAIL!</b><br />Expected "http://www.example.com", received "%s".', $testing );
-	} 
-	
-	die();
-} 
-
 session_start(); 
 ?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" dir="ltr" lang="en-US">
@@ -62,40 +48,7 @@ session_start();
 
 	<hr />
 
-	<h5>1. URL Rewrite</h5> 
-	<p id="urlrewrite">
-<?php   
-	if ( isset( $_REQUEST['url'] ) ) {
-		$testing = @ $_REQUEST['url'];
-		
-		if ( $testing == "http://www.example.com" ) {
-			echo "<b style='color:green;'>OK!</b><br />The rewrite rules on your server appear to be setup correctly for this plugin to work.";
-		}
-		else{ 
-			echo sprintf( '<b style="color:red;">FAIL!</b><br />Expected "http://www.example.com", received "%s".', $testing );
-		} 
-	} 
-	else{
-	?>
-		&nbsp;<i style="color:blue">Testing...</i> (If this "testing" seems to take forever to load, use this <a href="diagnostics.php?url=http://www.example.com">direct link</a>.)
-		
-		<script>
-			jQuery(document).ready(function($) {
-				$("#urlrewrite").load( "diagnostics.php?xhrurl=http://www.example.com" );
-			});
-		</script>
-	<?php
-	}
-?>
-	</p>
-	<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding:5px;font-size: 12px;">  
-		<b>What do I do if the Rewrite Diagnostics fail?</b>
-		<p>
-			If you get a 403 and 404 on the Rewrite Diagnostics test, request your hosting provider whitelist your domain on mod_security. This problem has been encountered with Host Gator* and **GoDaddy.
-		</p>
-	</div>
- 
-	<h5>2. PHP Version</h5> 
+	<h5>1. PHP Version</h5> 
 	<p>
 <?php 
 	if ( version_compare( PHP_VERSION, '5.2.0', '>=' ) ){
@@ -107,7 +60,7 @@ session_start();
 ?>
 	</p>
 
-	<h5>3. PHP Sessions</h5> 
+	<h5>2. PHP Sessions</h5> 
 	<p>
 <?php
 	if ( isset( $_SESSION["wsl::plugin"] ) ){
@@ -146,7 +99,7 @@ session_start();
 ?>
 	</p>
 
-	<h5>4. cURL Extension</h5> 
+	<h5>3. cURL Extension</h5> 
 	<p>
 <?php 
 	if ( function_exists('curl_init') ) {

@@ -33,10 +33,9 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true, 
 		"new_app_link"      => "https://developers.facebook.com/apps", 
 
-		"default_network"  => true,
+		"default_network"   => true,
 		"cat"               => "socialnetworks",
-	)
-	,
+	),
 	ARRAY(
 		"provider_id"       => "Google",
 		"provider_name"     => "Google",
@@ -44,20 +43,17 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true,
 		"new_app_link"      => "https://code.google.com/apis/console/", 
 
-		"default_network"  => true,
+		"default_network"   => true,
 		"cat"               => "socialnetworks",
-	) 
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Twitter",
 		"provider_name"     => "Twitter", 
 		"new_app_link"      => "https://dev.twitter.com/apps", 
 
 		"default_network"  => true,
-		
 		"cat"               => "microblogging",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Live",
 		"provider_name"     => "Windows Live", 
@@ -65,24 +61,14 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "https://manage.dev.live.com/ApplicationOverview.aspx", 
 
 		"cat"               => "pleasedie",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Yahoo",
 		"provider_name"     => "Yahoo!",
 		"new_app_link"      => null, 
 
 		"cat"               => "pleasedie",
-	)
-	,
-	ARRAY( 
-		"provider_id"       => "MySpace",
-		"provider_name"     => "MySpace", 
-		"new_app_link"      => "http://www.developer.myspace.com/", 
-
-		"cat"               => "pleasedie",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Foursquare",
 		"provider_name"     => "Foursquare",
@@ -91,24 +77,21 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "https://www.foursquare.com/oauth/", 
 
 		"cat"               => "microblogging",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "LinkedIn",
 		"provider_name"     => "LinkedIn", 
 		"new_app_link"      => "https://www.linkedin.com/secure/developer", 
 
 		"cat"               => "professional",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "AOL",
 		"provider_name"     => "AOL", 
 		"new_app_link"      => null, 
 
 		"cat"               => "pleasedie",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Vkontakte",
 		"provider_name"     => "Vkontakte", 
@@ -117,16 +100,14 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "http://vk.com/developers.php", 
 
 		"cat"               => "socialnetworks",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "LastFM",
 		"provider_name"     => "Last.FM", 
 		"new_app_link"      => "http://www.lastfm.com/api/account", 
 
 		"cat"               => "media",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Instagram",
 		"provider_name"     => "Instagram", 
@@ -135,16 +116,14 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "http://instagr.am/developer/clients/manage/", 
 
 		"cat"               => "media",
-	)
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Identica",
 		"provider_name"     => "Identica", 
 		"new_app_link"      => "http://identi.ca/settings/oauthapps/new", 
 
 		"cat"               => "microblogging",
-	) 
-	,
+	),
 	ARRAY( 
 		"provider_id"       => "Tumblr",
 		"provider_name"     => "Tumblr", 
@@ -240,21 +219,21 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "socialnetworks",
 	),
-	ARRAY(
-			"provider_id"       => "Latch",
-			"provider_name"     => "Latch",
-			"new_app_link"      => null,
-
-			"cat"               => "misc",
-	),
-	ARRAY(
+	ARRAY( 
 		"provider_id"       => "PixelPin",
 		"provider_name"     => "PixelPin",
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "https://login.pixelpin.co.uk/", 
 
-		"cat"               => "misc",
+		"cat"               => "paymemaybe",
+	),
+	ARRAY( 
+		"provider_id"       => "Latch",
+		"provider_name"     => "Latch",
+		"new_app_link"      => null,
+
+		"cat"               => "paymemaybe",
 	),
 );
 

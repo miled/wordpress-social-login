@@ -553,6 +553,12 @@ function wsl_admin_welcome_panel()
 	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_version() ){ 
 		return;
 	}
+	
+	$wslp = "networks"; 
+
+	if( isset( $_REQUEST["wslp"] ) ){
+		$wslp = $_REQUEST["wslp"];
+	}	
 ?> 
 <!-- 
 	if you want to know if a UI was made by devloper, then here is a tip: he will always use tables
@@ -614,6 +620,8 @@ function wsl_admin_welcome_panel()
 */
 function wsl_admin_localize_widget()
 {
+	return; // nothing until I decide otherwise
+	
 	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
 
 	// default endpoint_url

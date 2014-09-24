@@ -89,7 +89,7 @@ function wsl_component_users_list()
 						</td>
 						<td><?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?></td>
 						<td>
-							<?php $user_wsl_email = wsl_get_user_data_by_user_id( "user_wsl_email", $user_id); if( $user_wsl_email ) { ?>
+							<?php $user_wsl_email = wsl_get_user_data_by_user_id( "user_email", $user_id); if( $user_wsl_email ) { ?>
 								<?php if( ! strstr( $user_wsl_email, "@example.com" ) ) { ?>
 									<a href="mailto:<?php echo $user_wsl_email ?>"><?php echo $user_wsl_email ?></a>
 								<?php } else { ?>

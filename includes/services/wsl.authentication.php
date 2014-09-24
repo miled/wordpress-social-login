@@ -109,7 +109,7 @@ function wsl_process_login_auth()
 			global $current_user;
 			get_currentuserinfo(); 
 
-			wp_die( sprintf( _wsl__("You are already logged in as <b>%</b>.", 'wordpress-social-login'), $current_user->display_name ) );
+			wp_die( sprintf( _wsl__("You are already logged in as <b>%s</b>.", 'wordpress-social-login'), $current_user->display_name ) );
 		}
 
 		# Hybrid_Auth already used?
@@ -168,6 +168,11 @@ function wsl_process_login_auth()
 		if( strtolower( $provider ) == "facebook" ){
 			$config["providers"][$provider]["scope"]   = "email, user_about_me, user_birthday, user_hometown, user_website"; 
 			$config["providers"][$provider]["display"] = "popup";
+
+			//No Popup window
+			if ( get_option( 'wsl_settings_use_popup') == 2 ) {
+				$config["providers"][$provider]["display"] = "page";
+			}
 		}
 
 		// reset scope for if google
@@ -707,7 +712,8 @@ function wsl_process_login_hybridauth_authenticate( $provider, $redirect_to )
 				}
 			}
 
-			// if user does not exist
+			// if user do not exist
+			// if( ! $hybridauth_user_id ){ //-- ToDo: Check this?
 			if( ! email_exists($hybridauth_user_email) ){
 				// Bouncer :: Accept new registrations
 				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
