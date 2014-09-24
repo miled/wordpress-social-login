@@ -240,13 +240,22 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "socialnetworks",
 	),
-        ARRAY(
-                "provider_id"       => "Latch",
-                "provider_name"     => "Latch",
-                "new_app_link"      => null,
+	ARRAY(
+			"provider_id"       => "Latch",
+			"provider_name"     => "Latch",
+			"new_app_link"      => null,
 
-                "cat"               => "misc",
-        ),
+			"cat"               => "misc",
+	),
+	ARRAY(
+		"provider_id"       => "PixelPin",
+		"provider_name"     => "PixelPin",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://login.pixelpin.co.uk/", 
+
+		"cat"               => "misc",
+	),
 );
 
 // --------------------------------------------------------------------
