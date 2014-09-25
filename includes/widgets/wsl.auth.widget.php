@@ -330,62 +330,7 @@ function wsl_render_login_form_admin_head_user_profile_generate_html()
 				?>
 			</table>
 		</td> 
-	</tr> 
-	</tr> 
-<?php
-	// Bouncer :: Allow authentication && Linking accounts is enabled
-	if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 1 && get_option( 'wsl_settings_bouncer_linking_accounts_enabled' ) == 1 ){ 
-		$list_connected_providers = wsl_get_list_connected_providers();
-?>	
-	<tr>    
-		<td valign="top">
-			<b><?php _wsl_e("Add more identities", 'wordpress-social-login') ?></b>
-			<br />
-			<?php
-				foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-					$provider_id   = @ $item["provider_id"];
-					$provider_name = @ $item["provider_name"]; 
-					$dispaly       = true;
-
-					// only one linked account per provider is permitted!!
-					foreach( $linked_accounts AS $link ){
-						if( $link->provider == $provider_id ){
-							$dispaly = false;
-						}
-					}
-
-					if( $dispaly ){ 
-						$social_icon_set = get_option( 'wsl_settings_social_icon_set' );
-
-						$current_page_url = admin_url("profile.php");
-
-						if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){ 
-							?>
-							<a href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?>/services/authenticate.php?provider=<?php echo $provider_id ?>&link=1&redirect_to=<?php echo urlencode($current_page_url) ?>" title="Connect with <?php echo $provider_name ?>"  style="text-decoration:none;" target="_blank">
-								<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" />
-							</a>
-							<?php   
-						}  
-					}
-				}
-			?>
-		</td> 
-	</tr> 
-<?php
-	} 
-
-	if( $list_connected_providers ){
-?>
-	<tr> 
-		<td>
-			<b><?php _wsl_e("Currently connected to:", 'wordpress-social-login') ?></b> 
-			<?php echo implode( ', ', $list_connected_providers ); ?>
-		</td> 
-	</tr> 
-<?php
-	}
-?>
-
+	</tr>
 </table>
 <?php
 	$html = ob_get_contents();
@@ -434,11 +379,11 @@ function wsl_render_login_form_admin_head_user_profile()
 		jQuery(document).ready(function($)
 		{     
 			jQuery( '#user_login' )
-			.parent()
 				.parent()
 					.parent()
+						.parent()
 					.parent()
-						.after( '<?php echo wsl_render_login_form_admin_head_user_profile_generate_html() ?>' );
+				.after( '<?php echo wsl_render_login_form_admin_head_user_profile_generate_html() ?>' );
 		});
 	</script>
 <?php

@@ -12,33 +12,40 @@ Domain Path: languages
 */
 
 /*
-****************************************************************************************************
-* Hi and thanks for taking the time to check out WSL code.
 *
-* Please, don't hesitate to:
+*  Hi and thanks for taking the time to check out WSL code.
 *
-*	- Report bugs and issues.
-*	- Contribute: Code, Reviews, Ideas and Design.
-*	- Point out stupidity, smells and inconsistencies in the code.
-*	- Criticize.
+*  Please, don't hesitate to:
 *
-*
-* If you want to contribute, please consider these general guide lines:
-*
-*	- Don't hesitate to delete code that doesn't make sense or looks redundant.
-*	- Feel free to create new functions and files when needed.
-*	- Use 'if' and 'foreach' as little as possible.
-*	- No 'switch'. No 'for'.
-*	- Avoid over-commenting.
+*   - Report bugs and issues.
+* 	- Contribute: Code, Reviews, Ideas and Design.
+*   - Point out stupidity, smells and inconsistencies in the code.
+*   - Criticize.
 *
 *
-* Coding Style :
+*  If you want to contribute, please consider these general guide lines:
+* 
+*   - Don't hesitate to delete code that doesn't make sense or looks redundant.
+*   - Feel free to create new functions and files when needed.
+*   - Use 'if' and 'foreach' as little as possible.
+*   - No 'switch'. No 'for'.
+*   - Avoid over-commenting.
 *
-* - Redable code.
-* - Same name convention of wordpress: these long long self explanatory functions and variables.
-* - Use tabs(8 chars): as devlopers we read and look at code 1/3 of the day and using clear 
-* 	indentations could make life a bit easier.
-****************************************************************************/
+*
+*  Coding Style :
+*
+*   - Readable code.
+*   - Use tabs(8 spaces). As developers we read code 1/3 of the day and using clear indentations could
+*     make life a bit easier.
+*   - Same name convention of wordpress: those long long and self explanatory functions and variables.
+*
+*  If you want to translate this plugin and you are new to WP/i18n, then we recommend check out this
+*  video https://youtube.com/watch?v=aGN-hbMCPMg (Localizing and Translating WordPress Plugins)
+*
+*  And PLEASE, if you have fixed, improved or translated something on WSL then consider sharing back 
+*  by doping me an email or by submitting a PR on https://github.com/hybridauth/WordPress-Social-Login 
+*
+*/
 
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit;
@@ -49,11 +56,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 $WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7"; // I know
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; // a useless piece of data stored for checking some stuff
+$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; // a useless piece of data we use to check some stuff
 
 // -------------------------------------------------------------------- 
-
-/* Constants */ 
 
 define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, WP_PLUGIN_DIR . '/wordpress-social-login'          );
 define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) )             );
@@ -64,6 +69,7 @@ define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN
 
 /**
 * Check technical requirements before activating the plugin. 
+*
 * Wordpress 3.0 or newer required
 */
 function wsl_activate()
@@ -106,6 +112,7 @@ add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 );
 
 /**
 * This file only need to be included for versions before 3.1.
+*
 * Deprecated since version 3.1, the functions are included by default
 */
 if ( ! function_exists ('email_exists') ){
@@ -113,8 +120,6 @@ if ( ! function_exists ('email_exists') ){
 }
 
 // --------------------------------------------------------------------
-
-/* Localization */ 
 
 /**
 * Loads the plugin's translated strings.
@@ -130,24 +135,14 @@ if ( function_exists ('load_plugin_textdomain') ){
 
 /**
 * _e() wrapper
+* 
+* This function was used for the localization widget to generate translations per page. 
 *
-* This function is used for the localization widget to generate translations per page. 
-* If you are using Poedit for example you could search for texts by _wsl_e and _wsl__ instead
-*
-* If you are new to wp/i18n, then check out this video youtube.com/watch?v=aGN-hbMCPMg
-*
-* And PLEASE, if you translated something on wsl then consider shareing it by droping an email
-* even if it's one word or one sentence.
+* kept for compatibility.
 */
 function _wsl_e($text, $domain)
 {
-	global $WORDPRESS_SOCIAL_LOGIN_TEXTS; 
-
-	$local = __($text, $domain);
-
-	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $local ) ) ] = $text;
-
-	echo $local;
+	echo __($text, $domain);
 }
 
 // --------------------------------------------------------------------
@@ -155,23 +150,13 @@ function _wsl_e($text, $domain)
 /**
 * __() wrapper
 * 
-* This function is used for the localization widget to generate translations per page. 
-* If you are using Poedit for example you could search for texts by _wsl_e and _wsl__ instead
+* This function was used for the localization widget to generate translations per page. 
 *
-* If you are new to wp/i18n, then check out this video youtube.com/watch?v=aGN-hbMCPMg
-*
-* And PLEASE, if you translated something on wsl then consider shareing it by droping an email
-* even if it's one word or one sentence.
+* kept for compatibility.
 */
 function _wsl__($text, $domain)
 {
-	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
-
-	$local = __($text, $domain);
-
-	$WORDPRESS_SOCIAL_LOGIN_TEXTS[ preg_replace('/\s+/', ' ', strip_tags( $local ) ) ] = $text;
-
-	return $local;
+	return __($text, $domain);
 }
 
 // --------------------------------------------------------------------
@@ -191,31 +176,33 @@ function wsl_version()
 /* includes */
 
 # Settings
-require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php' 			 ); // List of provider supported by hybridauth library 
-require_once( dirname (__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utililies related to wsl database installation and migrations
-require_once( dirname (__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check wsl requirements and register wsl settings, list of components and admin tabs
-require_once( dirname (__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade compatibilities from old wsl versions 
+require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php' 			 ); // List of provider supported by WSL (provided by hybridauth library) 
+require_once( dirname (__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
+require_once( dirname (__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
+require_once( dirname (__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
 
 # Services
-require_once( dirname (__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. 
-require_once( dirname (__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Email notifications to send. so far only the admin one is implemented
+require_once( dirname (__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script.
+require_once( dirname (__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
 require_once( dirname (__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
 require_once( dirname (__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
 
-# WSL Widgets or so we call them
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (yep where the icons are displayed)
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Page for users completing their registration (currently used only by Bouncer::Email Validation
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.notices.php'               ); // Kill WordPress execution and display HTML message with error message. in similar fashion to wp_die
+# WSL Widget or so we call it
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
+require_once( dirname (__FILE__) . '/includes/widgets/wsl.notices.php'               ); // Kill WordPress and display HTML message with an error message. same as wp_die()
 
-# WSL Admin UIs
+# WSL Admin UI. This will only kick in, if the current user is connected as admin
 if( is_admin() ){
-	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The LOC in charge of displaying WSL Admin GUInterfaces 
+	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The entry point to WSL Admin interfaces 
 }
 
 // --------------------------------------------------------------------
 
 /* hooks */
 
+// registers wsl_database_migration_hook() to be run when the WSL is activated.
+// this will create/update wslusersprofiles and wsluserscontacts
 register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
 
 // --------------------------------------------------------------------

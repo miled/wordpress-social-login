@@ -9,13 +9,23 @@
 /**
 * List of supported providers by Hybridauth Library 
 *
-* Here are defined a 24 idp or so. If you need even more of the Hybridauth additional providers, 
+* Here are defined a 26 idp or so. If you need even more of the Hybridauth additional providers, 
 * then you need to download additional providers package at http://hybridauth.sf.net/download.html
 * and then copy needed additional providers to the library.
 *
-* For instance, to get Identica provider working you need to copy 'hybridauth-identica/Providers/Identica.php' 
-* to 'plugins/wordpress-social-login/hybridauth/Hybrid/Providers/Identica.php' and then add it to 
-* $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG.
+* For instance, to get Vimeo provider working you need to copy 'hybridauth-identica/Providers/Vimeo.php' 
+* to 'plugins/wordpress-social-login/hybridauth/Hybrid/Providers/Vimeo.php' and then add it to 
+* $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG :
+*
+*   ARRAY( 
+*      'provider_id'         : Alphanumeric(a-zA-Z0-9) code/name of a provider
+*      'provider_name'       : Real provider name.
+*      'require_client_id'   : If a provider uses OAuth 2. Defaults to false.
+*      'callback'            : If the provide require to set a callback url. Defaults to false.
+*      'new_app_link'        : If the provide require to create a new application on his developer site.
+*      'default_network'     : If true, it will shows up by default on Admin > WordPress Social Login > Networks
+*      'cat'                 : http://imgur.com/CMdE9gL
+*   ),
 *
 * After that you just need to configure your application ID, private and secret keys at the plugin
 * configuration pages.
@@ -49,6 +59,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY( 
 		"provider_id"       => "Twitter",
 		"provider_name"     => "Twitter", 
+		"callback"          => true,
 		"new_app_link"      => "https://dev.twitter.com/apps", 
 
 		"default_network"  => true,

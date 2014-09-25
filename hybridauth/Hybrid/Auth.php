@@ -14,7 +14,7 @@
  */
 class Hybrid_Auth 
 {
-	public static $version = "2.2.2";
+	public static $version = "2.3.0-dev";
 
 	public static $config  = array();
 
@@ -68,6 +68,7 @@ class Hybrid_Auth
 
 		# load hybridauth required files, a autoload is on the way...
 		require_once $config["path_base"] . "Error.php";
+		require_once $config["path_base"] . "Exception.php";
 		require_once $config["path_base"] . "Logger.php";
 
 		require_once $config["path_base"] . "Provider_Adapter.php";
@@ -82,9 +83,9 @@ class Hybrid_Auth
 		require_once $config["path_base"] . "User_Contact.php";
 		require_once $config["path_base"] . "User_Activity.php";
 
-        if(!class_exists("Hybrid_Storage")){
-            require_once $config["path_base"] . "Storage.php";
-        }
+		if ( ! class_exists("Hybrid_Storage", false) ){
+			require_once $config["path_base"] . "Storage.php";
+        	}
 
 		// hash given config
 		Hybrid_Auth::$config = $config;
@@ -260,11 +261,11 @@ class Hybrid_Auth
 			Hybrid_Logger::info( "Hybrid_Auth::setup( $providerId ), no stored params found for this provider. Initialize a new one for new session" );
 		}
 
-		if( ! isset( $params["hauth_return_to"] ) ){
+		if( is_array($params) && ! isset( $params["hauth_return_to"] ) ){
 			$params["hauth_return_to"] = Hybrid_Auth::getCurrentUrl(); 
-		}
 
-		Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ). HybridAuth Callback URL set to: ", $params["hauth_return_to"] );
+			Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ). HybridAuth Callback URL set to: ", $params["hauth_return_to"] );
+		}
 
 		# instantiate a new IDProvider Adapter
 		$provider   = new Hybrid_Provider_Adapter();
@@ -386,14 +387,6 @@ class Hybrid_Auth
 		}
 
 		$url = $protocol . $_SERVER['HTTP_HOST'];
-
-		// use port if non default
-		if( isset( $_SERVER['SERVER_PORT'] ) && strpos( $url, ':'.$_SERVER['SERVER_PORT'] ) === FALSE ) {
-			$url .= ($protocol === 'http://' && $_SERVER['SERVER_PORT'] != 80 && !isset( $_SERVER['HTTP_X_FORWARDED_PROTO']))
-				|| ($protocol === 'https://' && $_SERVER['SERVER_PORT'] != 443 && !isset( $_SERVER['HTTP_X_FORWARDED_PROTO']))
-				? ':' . $_SERVER['SERVER_PORT'] 
-				: '';
-		}
 
 		if( $request_uri ){
 			$url .= $_SERVER['REQUEST_URI'];

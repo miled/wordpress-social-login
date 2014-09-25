@@ -39,7 +39,7 @@ function wsl_get_contact_data_by_user_id( $field, $contact_id ){
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wsluserscontacts` where ID = '$contact_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return $rs[0]->data_field;
+	return (empty($rs) ? '' : $rs[0]->data_field);
 }
 
 // --------------------------------------------------------------------
@@ -81,34 +81,59 @@ function wsl_get_user_linked_account_by_provider_and_identifier( $provider, $ide
 function wsl_store_hybridauth_user_data( $user_id, $provider, $profile )
 {
 	global $wpdb;
+	
+	$wpdb->show_errors(); 
 
 	$sql = "SELECT id, object_sha FROM `{$wpdb->prefix}wslusersprofiles` where user_id = '$user_id' and provider = '$provider'";
 	$rs  = $wpdb->get_results( $sql );
 
 	$profile_sha = sha1( serialize( $profile ) );
 
-	// if $profile didnt change, no need for update
-	if( $rs && $rs[0]->object_sha == $profile_sha ){
-		return;
-	}
-
 	$table_data = array(
+		"id"         => 'null',
 		"user_id"    => $user_id,
 		"provider"   => $provider,
 		"object_sha" => $profile_sha
 	);
+	
+	if( $rs ){
+		$table_data['id'] = $rs[0]->id;
+	}
+
+	$fields = array( 
+		'identifier', 
+		'profileurl', 
+		'websiteurl', 
+		'photourl', 
+		'displayname', 
+		'description', 
+		'firstname', 
+		'lastname', 
+		'gender', 
+		'language', 
+		'age', 
+		'birthday', 
+		'birthmonth', 
+		'birthyear', 
+		'email', 
+		'emailverified', 
+		'phone', 
+		'address', 
+		'country', 
+		'region', 
+		'city', 
+		'zip'
+	);
 
 	foreach( $profile as $key => $value ) {
-		$table_data[ strtolower($key) ] = (string) $value;
+		$key = strtolower($key);
+
+		if( in_array( $key, $fields ) ){
+			$table_data[ $key ] = (string) $value;
+		}
 	}
 
-	// if $profile updated we re/store on database
-	if( $rs && $rs[0]->object_sha != $profile_sha ){
-		$wpdb->update( "{$wpdb->prefix}wslusersprofiles", $table_data, array( "id" => $rs[0]->id ) ); 
-	}
-	else{
-		$wpdb->insert( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
-	}
+	$rs = $wpdb->replace( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
 }
 
 // --------------------------------------------------------------------
@@ -118,7 +143,7 @@ function wsl_store_hybridauth_user_data( $user_id, $provider, $profile )
 * 
 * We import a user contact per provider only once.
 */
-function wsl_import_user_contacts( $provider, $adapter, $user_id )
+function wsl_import_user_contacts( $user_id, $provider, $adapter )
 {
 	if( ! (
 		get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ||
@@ -131,11 +156,18 @@ function wsl_import_user_contacts( $provider, $adapter, $user_id )
 	}
 
 	global $wpdb;
+	
+	$user_contacts = null;
 
 	// grab the user's friends list
-	$user_contacts = $adapter->getUserContacts();
-// print_r( $user_contacts ); die();
-	// update contact only one time per provider, this behaviour may change depend on the feedback reviced
+	try{
+		$user_contacts = $adapter->getUserContacts();
+	}
+	catch( Exception $e ){ 
+		// well.. fuck it
+	}
+
+	// update contact only one time per provider, this behaviour may change depend on users feedback 
 	if( ! $user_contacts ){
 		return;
 	}
@@ -203,7 +235,7 @@ function wsl_get_user_linked_accounts_field_by_id( $id, $field )
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wslusersprofiles` where id = '$id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return $rs[0]->data_field;
+	return (empty($rs) ? '' : $rs[0]->data_field);
 }
 
 // --------------------------------------------------------------------
@@ -215,7 +247,7 @@ function wsl_get_user_by_meta_key_and_user_id( $meta_key, $user_id )
 	$sql = "SELECT meta_value FROM `{$wpdb->prefix}usermeta` where meta_key = '$meta_key' and user_id = '$user_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return $rs[0]->meta_value;
+	return (empty($rs) ? '' : $rs[0]->meta_value);
 }
 
 // --------------------------------------------------------------------
@@ -227,7 +259,7 @@ function wsl_get_user_data_by_user_id( $field, $user_id )
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}users` where ID = '$user_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return $rs[0]->data_field;
+	return (empty($rs) ? '' : $rs[0]->data_field);
 }
 
 // --------------------------------------------------------------------

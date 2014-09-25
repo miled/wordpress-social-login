@@ -29,7 +29,7 @@ function wsl_component_loginwidget_setup()
 		<div class="inside"> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" > 
 			  <tr>
-				<td width="135" align="right"><strong><?php _wsl_e("Connect with caption", 'wordpress-social-login') ?> :</strong></td>
+				<td width="180" align="right"><strong><?php _wsl_e("Connect with caption", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
 				<input type="text" class="inputgnrc" value="<?php echo get_option( 'wsl_settings_connect_with_label' ); ?>" name="wsl_settings_connect_with_label" > 
 				</td>
@@ -62,26 +62,55 @@ function wsl_component_loginwidget_setup()
 			<label for="name"><?php _wsl_e("Advanced Settings", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
-			<table width="100%" border="0" cellpadding="5" cellspacing="2" >
+			<p> 
+				<b>Redirect URL :</b> By default and after they authenticate, users will be automatically redirected to the page where they come from. If WSL wasn't able to identify where they come from (or if they used wp-login page to connect), then they will be redirected to <code>Redirect URL</code> instead.
+			</p>
+
+			<p> 
+				<b>Force redirection :</b> When set to <b>Yes</b>, users will be <b>always</b> redirected to <code>Redirect URL</code>.
+			</p>
+
+			<p> 
+				<b>Authentication display :</b> Determines how the authentication dialog is rendered. You can chose to open the dialog in a <b>popup</b> or to <b>in page</b>. (Authentication display was previously known as Authentication flow).
+			</p>
+
+			<p> 
+				<b>Widget display :</b> Determines where you want to show the authentication widget. 
+			</p>
+
+			<p> 
+				<b>Notification :</b> Determines whether you want to receive a notification by mail when a new user is logged in via WSL.
+			</p>
+
+			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 			  <tr>
-				<td width="135" align="right"><strong><?php _wsl_e("Redirect URL", 'wordpress-social-login') ?> :</strong></td>
+				<td width="180" align="right"><strong><?php _wsl_e("Redirect URL", 'wordpress-social-login') ?> :</strong></td>
 				<td>
 					<input type="text" name="wsl_settings_redirect_url" value="<?php echo get_option( 'wsl_settings_redirect_url' ); ?>" class="inputgnrc"> 
 				</td>
 			  </tr>
 			  <tr>
-				<td align="right"><strong><?php _wsl_e("Authentication flow", 'wordpress-social-login') ?> :</strong></td>
+				<td align="right"><strong><?php _wsl_e("Force redirection", 'wordpress-social-login') ?> :</strong></td>
 				<td>
-					<select name="wsl_settings_use_popup" style="width:400px">
-						<option <?php if( get_option( 'wsl_settings_use_popup' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Using popup window", 'wordpress-social-login') ?></option> 
-						<option <?php if( get_option( 'wsl_settings_use_popup' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No popup window", 'wordpress-social-login') ?></option> 
+					<select name="wsl_settings_force_redirect_url" style="width:100px">
+						<option <?php if( get_option( 'wsl_settings_force_redirect_url' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_force_redirect_url' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
+					</select> 
+				</td>
+			  </tr>
+			  <tr>
+				<td align="right"><strong><?php _wsl_e("Authentication display", 'wordpress-social-login') ?> :</strong></td>
+				<td>
+					<select name="wsl_settings_use_popup" style="width:100px">
+						<option <?php if( get_option( 'wsl_settings_use_popup' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Popup", 'wordpress-social-login') ?></option> 
+						<option <?php if( get_option( 'wsl_settings_use_popup' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("In Page", 'wordpress-social-login') ?></option> 
 					</select> 
 				</td>
 			  </tr>
 			  <tr>
 				<td align="right"><strong><?php _wsl_e("Widget display", 'wordpress-social-login') ?> :</strong></td>
 				<td>
-					<select name="wsl_settings_widget_display" style="width:400px">
+					<select name="wsl_settings_widget_display" style="width:535px">
 						<option <?php if( get_option( 'wsl_settings_widget_display' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Display the widget in the comments area, login and register forms", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_widget_display' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Display the widget ONLY in the comments area", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_widget_display' ) == 3 ) echo "selected"; ?> value="3"><?php _wsl_e("Display the widget ONLY in the login form", 'wordpress-social-login') ?></option> 
@@ -91,7 +120,7 @@ function wsl_component_loginwidget_setup()
 			  <tr>
 				<td align="right"><strong><?php _wsl_e("Notification", 'wordpress-social-login') ?> :</strong></td>
 				<td>
-					<select name="wsl_settings_users_notification" style="width:400px">
+					<select name="wsl_settings_users_notification" style="width:535px">
 						<option <?php if( ! get_option( 'wsl_settings_users_notification' )      ) echo "selected"; ?> value="0"><?php _wsl_e("No notification", 'wordpress-social-login') ?></option> 
 						<option <?php if(   get_option( 'wsl_settings_users_notification' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Notify ONLY the blog admin of a new user", 'wordpress-social-login') ?></option> 
 					</select> 
@@ -107,12 +136,12 @@ function wsl_component_loginwidget_setup()
 			<label for="name"><?php _wsl_e("Custom CSS", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
-			<table width="100%" border="0" cellpadding="5" cellspacing="2" >
-			  <tr>
-				<td width="135" align="right" valign="top"><strong><?php _wsl_e("Widget CSS", 'wordpress-social-login') ?> :</strong></td>
-				<td>
+			<p>
 				<?php _wsl_e("To customize the default widget styles you can either: edit the css file <strong>/wordpress-social-login/assets/css/style.css</strong>, or change it from this text area", 'wordpress-social-login') ?>. 
-				<br />
+			</p>
+			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
+			  <tr>  
+				<td>
 				<textarea style="width:100%;height:120px;margin-top:6px;" name="wsl_settings_authentication_widget_css"><?php echo get_option( 'wsl_settings_authentication_widget_css' );  ?></textarea>
 				<br />
 				<p><?php _wsl_e("The basic widget markup is the following", 'wordpress-social-login') ?>:</p>

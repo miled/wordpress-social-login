@@ -7,14 +7,14 @@
 */
 
 /**
-* Functions & utililies related to wsl database installation and migrations
+* Functions & utilities related to WSL database installation and migrations
 *
-* After WSl activated, wsl_database_migration_process will attempt to create or upgrade the required database
+* When WSl is activated, wsl_database_migration_process() will attempt to create or upgrade the required database
 * tables.
 *
 * Currently there is 2 tables used by WSL :
-*	- wslusersprofiles:  where sotred the users profile as provided by Hybridauth
-*	- wsluserscontacts:  where sotred the users contact list as provided by Hybridauth
+*	- wslusersprofiles:  where we store users profiles
+*	- wsluserscontacts:  where we store users contact lists
 */
 
 // Exit if accessed directly

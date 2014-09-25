@@ -26,7 +26,7 @@ if ( ! current_user_can('manage_options') ) {
 	wsl_render_notices_pages( 'You do not have sufficient permissions to access this page.' );
 }
 
-session_start();
+@ session_start(); // meh..
 ?>
 <!DOCTYPE html>
 <head>
@@ -125,11 +125,6 @@ if ( get_bloginfo( 'version' ) < '3.4' ) {
 
 
 # EOF</textarea> 
-<table width="100%" border="0">
-  <tr>
-	<td><?php echo $message ; ?></td> 
-  </tr>  
-</table> 
 </div> 
 </body>
 </html> 

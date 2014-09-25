@@ -21,17 +21,17 @@ function wsl_component_help()
 	do_action( "wsl_component_help_start" ); 
 ?>
 <div class="wslgn"> 
-	<div style="width: 290px; float: right; margin: 20px 0 20px 20px; margin-top:0px; padding: 0 20px 20px 20px; border: 1px solid #ddd; background-color: #fff;">
+	<div style="width: 320px; float: right; margin: 20px 0 20px 20px; margin-top:0px; padding: 0 20px 20px 20px; border: 1px solid #ddd; background-color: #fff;">
 		<h3><?php _wsl_e("Troubleshooting", 'wordpress-social-login') ?></h3>
 		<p>
 			<b><a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=diagnostics"><?php _wsl_e('WSL Diagnostics', 'wordpress-social-login') ?></a></b>
 			
 			<b><a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php"><?php _wsl_e('System information', 'wordpress-social-login') ?></a></b>
 		</p> 
-		<p align="justify">
+		<p>
 			<?php _wsl_e('If you run into any issue, you can access the <b>WordPress Social Login Diagnostics</b> to check the <b>Plugin Requirements</b> or to enable the <b>Development mode</b>', 'wordpress-social-login') ?>.
 		</p> 
-		<p align="justify">
+		<p>
 			<?php _wsl_e('Remember to include your System information when posting support requests', 'wordpress-social-login') ?>.
 		</p> 
 	</div>

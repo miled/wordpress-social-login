@@ -15,7 +15,7 @@
 class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 {
 	// default permissions, and a lot of them. You can change them from the configuration by setting the scope to what you want/need
-	public $scope = "email, user_about_me, user_birthday, user_hometown, user_website, read_stream, offline_access, publish_stream, read_friendlists";
+	public $scope = "email, user_about_me, user_birthday, user_hometown, user_website, read_stream, publish_actions, read_friendlists";
 
 	/**
 	* IDp wrappers initializer 
@@ -77,6 +77,13 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 				}
 			}
 		}
+
+        if( isset( $this->config[ 'force' ] ) && $this->config[ 'force' ] === true ){
+            $parameters[ 'auth_type' ]  = 'reauthenticate';
+            $parameters[ 'auth_nonce' ] = md5( uniqid( mt_rand(), true ) );
+
+            Hybrid_Auth::storage()->set( 'fb_auth_nonce', $parameters[ 'auth_nonce' ] );
+        }
 
 		// get the login url 
 		$url = $this->api->getLoginUrl( $parameters );
@@ -175,7 +182,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		$this->user->profile->profileURL    = (array_key_exists('link',$data))?$data['link']:""; 
 		$this->user->profile->webSiteURL    = (array_key_exists('website',$data))?$data['website']:""; 
 		$this->user->profile->gender        = (array_key_exists('gender',$data))?$data['gender']:"";
-		$this->user->profile->description   = (array_key_exists('bio',$data))?$data['bio']:"";
+        	$this->user->profile->language      = (array_key_exists('locale',$data))?$data['locale']:"";
+		$this->user->profile->description   = (array_key_exists('about',$data))?$data['about']:"";
 		$this->user->profile->email         = (array_key_exists('email',$data))?$data['email']:"";
 		$this->user->profile->emailVerified = (array_key_exists('email',$data))?$data['email']:"";
 		$this->user->profile->region        = (array_key_exists("hometown",$data)&&array_key_exists("name",$data['hometown']))?$data['hometown']["name"]:"";
@@ -225,20 +233,36 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 	*/
 	function getUserContacts()
 	{
-		try{ 
-			$response = $this->api->api('/me/friends?fields=link,name'); 
+		$apiCall = '?fields=link,name';
+		$returnedContacts = array();
+		$pagedList = false;
+
+		do {
+			try{ 
+				$response = $this->api->api('/me/friends' . $apiCall); 
+			}
+			catch( FacebookApiException $e ){
+				throw new Exception( 'User contacts request failed! {$this->providerId} returned an error: $e' );
+			} 
+
+			// Prepare the next call if paging links have been returned
+			if (array_key_exists('paging', $response) && array_key_exists('next', $response['paging'])) {
+				$pagedList = true;
+			        $next_page = explode('friends', $response['paging']['next']);
+			        $apiCall = $next_page[1];
+			}
+			else{
+				$pagedList = false;
+			}
+
+			// Add the new page contacts
+			$returnedContacts = array_merge($returnedContacts, $response['data']);
 		}
-		catch( FacebookApiException $e ){
-			throw new Exception( "User contacts request failed! {$this->providerId} returned an error: $e" );
-		} 
- 
-		if( ! $response || ! count( $response["data"] ) ){
-			return ARRAY();
-		}
+		while ($pagedList == true);
 
 		$contacts = ARRAY();
  
-		foreach( $response["data"] as $item ){
+		foreach( $returnedContacts as $item ){
 			$uc = new Hybrid_User_Contact();
 
 			$uc->identifier  = (array_key_exists("id",$item))?$item["id"]:"";
@@ -252,27 +276,96 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		return $contacts;
  	}
 
+    /**
+    * update user status
+	*
+	* @param  string $pageid   (optional) User page id
+    */
+    function setUserStatus( $status, $pageid = null )
+    {
+        if( !is_array( $status ) ){
+            $status = array( 'message' => $status );
+        }
+
+        if( is_null( $pageid ) ){
+            $pageid = 'me';
+
+        // if post on page, get access_token page
+        }else{
+            $access_token = null;
+            foreach( $this->getUserPages( true ) as $p ){
+                if( isset( $p[ 'id' ] ) && intval( $p['id'] ) == intval( $pageid ) ){
+                    $access_token = $p[ 'access_token' ];
+                    break;
+                }
+            }
+
+            if( is_null( $access_token ) ){
+                throw new Exception( "Update user page failed, page not found or not writable!" );
+            }
+
+            $status[ 'access_token' ] = $access_token;
+        }
+
+        try{ 
+            $response = $this->api->api( '/' . $pageid . '/feed', 'post', $status );
+        }
+        catch( FacebookApiException $e ){
+            throw new Exception( "Update user status failed! {$this->providerId} returned an error: $e" );
+        }
+
+        return $response;
+    }
+
+
 	/**
-	* update user status
+	* get user status
 	*/
-	function setUserStatus( $status )
-	{
-		$parameters = array();
-
-		if( is_array( $status ) ){
-			$parameters = $status;
-		}
-		else{
-			$parameters["message"] = $status; 
-		}
-
-		try{ 
-			$response = $this->api->api( "/me/feed", "post", $parameters );
-		}
+    function getUserStatus( $postid )
+    {
+		try{
+            $postinfo = $this->api->api( "/" . $postid );
+        }
 		catch( FacebookApiException $e ){
-			throw new Exception( "Update user status failed! {$this->providerId} returned an error: $e" );
+			throw new Exception( "Cannot retrieve user status! {$this->providerId} returned an error: $e" );
 		}
- 	}
+
+        return $postinfo;
+    }
+
+
+	/**
+	* get user pages
+	*/
+    function getUserPages( $writableonly = false )
+    {
+        if( ( isset( $this->config[ 'scope' ] ) && strpos( $this->config[ 'scope' ], 'manage_pages' ) === false ) || ( !isset( $this->config[ 'scope' ] ) && strpos( $this->scope, 'manage_pages' ) === false ) )
+            throw new Exception( "User status requires manage_page permission!" );            
+
+        try{
+            $pages = $this->api->api( "/me/accounts", 'get' );
+        }
+        catch( FacebookApiException $e ){
+            throw new Exception( "Cannot retrieve user pages! {$this->providerId} returned an error: $e" );
+        }
+
+        if( !isset( $pages[ 'data' ] ) ){
+            return array();
+        }
+
+        if( !$writableonly ){
+            return $pages[ 'data' ];
+        }
+
+        $wrpages = array();
+        foreach( $pages[ 'data' ] as $p ){
+            if( isset( $p[ 'perms' ] ) && in_array( 'CREATE_CONTENT', $p[ 'perms' ] ) ){
+                $wrpages[] = $p;
+            }
+        }
+
+        return $wrpages;
+    }
 
 	/**
 	* load the user latest activity  

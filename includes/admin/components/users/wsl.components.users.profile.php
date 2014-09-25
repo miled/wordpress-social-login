@@ -42,12 +42,12 @@ function wsl_component_users_profile( $user_id )
 		?>
 			<h3><?php _wsl_e("User Profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
 
-			<table class="form-table"
+			<table class="wp-list-table widefat">
 				<tr><th><label><?php echo $link->provider; ?> Identifier </label></th><td><?php echo $link->identifier 	; ?> <br /><span class="description">The Unique user's ID. Can be an interger for some providers, Email, URL, etc.</span></td></tr>
 				<tr><th><label>Wordpress Identifier </label></th><td><?php echo $user_id; ?> <br /><span class="description">The Unique user's ID on your website.</span></td></tr>
 				<tr><th><label>Profile URL 	</label></th><td><a href="<?php echo $link->profileurl; ?>"><?php echo $link->profileurl; ?></a> <br /><span class="description">URL link to profile page on the <?php echo $link->provider; ?> web site.</span></td></tr>
 				<tr><th><label>Website URL 	</label></th><td><a href="<?php echo $link->websiteurl; ?>"><?php echo $link->websiteurl; ?></a> <br /><span class="description">User website, blog, web page, etc.</span></td></tr>
-				<tr><th><label>Photo URL 	</label></th><td><a href="<?php echo $link->photourl; ?>"><?php echo $link->photourl; ?></a> <br /><span class="description">URL link to user photo or avatar.</span></td></tr>
+				<tr><th><label>Photo URL 	</label></th><td><?php if( $link->photourl ){ ?><a href="<?php echo $link->photourl; ?>"><img width="48" height="48" align="left" src="<?php echo $link->photourl ?>" style="margin-right: 5px;" > <?php echo $link->photourl; ?></a> <br /><span class="description">URL link to user photo or avatar.</span><?php } ?></td></tr>
 				<tr><th><label>Display name	</label></th><td><?php echo $link->displayname	; ?> <br /><span class="description">User dispaly Name provided by the <?php echo $link->provider; ?> or a concatenation of first and last name.</span></td></tr>
 				<tr><th><label>Description	</label></th><td><?php echo $link->description	; ?>
 				<tr><th><label>First name	</label></th><td><?php echo $link->firstname	; ?>

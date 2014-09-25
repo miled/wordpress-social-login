@@ -380,6 +380,16 @@ function wsl_admin_ui_footer()
 	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
+    if( get_option( 'wsl_settings_development_mode_enabled' ) ){
+		global $wpdb;
+
+		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
+
+		print_r( $wpdb );
+		
+		echo '</pre>';
+	}
+	
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
 }

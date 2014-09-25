@@ -84,10 +84,10 @@ function wsl_component_users_list()
 							<?php } else { ?>
 								<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
 							<?php } ?>
-							<strong><a href="user-edit.php?user_id=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong>
+							<strong><a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong>
 							<br>
 						</td>
-						<td><?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?></td>
+						<td><?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?></td>
 						<td>
 							<?php $user_wsl_email = wsl_get_user_data_by_user_id( "user_email", $user_id); if( $user_wsl_email ) { ?>
 								<?php if( ! strstr( $user_wsl_email, "@example.com" ) ) { ?>

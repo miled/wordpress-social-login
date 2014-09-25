@@ -67,6 +67,8 @@ class OAuth2Client
 
 	public function authenticate( $code )
 	{
+		Hybrid_Logger::info( "Enter OAuth2Client::authenticate( $code )" );
+		
 		$params = array(
 			"client_id"     => $this->client_id,
 			"client_secret" => $this->client_secret,
@@ -74,11 +76,15 @@ class OAuth2Client
 			"redirect_uri"  => $this->redirect_uri,
 			"code"          => $code
 		);
+		
+		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request params: ", $params );
 	
 		$response = $this->request( $this->token_url, $params, $this->curl_authenticate_method );
 		
 		$response = $this->parseRequestResult( $response );
 
+		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request response: ", $response );
+		
 		if( ! $response || ! isset( $response->access_token ) ){
 			throw new Exception( "The Authorization Service has return: " . $response->error );
 		}
@@ -192,7 +198,7 @@ class OAuth2Client
 	private function request( $url, $params=false, $type="GET" )
 	{
 		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", $params );
 
 		if( $type == "GET" ){
 			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
@@ -223,8 +229,8 @@ class OAuth2Client
 		if( $response === FALSE ) {
 				Hybrid_Logger::error( "OAuth2Client::request(). curl_exec error: ", curl_error($ch) );
 		}
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", curl_getinfo($ch) );
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", $response );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));
