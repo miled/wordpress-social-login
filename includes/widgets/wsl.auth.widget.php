@@ -15,7 +15,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-function wsl_render_login_form()
+function wsl_render_login_form( $show_connect_with = true )
 {
 	if ( is_user_logged_in() && ! is_admin() ){
 		return;
@@ -85,8 +85,13 @@ function wsl_render_login_form()
 </style>
 <?php 
 	}
+
+	if( $show_connect_with ){
 ?>
-	<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>
+		<span id="wp-social-login-connect-with"><?php echo $wsl_settings_connect_with_label ?></span>
+<?php
+	}
+?>
 	<div id="wp-social-login-connect-options">
 <?php 
 	$nok = true;
@@ -157,12 +162,16 @@ function wsl_render_login_form()
 
 # {{{ render widget
 
-function wsl_render_login_form_login()
+function wsl_render_login_form_login( $show_connect_with )
 {
-	wsl_render_login_form(); 
+	// validation input
+	if( !is_bool( $show_connect_with ) ) {
+		$show_connect_with = true;
+	}
+	wsl_render_login_form( $show_connect_with );
 }
 
-add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
+add_action( 'wordpress_social_login', 'wsl_render_login_form_login', 10, 1 );
 
 // --------------------------------------------------------------------
 
@@ -213,7 +222,11 @@ add_action( 'after_signup_form', 'wsl_render_login_form_login_on_register_and_lo
 function wsl_shortcode_handler($args)
 {
 	if ( ! is_user_logged_in () ){
-		wsl_render_login_form();
+		$show_connect_with = true;
+		if( $args['show_label'] === 'false' ) {
+			$show_connect_with = false;
+		}
+		wsl_render_login_form( $show_connect_with );
 	}
 }
 
