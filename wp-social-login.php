@@ -18,7 +18,7 @@ Domain Path: languages
 *  Please, don't hesitate to:
 *
 *   - Report bugs and issues.
-* 	- Contribute: Code, Reviews, Ideas and Design.
+*   - Contribute: Code, Reviews, Ideas and Design.
 *   - Point out stupidity, smells and inconsistencies in the code.
 *   - Criticize.
 *
