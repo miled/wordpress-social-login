@@ -48,6 +48,7 @@ function wsl_database_migration_process()
 	// install database
     $wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
     $wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
+
     $installed_ver    = get_option( "wsl_database_migration_version" );
 
     if( $installed_ver != $wsl_database_migration_version ) { 

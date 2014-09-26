@@ -62,7 +62,7 @@ function wsl_component_bouncer_setup()
 				<?php _wsl_e("Select required fields. If a social network doesn't return them, Bouncer will then ask your visitors to fill additional form to provide them when registering.", 'wordpress-social-login') ?> 
 			</p>
 			<p class="description">
-				<?php _wsl_e("You may activate <b>Profile Completion</b> for both <b>E-mail</b> and <b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to avoid forms and remove all the hassle of registration", 'wordpress-social-login') ?>.
+				<?php _wsl_e("You may activate <b>Profile Completion</b> for both <b>E-mail</b> and <b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to avoid forms and to remove the hassle of registration", 'wordpress-social-login') ?>.
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -101,11 +101,17 @@ function wsl_component_bouncer_setup()
 				<li><?php _wsl_e('<b>Admin Approval</b>: New users will need to be approved by an administrator before they may log in', 'wordpress-social-login') ?>.</li>
 			</ul> 
 			<p class="description">
-				<?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin to be installed', 'wordpress-social-login') ?>.
+				<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
 			</p> 
 			<p class="description">
-				<?php _wsl_e('<b>Note</b>: <b>User Moderation</b> was purposely made compatible with the <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> because that plugin is good at what he does, besides, there(s no point to reinvent the wheel', 'wordpress-social-login') ?>.
+				1. <?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login Plugin</a> to be installed', 'wordpress-social-login') ?>.
+				<br />
+				2. <?php _wsl_e('<a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a>, is a free and open source plugin and <b>WordPress Social Login User Moderation</b> was purposely made compatible with it because it provides a solid <b>User Moderation</b> module and there is no point to reinvent the wheel', 'wordpress-social-login') ?>.
+				<br />
+				3. <?php _wsl_e('In order for this to work correctly, you will need to go to <b>Theme My Login</b> settings, then enable <b>User Moderation</b> and set <b>Moderation Type</b> to the same thing as the box bellow', 'wordpress-social-login') ?>.
 			</p> 
+			
+			
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
 				<td width="200" align="right"><strong><?php _wsl_e("User Moderation", 'wordpress-social-login') ?> :</strong></td>
@@ -130,10 +136,10 @@ function wsl_component_bouncer_setup()
 				<?php _wsl_e('Here you can define the default role for new users authenticating through WSL. The <code>Administrator</code> and <code>Editor</code> roles are not available for safety reasons', 'wordpress-social-login') ?>.
 			</p> 
 			<p>
-				<?php _wsl_e('For more information about wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
+				<?php _wsl_e('For more information about Wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
 			</p> 
 			<p>
-				<?php _wsl_e('If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>.
+				<?php _wsl_e('<b>Note:</b> If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>

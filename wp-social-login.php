@@ -40,10 +40,10 @@ Domain Path: languages
 *
 *
 *  If you want to translate this plugin into your language (or to improve the current translation), then
-*  please check out: wordpress-social-login/languages/readme.txt
+*  check out for more information: wordpress-social-login/languages/readme.txt
 *
 *  If you have fixed, improved or translated something on WSL and you want to contribute to the pluging
-*  then don't hesitate to doping me an email or to submit a PR on https://github.com/hybridauth/WordPress-Social-Login 
+*  then don't hesitate to drop me an email or to submit a PR on https://github.com/hybridauth/WordPress-Social-Login 
 *
 */
 
