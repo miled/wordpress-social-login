@@ -17,6 +17,14 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_help()
 {
+	// page help up us translate wsl
+	// .. to be moved somewhere else
+	if( isset( $_REQUEST["wslhelp"] ) && $_REQUEST["wslhelp"] == 'translate' ){
+		wsl_component_help_translate();
+
+		return;
+	}
+
 	// HOOKABLE: 
 	do_action( "wsl_component_help_start" ); 
 ?>
@@ -101,5 +109,53 @@ function wsl_component_help()
 }
 
 wsl_component_help();
+
+// --------------------------------------------------------------------
+
+function wsl_component_help_translate()
+{
+?>	
+<style>
+#l10n-footer { 
+	display:none !important;
+}
+#wsl_div_warn { 
+	padding: 10px;  
+	border: 1px solid #ddd; 
+	background-color: #fff; 
+	
+	width: 750px;
+	margin: 0px auto;
+	margin-top:30px;
+}
+</style>
+<div id="wsl_div_warn">
+	<h3 style="margin:0px;"><?php _wsl_e('Help us translate WordPress Social Login into your language', 'wordpress-social-login') ?></h3> 
+
+	<hr />
+
+	<p>
+		<?php _wsl_e( "We're calling on the help of WordPress Social Login users to translate this plugin into their own language or improve current translations where necessary. If you are interested in helping us out, please drop a mail at hybridauth@gmail.com. You can also sent us a pull request on <a href='https://github.com/hybridauth/WordPress-Social-Login'>https://github.com/hybridauth/WordPress-Social-Login</a>", 'wordpress-social-login') ?>. 
+	</p>
+
+	<p>
+		<?php _wsl_e("If you are interested and you want to help, but you are new to WP/i18n, then we recommend check out this video", 'wordpress-social-login') ?>:
+	</p>
+
+	<hr />
+
+	<div style="text-align:center"><iframe width="560" height="315" src="//www.youtube.com/embed/aGN-hbMCPMg" frameborder="0" allowfullscreen></iframe></div>
+	
+	<br />
+	
+	<small>
+		<?php _wsl_e("<b>Note:</b> WSL uses <code>_wsl_e()</code> instead of <code>_e()</code> and <code>_wsl__</code> instead of <code>__()</code>", 'wordpress-social-login') ?>.
+	</small> 
+
+	<br />
+
+</div>  
+<?php
+}
 
 // --------------------------------------------------------------------	

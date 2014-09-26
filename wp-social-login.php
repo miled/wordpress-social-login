@@ -35,15 +35,15 @@ Domain Path: languages
 *  Coding Style :
 *
 *   - Readable code.
-*   - Use tabs(8 spaces). As developers we read code 1/3 of the day and using clear indentations could
-*     make life a bit easier.
+*   - Clear indentations (8 spaces). 
 *   - Same name convention of wordpress: those long long and self explanatory functions and variables.
 *
-*  If you want to translate this plugin and you are new to WP/i18n, then we recommend check out this
-*  video https://youtube.com/watch?v=aGN-hbMCPMg (Localizing and Translating WordPress Plugins)
 *
-*  And PLEASE, if you have fixed, improved or translated something on WSL then consider sharing back 
-*  by doping me an email or by submitting a PR on https://github.com/hybridauth/WordPress-Social-Login 
+*  If you want to translate this plugin into your language (or to improve the current translation), then
+*  please check out: wordpress-social-login/languages/readme.txt
+*
+*  If you have fixed, improved or translated something on WSL and you want to contribute to the pluging
+*  then don't hesitate to doping me an email or to submit a PR on https://github.com/hybridauth/WordPress-Social-Login 
 *
 */
 
@@ -54,7 +54,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7"; // I know
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; // a useless piece of data we use to check some stuff
 
@@ -76,6 +76,7 @@ function wsl_activate()
 {
 	if ( ! function_exists ('register_post_status') ){
 		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+
 		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
 	}
 
@@ -126,8 +127,7 @@ if ( ! function_exists ('email_exists') ){
 *
 * http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 */
-if ( function_exists ('load_plugin_textdomain') ){
-	// B. Please. It's on purpose.
+if ( function_exists( 'load_plugin_textdomain' ) ){
 	load_plugin_textdomain ( 'wordpress-social-login', false, WORDPRESS_SOCIAL_LOGIN_REL_PATH . '/languages/' );
 }
 
@@ -140,9 +140,9 @@ if ( function_exists ('load_plugin_textdomain') ){
 *
 * kept for compatibility.
 */
-function _wsl_e($text, $domain)
+function _wsl_e( $text, $domain )
 {
-	echo __($text, $domain);
+	echo __( $text, $domain );
 }
 
 // --------------------------------------------------------------------
@@ -154,9 +154,9 @@ function _wsl_e($text, $domain)
 *
 * kept for compatibility.
 */
-function _wsl__($text, $domain)
+function _wsl__( $text, $domain )
 {
-	return __($text, $domain);
+	return __( $text, $domain );
 }
 
 // --------------------------------------------------------------------
@@ -203,6 +203,9 @@ if( is_admin() ){
 
 // registers wsl_database_migration_hook() to be run when the WSL is activated.
 // this will create/update wslusersprofiles and wsluserscontacts
+// and register/unregister few wp options
 register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
+
+// toDo: WSL uninstall (drops tables and options)
 
 // --------------------------------------------------------------------

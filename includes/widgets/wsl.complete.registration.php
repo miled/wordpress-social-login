@@ -22,8 +22,8 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// check posted user email & login
-	$request_user_login          = @ $_REQUEST["user_login"];
-	$request_user_email          = @ $_REQUEST["user_email"];
+	$request_user_login          = isset( $_REQUEST["user_login"] ) ? $_REQUEST["user_login"] : '';
+	$request_user_email          = isset( $_REQUEST["user_email"] ) ? $_REQUEST["user_email"] : '';
 
 	$request_user_login          = sanitize_user( $request_user_login, true );
 	$request_user_email          = sanitize_email( $request_user_email );

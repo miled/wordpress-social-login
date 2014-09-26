@@ -37,7 +37,6 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"diagnostics"  => array( "label" => __("Diagnostics"   , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "diagnostics"   , "pull-right" => true , "welcome-panel" => false ), 
 	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
 	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
-	"advanced"     => array( "label" => __("Advanced"      , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ),
 );
 
 // --------------------------------------------------------------------
@@ -182,9 +181,9 @@ function wsl_register_setting()
 
 	// idps credentials
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-		$provider_id          = @ $item["provider_id"]; 
-		$require_client_id    = @ $item["require_client_id"];
-		$require_registration = @ $item["new_app_link"];
+		$provider_id          = isset( $item["provider_id"]       ) ? $item["provider_id"]       : null; 
+		$require_client_id    = isset( $item["require_client_id"] ) ? $item["require_client_id"] : null;
+		$require_registration = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : null;
 
 		register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_enabled' );
 
@@ -222,15 +221,6 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_require_email'         );
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_change_email'          );
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_change_username'       );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_notice'           );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_submit_button'    );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_connected_with'   );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_email'            );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_username'         );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_email_invalid'    );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_username_invalid' );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_email_exists'     );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_text_username_exists'  );
 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_moderation_level'               );
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_membership_default_role'        );
@@ -245,14 +235,9 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_list'          );
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce'   );
 
-	register_setting( 'wsl-settings-group-advanced-settings', 'wsl_settings_base_url' );
-
 	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
 
 	add_option( 'wsl_settings_welcome_panel_enabled' );
-
-	// update old/all default wsl-settings
-	wsl_check_compatibilities();
 
 	// HOOKABLE:
 	do_action( 'wsl_register_setting_end' );
@@ -288,6 +273,8 @@ add_action('admin_menu', 'wsl_admin_menu_sidebar');
 
 /**
 * Add a new column to wp-admin/users.php
+*
+* currently disabled.
 */
 function wsl_manage_users_columns( $columns )
 {
@@ -303,6 +290,8 @@ function wsl_manage_users_columns( $columns )
 
 /**
 * Alter wp-admin/edit-comments.php
+*
+* currently disabled.
 */
 function wsl_comment_row_actions( $a ) {
 	global $comment;
@@ -324,6 +313,8 @@ function wsl_comment_row_actions( $a ) {
 
 /**
 * Generate content for the added column to wp-admin/users.php
+*
+* currently disabled.
 */
 function wsl_manage_users_custom_column( $value, $column_name, $user_id )
 {

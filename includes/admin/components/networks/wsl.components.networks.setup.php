@@ -23,6 +23,27 @@ function wsl_component_networks_setup()
 	GLOBAL $wpdb;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
+	// if no idp is enabled then we enable the default providers (facebook, google, twitter)
+	$nok = true; 
+	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+		$provider_id = $item["provider_id"];
+		
+		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
+			$nok = false;
+		}
+	}
+
+	if( $nok ){
+		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+			$provider_id = $item["provider_id"];
+			
+			if( isset( $item["default_network"] ) && $item["default_network"] ){
+				update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
+			} 
+		} 
+	}
+
+	// save settings?
 	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
 		$provider_id = $_REQUEST["enable"];
 
@@ -66,14 +87,14 @@ function wsl_component_networks_setup()
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 	
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ):
-		$provider_id                = @ $item["provider_id"];
-		$provider_name              = @ $item["provider_name"];
+		$provider_id                = isset( $item["provider_id"]       ) ? $item["provider_id"]       : '';
+		$provider_name              = isset( $item["provider_name"]     ) ? $item["provider_name"]     : '';
 
-		$require_client_id          = @ $item["require_client_id"];
-		$provide_email              = @ $item["provide_email"];
-		
-		$provider_new_app_link      = @ $item["new_app_link"];
-		$provider_userguide_section = @ $item["userguide_section"];
+		$require_client_id          = isset( $item["require_client_id"] ) ? $item["require_client_id"] : '';
+		$provide_email              = isset( $item["provide_email"]     ) ? $item["provide_email"]     : '';
+
+		$provider_new_app_link      = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : '';
+		$provider_userguide_section = isset( $item["userguide_section"] ) ? $item["userguide_section"] : '';
 
 		$provider_callback_url      = "" ;
 
@@ -83,11 +104,6 @@ function wsl_component_networks_setup()
 
 		// default endpoint_url
 		$endpoint_url = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
-
-		// overwrite endpoint_url if need'd
-		if( get_option( 'wsl_settings_base_url' ) ){
-			$endpoint_url = strtolower( get_option( 'wsl_settings_base_url' ) . '/hybridauth/' );
-		}
 
 		if( isset( $item["callback"] ) && $item["callback"] ){
 			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
@@ -143,15 +159,26 @@ function wsl_component_networks_setup()
 					</tbody>
 				</table> 
 				<?php if ( in_array( $provider_id, array( "Twitter", "Identica", "Tumblr", "Goodreads", "500px", "Vkontakte", "Gowalla", "Steam" ) ) ) : ?>
-				<br />
-				<hr />
-				<p style="margin-left:12px;margin-bottom:0px;"> 
-					<b  style="color:#CB4B16;"><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
-					
-					<?php echo sprintf( _wsl__("<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", 'wordpress-social-login'), $provider_name ) ?>. 
-					
-					<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Profile Completion</b>', 'wordpress-social-login') ?>.
-				</p>
+					<br />
+					<hr />
+					<p style="margin-left:12px;margin-bottom:0px;"> 
+						<b><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
+						
+						<?php echo sprintf( _wsl__("<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", 'wordpress-social-login'), $provider_name ) ?>. 
+						
+						<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Profile Completion</b>', 'wordpress-social-login') ?>.
+					</p>
+				<?php endif; ?> 
+				<?php if ( 0 && in_array( $provider_id, array( "Facebook", "Google" ) ) ) : ?>
+					<br />
+					<hr />
+					<p style="margin-left:12px;margin-bottom:0px;"> 
+						<b><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
+
+						<?php echo sprintf( _wsl__("<b>WSL</b> will ask <b>%s</b> users for a set number of permissions, however you can change these said permissions using a filter", 'wordpress-social-login'), $provider_name ) ?>. 
+
+						<?php _wsl_e('For more information, please refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help&wslhelp=filters">this page</a></b>', 'wordpress-social-login') ?>.
+					</p>
 				<?php endif; ?> 
 				<br />
 				<div

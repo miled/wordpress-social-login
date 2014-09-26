@@ -104,7 +104,7 @@ function wsl_component_bouncer_setup()
 				<?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin to be installed', 'wordpress-social-login') ?>.
 			</p> 
 			<p class="description">
-				<?php _wsl_e('<b>Note</b>: <b>User Moderation</b> was purposely made compatible with the <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> for a number reasons: There is no point to reinvent the wheel. That plugin is good at what he does, a hell of a lot of people are using', 'wordpress-social-login') ?>.
+				<?php _wsl_e('<b>Note</b>: <b>User Moderation</b> was purposely made compatible with the <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> because that plugin is good at what he does, besides, there(s no point to reinvent the wheel', 'wordpress-social-login') ?>.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>

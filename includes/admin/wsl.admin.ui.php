@@ -373,11 +373,11 @@ function wsl_admin_ui_footer()
 ?>
 </div> <!-- ./wsl_admin_tab_content -->  
 <div class="clear"></div>
-<?php wsl_admin_localize_widget(); ?>
+<?php wsl_admin_help_us_localize_note(); ?>
 
 <script>
 	// check for new versions and updates
-	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
+	// jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
     if( get_option( 'wsl_settings_development_mode_enabled' ) ){
@@ -386,10 +386,10 @@ function wsl_admin_ui_footer()
 		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
 
 		print_r( $wpdb );
-		
+
 		echo '</pre>';
 	}
-	
+
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
 }
@@ -416,7 +416,7 @@ function wsl_admin_ui_error()
 }
 </style>
 <div id="wsl_div_warn">
-	<h3 style="margin:0px;"><?php _wsl_e('Something wrong!', 'wordpress-social-login') ?></h3> 
+	<h3 style="margin:0px;"><?php _wsl_e('Oops! We ran into an issue.', 'wordpress-social-login') ?></h3> 
 
 	<hr />
 
@@ -434,8 +434,7 @@ function wsl_admin_ui_error()
 		<a class="button-secondary" href="http://hybridauth.sourceforge.net/wsl/support.html" target="_blank"><?php _wsl_e( "Report as bug", 'wordpress-social-login' ) ?></a>
 		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:right"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
 	</div> 
-</div> 
-
+</div>  
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_error_end" );
@@ -626,168 +625,22 @@ function wsl_admin_welcome_panel()
 // --------------------------------------------------------------------
 
 /**
-* Renders wsl localization widget
+* Renders wsl localization note
 */
-function wsl_admin_localize_widget()
+function wsl_admin_help_us_localize_note()
 {
-	return; // nothing until I decide otherwise
-	
-	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
+	return; // nothing, until I decide otherwise.. 
 
-	// default endpoint_url
-	$assets_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL;
+	$assets_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 
-	// overwrite endpoint_url if need'd
-	if( get_option( 'wsl_settings_base_url' ) ){
-		$assets_url = strtolower( get_option( 'wsl_settings_base_url' ) );
-	}
-
-	$assets_url .= '/assets/img/';
-
-	$current_user = wp_get_current_user();
-	
-	$wslp = "networks"; 
-
-	if( isset( $_REQUEST["wslp"] ) ){
-		$wslp = $_REQUEST["wslp"];
-	}
-?> 
-<form action="http://hybridauth.sourceforge.net/wsl/i18n.contributions.php" method="post" target="_blank"> 
-<input type="hidden" name="wsl_i18n_site_url" value="<?php bloginfo('url'); ?>" />
-<input type="hidden" name="wsl_i18n_site_charset" value="<?php bloginfo('charset'); ?>" />
-<input type="hidden" name="wsl_i18n_site_language" value="<?php bloginfo('language'); ?>" />
-<input type="hidden" name="wsl_i18n_current_page" value="<?php echo $wslp ?>" />
-
-<input type="hidden" name="wsl_version" value="<?php echo wsl_version() ?>" />
-
-<div id="wsl_i18n_cla">
-		<h3 style="margin:0px;"><?php _wsl_e( "Contributor License Agreement", 'wordpress-social-login' ) ?></h3> 
-
-		<hr />
-
-		<p>
-			<?php _wsl_e( "You are about to submit your contributions to the WordPress Social Login Website to be reviewed for inclusion in future versions", 'wordpress-social-login' ) ?>.
-
-			<?php _wsl_e( "You hereby grant the permission to publish your contribution, in whole or in part, and to made it available  under the <b>MIT License</b>, for the <b>Wordpress community</b> to, freely use or misuse", 'wordpress-social-login' ) ?>.
-		</p>
-
-		<hr />
-		
-		<div> 
-			<a class="button-secondary" href="admin.php?page=wordpress-social-login"><?php _wsl_e( "Hell No", 'wordpress-social-login' ) ?></a>
-			<input style="float:right" type="submit" value="<?php _wsl_e( "Yes, I agree to contribute my translation", 'wordpress-social-login' ) ?>" class="button-primary"  onClick="wsl_i18n_done()" > 
-		</div> 
-</div> 
-<div id="wsl_i18n_form"> 
-	<h3 style="margin:0px;"><?php _wsl_e( "Help us translate this page into your language", 'wordpress-social-login' ) ?></h3> 
-
-	<hr />
-
-	<p><?php _wsl_e( "You can <b>translate as much you please as much as you want</b>. You don't have to translate everything in this page. Ignore any string you want or aleardy translated. You could also use this tool to fix any typo you may find or to improve the current language expressions", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "All the texts on this page are automatically extracted and generated on the form beside. If the translation tool has scapped something you may consider as irrelevant, please leave that particular field empty", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "Your contributions will be sent to the WordPress Social Login website for inclusion in future versions", 'wordpress-social-login' ) ?>.</p> 
-</div>
-<div id="wsl_i18n">  
-	<pre id="wsl_i18n_pre"></pre> 
-	<hr />
-	<table width="100%" cellspacing="2" cellpadding="5" border="0"> 
-		<tbody>
-		  <tr>
-			<td align="right"><strong><?php _wsl_e( "Target Language", 'wordpress-social-login' ) ?></strong></td>
-			<td> 
-				<select name="wsl_i18n_locale" style="width:400px;"><option value="en">English (enhancement)</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="ar">Arabic</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn_IN">Bengali (India)</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh_CN">Chinese (Simplified)</option><option value="zh_TW">Chinese (Traditional)</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy_NL">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu_IN">Gujarati</option><option value="he">Hebrew</option><option value="hi_IN">Hindi</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="id">Indonesian</option><option value="ga_IE">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="kn">Kannada</option><option value="ko">Korean</option><option value="ku">Kurdish</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="mk">Macedonian</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="nb_NO">Norwegian (Bokmal)</option><option value="nn_NO">Norwegian (Lengadocian)</option><option value="oc">Occitan (Lengadocian)</option><option value="pl">Polish</option><option value="pt_BR">Portuguese (Brazilian)</option><option value="pt_PT">Portuguese (Portugal)</option><option value="pa_IN">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sr">Serbian</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="es_AR">Spanish (Argentina)</option><option value="sv_SE">Swedish</option><option value="te">Telgu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option></select>
-			</td>
-		  </tr> 
-		  <tr>
-			<td align="right"><strong><?php _wsl_e( "Your Name", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
-			<td> 
-			<input name="wsl_i18n_name" type="text" value="<?php echo htmlspecialchars( $current_user->display_name . " <" . get_bloginfo('admin_email') . ">" ); ?>" class="inputgnrc" style="width:400px;"> 
-			</td>
-		  </tr>
-			<tr>
-			<td align="right"><strong><?php _wsl_e( "Comment", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
-			<td> 
-			<textarea name="wsl_i18n_comment" style="width:400px;height:60px;"></textarea>
-			</td>
-		  </tr> 
-		</tbody>
-	</table> 
-	<hr /> 
-	<div style="float:right"> 
-		<a class="button-primary" href="javascript:void(0);" onClick="wsl_i18n_cla()"><?php _wsl_e( "Submit changes", 'wordpress-social-login' ) ?></a>
-	</div>
-</div>
-</form>
-<script>
-	function wsl_i18n_cla(){
-		jQuery("#wsl_i18n_form").hide()
-		jQuery("#wsl_i18n").hide()
-		jQuery("#wsl_i18n_cla").show()
-	}
-
-	function wsl_i18n_done(){
-		jQuery("#wsl_i18n_form").hide()
-		jQuery("#wsl_i18n").hide()
-		jQuery("#wsl_i18n_cla").hide()
-
-		jQuery("#wsl_admin_tab_content").show()
-		jQuery("#l10n-footer").show()
-	}
-
-	function wsl_i18n(){
-		if(typeof jQuery=="undefined"){
-			alert( "Error: WordPress Social Login require jQuery to be installed on your wordpress in order to works!" )
-
-			return
-		}
-
-		jQuery("#wsl_admin_tab_content").hide()
-		jQuery("#l10n-footer").hide()
-		jQuery("#wsl_i18n_form").show() 
-		jQuery("#wsl_i18n").show()
-		jQuery("#wsl_i18n_cla").hide()
-
-		var __wsl_texts = <?php echo json_encode ( array_keys( $WORDPRESS_SOCIAL_LOGIN_TEXTS ) ); ?>
-
-		jQuery.each( __wsl_texts, function(index, string) {
-			if( string.length >= 2 ){ 
-				if( string.length >= 100 ) jQuery("#wsl_i18n_pre").append( index + ".\n" + '<textarea id="wsl_i18n_target_'+ index +'" class="wsl_i18n_input" style="width:98%;height:60px;" name="wsl_i18n_target_'+ index +'">' + string + '</textarea>' + "\n" )
-				if( string.length <  100 ) jQuery("#wsl_i18n_pre").append( index + ".\n" + '<input    id="wsl_i18n_target_'+ index +'" class="wsl_i18n_input inputgnrc" type="text" style="width:98%;" name="wsl_i18n_target_'+ index +'" value="' + string + '" >' + "\n" )
-
-				jQuery("#wsl_i18n_pre").append( '<textarea id="wsl_i18n_default_'+ index +'" style="display:none;" name="wsl_i18n_default_'+ index +'">' + string + '</textarea>' + "\n" ) 
-			}
-
-			jQuery("#wsl_i18n_target_" + index).change(function() {
-				jQuery(this).css( "border-color", "#C09853" )
-
-				if( jQuery(this).val() ){
-					jQuery(this).css( "border-color", "#468847" )
-				}
-
-				if( jQuery(this).val() == jQuery("#wsl_i18n_default_" + index).val() ){
-					jQuery(this).css( "border-color", "#DFDFDF" )
-				}
-
-				if( jQuery(this).val() && jQuery(this).val().length <  2 ){
-					jQuery(this).css( "border-color", "#B94A48" )
-				}
-			})
-		})
-	}
-</script>
-<div id="l10n-footer" style="float: left; display: block; ">
-	<br style="clear:both;" />
-	<hr />
-	<img src="<?php echo $assets_url ?>flags.png">
-	<a href="#wsltop" onclick="return wsl_i18n();">
-		<?php _wsl_e( "Help us translate this page into your language", 'wordpress-social-login' ) ?>
-    </a>
-</div>
+	?> 
+		<div id="l10n-footer" style="float: left; display: block; ">
+			<br style="clear:both;" />
+			<hr />
+			<img src="<?php echo $assets_url ?>flags.png">
+			<a href="options-general.php?page=wordpress-social-login&wslp=help&wslhelp=translate"><?php _wsl_e( "Help us translate WordPress Social Login into your language", 'wordpress-social-login' ) ?></a>
+		</div>
 	<?php
-
-	return;
 }
 
 // --------------------------------------------------------------------

@@ -39,7 +39,7 @@ function wsl_get_contact_data_by_user_id( $field, $contact_id ){
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wsluserscontacts` where ID = '$contact_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return (empty($rs) ? '' : $rs[0]->data_field);
+	return ( empty( $rs ) ? '' : $rs[0]->data_field );
 }
 
 // --------------------------------------------------------------------
@@ -142,6 +142,8 @@ function wsl_store_hybridauth_user_data( $user_id, $provider, $profile )
 * Contacts import
 * 
 * We import a user contact per provider only once.
+*
+* We update contact list only one time per provider, this behaviour may change depend on wsl users feedback 
 */
 function wsl_import_user_contacts( $user_id, $provider, $adapter )
 {
@@ -164,10 +166,9 @@ function wsl_import_user_contacts( $user_id, $provider, $adapter )
 		$user_contacts = $adapter->getUserContacts();
 	}
 	catch( Exception $e ){ 
-		// well.. fuck it
+		// well.. we can't do much.
 	}
 
-	// update contact only one time per provider, this behaviour may change depend on users feedback 
 	if( ! $user_contacts ){
 		return;
 	}
@@ -196,15 +197,17 @@ function wsl_import_user_contacts( $user_id, $provider, $adapter )
 
 function wsl_get_list_connected_providers()
 {
-	// load hybridauth
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php";
-
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+
+	// load Hybrid_Auth
+	if ( ! class_exists('Hybrid_Auth', false) ){
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php"; 
+	}
 
 	$config = array();
 	
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-		$provider_id = @ $item["provider_id"];
+		$provider_id = isset( $item["provider_id"] ) ? $item["provider_id"] : ''; 
 
 		$config["providers"][$provider_id]["enabled"] = true;
 	}
@@ -235,7 +238,7 @@ function wsl_get_user_linked_accounts_field_by_id( $id, $field )
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}wslusersprofiles` where id = '$id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return (empty($rs) ? '' : $rs[0]->data_field);
+	return ( empty( $rs ) ? '' : $rs[0]->data_field );
 }
 
 // --------------------------------------------------------------------
@@ -247,7 +250,7 @@ function wsl_get_user_by_meta_key_and_user_id( $meta_key, $user_id )
 	$sql = "SELECT meta_value FROM `{$wpdb->prefix}usermeta` where meta_key = '$meta_key' and user_id = '$user_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return (empty($rs) ? '' : $rs[0]->meta_value);
+	return ( empty( $rs ) ? '' : $rs[0]->meta_value );
 }
 
 // --------------------------------------------------------------------
@@ -259,7 +262,7 @@ function wsl_get_user_data_by_user_id( $field, $user_id )
 	$sql = "SELECT $field as data_field FROM `{$wpdb->prefix}users` where ID = '$user_id'";
 	$rs  = $wpdb->get_results( $sql );
 
-	return (empty($rs) ? '' : $rs[0]->data_field);
+	return ( empty( $rs ) ? '' : $rs[0]->data_field );
 }
 
 // --------------------------------------------------------------------

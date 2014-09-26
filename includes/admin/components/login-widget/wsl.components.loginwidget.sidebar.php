@@ -41,6 +41,20 @@ function wsl_component_loginwidget_sidebar()
 							<?php _wsl_e("If this widget does not show up on your custom theme or you want to add it somewhere else then refer to the next section", 'wordpress-social-login') ?>.
 						</p>
 
+						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h4>
+
+						<p style="margin:10px;"> 
+							<?php _wsl_e("This is a preview of what should be on the comments area", 'wordpress-social-login') ?>.
+
+							<br />
+
+							<strong><?php _wsl_e("Please, do not test it here", 'wordpress-social-login') ?></strong>!
+						</p>
+ 
+						<div style="width: 380px;background-color: #FFEBE8;border:1px solid #CC0000; border-radius: 3px;padding: 10px;margin-left:10px;">
+							<?php echo wsl_render_login_form(); ?>
+						</div> 
+					
 						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Custom integration", 'wordpress-social-login') ?></h4>
 
 						<p style="margin:10px;"> 
@@ -57,17 +71,6 @@ function wsl_component_loginwidget_sidebar()
 						<p style="margin:10px;"> 
 							<?php _wsl_e('Also, if you are a developer or designer then you can customize it to your heart\'s content. For more inofmation refer to <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">User Guide</a></b>', 'wordpress-social-login') ?>.
 						</p>
-
-						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h4>
-
-						<p style="margin:10px;"> 
-							<?php _wsl_e("This is a preview of what should be on the comments area", 'wordpress-social-login') ?>.
-							<strong><?php _wsl_e("Do not test it here", 'wordpress-social-login') ?></strong>!
-						</p>
- 
-						<div style="width: 380px;background-color: #FFEBE8;border:1px solid #CC0000; border-radius: 3px;padding: 10px;margin-left:10px;">
-							<?php wsl_render_login_form(); ?>
-						</div> 
 					</div> 
 				</div> 
 			</div> 

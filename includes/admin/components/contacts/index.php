@@ -85,7 +85,7 @@ function wsl_component_contacts()
 			  </tr> 
 			</table>  
 			<p>
-				<b  style="color:#CB4B16;"><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
+				<b><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
 				<ul style="margin-left:40px;margin-top:0px;">
 					<li><?php _wsl_e('To enable contacts import from these social network, you need first to enabled them on the <a href="options-general.php?page=wordpress-social-login&wslp=networks"><b>Networks</b></a> tab and register the required application', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e("<b>WSL</b> will try to import as much information about a user contacts as he was able to pull from the social networks APIs.", 'wordpress-social-login') ?></li> 
@@ -109,12 +109,22 @@ function wsl_component_contacts()
 	<h3><?php _wsl_e("Users contacts list preview", 'wordpress-social-login') ?></h3>
 <?php
 	} // if( isset( $_REQUEST["uid"] ) && (int) $_REQUEST["uid"] ){ 
-	
+
+	//--
+
+	$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
+	$limit = 25; // number of rows in page
+	$offset = ( $pagenum - 1 ) * $limit;
+	$num_of_pages = 0;
+
 	if( $user_id ){
+		$total = $wpdb->get_var( "SELECT COUNT(`id`) FROM {$wpdb->prefix}wsluserscontacts WHERE user_id = '$user_id' " );
+		$num_of_pages = ceil( $total / $limit );
+	
 		$display_name = wsl_get_user_data_by_user_id( "display_name", $user_id );
 ?> 
-	<h3><?php echo sprintf( _wsl__("%s contact's list", 'wordpress-social-login'), $display_name ) ?></h3>
-<?php
+	<h3><?php echo sprintf( _wsl__("%s contact's list", 'wordpress-social-login'), $display_name ) ?> (<?php echo $total; ?>)</h3>
+<?php 
 	}
 ?> 
 <table cellspacing="0" class="wp-list-table widefat fixed users">
@@ -141,7 +151,7 @@ function wsl_component_contacts()
 	$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` order by rand() limit 10"; 
 
 	if( $user_id ){
-		$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '$user_id'"; 
+		$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '$user_id' LIMIT $offset, $limit"; 
 	}
 
 	$rs1 = $wpdb->get_results( $sql );  
@@ -211,6 +221,22 @@ function wsl_component_contacts()
 ?> 
 	</tbody>
 </table>
+
+<?php  
+	$page_links = paginate_links( array(
+		'base' => add_query_arg( 'pagenum', '%#%' ),
+		'format' => '',
+		'prev_text' => __( '&laquo;', 'text-domain' ),
+		'next_text' => __( '&raquo;', 'text-domain' ),
+		'total' => $num_of_pages,
+		'current' => $pagenum
+	) );
+
+	if ( $page_links ) {
+		echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
+	}
+?> 
+
 </div>
 <?php
 	// HOOKABLE: 

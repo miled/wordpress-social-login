@@ -57,6 +57,10 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 	*/
 	function initialize() 
 	{
+		if ( ! isset( $this->config["keys"]["id"] ) || ! isset( $this->config["keys"]["secret"] ) ){
+			throw new Exception( "Your application id and secret are required in order to connect to {$this->providerId}.", 4 );
+		}
+		
 		if ( ! $this->config["keys"]["id"] || ! $this->config["keys"]["secret"] ){
 			throw new Exception( "Your application id and secret are required in order to connect to {$this->providerId}.", 4 );
 		}

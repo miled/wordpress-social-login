@@ -28,7 +28,7 @@ $wsl_database_migration_version = 4;
 
 // --------------------------------------------------------------------
 
-function wsl_database_migration_hook ()
+function wsl_database_migration_hook()
 {
     wsl_database_migration_process();
 }
@@ -41,7 +41,11 @@ function wsl_database_migration_process()
 {
     global $wpdb;
     global $wsl_database_migration_version;
-	
+
+	// update old/all default wsl-settings
+	wsl_check_compatibilities();
+
+	// install database
     $wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
     $wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
     $installed_ver    = get_option( "wsl_database_migration_version" );

@@ -24,7 +24,7 @@
 *      'callback'            : If the provide require to set a callback url. Defaults to false.
 *      'new_app_link'        : If the provide require to create a new application on his developer site.
 *      'default_network'     : If true, it will shows up by default on Admin > WordPress Social Login > Networks
-*      'cat'                 : http://imgur.com/CMdE9gL
+*      'cat'                 : Provider category. (for future use)
 *   ),
 *
 * After that you just need to configure your application ID, private and secret keys at the plugin
@@ -237,14 +237,14 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"callback"          => true,
 		"new_app_link"      => "https://login.pixelpin.co.uk/", 
 
-		"cat"               => "paymemaybe",
+		"cat"               => "misc",
 	),
 	ARRAY( 
 		"provider_id"       => "Latch",
 		"provider_name"     => "Latch",
 		"new_app_link"      => null,
 
-		"cat"               => "paymemaybe",
+		"cat"               => "misc",
 	),
 );
 

@@ -32,9 +32,8 @@ function wsl_component_networks_addmore()
 
 			$nb_used = count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG );
 			foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-				$provider_id                = @ $item["provider_id"];
-				$provider_name              = @ $item["provider_name"];
-				$provider_cat               = @ $item["cat"];
+				$provider_id   = isset( $item["provider_id"]   ) ? $item["provider_id"]   : '';
+				$provider_name = isset( $item["provider_name"] ) ? $item["provider_name"] : '';
 
 				if( isset( $item["default_network"] ) && $item["default_network"] ){
 					continue;

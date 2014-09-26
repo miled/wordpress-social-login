@@ -26,7 +26,9 @@ if ( ! current_user_can('manage_options') ) {
 	wsl_render_notices_pages( 'You do not have sufficient permissions to access this page.' );
 }
 
-@ session_start(); // meh..
+if ( ! session_id() ){
+	session_start();
+}
 ?>
 <!DOCTYPE html>
 <head>

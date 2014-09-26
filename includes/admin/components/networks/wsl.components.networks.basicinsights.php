@@ -110,6 +110,7 @@ function wsl_component_networks_basicinsights()
 							<?php
 								$t_ages = 0;
 								$n_ages = 0;
+								$a_ages = 0;
 
 								foreach( $rs as $item ){
 									if( ! $item->meta_value ){
@@ -131,7 +132,9 @@ function wsl_component_networks_basicinsights()
 								<?php
 								}
 
-								if( $n_ages ) $a_ages = $t_ages/$n_ages;
+								if( $n_ages ){
+									$a_ages = $t_ages / $n_ages;
+								}
 							?>
 						</td>
 						</tr>
