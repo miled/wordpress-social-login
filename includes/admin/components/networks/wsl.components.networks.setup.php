@@ -206,6 +206,7 @@ function wsl_component_networks_setup()
 						
 
 								<?php if ( $provider_id == "Google" ) : ?>
+									<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a>.</p>
 									<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('On the <b>Dashboard sidebar</b> click on <b>Project</b> then click <em style="color:#0147bb;">Create Project</em>', 'wordpress-social-login') ?>.</p> 
 								<?php else: ?>  
 									<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> Go to <a href="<?php echo $provider_new_app_link ?>" target ="_blanck"><?php echo $provider_new_app_link ?></a> and <b>create a new application</b>.</p>

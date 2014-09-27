@@ -32,7 +32,6 @@ WordPress Social Login come with a simple but flexible and fully customizable au
 <strong>Even more features are planned</strong> <br>
 The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users management to contacts import and export, social sharing, tweet comments, tweet to download, and more.
 
-
 <strong>Supported Providers</strong> <br>
 Facebook , Google , Yahoo , Twitter , Windows Live , Foursquare , Linkedin , Reddit, Disqus, Tumblr , Steam , Twitch.tv , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Mail.ru , Yandex, Odnoklassniki,  Latch and PixelPin.
 
