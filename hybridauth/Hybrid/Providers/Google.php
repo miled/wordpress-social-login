@@ -97,7 +97,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:""; 
 		$this->user->profile->language      = (property_exists($response,'locale'))?$response->locale:((property_exists($verified,'locale'))?$verified->locale:"");
 		$this->user->profile->email         = (property_exists($response,'email'))?$response->email:((property_exists($verified,'email'))?$verified->email:"");
-		$this->user->profile->emailVerified = (property_exists($verified,'email'))?$verified->email:"";
+		
 		if (property_exists($response, 'emails')) {
 			if (count($response->emails) == 1) {
 				$this->user->profile->email = $response->emails[0]->value;
@@ -110,6 +110,9 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 				}
 			}
 		}
+
+		$this->user->profile->emailVerified = $this->user->profile->email;
+
 		$this->user->profile->phone 		= (property_exists($response,'phone'))?$response->phone:"";
 		$this->user->profile->country 		= (property_exists($response,'country'))?$response->country:"";
 		$this->user->profile->region 		= (property_exists($response,'region'))?$response->region:"";

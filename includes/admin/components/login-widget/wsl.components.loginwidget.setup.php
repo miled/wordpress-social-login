@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -38,13 +38,15 @@ function wsl_component_loginwidget_setup()
 
 			<p> 
 				<?php _wsl_e("<b>Users avatars :</b> Determines whether to show users avatars from social networks or to display the default ones", 'wordpress-social-login') ?>.
+
+				<?php _wsl_e("Avatars display should work right out of the box with most WordPress themes, BuddyPress and bbPress", 'wordpress-social-login') ?>.				
 			</p>
 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 			  <tr>
 				<td width="180" align="right"><strong><?php _wsl_e("Connect with caption", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
-				<input type="text" class="inputgnrc" value="<?php _wsl_e( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' ); ?>" name="wsl_settings_connect_with_label" > 
+				<input type="text" class="inputgnrc" style="width:535px" value="<?php _wsl_e( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' ); ?>" name="wsl_settings_connect_with_label" > 
 				</td>
 			  </tr>
 			  <tr>
@@ -60,7 +62,7 @@ function wsl_component_loginwidget_setup()
 				<td align="right"><strong><?php _wsl_e("Users avatars", 'wordpress-social-login') ?> :</strong></td>
 				<td>
 					<select name="wsl_settings_users_avatars" style="width:535px">
-						<option <?php if( ! get_option( 'wsl_settings_users_avatars' ) ) echo "selected"; ?> value="0"><?php _wsl_e("Display the default users avatars", 'wordpress-social-login') ?></option> 
+						<option <?php if( ! get_option( 'wsl_settings_users_avatars' ) ) echo "selected"; ?> value="0"><?php _wsl_e("Display the default WordPress avatars", 'wordpress-social-login') ?></option> 
 						<option <?php if(   get_option( 'wsl_settings_users_avatars' ) ) echo "selected"; ?> value="1"><?php _wsl_e("Display users avatars from social networks when available", 'wordpress-social-login') ?></option>
 					</select> 
 				</td>
@@ -93,13 +95,14 @@ function wsl_component_loginwidget_setup()
 
 			<p> 
 				<?php _wsl_e("<b>Notification :</b> Determines whether you want to receive a notification by mail when a new user is logged in via WSL", 'wordpress-social-login') ?>.
+
 			</p>
 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 			  <tr>
 				<td width="180" align="right"><strong><?php _wsl_e("Redirect URL", 'wordpress-social-login') ?> :</strong></td>
 				<td>
-					<input type="text" name="wsl_settings_redirect_url" value="<?php echo get_option( 'wsl_settings_redirect_url' ); ?>" class="inputgnrc"> 
+					<input type="text" name="wsl_settings_redirect_url" class="inputgnrc" style="width:535px" value="<?php echo get_option( 'wsl_settings_redirect_url' ); ?>"> 
 				</td>
 			  </tr>
 			  <tr>

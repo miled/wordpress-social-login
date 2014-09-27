@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -28,7 +28,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 */
 function wsl_check_compatibilities()
 {
-	# widget settings / customization
+	delete_option( 'wsl_settings_development_mode_enabled' );
+
+	delete_option( 'wsl_settings_welcome_panel_enabled' );
+
 	if( ! get_option( 'wsl_settings_redirect_url' ) ){ 
 		update_option( 'wsl_settings_redirect_url', site_url() );
 	}

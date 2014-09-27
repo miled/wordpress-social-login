@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -35,23 +35,25 @@ function wsl_component_users_list()
 		<thead>
 			<tr> 
 				<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
+				<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
-				<th width="60"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th> 
+				<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th> 
 				<th width="140"><span><?php _wsl_e("Actions", 'wordpress-social-login') ?></span></th>
 			</tr>
 		</thead> 
 		<tfoot>
 			<tr> 
 				<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
+				<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 				<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
-				<th><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th>
-				<th><span><?php _wsl_e("Actions", 'wordpress-social-login') ?></span></th>
+				<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th> 
+				<th width="140"><span><?php _wsl_e("Actions", 'wordpress-social-login') ?></span></th>
 			</tr>
 		</tfoot> 
 		<tbody data-wp-lists="list:user" id="the-list">
@@ -91,8 +93,9 @@ function wsl_component_users_list()
 							<?php } else { ?>
 								<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
 							<?php } ?>
+						</td>
+						<td>
 							<strong><a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong>
-							<br>
 						</td>
 						<td><?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?></td>
 						<td>
@@ -144,7 +147,7 @@ function wsl_component_users_list()
 			'next_text' => __( '&raquo;', 'text-domain' ),
 			'total' => $num_of_pages,
 			'current' => $pagenum
-		) );
+		));
 
 		if ( $page_links ) {
 			echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';

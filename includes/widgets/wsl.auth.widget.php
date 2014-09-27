@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -142,6 +142,10 @@ function wsl_render_login_form()
 
 		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
 
+		_wsl_e("<strong>Note:</strong> This debugging area can be disabled from the plugin settings by setting <b>Development mode</b> to <b>Disabled</b>.", 'wordpress-social-login');
+
+		echo '<hr />';
+		
 		debug_print_backtrace();
 
 		echo '</pre>';

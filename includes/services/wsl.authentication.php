@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -11,16 +11,16 @@
 *
 * To sum things up, here is how things works in this script (bit hard to explain, so bare with me):
 *
-*	[icons links]                            A wild visitor appear and click on one of these providers. Obviously he will redirected to yourblog.com/wp-login.php (with specific args in the url: &action=wordpress_social_authenticate&..)
-*		=> [wp-login.php]                    wp-login.php will first call wsl_process_login(). wsl_process_login() will attempt to authenticate the user through Hybridauth Library;
-*			=> [Hybridauth] <=> [Provider]   Hybridauth and the Provider will have some little chat on their own. 
-*				=> [Provider]                If the visitor consent and agrees to authenticate, then horray for you;
-*					=> [wp-login.php]        Provider will then redirect the user to back wp-login.php and wsl_process_login() will kick in;
-*						=> [callback URL]    If things goes as expected, the wsl_process_login will log the user in your website and redirect him to where he come from (or Redirect URL).
+*   [icons links]                            A wild visitor appear and click on one of these providers. Obviously he will redirected to yourblog.com/wp-login.php (with specific args in the url: &action=wordpress_social_authenticate&..)
+*       => [wp-login.php]                    wp-login.php will first call wsl_process_login(). wsl_process_login() will attempt to authenticate the user through Hybridauth Library;
+*           => [Hybridauth] <=> [Provider]   Hybridauth and the Provider will have some little chat on their own. 
+*               => [Provider]                If the visitor consent and agrees to authenticate, then horray for you;
+*                   => [wp-login.php]        Provider will then redirect the user to back wp-login.php and wsl_process_login() will kick in;
+*                       => [callback URL]    If things goes as expected, the wsl_process_login will log the user in your website and redirect him to where he come from (or Redirect URL).
 *
 * when wsl_process_login() is triggered, it will attempt to recognize the user.
 * If he exist on the database as WSL user, then fine we cut things short.
-* If not, attempt to recognize users based on his email (this only when users authenticate through Facebook, Google, Yahoo or Foursquare as these provides verified emails). 
+* If not, attempt to recognize users based on his email (this only when users authenticate through a provider who give an verified email, ex: Facebook, Google, Yahoo, Foursquare). 
 * Otherwise create new account for him. 
 */
 
@@ -241,8 +241,6 @@ function wsl_process_login_begin()
 			if( isset( $_REQUEST[ 'redirect_to' ] ) ){
 				$redirect_to = urldecode( $_REQUEST[ 'redirect_to' ] );
 			}
-			
-			// print_r( $_REQUEST );
 			?>
 				<html><head><script>
 				function init() { document.loginform.submit() }
@@ -339,7 +337,7 @@ function wsl_process_login_end()
 	// launch contact import, if enabled
 	wsl_import_user_contacts( $user_id, $provider, $adapter );
 
-	// finally create a wordpress session for the user (we give him a cookie)
+	// finally create a wordpress session for the user
 	return wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile );
 }
 
@@ -502,7 +500,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 	}
 
 	// if the user email is verified, then try to map to legacy account if exist
-	// > Currently only Facebook, Google, Yahaoo and Foursquare do provide the verified user email.
+	// > Only few idps (like Facebook, Google, Yahoo and Foursquare) provides a verified user email.
 	if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
 		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
 	}
@@ -538,66 +536,64 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	// HOOKABLE: any action to fire right before a user created on database
 	do_action( 'wsl_hook_process_login_before_create_wp_user' );
 
-    $user_login = '';
-    $user_email = '';
+	$user_login = '';
+	$user_email = '';
 
 	// if coming from "complete registration form" 
-    if( $request_user_login ){
-        $user_login = $request_user_login;
-    }
-
-    if( $request_user_email ){
-        $user_email = $request_user_email;
-    }
-
-    if ( ! $user_login ){
-        // generate a valid user login
-        $user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
-
-        if( empty( $user_login ) ){
-            $user_login = trim( $hybridauth_user_profile->lastName . " " . $hybridauth_user_profile->firstName );
-        }
-
-        if( empty( $user_login ) ){
-            $user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
-        }
-
-        // user name should be unique
-        if ( username_exists ( $user_login ) ){
-            $i = 1;
-            $user_login_tmp = $user_login;
-
-            do
-            {
-                $user_login_tmp = $user_login . "_" . ($i++);
-            } while (username_exists ($user_login_tmp));
-
-            $user_login = $user_login_tmp;
-        }
- 
-        $user_login = sanitize_user($user_login, true );
-
-        if( ! validate_username( $user_login ) ){
-            $user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
-        }
+	if( $request_user_login ){
+		$user_login = $request_user_login;
 	}
 
-    if ( ! $user_email ){
-        $user_email = $hybridauth_user_profile->email;
+	if( $request_user_email ){
+		$user_email = $request_user_email;
+	}
 
-        // generate an email if none
-        if ( ! isset ( $user_email ) OR ! is_email( $user_email ) ){
-            $user_email = strtolower( $provider . "_user_" . $user_login ) . "@example.com";
-        }
+	if ( ! $user_login ){
+		// generate a valid user login
+		$user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
 
-        // email should be unique
-        if ( email_exists ( $user_email ) ){
-            do
-            {
-                $user_email = md5(uniqid(wp_rand(10000,99000)))."@example.com";
-            } while( email_exists( $user_email ) );
-        } 
-    }
+		if( empty( $user_login ) ){
+			$user_login = trim( $hybridauth_user_profile->lastName . " " . $hybridauth_user_profile->firstName );
+		}
+
+		if( empty( $user_login ) ){
+			$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
+		}
+
+		// user name should be unique
+		if ( username_exists ( $user_login ) ){
+			$i = 1;
+			$user_login_tmp = $user_login;
+
+			do{
+				$user_login_tmp = $user_login . "_" . ($i++);
+			} while (username_exists ($user_login_tmp));
+
+			$user_login = $user_login_tmp;
+		}
+
+		$user_login = sanitize_user($user_login, true );
+
+		if( ! validate_username( $user_login ) ){
+			$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
+		}
+	}
+
+	if ( ! $user_email ){
+		$user_email = $hybridauth_user_profile->email;
+
+		// generate an email if none
+		if ( ! isset ( $user_email ) OR ! is_email( $user_email ) ){
+			$user_email = strtolower( $provider . "_user_" . $user_login ) . "@example.com";
+		}
+
+		// email should be unique
+		if ( email_exists ( $user_email ) ){
+			do{
+				$user_email = md5(uniqid(wp_rand(10000,99000)))."@example.com";
+			} while( email_exists( $user_email ) );
+		} 
+	}
 
 	$display_name = $hybridauth_user_profile->displayName;
 
@@ -697,10 +693,10 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	}
 
 	// calculate user age
-	$user_age = (int) $hybridauth_user_profile->age;
+	$user_age = (int) preg_replace('/\D/', '', $hybridauth_user_profile->age );
 
 	// not that precise you say... well welcome to my world
-	// if you want to improve this, you are more than welcome.
+	// if you want to improve this, you are more than welcome tho
 	if( ! $user_age && (int) $hybridauth_user_profile->birthYear ){
 		$user_age = (int) date("Y") - (int) $hybridauth_user_profile->birthYear;
 	}
@@ -747,37 +743,48 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 			}
 		}
 	# }}} module Bouncer
-	
-	// otherwise, let him go..
+
+	// otherwise, we connect the user with in wordpress (we give him a cookie)
 	else{
-		// HOOKABLE: 
+		// HOOKABLE: custom actions to execute before logging the user in
 		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
-		// That's it. create a session for user_id and redirect him to redirect_to
 		wp_set_auth_cookie( $user_id, true );
 	}
 
-	// HOOKABLE: 
+	// HOOKABLE: custom actions to execute before redirecting the user back to $redirect_to 
 	do_action( "wsl_hook_process_login_before_redirect", $user_id, $provider, $hybridauth_user_profile );
 
+	// That's it. We done.
 	wp_safe_redirect( $redirect_to );
 
-	exit(); 
+	// for good measures
+	die(); 
 }
 
 // --------------------------------------------------------------------
 
 /**
-* Returns redirect_to url
+* Returns redirect_to (callback url)
+*
+* By default, once a user  authenticate, he will be automatically redirected to the page where he come from (referer).
+* If WSL wasn't able to identify the referer url (or if the user come wp-login.php), then they will be redirected to 
+* Widget::Redirect URL instead. 
+*
+* When Widget::Force redirection is set to Yes, users will be always redirected to Widget::Redirect URL. 
+*
+* Note: Widget::Redirect URL can be customised using the filter 'wsl_hook_process_login_alter_redirect_to'
 */
 function wsl_process_login_get_redirect_to()
 {
+	// force redirection?
 	$wsl_settings_redirect_url = get_option( 'wsl_settings_redirect_url' );
-	
+
 	if( get_option( 'wsl_settings_force_redirect_url' ) == 1 ){
 		return $wsl_settings_redirect_url;
 	}
 
+	// get a valid $redirect_to
 	if ( isset( $_REQUEST[ 'redirect_to' ] ) && $_REQUEST[ 'redirect_to' ] != '' ){
 		$redirect_to = $_REQUEST[ 'redirect_to' ];
 
@@ -786,10 +793,12 @@ function wsl_process_login_get_redirect_to()
 			$redirect_to = preg_replace( '|^http://|', 'https://', $redirect_to );
 		}
 
-		if ( strpos( $redirect_to, 'wp-admin') && ! is_user_logged_in() ){
+		// we don't go there..
+		if ( strpos( $redirect_to, 'wp-admin') ){
 			$redirect_to = $wsl_settings_redirect_url; 
 		}
 
+		// nor there..
 		if ( strpos( $redirect_to, 'wp-login.php') ){
 			$redirect_to = $wsl_settings_redirect_url; 
 		}
@@ -954,7 +963,12 @@ body {
 	padding: 10px;
 	text-align:left;
 }
-#error-page code {
+#error-page pre {
+	max-width: 680px;
+	overflow: scroll;
+	padding: 5px;
+	background: none repeat scroll 0 0 #F5F5F5;
+	border-radius:3px;
 	font-family: Consolas, Monaco, monospace;
 }
 a {
@@ -1014,35 +1028,35 @@ function wsl_process_login_render_debug_section( $e, $config, $hybridauth, $adap
 {
 	global $wpdb;
 ?>
-  <tr>
+<tr>
     <td align="center"> 
 		<div style="margin: 5px;"> 
 			<table width="90%" border="0">
 				<tr>
 					<td align="left" valign="top"> 
 						<h3>Backtrace</h3>
-						<pre style="max-width: 680px;overflow: scroll;padding: 5px;background: none repeat scroll 0 0 #F5F5F5;border-radius:3px;"><?php debug_print_backtrace(); ?></pre>
+						<pre><?php debug_print_backtrace(); ?></pre>
 
 						<h3>HybridAuth Expection</h3>
-						<pre style="max-width: 680px;overflow: scroll;padding: 5px;background: none repeat scroll 0 0 #F5F5F5;border-radius:3px;"><?php print_r( $e ) ?></pre> 
+						<pre><?php print_r( $e ) ?></pre> 
 
 						<h3>HybridAuth Class</h3>
-						<pre style="max-width: 680px;overflow: scroll;padding: 5px;background: none repeat scroll 0 0 #F5F5F5;border-radius:3px;"><?php print_r( array( $config, $hybridauth, $adapter  ) ) ?></pre>
+						<pre><?php print_r( array( $config, $hybridauth, $adapter  ) ) ?></pre>
 
 						<h3>$wpdb</h3>
-						<pre style="max-width: 680px;overflow: scroll;padding: 5px;background: none repeat scroll 0 0 #F5F5F5;border-radius:3px;"><?php print_r( $wpdb ) ?></pre>
+						<pre><?php print_r( $wpdb ) ?></pre>
 					</td> 
 				</tr>  
 			</table>
 
 			<br />
-			
+
 			<small>
-				<?php _wsl_e("Note: This message can be disabled from the plugin settings by setting <b>Development mode</b> to <b>Disabled</b>", 'wordpress-social-login') ?>.
+				<?php _wsl_e("<strong>Note:</strong> This debugging area can be disabled from the plugin settings by setting <b>Development mode</b> to <b>Disabled</b>.", 'wordpress-social-login'); ?>.
 			</small>
 		</div> 
 	</td> 
-  </tr>
+</tr>
 <?php
 }
 

@@ -1,6 +1,6 @@
 === WordPress Social Login ===
-Contributors: miled
-Tags:  login, register, comment, social, social networks, social login, import contacts, facebook, google, yahoo, twitter, windows live, foursquare, linkedin, last.fm, instagram, vkontakte, stackoverflow, github, steam, twitch.tv
+Contributors: miled, himselfv, acvic
+Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
 Stable tag: 2.1.7
@@ -18,10 +18,10 @@ Using <strong>WordPress Social Login</strong>, your blog's users will be able to
 <strong>WordPress Social Login</strong> gives you absolute control over users access to your website and comes with a painfully long list of rules and restrictions for you to setup.
 
 <strong>Free, unlimited and white-label</strong> <br>
-Licenced under MIT License, WordPress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a WordPress Social Login in commercial websites as long as the copyright header is left intact.
+Licensed under MIT License, WordPress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a WordPress Social Login in commercial websites as long as the copyright header is left intact.
 
 <strong>Built on top of an Open Source Library</strong><br>
-HybridAuth Library enable developers to easily build social applications to engage websites vistors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
+HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
 
 <strong>23 supported social netwroks</strong> <br>
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
@@ -30,31 +30,23 @@ Depending on the audience you're targeting, you can choose from a wide variety o
 WordPress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
 
 <strong>Even more features are planned</strong> <br>
-The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users managment to contacts import and export, social sharing, tweet comments, tweet to download, and more.
+The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users management to contacts import and export, social sharing, tweet comments, tweet to download, and more.
 
 
 <strong>Supported Providers</strong> <br>
-Facebook , Google , Yahoo , Twitter , Windows Live , Foursquare , Linkedin , Tumblr , Steam , Twitch.tv , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Mail.ru , Yandex and Odnoklassniki. 
-
-<strong>Special thanks to:</strong>
-
-* [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
-* [Macky Franklin](http://www.mackyfranklin.com) for all the great help
-* [Pat Anvil](http://patanvil.com) for adding Goodreads
-* [Nicolas Quienot](https://github.com/niQo) for adding Skyrock
-* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki
+Facebook , Google , Yahoo , Twitter , Windows Live , Foursquare , Linkedin , Reddit, Disqus, Tumblr , Steam , Twitch.tv , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Mail.ru , Yandex, Odnoklassniki,  Latch and PixelPin.
 
 == Installation ==
 
 = the hard way =
 
-1. Download, Unzip and drop the extention on /wp-content/plugins/ directory,
-1. As admistration, activate the plugin through the 'Plugins' menu in WordPress,
+1. Download, Unzip and drop the extension on /wp-content/plugins/ directory,
+1. As administrator, activate the plugin through the 'Plugins' menu in WordPress,
 1. Goto the Settings > WP Social Login to get started.
 
 = the easy way =
 
-1. As admistration, goto 'Plugins' then Click on 'Add New',
+1. As administrator, goto 'Plugins' then Click on 'Add New',
 2. Search for 'WordPress Social Login' then Click on 'Install Now',
 3. Wait for it to download, Unpack and to install,
 4. Activate the plugin by Clicking on 'Activate Plugin'
@@ -63,9 +55,9 @@ Facebook , Google , Yahoo , Twitter , Windows Live , Foursquare , Linkedin , Tum
 
 == Frequently Asked Questions ==
 
-= Where do I find the plugin Documentation & FAQ ? =
+= Where do I find the plugin documentation ? =
 
-The user guide and frequently asked questions can be found at http://bit.ly/TYy2CM
+The user guide and frequently asked questions can be found at http://hybridauth.sourceforge.net/wsl/index.html
 
 == Screenshots ==
 
@@ -75,6 +67,13 @@ The user guide and frequently asked questions can be found at http://bit.ly/TYy2
 4. **Customize** - WordPress Social Login customization form
 
 == Changelog ==
+
+= 2.1.7 = 
+
+* WSL is now updated to work with the latest apis changes of the supported social networks.
+* Introducing three new providers : Paypal, Disqus, Latch and PixelPin.
+* A number of bug fixes, small enhancements and visual updates.
+
 
 = 2.1.3 = 
 
@@ -95,10 +94,10 @@ The user guide and frequently asked questions can be found at http://bit.ly/TYy2
 = 1.2.4 =
 
 * WSL admin ui Relooking
-* Code refactoring
+* Code re-factoring
 * add Widget display on advanced settings
 * RIP Gowalla
-* WordPress Social Login is now licenced under The MIT License only (should be GPL compatible) 
+* WordPress Social Login is now licensed under The MIT License only (should be GPL compatible) 
 
 = 0.0.0 =
 

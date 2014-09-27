@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -51,7 +51,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_name"     => "Google",
 		"callback"          => true,
 		"require_client_id" => true,
-		"new_app_link"      => "https://code.google.com/apis/console/", 
+		"new_app_link"      => "https://console.developers.google.com", 
 
 		"default_network"   => true,
 		"cat"               => "socialnetworks",
@@ -69,7 +69,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_id"       => "Live",
 		"provider_name"     => "Windows Live", 
 		"require_client_id" => true,
-		"new_app_link"      => "https://manage.dev.live.com/ApplicationOverview.aspx", 
+		"new_app_link"      => "https://account.live.com/developers/applications/create", 
 
 		"cat"               => "pleasedie",
 	),
@@ -229,6 +229,33 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "http://dev.odnoklassniki.ru/", 
 
 		"cat"               => "socialnetworks",
+	),
+	ARRAY( 
+		"provider_id"       => "Reddit",
+		"provider_name"     => "Reddit", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://ssl.reddit.com/prefs/apps", 
+
+		"cat"               => "socialnetworks",
+	),
+	ARRAY( 
+		"provider_id"       => "Disqus",
+		"provider_name"     => "Disqus", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://disqus.com/api/applications/", 
+
+		"cat"               => "misc",
+	),
+	ARRAY( 
+		"provider_id"       => "Paypal",
+		"provider_name"     => "Paypal", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://developer.paypal.com/webapps/developer/applications/myapps", 
+
+		"cat"               => "misc",
 	),
 	ARRAY( 
 		"provider_id"       => "PixelPin",

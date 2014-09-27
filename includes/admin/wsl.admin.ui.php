@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /** 
@@ -87,7 +87,7 @@ function wsl_admin_init()
 
 		wsl_admin_ui_error();
 	}
-	
+
 	// HOOKABLE: 
 	do_action( "wsl_admin_init_end" );
 }
@@ -377,10 +377,23 @@ function wsl_admin_ui_footer()
 
 <script>
 	// check for new versions and updates
-	// jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
+	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
-    if( get_option( 'wsl_settings_development_mode_enabled' ) ){
+    if( get_option( 'wsl_settings_development_mode_enabled' ) ){ 
+		echo '<br />';
+		echo '<hr />';
+
+		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
+
+		_wsl_e("<strong>Note:</strong> This debugging area can be disabled from the plugin settings by setting <b>Development mode</b> to <b>Disabled</b>.", 'wordpress-social-login');
+
+		echo '<hr />';
+
+		debug_print_backtrace();
+
+		echo '</pre>';
+
 		global $wpdb;
 
 		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
@@ -443,7 +456,7 @@ function wsl_admin_ui_error()
 // --------------------------------------------------------------------
 
 /**
-* Renders wsl #FAIL page
+* Renders WSL #FAIL page
 */
 function wsl_admin_ui_fail()
 {
@@ -457,32 +470,20 @@ h1 {
     font-size: 2.8em;
     font-weight: 200;
     line-height: 1.2em;
-    margin: 0.2em 200px 0 0;
+    margin: 0;
 } 
-hr{ 
-	border-color: #EEEEEE;
-	border-style: none none solid;
-	border-width: 0 0 1px;
-	margin: 2px 0 15px;
-}
 .wsldiv { 
-    margin: 30px 70px 0 70px; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 20px;
+    padding: 20px;
+    width: 770px;
 }
 .wsldiv p{ 
     ont-size: 14px;
 	line-height: 1.8em;
 }
-.wslpre{ 
-    font-size:14m;
-	border:1px solid #E6DB55; 
-	border-radius: 3px;
-	padding:5px;
-	width:650px;
-}
-ul {
-    list-style: disc outside none;
-}
-</style>
+</style> 
 
 <div class="wsldiv">
 	<h1><?php _e("WordPress Social Login - FAIL!", 'wordpress-social-login') ?></h1>
@@ -493,48 +494,23 @@ ul {
 		<?php _e('Despite the efforts, the plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and other <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>, put into <b>WordPress Social Login</b> in terms of reliability, portability, <br />and maintenance', 'wordpress-social-login') ?>.
 		<b style="color:red;"><?php _e('Your server failed the requirements check for this plugin!', 'wordpress-social-login') ?></b>
 	</p> 
+
 	<p> 
 		<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may <br />occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
 	</p> 
+
 	<p> 
-		<?php _e("To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow", 'wordpress-social-login') ?>:
+		<?php _e("To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow", 'wordpress-social-login') ?>.
 
 		<br />
 		<br />
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'><?php _e("System Information", 'wordpress-social-login') ?></a> 
+
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php" target="_blank"><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php" target="_blank"><?php _e("System Information", 'wordpress-social-login') ?></a> 
+		<a class="button" href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank"><?php _e("Read WSL FAQ", 'wordpress-social-login') ?></a> 
 	</p>
- 
-	<br /> 
-	<hr />
- 
-	<p>
-		<?php _e("<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)", 'wordpress-social-login') ?>
-	</p> 
+</div>
 
-<pre class="wslpre">
-	Copyright (C) 2011-2013 Mohamed Mrassi and contributors
-
-	Permission is hereby granted, free of charge, to any person obtaining
-	a copy of this software and associated documentation files (the
-	"Software"), to deal in the Software without restriction, including
-	without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to
-	permit persons to whom the Software is furnished to do so, subject to
-	the following conditions:
-
-	The above copyright notice and this permission notice shall be
-	included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-</pre>
-<br />
 <script>
 	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>&fail=true");
 </script>
@@ -604,11 +580,21 @@ function wsl_admin_welcome_panel()
 				<p>
 					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_version() ) ?></b>
 				</p>
+
+				<!-- 2.1.5+
 				<ul style="margin-left:25px;">
 					<li><?php _wsl_e('In a similar way to WordPress plugins, WSL uses <a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a>', 'wordpress-social-login') ?>,</li>  
 					<li><?php _wsl_e('<b>Email Validation</b> is replaced with <b>Profile Completion</b>', 'wordpress-social-login') ?>,</li>
 					<li><?php _wsl_e('<b>User Moderation</b> made compatible with <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin', 'wordpress-social-login') ?>,</li>  
 					<li><?php _wsl_e('A number of enhancements and new options now available', 'wordpress-social-login') ?>.</li>
+				</ul>
+				-->
+
+				<!-- 2.1.7+ -->
+				<ul style="margin-left:25px;">
+					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('Introducing four new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a>, <a href="http://www.latch-app.com" target="_blank">Latch</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('A number of bug fixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>
 		</tr>

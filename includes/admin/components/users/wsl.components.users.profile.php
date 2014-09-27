@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -36,7 +36,7 @@ function wsl_component_users_profile( $user_id )
 		.form-table th { width:120px; text-align:right; }
 	</style>
 
-	<p style="float:right">
+	<p style="float: right; margin: 0px;">
 		<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit User", 'wordpress-social-login'); ?></a>
 		<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php _wsl_e("Show User Contacts List", 'wordpress-social-login'); ?></a>
 	</p>

@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -28,11 +28,13 @@ function wsl_component_help()
 	// HOOKABLE: 
 	do_action( "wsl_component_help_start" ); 
 ?>
-<div class="wslgn"> 
-	<div style="width: 320px; float: right; margin: 20px 0 20px 20px; margin-top:0px; padding: 0 20px 20px 20px; border: 1px solid #ddd; background-color: #fff;">
+<div style="padding: 20px; border: 1px solid #ddd; background-color: #fff;">
+	<div style="width: 460px; float: right; line-height: 20px;padding: 8px;background-color: #f2f2f2;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
 		<h3><?php _wsl_e("Troubleshooting", 'wordpress-social-login') ?></h3>
 		<p>
 			<b><a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=diagnostics"><?php _wsl_e('WSL Diagnostics', 'wordpress-social-login') ?></a></b>
+			
+			<b><a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=diagnostics#devmode"><?php _wsl_e('Development mode', 'wordpress-social-login') ?></a></b>
 			
 			<b><a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php"><?php _wsl_e('System information', 'wordpress-social-login') ?></a></b>
 		</p> 

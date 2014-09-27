@@ -2,7 +2,7 @@
 /*
 Plugin Name: WordPress Social Login
 Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
-Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
+Description: Allow your blog readers to login and comment using social networks such as Twitter, Facebook, Google, Yahoo and many more.
 Version: 2.1.7
 Author: Miled
 Author URI: http://hybridauth.sourceforge.net
@@ -35,7 +35,7 @@ Domain Path: languages
 *  Coding Style :
 *
 *   - Readable code.
-*   - Clear indentations (8 spaces). 
+*   - Clear indentations (8 chars). 
 *   - Same name convention of wordpress: those long long and self explanatory functions and variables.
 *
 *
@@ -56,13 +56,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 $WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7";
 
-$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION; // a useless piece of data we use to check some stuff
+$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
-// -------------------------------------------------------------------- 
+// --------------------------------------------------------------------
 
-define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'				, WP_PLUGIN_DIR . '/wordpress-social-login'          );
-define( 'WORDPRESS_SOCIAL_LOGIN_REL_PATH'				, dirname( plugin_basename( __FILE__ ) )             );
-define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'				, WP_PLUGIN_URL . '/wordpress-social-login'          );
+define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH'               , WP_PLUGIN_DIR . '/wordpress-social-login'          );
+define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL'             , WP_PLUGIN_URL . '/wordpress-social-login'          );
 define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' );
 
 // --------------------------------------------------------------------
@@ -127,9 +126,13 @@ if ( ! function_exists ('email_exists') ){
 *
 * http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 */
-if ( function_exists( 'load_plugin_textdomain' ) ){
-	load_plugin_textdomain ( 'wordpress-social-login', false, WORDPRESS_SOCIAL_LOGIN_REL_PATH . '/languages/' );
+function wsl_load_plugin_textdomain() {
+	if ( function_exists( 'load_plugin_textdomain' ) ){
+		load_plugin_textdomain( 'wordpress-social-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' ); 
+	}
 }
+
+add_action( 'plugins_loaded', 'wsl_load_plugin_textdomain' );
 
 // --------------------------------------------------------------------
 
@@ -176,7 +179,7 @@ function wsl_version()
 /* includes */
 
 # Settings
-require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php' 			 ); // List of provider supported by WSL (provided by hybridauth library) 
+require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php'            ); // List of provider supported by WSL (provided by hybridauth library) 
 require_once( dirname (__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
 require_once( dirname (__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
 require_once( dirname (__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
