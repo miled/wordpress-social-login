@@ -36,11 +36,15 @@ function wsl_component_users_profile( $user_id )
 		.form-table th { width:120px; text-align:right; }
 	</style>
 
-	<p style="float: right; margin: 0px;">
-		<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit User", 'wordpress-social-login'); ?></a>
-		<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php _wsl_e("Show User Contacts List", 'wordpress-social-login'); ?></a>
-	</p>
-	
+	<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+		<p style="float: right; margin: -5px;">
+			<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit user details", 'wordpress-social-login'); ?></a>
+			<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php _wsl_e("Show user contacts list", 'wordpress-social-login'); ?></a>
+		</p>
+		
+		<?php echo sprintf( _wsl__("Wordpress user details and list of WSL profiles", 'wordpress-social-login'), $user_info->display_name ) ?>. 
+	</div>
+
 	<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
 
 	<table class="wp-list-table widefat">

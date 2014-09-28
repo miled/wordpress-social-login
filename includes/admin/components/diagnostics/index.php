@@ -53,7 +53,7 @@ function wsl_component_diagnostics()
 	<h3 style="color: #da4f49;"><?php _wsl_e("Development mode", 'wordpress-social-login') ?></h3> 
 
 	<p>
-		<?php _wsl_e('When <b>Development Mode</b> is enabled, this plugin will display a debugging area on the footer of admin interfaces and bellow the authentication widget. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong and this report can help your figure out the root of any issues you may runs into', 'wordpress-social-login') ?>.
+		<?php _wsl_e('When <b>Development Mode</b> is enabled, this plugin will display a debugging area on the footer of admin interfaces and bellow the authentication widget. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into', 'wordpress-social-login') ?>.
 	</p>
 
 	<p>

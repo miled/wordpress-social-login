@@ -1,5 +1,8 @@
 "hybridauth/hybridauth": "dev-master" 2.3.0-dev 2014-09-22 18:16 UTC
 
+hybridauth/Hybrid/thirdparty/Facebook/base_facebook.php
+	L-145 add CURLOPT_SSL_VERIFYPEER => false
+
 hybridauth/Hybrid/Providers/Google.php
 	L-114 Reassign emailVerified
 

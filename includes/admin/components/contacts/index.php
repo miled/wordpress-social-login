@@ -37,9 +37,6 @@ function wsl_component_contacts()
 	<div  id="post-body-content"> 
 
 	<div id="namediv" class="stuffbox">
-		<h3>
-			<label for="name"><?php _wsl_e("Settings", 'wordpress-social-login') ?></label>
-		</h3>
 		<div class="inside"> 
 			<p>
 				<?php _wsl_e("<b>WordPress Social Login</b> is now introducing <b>Contacts Import</b> as a new feature. When enabled, users authenticating through WordPress Social Login will be asked for the authorisation to import their contact list. Note that some social networks do not provide certains of their users information like contacts emails, photos and or profile urls", 'wordpress-social-login') ?>.
@@ -122,9 +119,17 @@ function wsl_component_contacts()
 		$num_of_pages = ceil( $total / $limit );
 	
 		$display_name = wsl_get_user_data_by_user_id( "display_name", $user_id );
-?> 
-	<h3><?php echo sprintf( _wsl__("%s contact's list", 'wordpress-social-login'), $display_name ) ?> (<?php echo $total; ?>)</h3>
-<?php 
+	?> 
+		<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+			<p style="float: right; margin: 0px;margin-top: -4px;">
+				<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit user details", 'wordpress-social-login'); ?></a>
+				<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php _wsl_e("Show user WSL profile", 'wordpress-social-login'); ?></a>
+			</p>
+			
+			<?php echo sprintf( _wsl__("<b>%s</b> contact's list", 'wordpress-social-login'), $display_name ) ?>.
+			<?php echo sprintf( _wsl__("This user have <b>%d</b> contacts in his list in total", 'wordpress-social-login'), $total ) ?>.
+		</div>
+	<?php 
 	}
 ?> 
 <table cellspacing="0" class="wp-list-table widefat fixed users">

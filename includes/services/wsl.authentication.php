@@ -44,12 +44,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function wsl_process_login()
 {
 	// check for the call origin
-	// > action should be either 'wordpress_social_authenticate' or 'wordpress_social_authenticated'
+	// > action should be either 'wordpress_social_authenticate', 'wordpress_social_profile_completion' or 'wordpress_social_authenticated'
 	if( ! isset( $_REQUEST[ 'action' ] ) ){
 		return false;
 	}
 
-	if( ! in_array( $_REQUEST[ 'action' ], array( "wordpress_social_authenticate", "wordpress_social_authenticated" ) ) ){
+	if( ! in_array( $_REQUEST[ 'action' ], array( "wordpress_social_authenticate", "wordpress_social_profile_completion", "wordpress_social_authenticated" ) ) ){
 		return false;
 	}
 
@@ -166,6 +166,7 @@ function wsl_process_login_begin()
 		if( strtolower( $provider ) == "facebook" ){
 			$config["providers"][$provider]["scope"]   = "email, user_about_me, user_birthday, user_hometown, user_website"; 
 			$config["providers"][$provider]["display"] = "popup";
+			$config["providers"][$provider]["trustForwarded"] = true;
 
 			// switch to fb::display 'page' if wsl auth in page
 			if ( get_option( 'wsl_settings_use_popup') == 2 ) {
@@ -189,9 +190,8 @@ function wsl_process_login_begin()
 		}
 
 		// HOOKABLE: allow to overwrite scopes (some people have asked for a way to lower the number of permissions requested)
-		if( strtolower( $provider ) == "facebook" || strtolower( $provider ) == "google"  ){
-			$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $config["providers"][$provider]["scope"], $provider );
-		}
+		$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ; 
+		$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
 
 		// create an instance for Hybridauth
 		$hybridauth = new Hybrid_Auth( $config );
@@ -284,13 +284,8 @@ function wsl_process_login_end()
 	// HOOKABLE: reset the provider id
 	$provider = apply_filters("wsl_hook_process_login_alter_provider", wsl_process_login_get_selected_provider() ) ;
 
-	// Add TML filters for WordPress Social Login
-	// https://wordpress.org/support/topic/bouncer-user-moderation-blocks-logins-when-enabled#post-5227563
-	if( ! has_filter( 'user_activation_notification_message', 'user_activation_notification_message_filter' ) ){
-		// $tml = Theme_My_Login_Custom_Email::get_object();
-
-		// $tml->apply_user_moderation_notification_filters();
-	}
+	// is it a new or returning user
+	$is_new_user = false;
 
 	// call wsl_process_login_end_get_userdata(), which will try to:
 	//    1. grab the user profile from hybridauth,
@@ -324,6 +319,8 @@ function wsl_process_login_end()
 			$user_email , // email
 		)
 		= wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email );
+
+		$is_new_user = true;
 	}
 
 	// we check if it is a valid id, so just in case
@@ -333,6 +330,12 @@ function wsl_process_login_end()
 
 	// store user hybridauth user profile in table wslusersprofiles
 	wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
+
+	// map hybridauth profile to buddypress xprofile table, if enabled
+	// > Profile mapping will only work with new users. Profile mapping for returning users will implemented in future version of WSL.
+	if( $is_new_user ){
+		wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile );
+	}
 
 	// launch contact import, if enabled
 	wsl_import_user_contacts( $user_id, $provider, $adapter );
@@ -409,86 +412,86 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 			$request_user_email    = '';
 
 			# {{{ module Bouncer
-				// Bouncer::Filters by emails domains name
-				if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 ){ 
-					if( empty( $hybridauth_user_email ) ){
-						return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
-					}
+			// Bouncer::Filters by emails domains name
+			if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 ){ 
+				if( empty( $hybridauth_user_email ) ){
+					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
+				}
 
-					$list = get_option( 'wsl_settings_bouncer_new_users_restrict_domain_list' );
-					$list = preg_split( '/$\R?^/m', $list ); 
+				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_domain_list' );
+				$list = preg_split( '/$\R?^/m', $list ); 
 
-					$current = strstr( $hybridauth_user_email, '@' );
+				$current = strstr( $hybridauth_user_email, '@' );
 
-					$shall_pass = false;
-					foreach( $list as $item ){
-						if( trim( strtolower( "@$item" ) ) == strtolower( $current ) ){
-							$shall_pass = true;
-						}
-					}
-
-					if( ! $shall_pass ){
-						return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
+				$shall_pass = false;
+				foreach( $list as $item ){
+					if( trim( strtolower( "@$item" ) ) == strtolower( $current ) ){
+						$shall_pass = true;
 					}
 				}
 
-				// Bouncer::Filters by e-mails addresses
-				if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 ){ 
-					if( empty( $hybridauth_user_email ) ){
-						return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
-					}
+				if( ! $shall_pass ){
+					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
+				}
+			}
 
-					$list = get_option( 'wsl_settings_bouncer_new_users_restrict_email_list' );
-					$list = preg_split( '/$\R?^/m', $list ); 
+			// Bouncer::Filters by e-mails addresses
+			if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 ){ 
+				if( empty( $hybridauth_user_email ) ){
+					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
+				}
 
-					$shall_pass = false;
-					foreach( $list as $item ){
-						if( trim( strtolower( $item ) ) == strtolower( $hybridauth_user_email ) ){
-							$shall_pass = true;
-						}
-					}
+				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_email_list' );
+				$list = preg_split( '/$\R?^/m', $list ); 
 
-					if( ! $shall_pass ){
-						return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
+				$shall_pass = false;
+				foreach( $list as $item ){
+					if( trim( strtolower( $item ) ) == strtolower( $hybridauth_user_email ) ){
+						$shall_pass = true;
 					}
 				}
 
-				// Bouncer ::Filters by profile urls
-				if( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_enabled' ) == 1 ){ 
-					$list = get_option( 'wsl_settings_bouncer_new_users_restrict_profile_list' );
-					$list = preg_split( '/$\R?^/m', $list ); 
+				if( ! $shall_pass ){
+					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
+				}
+			}
 
-					$shall_pass = false;
-					foreach( $list as $item ){
-						if( trim( strtolower( $item ) ) == strtolower( $hybridauth_user_profile->profileURL ) ){
-							$shall_pass = true;
-						}
-					}
+			// Bouncer ::Filters by profile urls
+			if( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_enabled' ) == 1 ){ 
+				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_profile_list' );
+				$list = preg_split( '/$\R?^/m', $list ); 
 
-					if( ! $shall_pass ){
-						return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ) );
+				$shall_pass = false;
+				foreach( $list as $item ){
+					if( trim( strtolower( $item ) ) == strtolower( $hybridauth_user_profile->profileURL ) ){
+						$shall_pass = true;
 					}
 				}
 
-				// if user do not exist
-				if( ! $hybridauth_user_id ){
-					// Bouncer :: Accept new registrations
-					if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
-						return wsl_render_notices_pages( _wsl__("registration is now closed!", 'wordpress-social-login') ); 
-					}
-
-					// Bouncer :: Profile Completion
-					if(
-						( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
-						get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-					){
-						do
-						{
-							list( $shall_pass, $request_user_login, $request_user_email ) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
-						}
-						while( ! $shall_pass );
-					}
+				if( ! $shall_pass ){
+					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ) );
 				}
+			}
+
+			// if user do not exist
+			if( ! $hybridauth_user_id ){
+				// Bouncer :: Accept new registrations
+				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
+					return wsl_render_notices_pages( _wsl__("registration is now closed!", 'wordpress-social-login') ); 
+				}
+
+				// Bouncer :: Profile Completion
+				if(
+					( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
+					get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+				){
+					do
+					{
+						list( $shall_pass, $request_user_login, $request_user_email ) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
+					}
+					while( ! $shall_pass );
+				}
+			}
 			# }}} module Bouncer
 		}
 		else{
@@ -617,24 +620,24 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 	# {{{ module Bouncer 
 	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
-		// Bouncer::Membership level 
-		// when enabled (!= 'default'), it defines the new user role
-		$wsl_settings_bouncer_new_users_membership_default_role = get_option( 'wsl_settings_bouncer_new_users_membership_default_role' );
+	// Bouncer::Membership level 
+	// when enabled (!= 'default'), it defines the new user role
+	$wsl_settings_bouncer_new_users_membership_default_role = get_option( 'wsl_settings_bouncer_new_users_membership_default_role' );
 
-		if( $wsl_settings_bouncer_new_users_membership_default_role != "default" ){ 
-			$userdata['role'] = $wsl_settings_bouncer_new_users_membership_default_role;
-		}
+	if( $wsl_settings_bouncer_new_users_membership_default_role != "default" ){ 
+		$userdata['role'] = $wsl_settings_bouncer_new_users_membership_default_role;
+	}
 
-		// Bouncer::User Moderation 
-		// > if enabled (Yield to Theme My Login), then we overwrite the user role to 'pending'
-		// > (If User Moderation is set to Admin Approval then Membership level will be ignored)
-		if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) > 100 ){ 
-			// Theme My Login : User Moderation
-			// > Upon activation of this module, a new user role will be created, titled “Pending”. This role has no privileges by default.
-			// > When a user confirms their e-mail address or when you approve a user, they are automatically assigned to the default user role for the blog/site.
-			// http://www.jfarthing.com/development/theme-my-login/user-moderation/
-			$userdata['role'] = "pending";
-		}
+	// Bouncer::User Moderation 
+	// > if enabled (Yield to Theme My Login), then we overwrite the user role to 'pending'
+	// > (If User Moderation is set to Admin Approval then Membership level will be ignored)
+	if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) > 100 ){ 
+		// Theme My Login : User Moderation
+		// > Upon activation of this module, a new user role will be created, titled “Pending”. This role has no privileges by default.
+		// > When a user confirms their e-mail address or when you approve a user, they are automatically assigned to the default user role for the blog/site.
+		// http://www.jfarthing.com/development/theme-my-login/user-moderation/
+		$userdata['role'] = "pending";
+	}
 	# }}} module Bouncer
 
 	// HOOKABLE: change the user data
@@ -719,40 +722,44 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	# {{{ module Bouncer
 	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
 	# https://wordpress.org/support/topic/bouncer-user-moderation-blocks-logins-when-enabled#post-4331601
-		$role = ''; 
-		$wsl_settings_bouncer_new_users_moderation_level = get_option( 'wsl_settings_bouncer_new_users_moderation_level' );
+	$role = ''; 
+	$wsl_settings_bouncer_new_users_moderation_level = get_option( 'wsl_settings_bouncer_new_users_moderation_level' );
 
-		// get user role 
-		if( $wsl_settings_bouncer_new_users_moderation_level > 100 ){
-			$role = current( get_userdata( $user_id )->roles );
+	// get user role 
+	if( $wsl_settings_bouncer_new_users_moderation_level > 100 ){
+		$role = current( get_userdata( $user_id )->roles );
+	}
+
+	// if role eq 'pending', we halt the authentication and we redirect the user to the appropriate url (pending=activation or pending=approval)
+	if( $role == 'pending' ){
+		// Bouncer::User Moderation : E-mail Confirmation
+		if( $wsl_settings_bouncer_new_users_moderation_level == 101 ){
+			$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=activation";
+
+			// send a new e-mail/activation notification 
+			@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
 		}
 
-		// if role eq 'pending', we halt the authentication and we redirect the user to the appropriate url (pending=activation or pending=approval)
-		if( $role == 'pending' ){
-			// Bouncer::User Moderation : E-mail Confirmation
-			if( $wsl_settings_bouncer_new_users_moderation_level == 101 ){
-				$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=activation";
-
-				// send a new e-mail/activation notification 
-				@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
-			}
-
-			// Bouncer::User Moderation : Admin Approval
-			elseif( $wsl_settings_bouncer_new_users_moderation_level == 102 ){
-				$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=approval";
-			}
+		// Bouncer::User Moderation : Admin Approval
+		elseif( $wsl_settings_bouncer_new_users_moderation_level == 102 ){
+			$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=approval";
 		}
+	}
 	# }}} module Bouncer
 
 	// otherwise, we connect the user with in wordpress (we give him a cookie)
 	else{
-		// HOOKABLE: custom actions to execute before logging the user in
+		// HOOKABLE: custom actions to execute before logging the user in (before creating a WP cookie)
 		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
+		// http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
 		wp_set_auth_cookie( $user_id, true );
 	}
 
-	// HOOKABLE: custom actions to execute before redirecting the user back to $redirect_to 
+	// HOOKABLE: custom actions to execute before redirecting the user back to $redirect_to  
+	// > Note: If you enabled User Moderation, then the user is NOT NECESSARILY CONNECTED at this point (in case $role == 'pending'),
+	// > and in this case, it is better to use 'wsl_hook_process_login_before_set_auth_cookie' instead, to be sure that
+	// > the user is connected and not waiting for validation.
 	do_action( "wsl_hook_process_login_before_redirect", $user_id, $provider, $hybridauth_user_profile );
 
 	// That's it. We done.

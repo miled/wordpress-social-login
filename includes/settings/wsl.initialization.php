@@ -22,9 +22,10 @@ $WORDPRESS_SOCIAL_LOGIN_COMPONENTS = ARRAY(
 	"login-widget"   => array( "type" => "core"  , "label" => __("Widget"         , 'wordpress-social-login'), "description" => __("Authentication widget customization.", 'wordpress-social-login') ),
 	"bouncer"        => array( "type" => "core"  , "label" => __("Bouncer"        , 'wordpress-social-login'), "description" => __("WordPress Social Login advanced configuration.", 'wordpress-social-login') ),
 	"diagnostics"    => array( "type" => "core"  , "label" => __("Diagnostics"    , 'wordpress-social-login'), "description" => __("WordPress Social Login diagnostics.", 'wordpress-social-login') ), 
-	"basicinsights"  => array( "type" => "plugin", "label" => __("Basic Insights" , 'wordpress-social-login'), "description" => __("WordPress Social Login basic insights. When enabled <b>Basic Insights</b> will on <b>Networks</b> tab.", 'wordpress-social-login') ), 
+	"basicinsights"  => array( "type" => "plugin", "label" => __("Basic Insights" , 'wordpress-social-login'), "description" => __("WordPress Social Login basic insights. When enabled, <b>Basic Insights</b> will be shown in the right sidebar of the <b>Networks</b> page.", 'wordpress-social-login') ), 
 	"users"          => array( "type" => "plugin", "label" => __("Users"          , 'wordpress-social-login'), "description" => __("WordPress Social Login users manager.", 'wordpress-social-login') ),
 	"contacts"       => array( "type" => "plugin", "label" => __("Contacts"       , 'wordpress-social-login'), "description" => __("WordPress Social Login users contacts manager", 'wordpress-social-login') ),
+	"buddypress"     => array( "type" => "plugin", "label" => __("BuddyPress"     , 'wordpress-social-login'), "description" => __("Makes WordPress Social Login compatible with BuddyPress: Widget integration, Users avatars and xProfiles mapping.", 'wordpress-social-login') ),
 );
 
 /** list of WSL admin tabs */
@@ -32,8 +33,12 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"networks"     => array( "label" => __("Networks"      , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "networks"      , "default" => true ),
 	"login-widget" => array( "label" => __("Widget"        , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "login-widget" ), 
 	"bouncer"      => array( "label" => __("Bouncer"       , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "bouncer"      ), 
+
+	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "buddypress"   ),
+
 	"users"        => array( "label" => __("Users"         , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "users"        ),
 	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "contacts"     ),
+
 	"diagnostics"  => array( "label" => __("Diagnostics"   , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "diagnostics"   , "pull-right" => true , "welcome-panel" => false ), 
 	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
 	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
@@ -235,6 +240,9 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_list'          );
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce'   );
 
+	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_enable_mapping' ); 
+	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_xprofile_map' ); 
+	
 	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
 
 	add_option( 'wsl_settings_welcome_panel_enabled' );
@@ -247,6 +255,8 @@ function wsl_register_setting()
 
 /**
 * Display WordPress Social Login on settings as submenu
+*
+* currently disabled.
 */
 function wsl_admin_menu()
 {
@@ -261,13 +271,15 @@ add_action('admin_menu', 'wsl_admin_menu' );
 
 /**
 * Display WordPress Social Login on sidebar
+*
+* currently disabled.
 */
 function wsl_admin_menu_sidebar()
 {
 	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' ); 
 }
  
-add_action('admin_menu', 'wsl_admin_menu_sidebar');
+// add_action('admin_menu', 'wsl_admin_menu_sidebar');
 
 // --------------------------------------------------------------------
 

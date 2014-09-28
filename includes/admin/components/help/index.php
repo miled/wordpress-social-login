@@ -17,14 +17,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_help()
 {
-	// page help up us translate wsl
-	// .. to be moved somewhere else
-	if( isset( $_REQUEST["wslhelp"] ) && $_REQUEST["wslhelp"] == 'translate' ){
-		wsl_component_help_translate();
-
-		return;
-	}
-
 	// HOOKABLE: 
 	do_action( "wsl_component_help_start" ); 
 ?>

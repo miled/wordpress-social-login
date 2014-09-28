@@ -133,6 +133,14 @@ function wsl_check_compatibilities()
 	if( ! get_option( 'wsl_settings_contacts_import_linkedin' ) ){ 
 		update_option( 'wsl_settings_contacts_import_linkedin', 2 );
 	}
+
+	if( ! get_option( 'wsl_settings_buddypress_enable_mapping' ) ){ 
+		update_option( 'wsl_settings_buddypress_enable_mapping', 2 );
+	}
+
+	if( ! get_option( 'wsl_settings_buddypress_xprofile_map' ) ){ 
+		update_option( 'wsl_settings_buddypress_xprofile_map', '' );
+	}
 }
 
 // --------------------------------------------------------------------

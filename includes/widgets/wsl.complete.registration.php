@@ -17,8 +17,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login )
 {
-	// print_r( "$provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login" );
-
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// check posted user email & login
@@ -100,12 +98,7 @@ function init() {
 	if( document.getElementById('user_email') ) document.getElementById('user_email').focus()
 }
 </script>
-<body class="login" onload="init();">
-	<!--
-	   wsl_process_login_complete_registration
-	   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> ) 
-	   http://wordpress.org/extend/plugins/wordpress-social-login/
-	-->
+<body class="login" onload="init();"> 
 	<div id="login">
 		<?php
 			if( ! isset( $_REQUEST["bouncer_profile_completion"] ) ){ 
@@ -119,15 +112,15 @@ function init() {
 		?>
 		<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="loginform" name="loginform"> 
 			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1 ){ ?>
-			<p>
-			<label for="user_login"><?php _wsl_e( "Username", 'wordpress-social-login' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
-			</p>
+				<p>
+					<label for="user_login"><?php _wsl_e( "Username", 'wordpress-social-login' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
+				</p>
 			<?php } ?>
 
 			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 ){ ?>
-			<p>
-			<label for="user_email"><?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
-			</p>
+				<p>
+					<label for="user_email"><?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
+				</p>
 			<?php } ?>
 
 			<table width="100%" border="0">
@@ -145,7 +138,7 @@ function init() {
 			</table>
 			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
-			<input type="hidden" id="action" name="action" value="wordpress_social_login">
+			<input type="hidden" id="action" name="action" value="wordpress_social_profile_completion">
 			<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 		</form>
 	</div> 

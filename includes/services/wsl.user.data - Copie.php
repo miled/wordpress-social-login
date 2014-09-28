@@ -170,7 +170,6 @@ function wsl_import_user_contacts( $user_id, $provider, $adapter )
 		return;
 	}
 
-	// all check: start import process
 	$user_contacts = null;
 
 	// grab the user's friends list
@@ -218,12 +217,6 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 	if( ! wsl_is_component_enabled( 'buddypress' ) ){
 		return;
 	}
-	
-	// make sure buddypress is loaded. 
-	// > is this a legit way to check?
-	if( ! function_exists( 'xprofile_set_field_data' ) ){
-		return;
-	}
 
 	// check if profiles mapping is enabled
 	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
@@ -261,7 +254,6 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 	
 	$hybridauth_user_profile = (array) $hybridauth_user_profile;
 
-	// all check: start mapping process
 	if( $wsl_settings_buddypress_xprofile_map ){
 		foreach( $wsl_settings_buddypress_xprofile_map as $buddypress_field_id => $field_name ){
 			// if data can be found in hybridauth profile
@@ -269,27 +261,37 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 				$value = $hybridauth_user_profile[ $field_name ];
 
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $value );
+				
+				$dbg[] = array( $buddypress_field_id, $user_id, $value );
 			}
 
 			// if eq provider
-			if( $field_name == 'provider' ){
+			if( $field_name == 'provider' ) ){
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $provider );
 			}
 
 			// if eq birthDate
-			if( $field_name == 'birthDate' ){
+			if( $field_name == 'birthDate' ) ){
 				$value = 
-					str_pad( (int) $hybridauth_user_profile[ 'birthYear'  ], 4, "0", STR_PAD_LEFT )
+					$hybridauth_user_profile[ 'birthYear' ]
 					. '-' . 
-					str_pad( (int) $hybridauth_user_profile[ 'birthMonth' ], 2, "0", STR_PAD_LEFT )
+					$hybridauth_user_profile[ 'birthMonth' ]
 					. '-' . 
-					str_pad( (int) $hybridauth_user_profile[ 'birthDay'   ], 2, "0", STR_PAD_LEFT )
+					$hybridauth_user_profile[ 'birthDay' ]
 					. ' 00:00:00';
 
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $value );
 			}
 		}
 	}
+	
+	echo '<pre>';
+	
+	print_r( $wsl_settings_buddypress_xprofile_map );
+	print_r( $hybridauth_user_profile );
+	print_r( $dbg  );
+	
+	die();
 }
 
 // --------------------------------------------------------------------

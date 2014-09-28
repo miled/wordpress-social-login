@@ -39,7 +39,7 @@ function wsl_component_loginwidget_setup()
 			<p> 
 				<?php _wsl_e("<b>Users avatars :</b> Determines whether to show users avatars from social networks or to display the default ones", 'wordpress-social-login') ?>.
 
-				<?php _wsl_e("Avatars display should work right out of the box with most WordPress themes, BuddyPress and bbPress", 'wordpress-social-login') ?>.				
+				<?php _wsl_e("Avatars display should work right out of the box with most WordPress themes, BuddyPress and bbPress", 'wordpress-social-login') ?>.
 			</p>
 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">

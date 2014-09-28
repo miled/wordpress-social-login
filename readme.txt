@@ -1,5 +1,5 @@
 === WordPress Social Login ===
-Contributors: miled, himselfv, acvic
+Contributors: miled, acvic
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
@@ -23,7 +23,7 @@ Licensed under MIT License, WordPress Social Login available to everyone for com
 <strong>Built on top of an Open Source Library</strong><br>
 HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
 
-<strong>23 supported social netwroks</strong> <br>
+<strong>28 supported social netwroks</strong> <br>
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
 
 <strong>Easy to customize and integrate </strong> <br>
@@ -33,7 +33,14 @@ WordPress Social Login come with a simple but flexible and fully customizable au
 The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users management to contacts import and export, social sharing, tweet comments, tweet to download, and more.
 
 <strong>Supported Providers</strong> <br>
-Facebook , Google , Yahoo , Twitter , Windows Live , Foursquare , Linkedin , Reddit, Disqus, Tumblr , Steam , Twitch.tv , Last.fm , Instagram , Goodreads , AOL , Vkontakte , Stackoverflow , Github , 500px , Skyrock , Mixi.jp , Mail.ru , Yandex, Odnoklassniki,  Latch and PixelPin.
+Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursquare, GitHub, Goodreads, Identica, Instagram, AOL, LastFM, Mail.ru, Mixi, Odnoklassniki, OpenID, 500px, Skyrock, Stackoverflow, Steam, Tumblr, Twitch.tv, Vkontakte, Yandex, PixelPin and Latch.
+
+<strong>Special thanks to:</strong>
+
+* [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
+* [Macky Franklin](http://www.mackyfranklin.com) for all the great help
+* [Pat Anvil](http://patanvil.com) for adding Goodreads 
+* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki
 
 == Installation ==
 
@@ -69,10 +76,10 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 = 2.1.7 = 
 
+* WSL can be fully integrated with your BuddyPress installation: display of users avatars and xprofiles mapping.
 * WSL is now updated to work with the latest apis changes of the supported social networks.
-* Introducing three new providers : Paypal, Disqus, Latch and PixelPin.
-* A number of bug fixes, small enhancements and visual updates.
-
+* Introducing four new providers : Reddit, Disqus, Latch and PixelPin.
+* A number of bugfixes, small enhancements and visual updates.
 
 = 2.1.3 = 
 
