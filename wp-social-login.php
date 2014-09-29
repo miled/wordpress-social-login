@@ -5,7 +5,7 @@ Plugin URI: http://wordpress.org/extend/plugins/wordpress-social-login/
 Description: Allow your blog readers to login and comment using social networks such as Twitter, Facebook, Google, Yahoo and many more.
 Version: 2.1.7
 Author: Miled
-Author URI: http://hybridauth.sourceforge.net
+Author URI: http://hybridauth.sourceforge.net/wsl/index.html
 License: MIT License
 Text Domain: wordpress-social-login
 Domain Path: languages
@@ -39,10 +39,10 @@ Domain Path: languages
 *   - Same name convention of wordpress: those long long and self explanatory functions and variables.
 *
 *
-*  If you want to translate this plugin into your language (or to improve the current translation), then
-*  check out for more information: wordpress-social-login/languages/readme.txt
+*  If you want to translate this plugin into your language (or to improve the current translation), see
+*  wordpress-social-login/languages/readme.txt
 *
-*  If you have fixed, improved or translated something on WSL and you want to contribute to the pluging
+*  If you have fixed, improved or translated something on WSL and you want to contribute to the plugin
 *  then don't hesitate to drop me an email or to submit a PR on https://github.com/hybridauth/WordPress-Social-Login 
 *
 */
@@ -179,25 +179,25 @@ function wsl_version()
 /* includes */
 
 # Settings
-require_once( dirname (__FILE__) . '/includes/settings/wsl.providers.php'            ); // List of provider supported by WSL (provided by hybridauth library) 
-require_once( dirname (__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
-require_once( dirname (__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
-require_once( dirname (__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
+require_once( dirname(__FILE__) . '/includes/settings/wsl.providers.php'            ); // List of provider supported by WSL (provided by hybridauth library) 
+require_once( dirname(__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
+require_once( dirname(__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
+require_once( dirname(__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
 
 # Services
-require_once( dirname (__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script.
-require_once( dirname (__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
-require_once( dirname (__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
-require_once( dirname (__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
+require_once( dirname(__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script.
+require_once( dirname(__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
+require_once( dirname(__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
+require_once( dirname(__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
 
 # WSL Widget or so we call it
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
-require_once( dirname (__FILE__) . '/includes/widgets/wsl.notices.php'               ); // Kill WordPress and display HTML message with an error message. same as wp_die()
+require_once( dirname(__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
+require_once( dirname(__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
+require_once( dirname(__FILE__) . '/includes/widgets/wsl.notices.php'               ); // Kill WordPress and display HTML message with an error message. same as wp_die()
 
 # WSL Admin UI. This will only kick in, if the current user is connected as admin
 if( is_admin() ){
-	require_once( dirname (__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The entry point to WSL Admin interfaces 
+	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The entry point to WSL Admin interfaces 
 }
 
 // --------------------------------------------------------------------
@@ -210,5 +210,6 @@ if( is_admin() ){
 register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
 
 // toDo: WSL uninstall (drops tables and options)
+// > to be implemented in 'wordpress-social-login/services/uninstall.php'
 
 // --------------------------------------------------------------------

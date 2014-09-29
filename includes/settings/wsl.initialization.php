@@ -254,96 +254,75 @@ function wsl_register_setting()
 // --------------------------------------------------------------------
 
 /**
-* Display WordPress Social Login on settings as submenu
-*
-* currently disabled.
-*/
-function wsl_admin_menu()
+ * Check if the current connection is being made over https
+ */
+function wsl_is_https_on ()
 {
-	add_options_page('WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' );
-
-	add_action( 'admin_init', 'wsl_register_setting' );
-}
-
-add_action('admin_menu', 'wsl_admin_menu' ); 
-
-// --------------------------------------------------------------------
-
-/**
-* Display WordPress Social Login on sidebar
-*
-* currently disabled.
-*/
-function wsl_admin_menu_sidebar()
-{
-	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' ); 
-}
- 
-// add_action('admin_menu', 'wsl_admin_menu_sidebar');
-
-// --------------------------------------------------------------------
-
-/**
-* Add a new column to wp-admin/users.php
-*
-* currently disabled.
-*/
-function wsl_manage_users_columns( $columns )
-{
-    $columns['wsl_column'] = "WP Social Login";
-
-    return $columns;
-}
-
-// add_filter('manage_users_columns', 'wsl_manage_users_columns');
-
-
-// --------------------------------------------------------------------
-
-/**
-* Alter wp-admin/edit-comments.php
-*
-* currently disabled.
-*/
-function wsl_comment_row_actions( $a ) {
-	global $comment;
-
-	$tmp = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $comment->user_id);
-
-    if ( $tmp ) { 
-		$a[ 'wsl_profile' ] = '<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=' . $comment->user_id . '">' . _wsl__("WSL user profile", 'wordpress-social-login') . '</a>';
-
-		$a[ 'wsl_contacts' ] = '<a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $comment->user_id . '">' . _wsl__("WSL user contacts", 'wordpress-social-login') . '</a>';
+	if (!empty ($_SERVER ['SERVER_PORT']))
+	{
+		if (trim ($_SERVER ['SERVER_PORT']) == '443')
+		{
+			return true;
+		}
 	}
 
-	return $a;
-}
+	if (!empty ($_SERVER ['HTTP_X_FORWARDED_PROTO']))
+	{
+		if (strtolower (trim ($_SERVER ['HTTP_X_FORWARDED_PROTO'])) == 'https')
+		{
+			return true;
+		}
+	}
 
-// add_filter( 'comment_row_actions', 'wsl_comment_row_actions', 11, 1 );
+	if (!empty ($_SERVER ['HTTPS']))
+	{
+		if (strtolower (trim ($_SERVER ['HTTPS'])) == 'on' OR trim ($_SERVER ['HTTPS']) == '1')
+		{
+			return true;
+		}
+	}
+
+	return false;
+}
 
 // --------------------------------------------------------------------
 
 /**
-* Generate content for the added column to wp-admin/users.php
-*
-* currently disabled.
-*/
-function wsl_manage_users_custom_column( $value, $column_name, $user_id )
+ * Return the current url
+ */
+function wsl_get_current_url ()
 {
-    if ( 'wsl_column' != $column_name ) {
-        return $value;
+	//Extract parts
+	$request_uri = (isset ($_SERVER ['REQUEST_URI']) ? $_SERVER ['REQUEST_URI'] : $_SERVER ['PHP_SELF']);
+	$request_protocol = (wsl_is_https_on () ? 'https' : 'http');
+	$request_host = (isset ($_SERVER ['HTTP_X_FORWARDED_HOST']) ? $_SERVER ['HTTP_X_FORWARDED_HOST'] : (isset ($_SERVER ['HTTP_HOST']) ? $_SERVER ['HTTP_HOST'] : $_SERVER ['SERVER_NAME']));
+
+	//Port of this request
+	$request_port = '';
+
+	//We are using a proxy
+	if (isset ($_SERVER ['HTTP_X_FORWARDED_PORT']))
+	{
+		// SERVER_PORT is usually wrong on proxies, don't use it!
+		$request_port = intval ($_SERVER ['HTTP_X_FORWARDED_PORT']);
+	}
+	//Does not seem like a proxy
+	elseif (isset ($_SERVER ['SERVER_PORT']))
+	{
+		$request_port = intval ($_SERVER ['SERVER_PORT']);
 	}
 
-	$tmp = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $user_id);
+	// Remove standard ports
+	$request_port = (!in_array ($request_port, array (80, 443)) ? $request_port : '');
 
-    if ( ! $tmp ) {
-        return "";
-	}
+	//Build url
+	$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
 
-    return
-		'<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=' . $user_id . '">' . _wsl__("Profile", 'wordpress-social-login') . '</a> | <a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id . '">' . _wsl__("Contacts", 'wordpress-social-login') . '</a>';
+	// HOOKABLE: 
+	$current_url = apply_filters ( 'wsl_hook_alter_current_url', $current_url );
+
+	//Done
+	return $current_url;
 }
-
-// add_action( 'manage_users_custom_column', 'wsl_manage_users_custom_column', 10, 3 );
 
 // --------------------------------------------------------------------

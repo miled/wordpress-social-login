@@ -28,7 +28,7 @@ function wsl_component_help()
 			
 			<b><a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=diagnostics#devmode"><?php _wsl_e('Development mode', 'wordpress-social-login') ?></a></b>
 			
-			<b><a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php"><?php _wsl_e('System information', 'wordpress-social-login') ?></a></b>
+			<b><a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/siteinfo.php"><?php _wsl_e('System information', 'wordpress-social-login') ?></a></b>
 		</p> 
 		<p>
 			<?php _wsl_e('If you run into any issue, you can access the <b>WordPress Social Login Diagnostics</b> to check the <b>Plugin Requirements</b> or to enable the <b>Development mode</b>', 'wordpress-social-login') ?>.

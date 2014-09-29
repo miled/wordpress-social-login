@@ -109,7 +109,7 @@ class Hybrid_Providers_Reddit extends Hybrid_Provider_Model_OAuth2
 		return $response;  
 	}
 
-	private function request( $url, $params = false, $type="GET", $http_headers = null )
+	private function request( $url, $params = array(), $type="GET", $http_headers = null )
 	{
 		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
 		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", print_r( $params, true ) );

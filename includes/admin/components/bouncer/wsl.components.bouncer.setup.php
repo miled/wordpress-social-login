@@ -24,7 +24,7 @@ function wsl_component_bouncer_setup()
  
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("WSL Widget", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("WSL Widget", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
 			<p> 
@@ -55,7 +55,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Profile Completion", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Profile Completion", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
@@ -89,7 +89,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("User Moderation", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("User Moderation", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p> 
@@ -129,7 +129,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Membership level", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Membership level", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
@@ -165,7 +165,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by emails domains name", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by emails domains name", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside">
 			<p>
@@ -203,7 +203,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by e-mails addresses", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by e-mails addresses", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
@@ -241,7 +241,7 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by profile urls", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by profile urls", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>

@@ -480,8 +480,8 @@ h1 {
 		<br />
 		<br />
 
-		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php" target="_blank"><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
-		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php" target="_blank"><?php _e("System Information", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/diagnostics.php" target="_blank"><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/siteinfo.php" target="_blank"><?php _e("System Information", 'wordpress-social-login') ?></a> 
 		<a class="button" href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank"><?php _e("Read WSL FAQ", 'wordpress-social-login') ?></a> 
 	</p>
 </div>
@@ -634,5 +634,100 @@ function wsl_render_wp_editor( $name, $content )
 	// HOOKABLE: 
 	do_action( "wsl_render_wp_editor_end" );
 }
+
+// --------------------------------------------------------------------
+
+/**
+* Display WordPress Social Login on settings as submenu
+*
+* currently disabled.
+*/
+function wsl_admin_menu()
+{
+	add_options_page('WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' );
+
+	add_action( 'admin_init', 'wsl_register_setting' );
+}
+
+add_action('admin_menu', 'wsl_admin_menu' ); 
+
+// --------------------------------------------------------------------
+
+/**
+* Display WordPress Social Login on sidebar
+*
+* currently disabled.
+*/
+function wsl_admin_menu_sidebar()
+{
+	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' ); 
+}
+ 
+// add_action('admin_menu', 'wsl_admin_menu_sidebar');
+
+// --------------------------------------------------------------------
+
+/**
+* Add a new column to wp-admin/users.php
+*
+* currently disabled.
+*/
+function wsl_manage_users_columns( $columns )
+{
+    $columns['wsl_column'] = "WP Social Login";
+
+    return $columns;
+}
+
+// add_filter('manage_users_columns', 'wsl_manage_users_columns');
+
+
+// --------------------------------------------------------------------
+
+/**
+* Alter wp-admin/edit-comments.php
+*
+* currently disabled.
+*/
+function wsl_comment_row_actions( $a ) {
+	global $comment;
+
+	$tmp = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $comment->user_id);
+
+    if ( $tmp ) { 
+		$a[ 'wsl_profile' ] = '<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=' . $comment->user_id . '">' . _wsl__("WSL user profile", 'wordpress-social-login') . '</a>';
+
+		$a[ 'wsl_contacts' ] = '<a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $comment->user_id . '">' . _wsl__("WSL user contacts", 'wordpress-social-login') . '</a>';
+	}
+
+	return $a;
+}
+
+// add_filter( 'comment_row_actions', 'wsl_comment_row_actions', 11, 1 );
+
+// --------------------------------------------------------------------
+
+/**
+* Generate content for the added column to wp-admin/users.php
+*
+* currently disabled.
+*/
+function wsl_manage_users_custom_column( $value, $column_name, $user_id )
+{
+    if ( 'wsl_column' != $column_name ) {
+        return $value;
+	}
+
+	$tmp = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $user_id);
+
+    if ( ! $tmp ) {
+        return "";
+	}
+
+    return
+		'<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=' . $user_id . '">' . _wsl__("Profile", 'wordpress-social-login') . '</a> | <a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id . '">' . _wsl__("Contacts", 'wordpress-social-login') . '</a>';
+}
+
+// add_action( 'manage_users_custom_column', 'wsl_manage_users_custom_column', 10, 3 );
 
 // --------------------------------------------------------------------

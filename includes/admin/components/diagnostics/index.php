@@ -40,8 +40,8 @@ function wsl_component_diagnostics()
 		
 		<br />
 		<br />
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'><?php _wsl_e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'><?php _wsl_e("Website Information", 'wordpress-social-login') ?></a>.
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/diagnostics.php' target='_blank'><?php _wsl_e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/siteinfo.php' target='_blank'><?php _wsl_e("Website Information", 'wordpress-social-login') ?></a>.
 	</p> 
 </div>
 
@@ -53,11 +53,11 @@ function wsl_component_diagnostics()
 	<h3 style="color: #da4f49;"><?php _wsl_e("Development mode", 'wordpress-social-login') ?></h3> 
 
 	<p>
-		<?php _wsl_e('When <b>Development Mode</b> is enabled, this plugin will display a debugging area on the footer of admin interfaces and bellow the authentication widget. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into', 'wordpress-social-login') ?>.
+		<?php _wsl_e('When <b>Development Mode</b> is enabled, this plugin will display a debugging area on the footer of admin interfaces. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into', 'wordpress-social-login') ?>.
 	</p>
 
 	<p>
-		<?php _wsl_e('Please, do not enable <b>Development Mode</b>, unless you are a developer or at least you have basic PHP knowledge', 'wordpress-social-login') ?>.
+		<?php _wsl_e('Please, do not enable <b>Development Mode</b>, unless you are a developer or you have basic PHP knowledge', 'wordpress-social-login') ?>.
 	</p>
 
 	<p>
@@ -65,7 +65,7 @@ function wsl_component_diagnostics()
 	</p>
 
 	<p>
-		<?php _wsl_e('It\'s highly recommended to keep the <b>Development Mode</b> to <b style="color:#da4f49">Disabled</b> on production', 'wordpress-social-login') ?>.
+		<?php _wsl_e('It\'s highly recommended to keep the <b>Development Mode</b> <b style="color:#da4f49">Disabled</b> on production as it would be a security risk otherwise', 'wordpress-social-login') ?>.
 	</p>
 
 	<?php

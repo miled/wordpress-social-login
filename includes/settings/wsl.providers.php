@@ -9,12 +9,11 @@
 /**
 * List of supported providers by Hybridauth Library 
 *
-* Here are defined a 26 idp or so. If you need even more of the Hybridauth additional providers, 
-* then you need to download additional providers package at http://hybridauth.sf.net/download.html
-* and then copy needed additional providers to the library.
+* If you need even more of the Hybridauth additional providers, then you need to download additional providers package 
+* at https://github.com/hybridauth/hybridauth/releases and then copy needed additional providers to the library.
 *
-* For instance, to get Vimeo provider working you need to copy 'hybridauth-identica/Providers/Vimeo.php' 
-* to 'plugins/wordpress-social-login/hybridauth/Hybrid/Providers/Vimeo.php' and then add it to 
+* For instance, to get XING provider working you need to copy 'hybridauth-identica/Providers/XING.php' 
+* to 'plugins/wordpress-social-login/hybridauth/Hybrid/Providers/XING.php' and then add it to 
 * $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG :
 *
 *   ARRAY( 
@@ -28,7 +27,7 @@
 *   ),
 *
 * After that you just need to configure your application ID, private and secret keys at the plugin
-* configuration pages.
+* configuration pages (wp-admin/options-general.php?page=wordpress-social-login).
 */
 
 // Exit if accessed directly
@@ -249,15 +248,18 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "misc",
 	),
-	ARRAY( 
-		"provider_id"       => "Paypal",
-		"provider_name"     => "Paypal", 
-		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "https://developer.paypal.com/webapps/developer/applications/myapps", 
 
-		"cat"               => "misc",
-	),
+// Paypal needs further testing..
+	// ARRAY( 
+		// "provider_id"       => "Paypal",
+		// "provider_name"     => "Paypal", 
+		// "require_client_id" => true,
+		// "callback"          => true,
+		// "new_app_link"      => "https://developer.paypal.com/webapps/developer/applications/myapps", 
+
+		// "cat"               => "misc",
+	// ),
+
 	ARRAY( 
 		"provider_id"       => "PixelPin",
 		"provider_name"     => "PixelPin",
@@ -267,6 +269,8 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "misc",
 	),
+
+// Latch seems to be down. Scheduled for removal..
 	ARRAY( 
 		"provider_id"       => "Latch",
 		"provider_name"     => "Latch",

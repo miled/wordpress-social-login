@@ -7,9 +7,7 @@
 */
 
 /**
-* Site Info 
-*
-* borrowed from http://wordpress.org/extend/plugins/easy-digital-downloads/
+* Site Info
 */
 
 // --------------------------------------------------------------------
@@ -19,12 +17,12 @@ require_once( dirname( dirname( dirname( dirname( __FILE__ )))) . '/../wp-load.p
 
 // only logged in users
 if ( ! is_user_logged_in() ) {
-	wsl_render_notices_pages( 'You do not have sufficient permissions to access this page.' );
+	wp_die( 'You do not have sufficient permissions to access this page.' );
 }
 
 // only display for admin
 if ( ! current_user_can('manage_options') ) {
-	wsl_render_notices_pages( 'You do not have sufficient permissions to access this page.' );
+	wp_die( 'You do not have sufficient permissions to access this page.' );
 }
 
 if ( ! session_id() ){
@@ -64,6 +62,7 @@ html {
 <ul style="padding-left:15px;">
 <li>Please include this information when posting support requests. It will help me immensely to better understand any issues.</li>
 <li>These information should be communicated to the plugin developer privately via email : Miled &lt;<a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a>&gt;</li>
+<li>Make sure to check out <b>WSL</b> <a href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank"><b>frequently asked questions</b></a>.</li> 
 </ul>
 
 <textarea readonly="readonly" style="height: 500px;overflow: auto;white-space: pre;width: 790px;">

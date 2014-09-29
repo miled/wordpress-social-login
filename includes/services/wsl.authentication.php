@@ -162,7 +162,7 @@ function wsl_process_login_begin()
 			$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
 		}
 
-		// set scope/display for facebook
+		// set default scope and display mode for facebook
 		if( strtolower( $provider ) == "facebook" ){
 			$config["providers"][$provider]["scope"]   = "email, user_about_me, user_birthday, user_hometown, user_website"; 
 			$config["providers"][$provider]["display"] = "popup";
@@ -174,22 +174,24 @@ function wsl_process_login_begin()
 			}
 		}
 
-		// set scope for if google
+		// set default scope for google
 		if( strtolower( $provider ) == "google" ){
 			$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read";  
 		}
 
-		// if contacts import enabled for facebook, we request another permission
+		// if contacts import enabled for facebook, we request an extra permission 'read_friendlists'
 		if( get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ){
 			$config["providers"][$provider]["scope"] = "email, user_about_me, user_birthday, user_hometown, user_website, read_friendlists";
 		}
 
-		// if contacts import enabled for google, we request another permission
+		// if contacts import enabled for google, we request an extra permission 'https://www.google.com/m8/feeds/'
 		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && strtolower( $provider ) == "google" ){
 			$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read https://www.google.com/m8/feeds/";
 		}
 
 		// HOOKABLE: allow to overwrite scopes (some people have asked for a way to lower the number of permissions requested)
+		# https://developers.facebook.com/docs/facebook-login/permissions
+		# https://developers.google.com/+/domains/authentication/scopes
 		$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ; 
 		$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
 
@@ -415,7 +417,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 			// Bouncer::Filters by emails domains name
 			if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 ){ 
 				if( empty( $hybridauth_user_email ) ){
-					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
+					return wsl_render_notices_pages( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
 				}
 
 				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_domain_list' );
@@ -431,14 +433,14 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ) );
+					return wsl_render_notices_pages( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
 			// Bouncer::Filters by e-mails addresses
 			if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 ){ 
 				if( empty( $hybridauth_user_email ) ){
-					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
+					return wsl_render_notices_pages( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
 				}
 
 				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_email_list' );
@@ -452,7 +454,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ) );
+					return wsl_render_notices_pages( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
@@ -469,7 +471,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notices_pages( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ) );
+					return wsl_render_notices_pages( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
@@ -508,7 +510,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
 	}
 
-	// http://boku.ru/files/wsl/commit-56b8b84
+	# http://boku.ru/files/wsl/commit-56b8b84
 	// try to guess (reliably) user profile with filters
 	// this allows for looking at other stuff (such as associated OpenID)
 	$user_id = apply_filters( 'wsl_hook_process_login_reliably_guess_user', $user_id, $provider, $hybridauth_user_profile );
@@ -752,7 +754,7 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 		// HOOKABLE: custom actions to execute before logging the user in (before creating a WP cookie)
 		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
-		// http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
+		# http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
 		wp_set_auth_cookie( $user_id, true );
 	}
 
@@ -882,10 +884,10 @@ body {
 </style>
 <script>
 function init(){
-	setTimeout( function(){window.location.href = window.location.href + "&redirect_to_provider=true"}, 150 );
+	setTimeout( function(){window.location.href = window.location.href + "&redirect_to_provider=true"}, 250 );
 }
 </script>
-<head>  
+</head>  
 <body id="loading-page" onload="init();"> 
 	<table width="100%" border="0">
 		<tr>
@@ -944,7 +946,7 @@ function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provide
 <head>
 <meta name="robots" content="NOINDEX, NOFOLLOW">
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-<title><?php bloginfo('name'); ?> - Ooops! WSL encountered an error.</title>
+<title><?php bloginfo('name'); ?> - <?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</title>
 <style type="text/css">
 html {
 	background: #f1f1f1;
@@ -986,14 +988,14 @@ a:hover {
 	color: #D54E21;
 }
 </style>
-<head>  
+</head>  
 <body id="error-page"> 
 	<table width="100%" border="0">
 		<tr>
-			<td align="center"><br /><img src="<?php echo $assets_base_url ?>alert.png" /></td>
+			<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
 		</tr>
 		<tr>
-			<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue.", 'wordpress-social-login') ?></h4></td> 
+			<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td> 
 		</tr>
 		<tr>
 			<td>
@@ -1044,8 +1046,21 @@ function wsl_process_login_render_debug_section( $e, $config, $hybridauth, $adap
 						<h3>Backtrace</h3>
 						<pre><?php debug_print_backtrace(); ?></pre>
 
-						<h3>HybridAuth Expection</h3>
+						<h3>HybridAuth Exception</h3>
 						<pre><?php print_r( $e ) ?></pre> 
+
+						<?php
+							// try to provide the previous if any
+							// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
+							if ( version_compare( PHP_VERSION, '5.3.0', '>=' ) ) { 
+								if ( $e->getPrevious() ) {
+								?>
+									<h3>HybridAuth - Previous Exception</h3>
+									<pre><?php print_r( $e->getPrevious() ) ?></pre> 
+								<?php
+								}
+							}						
+						?>
 
 						<h3>HybridAuth Class</h3>
 						<pre><?php print_r( array( $config, $hybridauth, $adapter  ) ) ?></pre>

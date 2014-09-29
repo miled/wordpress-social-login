@@ -20,51 +20,44 @@ function wsl_component_buddypress_setup()
 	// HOOKABLE: 
 	do_action( "wsl_component_buddypress_setup_start" );
 
-	// http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html 
+	# http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html 
 	$ha_profile_fields = array(
-		array( 'field' => 'provider'    , 'label' => "Provider name"            , 'description' => "The the provider or social network name the user used to connected"                                     ),
-		array( 'field' => 'identifier'  , 'label' => "Provider user Identifier" , 'description' => "The Unique user's ID on the connected provider. Depending on the provider, this field can be an number, Email, URL, etc"  ),
-		array( 'field' => 'profileURL'  , 'label' => "Profile URL"              , 'description' => "Link to the user profile on the provider web site"                                                      ),
-		array( 'field' => 'webSiteURL'  , 'label' => "Website URL"              , 'description' => "User website, blog or web page"                                                                         ),
-		array( 'field' => 'photoURL'    , 'label' => "Photo URL"                , 'description' => "Link to user picture or avatar on the provider web site"                                                ),
-		array( 'field' => 'displayName' , 'label' => "Display name"             , 'description' => "User Display name. If not provided by social network, WSL will return a concatenation of the user first and last name" ),
-		array( 'field' => 'description' , 'label' => "Description"              , 'description' => "A short about me"                                                                                       ),
-		array( 'field' => 'firstName'   , 'label' => "First name"               , 'description' => "User's first name"                                                                                      ),
-		array( 'field' => 'lastName'    , 'label' => "Last name"                , 'description' => "User's last name"                                                                                       ),
-		array( 'field' => 'gender'      , 'label' => "Gender"                   , 'description' => "User's gender. Values are 'female', 'male' or blank"                                                    ),
-		array( 'field' => 'language'    , 'label' => "Language"                 , 'description' => "User's language"                                                                                        ),
-		array( 'field' => 'age'         , 'label' => "Age"                      , 'description' => "User' age. Note that WSL do not calculate this field. We return it as it was provided"                  ),
-		array( 'field' => 'birthDay'    , 'label' => "Birth day"                , 'description' => "The day in the month in which the person was born. Not to confuse it with 'Birth date'"                 ),
-		array( 'field' => 'birthMonth'  , 'label' => "Birth month"              , 'description' => "The month in which the person was born"                                                                 ),
-		array( 'field' => 'birthYear'   , 'label' => "Birth year"               , 'description' => "The year in which the person was born"                                                                  ),
-		array( 'field' => 'birthDate'   , 'label' => "Birth date"               , 'description' => "Complete birthday in which the person was born. Format: YYYY-MM-DD"                                     ),
-		array( 'field' => 'email'       , 'label' => "Email"                    , 'description' => "User email. Not all of provider grant access to the user email"                                         ),
-		array( 'field' => 'phone'       , 'label' => "Phone"                    , 'description' => "User's phone number"                                                                                    ),
-		array( 'field' => 'address'     , 'label' => "Address"                  , 'description' => "User's address"                                                                                         ),
-		array( 'field' => 'country'     , 'label' => "Country"                  , 'description' => "User's country"                                                                                         ),
-		array( 'field' => 'region'      , 'label' => "Region"                   , 'description' => "User's state or region"                                                                                 ),
-		array( 'field' => 'city'        , 'label' => "City"                     , 'description' => "User's city"                                                                                            ),
-		array( 'field' => 'zip'         , 'label' => "Zip"                      , 'description' => "User's zipcode"                                                                                         ),
+		array( 'field' => 'provider'    , 'label' => _wsl__( "Provider name"            , 'wordpress-social-login'), 'description' => _wsl__( "The the provider or social network name the user used to connected"                                                     , 'wordpress-social-login') ),
+		array( 'field' => 'identifier'  , 'label' => _wsl__( "Provider user Identifier" , 'wordpress-social-login'), 'description' => _wsl__( "The Unique user's ID on the connected provider. Depending on the provider, this field can be an number, Email, URL, etc", 'wordpress-social-login') ),
+		array( 'field' => 'profileURL'  , 'label' => _wsl__( "Profile URL"              , 'wordpress-social-login'), 'description' => _wsl__( "Link to the user profile on the provider web site"                                                                      , 'wordpress-social-login') ),
+		array( 'field' => 'webSiteURL'  , 'label' => _wsl__( "Website URL"              , 'wordpress-social-login'), 'description' => _wsl__( "User website, blog or web page"                                                                                         , 'wordpress-social-login') ),
+		array( 'field' => 'photoURL'    , 'label' => _wsl__( "Photo URL"                , 'wordpress-social-login'), 'description' => _wsl__( "Link to user picture or avatar on the provider web site"                                                                , 'wordpress-social-login') ),
+		array( 'field' => 'displayName' , 'label' => _wsl__( "Display name"             , 'wordpress-social-login'), 'description' => _wsl__( "User Display name. If not provided by social network, WSL will return a concatenation of the user first and last name"  , 'wordpress-social-login') ),
+		array( 'field' => 'description' , 'label' => _wsl__( "Description"              , 'wordpress-social-login'), 'description' => _wsl__( "A short about me"                                                                                                       , 'wordpress-social-login') ),
+		array( 'field' => 'firstName'   , 'label' => _wsl__( "First name"               , 'wordpress-social-login'), 'description' => _wsl__( "User's first name"                                                                                                      , 'wordpress-social-login') ),
+		array( 'field' => 'lastName'    , 'label' => _wsl__( "Last name"                , 'wordpress-social-login'), 'description' => _wsl__( "User's last name"                                                                                                       , 'wordpress-social-login') ),
+		array( 'field' => 'gender'      , 'label' => _wsl__( "Gender"                   , 'wordpress-social-login'), 'description' => _wsl__( "User's gender. Values are 'female', 'male' or blank"                                                                    , 'wordpress-social-login') ),
+		array( 'field' => 'language'    , 'label' => _wsl__( "Language"                 , 'wordpress-social-login'), 'description' => _wsl__( "User's language"                                                                                                        , 'wordpress-social-login') ),
+		array( 'field' => 'age'         , 'label' => _wsl__( "Age"                      , 'wordpress-social-login'), 'description' => _wsl__( "User' age. Note that WSL do not calculate this field. We return it as it was provided"                                  , 'wordpress-social-login') ),
+		array( 'field' => 'birthDay'    , 'label' => _wsl__( "Birth day"                , 'wordpress-social-login'), 'description' => _wsl__( "The day in the month in which the person was born. Not to confuse it with 'Birth date'"                                 , 'wordpress-social-login') ),
+		array( 'field' => 'birthMonth'  , 'label' => _wsl__( "Birth month"              , 'wordpress-social-login'), 'description' => _wsl__( "The month in which the person was born"                                                                                 , 'wordpress-social-login') ),
+		array( 'field' => 'birthYear'   , 'label' => _wsl__( "Birth year"               , 'wordpress-social-login'), 'description' => _wsl__( "The year in which the person was born"                                                                                  , 'wordpress-social-login') ),
+		array( 'field' => 'birthDate'   , 'label' => _wsl__( "Birth date"               , 'wordpress-social-login'), 'description' => _wsl__( "Complete birthday in which the person was born. Format: YYYY-MM-DD"                                                     , 'wordpress-social-login') ),
+		array( 'field' => 'email'       , 'label' => _wsl__( "Email"                    , 'wordpress-social-login'), 'description' => _wsl__( "User's email address. Not all of provider grant access to the user email"                                               , 'wordpress-social-login') ),
+		array( 'field' => 'phone'       , 'label' => _wsl__( "Phone"                    , 'wordpress-social-login'), 'description' => _wsl__( "User's phone number"                                                                                                    , 'wordpress-social-login') ),
+		array( 'field' => 'address'     , 'label' => _wsl__( "Address"                  , 'wordpress-social-login'), 'description' => _wsl__( "User's address"                                                                                                         , 'wordpress-social-login') ),
+		array( 'field' => 'country'     , 'label' => _wsl__( "Country"                  , 'wordpress-social-login'), 'description' => _wsl__( "User's country"                                                                                                         , 'wordpress-social-login') ),
+		array( 'field' => 'region'      , 'label' => _wsl__( "Region"                   , 'wordpress-social-login'), 'description' => _wsl__( "User's state or region"                                                                                                 , 'wordpress-social-login') ),
+		array( 'field' => 'city'        , 'label' => _wsl__( "City"                     , 'wordpress-social-login'), 'description' => _wsl__( "User's city"                                                                                                            , 'wordpress-social-login') ),
+		array( 'field' => 'zip'         , 'label' => _wsl__( "Zip"                      , 'wordpress-social-login'), 'description' => _wsl__( "User's zipcode"                                                                                                         , 'wordpress-social-login') ),
 	);
 
 	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
 	$wsl_settings_buddypress_xprofile_map = get_option( 'wsl_settings_buddypress_xprofile_map' );
 
-	// echo "<pre>";
-	
-	// print_r( $_POST );
-	// print_r( $_GET );
-	// print_r( $_REQUEST ); 
-	// print_r( $wsl_settings_buddypress_xprofile_map ); 
-	
-	// echo "</pre>";
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 ?>
 
 <div  id="post-body-content">
 
 	<div class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Users avatars", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Users avatars", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
 			<p> 
@@ -86,11 +79,11 @@ function wsl_component_buddypress_setup()
 	
 	<div class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Profile mappings", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Profile mappings", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
 			<p> 
-				<?php _wsl_e("When <b>Enable profile mapping</b> is enabled, WSL will let try to automatically fill in Buddypress users X-Profile data from social networks profiles", 'wordpress-social-login') ?>.
+				<?php _wsl_e("When <b>Profile mapping</b> is enabled, WSL will try to automatically fill in Buddypress users profiles from their social networks profiles", 'wordpress-social-login') ?>.
 			</p>
 
 			<p>
@@ -98,11 +91,11 @@ function wsl_component_buddypress_setup()
 			</p> 
 
 			<p class="description">
-				1. <?php _wsl_e('<b>Profile mapping</b> will only work with new users. Profile mapping for returning users will implemented in future version of WSL', 'wordpress-social-login') ?>.
+				1. <?php _wsl_e('<b>Profile mapping</b> will only work for new users. Profile mapping for returning users will implemented in future version of WSL', 'wordpress-social-login') ?>.
 				<br />
 				2. <?php _wsl_e('Not all the mapped fields will be filled. Some providers and social networks do not give away many information about their users', 'wordpress-social-login') ?>.
 				<br />
-				3. <?php _wsl_e('WSL can only map <b>Single Fields</b>: Multi-line Text Areax, Text Box, URL, Date Selector and Number', 'wordpress-social-login') ?>.
+				3. <?php _wsl_e('WSL can only map <b>Single Fields</b>. Supported fields types are: Multi-line Text Areax, Text Box, URL, Date Selector and Number', 'wordpress-social-login') ?>.
 			</p> 
 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
@@ -122,9 +115,19 @@ function wsl_component_buddypress_setup()
 
 	<div id="xprofilemapdiv" class="stuffbox" style="<?php if( $wsl_settings_buddypress_enable_mapping == 2 ) echo "display:none;"; ?>">
 		<h3>
-			<label for="name"><?php _wsl_e("Fields Map", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Fields Map", 'wordpress-social-login') ?></label>
 		</h3>
+
 		<div class="inside">
+			<p>
+				<?php _wsl_e("Here you can create a new map by placing WSL users profiles fields to the appropriate destination fields", 'wordpress-social-login') ?>. 
+				<?php _wsl_e('The left column shows the available <b>WSL users profiles fields</b>: These select boxes are called <b>source</b> fields', 'wordpress-social-login') ?>. 
+				<?php _wsl_e('The right column shows the list of <b>Buddypress profiles fields</b>: Those are the <b>destination</b> fields', 'wordpress-social-login') ?>. 
+				<?php _wsl_e('If you don\'t want to map a particular Buddypress field, then leave the source for that field blank', 'wordpress-social-login') ?>.
+			</p>
+
+			<hr />
+			
 			<?php
 				if ( bp_has_profile() )
 				{
@@ -141,41 +144,59 @@ function wsl_component_buddypress_setup()
 									while ( bp_profile_fields() )
 									{
 										global $field;
-										
+
 										bp_the_profile_field();
 										?>
 											<tr>
-												<td width="150" align="right" valign="top">
-													<strong><?php echo $field->name; ?> :</strong> 
-												</td>
-												<td valign="top">
+												<td width="270" align="right" valign="top">
 													<?php
+														$map = isset( $wsl_settings_buddypress_xprofile_map[$field->id] ) ? $wsl_settings_buddypress_xprofile_map[$field->id] : 0;
+														$can_map_it = true;
+														
 														if( ! in_array( $field->type, array( 'textarea', 'textbox', 'url', 'datebox', 'number' ) ) ){
-															_wsl_e("<b>WSL</b> can not map this field. Supported field types are: <em>Multi-line Text Areax, Text Box, URL, Date Selector and Number</em>.", 'wordpress-social-login');
+															$can_map_it = false;
 														}
-														else{
-														
-															$map = isset( $wsl_settings_buddypress_xprofile_map[$field->id] ) ? $wsl_settings_buddypress_xprofile_map[$field->id] : 0;
 													?>
-														<select name="wsl_settings_buddypress_xprofile_map[<?php echo $field->id; ?>]" style="width:255px" id="bb_profile_mapping_selector_<?php echo $field->id; ?>" onChange="showMappingConfirm( <?php echo $field->id; ?> );">
-																<option value=""></option>
-															<?php foreach( $ha_profile_fields as $item ): ?>
-																<option value="<?php echo $item['field']; ?>" <?php if( $item['field'] == $map ) echo "selected"; ?> ><?php _wsl_e( $item['label'], 'wordpress-social-login'); ?></option>
-															<?php endforeach; ?>
-														</select>
-														
-														<?php
-															foreach( $ha_profile_fields as $item ){
-														?>
-															<p style="<?php if( $item['field'] != $map || $map == 0 ) echo "display:none;"; ?>" class="bb_profile_mapping_confirm_<?php echo $field->id; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
-																<?php echo sprintf( _wsl__( "WSL <b>%s</b> is mapped to Buddypress <b>%s</b> field", 'wordpress-social-login' ), _wsl__( $item['label'], 'wordpress-social-login'), $field->name ); ?>.
-																<br />
-																<em><b><?php _wsl_e( $item['label'], 'wordpress-social-login' ); ?>:</b> <?php _wsl_e( $item['description'], 'wordpress-social-login' ); ?>.</em>
-															</p>
-														<?php
+													<select name="wsl_settings_buddypress_xprofile_map[<?php echo $field->id; ?>]" style="width:255px" id="bb_profile_mapping_selector_<?php echo $field->id; ?>" onChange="showMappingConfirm( <?php echo $field->id; ?> );" <?php if( ! $can_map_it ) echo "disabled"; ?>>
+														<option value=""></option>
+														<?php 
+															if( $can_map_it ){
+																foreach( $ha_profile_fields as $item ){
+																?>
+																	<option value="<?php echo $item['field']; ?>" <?php if( $item['field'] == $map ) echo "selected"; ?> ><?php echo $item['label']; ?></option>
+																<?php 
+																}
 															}
 														?>
+													</select> 
+												</td>
+												<td valign="top" align="center" width="50">
+													<img src="<?php echo $assets_base_url; ?>arr_right.png" /> 
+												</td>
+												<td valign="top">
+													<strong><?php echo $field->name; ?></strong> 
 													<?php
+														if( ! $can_map_it ){
+														?>
+															<p class="description">
+																<?php _wsl_e("<b>WSL</b> can not map this field. Supported field types are: <em>Multi-line Text Areax, Text Box, URL, Date Selector and Number</em>", 'wordpress-social-login'); ?>.
+															</p>
+														<?php
+														}
+														else{
+														?>
+															<?php
+																foreach( $ha_profile_fields as $item ){
+															?>
+																<p class="description bb_profile_mapping_confirm_<?php echo $field->id; ?>" style="<?php if( $item['field'] != $map ) echo "display:none;"; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
+																	<?php echo sprintf( _wsl__( "WSL <b>%s</b> is mapped to Buddypress <b>%s</b> field", 'wordpress-social-login' ), $item['label'], $field->name ); ?>.
+																	<br />
+																	<em><b><?php echo $item['label']; ?>:</b> <?php echo $item['description']; ?>.</em>
+																</p>
+															<?php
+																}
+															?>
+														<?php
 														}
 													?>
 												</td>
@@ -197,7 +218,6 @@ function wsl_component_buddypress_setup()
 	<div style="margin-left:5px;margin-top:-20px;"> 
 		<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" /> 
 	</div>
-
 </div>
 
 <script>

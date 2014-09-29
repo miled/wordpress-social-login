@@ -16,8 +16,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 /**
-* send a notification to blog administrator when a new user register using WSL 
-* again borrowed from http://wordpress.org/extend/plugins/oa-social-login/
+* Send a notification to blog administrator when a new user register using WSL 
+*
+* also borrowed from http://wordpress.org/extend/plugins/oa-social-login/
 */
 function wsl_admin_notification( $user_id, $provider )
 {

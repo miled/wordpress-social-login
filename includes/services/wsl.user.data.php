@@ -146,7 +146,7 @@ function wsl_store_hybridauth_user_data( $user_id, $provider, $profile )
 function wsl_import_user_contacts( $user_id, $provider, $adapter )
 {
 	// component contact should be enabled
-	if( wsl_is_component_enabled( 'contacts' ) ){
+	if( ! wsl_is_component_enabled( 'contacts' ) ){
 		return;
 	}
 

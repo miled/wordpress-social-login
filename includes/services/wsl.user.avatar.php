@@ -42,16 +42,19 @@ function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
 			$user_id = $mixed;
 		}
 	}
+
 	//Check if we are in a comment
 	elseif(is_object($comment) AND property_exists($comment, 'user_id') AND !empty($comment->user_id))
 	{
 		$user_id = $comment->user_id;
 	}
+
 	//Check if we have an email
 	elseif(is_string($mixed) &&($user = get_user_by('email', $mixed)))
 	{
 		$user_id = $user->ID;
 	}
+
 	//Check if we have an user object
 	else if(is_object($mixed))
 	{
@@ -86,7 +89,12 @@ add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
 */
 function wsl_bp_user_custom_avatar($text, $args)
 {
-	//Check if avatars are enabled
+	//Buddypress component should be enabled
+	if( ! wsl_is_component_enabled( 'buddypress' ) ){
+		return $text;
+	}
+
+	//Check if avatars display is enabled
 	if( ! get_option( 'wsl_settings_users_avatars' ) )
 	{
 		return $text;
@@ -115,7 +123,7 @@ function wsl_bp_user_custom_avatar($text, $args)
 						if( strlen( trim( $user_thumbnail ) ) > 0 )
 						{
 							//Build Image tags
-							$img_alt = ""; // meh;
+							$img_alt = "";
 
 							$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
 							$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : '');
