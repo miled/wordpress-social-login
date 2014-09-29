@@ -51,7 +51,7 @@ function wsl_component_loginwidget_sidebar()
 							<strong><?php _wsl_e("Please, do not test it here", 'wordpress-social-login') ?></strong>!
 						</p>
  
-						<div style="width: 380px;background-color: #FFEBE8;border:1px solid #CC0000; border-radius: 3px;padding: 10px;margin-left:10px;">
+						<div style="width: 380px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">
 							<?php echo wsl_render_login_form(); ?>
 						</div> 
 					
@@ -69,7 +69,7 @@ function wsl_component_loginwidget_sidebar()
 						</p>
 
 						<p style="margin:10px;"> 
-							<?php _wsl_e('Also, if you are a developer or designer then you can customize it to your heart\'s content. For more inofmation refer to <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">User Guide</a></b>', 'wordpress-social-login') ?>.
+							<?php _wsl_e('Also, if you are a developer or designer then you can customize it to your heart\'s content. For more inofmation refer to <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">User Guide, widget customization</a></b>', 'wordpress-social-login') ?>.
 						</p>
 					</div> 
 				</div> 

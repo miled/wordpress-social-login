@@ -195,12 +195,6 @@ a.thumbnail:hover {
 .span4 {  
 	width: 220px; 
 }
-#wp-social-login-connect-with {  
-	font-size: 14px; 
-}
-#wp-social-login-connect-options {  
-	margin:5px; 
-}
 .wsl_connect_with_provider {  
 	text-decoration:none; 
 	cursor:not-allowed;
@@ -544,12 +538,12 @@ function wsl_admin_welcome_panel()
 					<b><?php _wsl_e("Get Started", 'wordpress-social-login') ?></b>
 				</p>
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/overview.html" target="_blank">Plugin Overview</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/configure.html" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/userdata.html" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/overview.html?" target="_blank">Plugin Overview</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/configure.html?" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/userdata.html?" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
 					<!--
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">WSL User Guide</a> and <a href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank">FAQ</a>', 'wordpress-social-login') ?></li>  
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/index.html?" target="_blank">WSL User Guide</a> and <a href="http://hybridauth.sourceforge.net/wsl/faq.html?" target="_blank">FAQ</a>', 'wordpress-social-login') ?></li>  
 					-->
 				</ul>
 			</td>
@@ -571,6 +565,7 @@ function wsl_admin_welcome_panel()
 				<!-- 2.1.7+ -->
 				<ul style="margin-left:25px;">
 					<li><?php _wsl_e('WSL can be fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation: display of users avatars and xprofiles mapping', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be  <a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('Introducing four new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a>, <a href="http://www.latch-app.com" target="_blank">Latch</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>

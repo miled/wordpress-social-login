@@ -13,14 +13,11 @@ hybridauth/Hybrid/Providers/Vkontakte.php
 hybridauth/Hybrid/Providers/Reddit.php
 	Add an unsupported provider
 
-hybridauth/Hybrid/Providers/Disqus.php
-	Add an unsupported provider
-
-hybridauth/Hybrid/Providers/Paypal.php
-	Add an unsupported provider
-
 hybridauth/Hybrid/Providers/PixelPin.php
 	Add an unsupported provider
 
 hybridauth/Hybrid/Providers/Mixi.php
+	Add an unsupported provider
+
+hybridauth/Hybrid/Providers/Latch.php
 	Add an unsupported provider
