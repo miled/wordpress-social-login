@@ -54,7 +54,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.1.7 - RC 2";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -167,7 +167,7 @@ function _wsl__( $text, $domain )
 /**
 * Return the current used WSL version
 */
-function wsl_version()
+function wsl_get_version()
 {
 	global $WORDPRESS_SOCIAL_LOGIN_VERSION;
 

@@ -53,7 +53,7 @@ function wsl_check_compatibilities()
 	}
 
 	if( ! get_option( 'wsl_settings_authentication_widget_css' ) ){ 
-		update_option( 'wsl_settings_authentication_widget_css', ".wp-social-login-connect-with {}\n.wp-social-login-connect-options {}\n.wp-social-login-connect-options a {}\n.wp-social-login-connect-options img {}\n.wsl_connect_with_provider {}" );
+		update_option( 'wsl_settings_authentication_widget_css', ".wp-social-login-connect-with {}\n.wp-social-login-provider-list {}\n.wp-social-login-provider-list a {}\n.wp-social-login-provider-list img {}\n.wsl_connect_with_provider {}" );
 	}
 
 	# bouncer settings

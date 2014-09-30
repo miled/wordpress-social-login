@@ -498,13 +498,13 @@ function wsl_admin_welcome_panel()
 	if( isset( $_REQUEST["wsldwp"] ) && (int) $_REQUEST["wsldwp"] ){
 		$wsldwp = (int) $_REQUEST["wsldwp"];
 
-		update_option( "wsl_settings_welcome_panel_enabled", wsl_version() );
+		update_option( "wsl_settings_welcome_panel_enabled", wsl_get_version() );
 
 		return;
 	}
 
 	// if new user or wsl updated, then we display wsl welcome panel
-	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_version() ){ 
+	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_get_version() ){ 
 		return;
 	}
 	
@@ -550,7 +550,7 @@ function wsl_admin_welcome_panel()
 			<td width="" valign="top">
 				<br />
 				<p>
-					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_version() ) ?></b>
+					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_get_version() ) ?></b>
 				</p>
 
 				<!-- 2.1.5+
@@ -633,9 +633,7 @@ function wsl_render_wp_editor( $name, $content )
 // --------------------------------------------------------------------
 
 /**
-* Display WordPress Social Login on settings as submenu
-*
-* currently disabled.
+* Display WordPress Social Login on settings as submenu 
 */
 function wsl_admin_menu()
 {
@@ -658,7 +656,7 @@ function wsl_admin_menu_sidebar()
 	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' ); 
 }
  
-// add_action('admin_menu', 'wsl_admin_menu_sidebar');
+add_action('admin_menu', 'wsl_admin_menu_sidebar');
 
 // --------------------------------------------------------------------
 
