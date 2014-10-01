@@ -1065,8 +1065,7 @@ function wsl_process_login_render_debug_section( $e, $config, $hybridauth, $adap
 						<h3>HybridAuth Class</h3>
 						<pre><?php print_r( array( $config, $hybridauth, $adapter  ) ) ?></pre>
 
-						<h3>$wpdb</h3>
-						<pre><?php print_r( $wpdb ) ?></pre>
+						<?php wsl_display_debugging_area(); ?>
 					</td> 
 				</tr>  
 			</table>

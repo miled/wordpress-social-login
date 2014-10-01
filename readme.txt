@@ -33,7 +33,7 @@ WordPress Social Login come with a simple but flexible and fully customizable au
 The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users management to contacts import and export, social sharing, tweet comments, tweet to download, and more.
 
 <strong>Supported Providers</strong> <br>
-Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursquare, GitHub, Goodreads, Identica, Instagram, AOL, LastFM, Mail.ru, Mixi, Odnoklassniki, OpenID, 500px, Skyrock, Stackoverflow, Steam, Tumblr, Twitch.tv, Vkontakte, Yandex, PixelPin and Latch.
+Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursquare, GitHub, Goodreads, Identica, Instagram, AOL, LastFM, Mail.ru, Mixi, Odnoklassniki, OpenID, 500px, Skyrock, Stackoverflow, Steam, Tumblr, Twitch.tv, Vkontakte, Yandex and PixelPin.
 
 <strong>Special thanks to:</strong>
 
@@ -78,7 +78,8 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 * WSL can be fully integrated with your BuddyPress installation: display of users avatars and xprofiles mapping.
 * WSL is now updated to work with the latest apis changes of the supported social networks.
-* Introducing four new providers : Reddit, Disqus, Latch and PixelPin.
+* WSL Widget is now more flexible than before and can be fully customized to fit you website theme.
+* Introducing new providers : Reddit, Disqus and PixelPin.
 * A number of bugfixes, small enhancements and visual updates.
 
 = 2.1.3 = 

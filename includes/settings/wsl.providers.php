@@ -270,14 +270,15 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "misc",
 	),
 
-// Latch seems to be down. Scheduled for removal..
-	ARRAY( 
-		"provider_id"       => "Latch",
-		"provider_name"     => "Latch",
-		"new_app_link"      => null,
+// Latch seems to be down. Scheduled for removal.. 
+// removed
+	// ARRAY( 
+		// "provider_id"       => "Latch",
+		// "provider_name"     => "Latch",
+		// "new_app_link"      => null,
 
-		"cat"               => "misc",
-	),
+		// "cat"               => "misc",
+	// ),
 );
 
 // --------------------------------------------------------------------

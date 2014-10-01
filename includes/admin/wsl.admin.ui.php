@@ -350,27 +350,8 @@ function wsl_admin_ui_footer()
 </script>
 <?php
     if( get_option( 'wsl_settings_development_mode_enabled' ) ){ 
-		echo '<br />';
-		echo '<hr />';
-
-		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
-
-		_wsl_e("<strong>Note:</strong> This debugging area can be disabled from the plugin settings by setting <b>Development mode</b> to <b>Disabled</b>.", 'wordpress-social-login');
-
-		echo '<hr />';
-
-		debug_print_backtrace();
-
-		echo '</pre>';
-
-		global $wpdb;
-
-		echo '<pre style="background: none repeat scroll 0px 0px rgb(255, 255, 255); border: 1px solid rgb(229, 229, 229); box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.04); padding: 10px; overflow: scroll;">';
-
-		print_r( $wpdb );
-
-		echo '</pre>';
-	}
+		wsl_display_debugging_area();
+ 	}
 
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
@@ -567,7 +548,7 @@ function wsl_admin_welcome_panel()
 					<li><?php _wsl_e('WSL can be fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation: display of users avatars and xprofiles mapping', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be  <a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Introducing four new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a>, <a href="http://www.latch-app.com" target="_blank">Latch</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('Introducing three new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>

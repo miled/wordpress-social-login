@@ -173,6 +173,9 @@ function wsl_render_login_form()
 	// HOOKABLE: 
 	do_action( 'wsl_render_login_form_end' );
 
+	// ! keep this line commented
+	// wsl_display_debugging_area();
+
 	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
 	// All output to stdout by 'wsl_render_login_form' has finished.
 	// Close and return buffer via PHP - Output Control function.

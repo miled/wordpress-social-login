@@ -279,11 +279,11 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 			// if eq birthDate
 			if( $field_name == 'birthDate' ){
 				$value = 
-					str_pad( (int) $hybridauth_user_profile[ 'birthYear'  ], 4, "0", STR_PAD_LEFT )
+					str_pad( (int) $hybridauth_user_profile[ 'birthYear'  ], 4, '0', STR_PAD_LEFT )
 					. '-' . 
-					str_pad( (int) $hybridauth_user_profile[ 'birthMonth' ], 2, "0", STR_PAD_LEFT )
+					str_pad( (int) $hybridauth_user_profile[ 'birthMonth' ], 2, '0', STR_PAD_LEFT )
 					. '-' . 
-					str_pad( (int) $hybridauth_user_profile[ 'birthDay'   ], 2, "0", STR_PAD_LEFT )
+					str_pad( (int) $hybridauth_user_profile[ 'birthDay'   ], 2, '0', STR_PAD_LEFT )
 					. ' 00:00:00';
 
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $value );
