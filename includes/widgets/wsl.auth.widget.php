@@ -32,7 +32,7 @@ function wsl_render_login_form()
 	// After buffer is returned, it can be output at the correct time / position of function instantiation.
 	ob_start();
 
-	// HOOKABLE: 
+	// HOOKABLE: This action runs just before generating the WSL Widget.
 	do_action( 'wsl_render_login_form_start' );
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
@@ -113,31 +113,19 @@ function wsl_render_login_form()
 		// http://codex.wordpress.org/Function_Reference/esc_url
 		$authenticate_url = esc_url( $authenticate_url );
 
-		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
-			// HOOKABLE: allow use of other icon sets
-			$provider_icon_markup = apply_filters( 'wsl_hook_alter_provider_icon_markup', $provider_id );
-
-			// if 'wsl_hook_alter_provider_icon_markup' was used, we display the custom HTML generated
-			if( $provider_icon_markup != $provider_id ){
-				echo $provider_icon_markup;
+		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){ 
+			// in case, Widget::Authentication display is set to 'popup', then we overwrite 'authenticate_url'
+			// > /assets/js/connect.js will take care of the rest
+			if( $wsl_settings_use_popup == 1 ){ 
+				$authenticate_url= "javascript:void(0);";
 			}
-
-			// otherwise, we generate the WSL default icons markup
-			else{ 
-				// in case, Widget::Authentication display is set to 'popup', then we overwrite 'authenticate_url'
-				// > /assets/js/connect.js will take care of the rest
-				if( $wsl_settings_use_popup == 1 ){ 
-					$authenticate_url= "javascript:void(0);";
-				}
 ?>
 
 		<a rel="nofollow" href="<?php echo $authenticate_url; ?>" title="<?php echo sprintf( _wsl__("Connect with %s", 'wordpress-social-login'), $provider_name ) ?>" class="wsl_connect_with_provider wp-social-login-provider wp-social-login-provider-<?php echo strtolower( $provider_id ); ?>" data-provider="<?php echo $provider_id ?>"> 
 			<?php if( $social_icon_set == 'none' ){ echo $provider_name; } else { ?><img alt="<?php echo $provider_name ?>" title="<?php echo sprintf( _wsl__("Connect with %s", 'wordpress-social-login'), $provider_name ) ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" /><?php } ?>	
 		</a>
 
-<?php
-			}
-
+<?php 
 			$nok = false; 
 		} 
 	} 
@@ -170,11 +158,11 @@ function wsl_render_login_form()
 <!-- wsl_render_login_form -->
 
 <?php
-	// HOOKABLE: 
+	// HOOKABLE: This action runs just after generating the WSL Widget.
 	do_action( 'wsl_render_login_form_end' );
 
 	// ! keep this line commented
-	// wsl_display_debugging_area();
+	// wsl_display_dev_mode_debugging_area();
 
 	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
 	// All output to stdout by 'wsl_render_login_form' has finished.
@@ -192,7 +180,7 @@ function wsl_render_login_form_login()
 {
 	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
 	// Captured stdout buffer from 'wsl_render_login_form' is returned on instantiation.
-	// It is now output to screen satisfying appropriate behavior for 'do_action()' calls.
+	// It is now output to screen satisfying appropriate behaviour for 'do_action()' calls.
 	// Since output is returned, other registrations (such as shortcodes) can display returned
 	// output at the correct time and position in the document for when the shortcode is triggered.
 	echo wsl_render_login_form();

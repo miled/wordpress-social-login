@@ -350,7 +350,7 @@ function wsl_admin_ui_footer()
 </script>
 <?php
     if( get_option( 'wsl_settings_development_mode_enabled' ) ){ 
-		wsl_display_debugging_area();
+		wsl_display_dev_mode_debugging_area();
  	}
 
 	// HOOKABLE: 
@@ -496,7 +496,7 @@ function wsl_admin_welcome_panel()
 	}	
 ?> 
 <!-- 
-	if you want to know if a UI was made by devloper, then here is a tip: he will always use tables
+	if you want to know if a UI was made by developer, then here is a tip: he will always use tables
 
 	//> wsl-w-panel is shamelessly borrowered and modified from wordpress welcome-panel
 -->
@@ -628,9 +628,7 @@ add_action('admin_menu', 'wsl_admin_menu' );
 // --------------------------------------------------------------------
 
 /**
-* Display WordPress Social Login on sidebar
-*
-* currently disabled.
+* Display WordPress Social Login on sidebar 
 */
 function wsl_admin_menu_sidebar()
 {

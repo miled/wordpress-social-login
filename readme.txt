@@ -23,7 +23,7 @@ Licensed under MIT License, WordPress Social Login available to everyone for com
 <strong>Built on top of an Open Source Library</strong><br>
 HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
 
-<strong>28 supported social netwroks</strong> <br>
+<strong>28 supported social networks</strong> <br>
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
 
 <strong>Easy to customize and integrate </strong> <br>
@@ -37,10 +37,13 @@ Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursq
 
 <strong>Special thanks to:</strong>
 
-* [thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin
-* [Macky Franklin](http://www.mackyfranklin.com) for all the great help
-* [Pat Anvil](http://patanvil.com) for adding Goodreads 
-* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki
+* [Thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin.
+* [Pat Anvil](http://patanvil.com) for adding Goodreads.
+* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki.
+* [Social Login plugin author](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
+* [Query Monitor plugin author](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress Plugin developers.
+
+Thanks to everyone who have contributed to this project and the Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support.
 
 == Installation ==
 
@@ -81,6 +84,7 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 * WSL Widget is now more flexible than before and can be fully customized to fit you website theme.
 * Introducing new providers : Reddit, Disqus and PixelPin.
 * A number of bugfixes, small enhancements and visual updates.
+* WSL Hooks has been reworked and few hooks have been depreciated in favour of new ones. For more information, see: http://hybridauth.sourceforge.net/wsl/hooks.html
 
 = 2.1.3 = 
 

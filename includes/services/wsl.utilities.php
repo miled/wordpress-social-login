@@ -85,7 +85,7 @@ function wsl_get_current_url()
 	$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
 
 	// HOOKABLE: 
-	$current_url = apply_filters ( 'wsl_hook_alter_current_url', $current_url );
+	$current_url = apply_filters( 'wsl_hook_alter_current_url', $current_url );
 
 	//Done
 	return $current_url;
@@ -103,9 +103,9 @@ function wsl_get_current_url()
 *
 * Note: in order for this function to display the sql queries, 'SAVEQUERIES' should be defined as true in 'wp-config.php'
 */
-function wsl_display_debugging_area()
+function wsl_display_dev_mode_debugging_area()
 {
-	global $wpdb, $wp_actions , $wp_filter, $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG, $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
+	global $wpdb, $wp_actions , $wp_filter;
 ?>
 	<style>
 		.wsl-dev-nonselectsql {
@@ -122,6 +122,18 @@ function wsl_display_debugging_area()
 		}
 		.wsl-dev-nonwslfunc {
 			color: #a0a !important;
+		}
+		.wsl-dev-usedhook, .wsl-dev-usedhook a {
+			color: #1468fa;
+		} 
+		.wsl-dev-usedwslhook {
+			color: #a0a !important;
+		} 
+		.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
+			color: #a3a3a3 !important;
+		}
+		.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
+			color: #4a4 !important;
 		}
 		.wsl-dev-table { 
 			width:100%
@@ -140,7 +152,7 @@ function wsl_display_debugging_area()
 		}
 	</style>
 
-	<h5>Host</h5>
+	<h4>Host</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr><th width="150"><label>IP</label></th><td><?php echo $_SERVER['SERVER_ADDR']; ?></td></tr>  
@@ -150,7 +162,7 @@ function wsl_display_debugging_area()
 		</tbody>
 	</table>
 	
-	<h5>Software</h5>
+	<h4>Software</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr><th width="150"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>  
@@ -159,7 +171,7 @@ function wsl_display_debugging_area()
 		</tbody>
 	</table>
 
-	<h5>MySQL</h5>
+	<h4>MySQL</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr><th width="150"><label>Host</label></th><td><?php echo $wpdb->dbhost; ?></td></tr>  
@@ -171,7 +183,7 @@ function wsl_display_debugging_area()
 		</tbody>
 	</table>
 
-	<h5>Wordpress</h5>
+	<h4>Wordpress</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr><th width="150"><label>Version</label></th><td><?php echo get_bloginfo( 'version' ); ?></td></tr>   
@@ -181,23 +193,28 @@ function wsl_display_debugging_area()
 		</tbody>
 	</table>
 
-	<h5>WSL</h5>
+	<h4>WSL</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr><th width="150"><label>Version</label></th><td><?php echo wsl_get_version(); ?></td></tr>  
-			<tr><th><label>Providers</label></th><td><?php echo count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG ); ?></td></tr>   
-			<tr><th><label>Components</label></th><td><?php echo count( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS ); ?></td></tr>   
 			<tr><th><label>Plugin path</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH; ?></td></tr>  
 			<tr><th><label>Plugin url</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?></td></tr>  
 			<tr><th><label>HA endpoint</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?></td></tr>   
 		</tbody>
 	</table>
 
-	<h5>SQL Queries <?php if( ! defined('SAVEQUERIES') || ! SAVEQUERIES ) echo " ('SAVEQUERIES' should be defined and set to TRUE: http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)"; ?></h5>
+	<h4>SQL Queries <?php if( ! defined('SAVEQUERIES') || ! SAVEQUERIES ) echo " ("; ?></h4>
 	<table class="wsl-dev-table">
 		<tbody>
+			<tr>
+				<td colspan="3">
+					1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)
+					<br />
+					2. Calls for get_option() don't necessarily result on a query to the database. WP use both cache and wp_load_alloptions() to load all options at once. Hence, it won't be shown here.
+				</td> 
+			</tr>
 			<?php
-				$queries = $wpdb->queries;
+				$queries = $wpdb->queries; 
 				
 				$total_wsl_queries = 0;
 				$total_wsl_queries_time = 0;
@@ -226,10 +243,12 @@ function wsl_display_debugging_area()
 								<span class="<?php if( stristr( $caller_name, '_option' ) ) echo 'wsl-dev-optionfunc'; elseif( stristr( $caller_name, 'wsl_' ) ) echo 'wsl-dev-wslfunc'; else echo 'wsl-dev-nonwslfunc'; ?>"><?php echo $caller_name; ?></span>
 								<p style="font-size:11px; margin-left:10px">
 								<?php
-									# God damn it
 									if(  count( $callers ) ){
+										# God damn it
 										for( $i = count( $callers ) - 1; $i > 0; $i-- ){
-											echo "#$i &nbsp; " . $callers[$i] . '<br />';
+											if( ! stristr( $callers[$i], 'include(' ) && ! stristr( $callers[$i],  'call_user_func_' ) && ! stristr( $callers[$i],  'toplevel_page_' ) ){
+												echo "#$i &nbsp; " . $callers[$i] . '<br />';
+											}
 										}
 									}
 								?>
@@ -247,55 +266,79 @@ function wsl_display_debugging_area()
 			<tr>
 				<td colspan="2">Total SQL Queries by WSL : <?php echo $total_wsl_queries; ?></td>
 				<td width="50" nowrap><?php echo number_format( $total_wsl_queries_time, 4, '.', '' ); ?></td>
-			</tr>   
+			</tr>
 		</tbody>
 	</table>
 
-	<h5>Hooks</h5>
+	<h4>Hooks</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<?php	
 				if( $wp_actions )
-				foreach( $wp_actions as $name => $count ){
-					if ( isset( $wp_filter[$name] ) ) {
-						$action = $wp_filter[$name]; 
+				{
+					foreach( $wp_actions as $name => $count ){
+						if ( isset( $wp_filter[$name] ) ) {
+							$action = $wp_filter[$name]; 
 
-						if ( 
-							$name == 'init' ||
-							stristr( $name, 'wsl_' ) ||
-							stristr( $name, 'admin_' ) ||
-							stristr( $name, 'plugins_' )  ||
-							stristr( $name, 'wp_' ) ||
-							stristr( $name, 'comment_' ) 
-							// 1
-						) {
-							?>
-								<tr>
-									<td valign="top" width="150">
-										<pre><?php echo $name ; ?></pre>
-									</td>
-									<td valign="top">
-										<?php 
-											if( $action )
-											foreach( $action as $priority => $callbacks ) {
-												foreach( $callbacks as $callback ) { 
-													if( isset( $callback['function'] ) && is_string( $callback['function'] ) ){
-														if( stristr( $callback['function'], 'wsl_' ) ){
-															echo $callback['function'] . " ( $priority ) <br />" ; 
-														} 
-													} 
-												}
+							if( $action )
+							{
+								foreach( $action as $priority => $callbacks ) {
+									foreach( $callbacks as $callback ) { 
+										if( isset( $callback['function'] ) && is_string( $callback['function'] ) ){
+											if( stristr( $callback['function'], 'wsl_' ) || stristr( $name, 'wsl_' ) ){
+												?>
+													<tr>
+														<td valign="top" width="270" nowrap class="wsl-dev-usedhook">
+															<?php
+																if( stristr( $name, 'wsl_' ) ){
+																	?>
+																		<a class="wsl-dev-usedwslhook" href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
+																	<?php
+																}
+																else{
+																	echo $name ;
+																}
+															?>
+														</td>
+														<td valign="top" class="wsl-dev-hookcallback">
+															<?php
+																if( stristr( $callback['function'], 'wsl_' ) ){
+																	?>
+																		<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $callback['function'] ; ?>" target="_blank"><?php echo $callback['function'] ; ?></a>
+																	<?php
+																}
+																else{
+																	echo $callback['function'] ;
+																}
+															?>
+														</td>
+														<td valign="top" width="50">
+															<?php echo $priority; ?>
+														</td>
+													</td>
+												<?php  
 											} 
-										?>
-									</td>
+										} 
+									}
+								}
+							}
+						}
+						elseif( stristr( $name, 'wsl_' )  ){
+						?>
+							<tr>
+								<td valign="top" width="270" nowrap class="wsl-dev-unusedhook">
+									<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
 								</td>
-							<?php 
+								<td></td>
+								<td></td>
+							</td>
+						<?php   
 						}
 					}
 				}
 			?>
 		</tbody>
-	</table>
+	</table> 
 <?php
 }
 

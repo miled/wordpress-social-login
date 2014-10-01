@@ -185,10 +185,6 @@ function wsl_import_user_contacts( $user_id, $provider, $adapter )
 		return;
 	}
 
-	$wpdb->query( 
-		$wpdb->prepare( "DELETE FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '%d' AND provider = '%s'", $user_id, $provider ) 
-	);
-
 	foreach( $user_contacts as $contact ){
 		$wpdb->insert(
 			"{$wpdb->prefix}wsluserscontacts", 
@@ -387,5 +383,15 @@ function wsl_delete_usercontacts( $user_id )
 }
 
 add_action( 'delete_user', 'wsl_delete_usercontacts' );
+
+// --------------------------------------------------------------------
+
+function wsl_delete_usermeta( $user_id )
+{
+    global $wpdb;
+
+    $sql = "DELETE FROM `{$wpdb->prefix}usermeta` where user_id = '$user_id'";
+    $wpdb->query( $sql );
+}
 
 // --------------------------------------------------------------------

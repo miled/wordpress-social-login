@@ -281,10 +281,10 @@ function wsl_process_login_end()
 	do_action( "wsl_hook_process_login_end_start" );
 
 	// HOOKABLE: set a custom Redirect URL
-	$redirect_to = apply_filters("wsl_hook_process_login_alter_redirect_to", wsl_process_login_get_redirect_to() ) ;
+	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', wsl_process_login_get_redirect_to() ) ;
 
 	// HOOKABLE: reset the provider id
-	$provider = apply_filters("wsl_hook_process_login_alter_provider", wsl_process_login_get_selected_provider() ) ;
+	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() ) ;
 
 	// is it a new or returning user
 	$is_new_user = false;
@@ -309,8 +309,20 @@ function wsl_process_login_end()
 	if( $user_id ){
 		$user_data  = get_userdata( $user_id );
 
-		$user_login = $user_data->user_login; 
-		$user_email = $hybridauth_user_profile->email; 
+		// if user is found on wslusersprofiles but do not really exist in users table 
+		// > this should not happen! but just in case: we delete the user wslusersprofiles/wsluserscontacts entries and we reset the process
+		if( $user_data ){
+			$user_login = $user_data->user_login; 
+			$user_email = $hybridauth_user_profile->email; 
+		}
+		else{
+			update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier . "#USER_NOT_FOUND" );
+
+			wsl_delete_userprofiles( $user_id );
+			wsl_delete_usercontacts( $user_id );
+
+			return wsl_render_notices_pages( _wsl__("Sorry, we couldn't connect you. Please try again.", 'wordpress-social-login') );
+		}
 	}
 
 	// otherwise, create new user within wordpress
@@ -538,9 +550,6 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 */
 function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email )
 {
-	// HOOKABLE: any action to fire right before a user created on database
-	do_action( 'wsl_hook_process_login_before_create_wp_user' );
-
 	$user_login = '';
 	$user_email = '';
 
@@ -645,11 +654,11 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	// HOOKABLE: change the user data
 	$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
 
-	// HOOKABLE: any action to fire right before a user created on database
-	do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $hybridauth_user_profile );
+	// HOOKABLE: This action runs just before creating a new wordpress user.
+	do_action( 'wsl_hook_process_login_before_wp_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
-	// HOOKABLE: delegate user insert to a custom function
-	$user_id = apply_filters( 'wsl_hook_process_login_alter_insert_user', $userdata, $provider, $hybridauth_user_profile );
+	// HOOKABLE: This action runs just before creating a new wordpress user, it delegate user insert to a custom function.
+	$user_id = apply_filters( 'wsl_hook_process_login_delegate_wp_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
 	// Create a new user
 	if( ! $user_id || ! is_integer( $user_id ) ){
@@ -675,8 +684,9 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		wsl_admin_notification( $user_id, $provider );
 	}
 
-	// HOOKABLE: any action to fire right after a user created on database
-	do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $hybridauth_user_profile );
+	// HOOKABLE: This action runs just after a wordpress user has been created
+	// > Note: At this point, the user has been added to wordpress database, but NOT CONNECTED.
+	do_action( 'wsl_hook_process_login_after_wp_insert_user', $user_id, $provider, $hybridauth_user_profile );
 
 	return array( 
 		$user_id,
@@ -706,20 +716,21 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 		$user_age = (int) date("Y") - (int) $hybridauth_user_profile->birthYear;
 	}
 
-	// update some stuff
-	$newdata['user_id']     = $user_id; //not to be changed
-	$newdata['user']        = $provider;
-	$newdata['user_gender'] = $hybridauth_user_profile->gender;
-	$newdata['user_age']    = $user_age;
-	$newdata['user_image']  = $hybridauth_user_profile->photoURL;
+	// update some field in usermeta for the current user
+	$new_user_metadata                = array();
+	$new_user_metadata['user_id']     = $user_id; //not to be changed
+	$new_user_metadata['user']        = $provider;
+	$new_user_metadata['user_gender'] = $hybridauth_user_profile->gender;
+	$new_user_metadata['user_age']    = $user_age;
+	$new_user_metadata['user_image']  = $hybridauth_user_profile->photoURL;
 
 	// HOOKABLE: 
-	$newdata = apply_filters( 'wsl_hook_process_login_alter_update_userdata', $newdata, $hybridauth_user_profile, $provider );
+	$new_user_metadata = apply_filters( 'wsl_hook_process_login_alter_user_metadata', $new_user_metadata, $hybridauth_user_profile, $provider );
 
-	update_user_meta ( $user_id, 'wsl_user'       , $newdata['user'] );
-	update_user_meta ( $user_id, 'wsl_user_gender', $newdata['user_gender'] );
-	update_user_meta ( $user_id, 'wsl_user_age'   , $newdata['user_age'] );
-	update_user_meta ( $user_id, 'wsl_user_image' , $newdata['user_image'] );
+	update_user_meta ( $user_id, 'wsl_user'       , $new_user_metadata['user'] );
+	update_user_meta ( $user_id, 'wsl_user_gender', $new_user_metadata['user_gender'] );
+	update_user_meta ( $user_id, 'wsl_user_age'   , $new_user_metadata['user_age'] );
+	update_user_meta ( $user_id, 'wsl_user_image' , $new_user_metadata['user_image'] );
 
 	# {{{ module Bouncer
 	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
@@ -751,18 +762,18 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 
 	// otherwise, we connect the user with in wordpress (we give him a cookie)
 	else{
-		// HOOKABLE: custom actions to execute before logging the user in (before creating a WP cookie)
-		do_action( "wsl_hook_process_login_before_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
+		// HOOKABLE: This action runs just before logging the user in (before creating a WP cookie)
+		do_action( "wsl_hook_process_login_before_wp_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
 		# http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
 		wp_set_auth_cookie( $user_id, true );
 	}
 
-	// HOOKABLE: custom actions to execute before redirecting the user back to $redirect_to  
-	// > Note: If you enabled User Moderation, then the user is NOT NECESSARILY CONNECTED at this point (in case $role == 'pending'),
-	// > and in this case, it is better to use 'wsl_hook_process_login_before_set_auth_cookie' instead, to be sure that
-	// > the user is connected and not waiting for validation.
-	do_action( "wsl_hook_process_login_before_redirect", $user_id, $provider, $hybridauth_user_profile );
+	// HOOKABLE: This action runs just before redirecting the user back to $redirect_to
+	// > Note: If you have enabled User Moderation, then the user is NOT NECESSARILY CONNECTED
+	// > within wordpress at this point (in case the user $role == 'pending').
+	// > To be sure the user is connected, use wsl_hook_process_login_before_wp_set_auth_cookie instead.
+	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile );
 
 	// That's it. We done.
 	wp_safe_redirect( $redirect_to );
@@ -1065,7 +1076,7 @@ function wsl_process_login_render_debug_section( $e, $config, $hybridauth, $adap
 						<h3>HybridAuth Class</h3>
 						<pre><?php print_r( array( $config, $hybridauth, $adapter  ) ) ?></pre>
 
-						<?php wsl_display_debugging_area(); ?>
+						<?php wsl_display_dev_mode_debugging_area(); ?>
 					</td> 
 				</tr>  
 			</table>
