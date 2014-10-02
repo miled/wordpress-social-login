@@ -18,7 +18,7 @@ function wsl_component_users_profile( $user_id )
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	$linked_accounts = wsl_get_user_linked_account_by_user_id( $user_id );
+	$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );
 
 	// is it a WSL user?
 	if( ! $linked_accounts ){
@@ -91,7 +91,7 @@ function wsl_component_users_profile( $user_id )
 <?php
 	foreach( $linked_accounts AS $link ){
 ?>
-	<h3><?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
+	<h3><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
 
 	<table class="wp-list-table widefat">
 		<?php

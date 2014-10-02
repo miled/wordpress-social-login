@@ -18,11 +18,11 @@ function wsl_component_networks_basicinsights()
 
 	GLOBAL $wpdb;
 
-	$sql = "SELECT count( * ) as items FROM `{$wpdb->prefix}users`"; 
+	$sql = "SELECT count( * ) AS items FROM `{$wpdb->prefix}users`"; 
 	$rs1 = $wpdb->get_results( $sql );  
 
-	$sql = "SELECT count( * ) as items FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user'"; 
-	$rs2 = $wpdb->get_results( $sql );  
+	$sql = "SELECT count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles` GROUP BY user_id"; 
+	$rs2 = $wpdb->get_results( $sql );
 
 	$total_users      = (int) $rs1[0]->items;
 	$total_users_wsl  = (int) $rs2[0]->items;
@@ -50,7 +50,7 @@ function wsl_component_networks_basicinsights()
 						</tr>
 					</table>
 					<?php 
-						$sql = "SELECT meta_value, count( * ) as items FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user' group by meta_value order by items desc ";
+						$sql = "SELECT provider, count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles` GROUP BY provider ORDER BY items DESC ";
 
 						$rs1 = $wpdb->get_results( $sql );  
 
@@ -59,26 +59,31 @@ function wsl_component_networks_basicinsights()
 					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By provider", 'wordpress-social-login') ?></h4>
 					<table width="90%">
 						<?php 
+							$total_profiles_wsl = 0;
+
 							foreach( $rs1 as $item ){
-								if( ! $item->meta_value ) $item->meta_value = "Unknown"; 
 							?>
 								<tr>
 									<td width="60%">
-										<img src="<?php echo $assets_base_url . strtolower( $item->meta_value ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $item->meta_value; ?> 
+										<img src="<?php echo $assets_base_url . strtolower( $item->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $item->provider; ?> 
 									</td>
 									<td>
 										<?php echo $item->items; ?>
 									</td>
 								</tr>
 							<?php
+								$total_profiles_wsl += (int) $item->items;
 							}
 						?> 
 						<tr>
-							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo $total_users_wsl; ?></b> <?php _wsl_e("WSL users", 'wordpress-social-login') ?></td>
+							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo $total_profiles_wsl; ?></b> <?php _wsl_e("WSL profiles", 'wordpress-social-login') ?></td>
+						</tr>
+						<tr>
+							<td align="right">&nbsp;</td><td><b><?php echo $total_users_wsl; ?></b> <?php _wsl_e("WSL users", 'wordpress-social-login') ?></td>
 						</tr>
 					</table> 
 					<?php 
-						$sql = "SELECT meta_value, count( * ) as items FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user_gender' group by meta_value order by items desc "; 
+						$sql = "SELECT age, count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles`  GROUP BY age ORDER BY items DESC ";
 
 						$rs = $wpdb->get_results( $sql ); 
 					?>
@@ -86,11 +91,11 @@ function wsl_component_networks_basicinsights()
 					<table width="90%">
 						<?php
 							foreach( $rs as $item ){
-								if( ! $item->meta_value ) $item->meta_value = "Unknown";
+								if( ! $item->age ) $item->age = "Unknown";
 							?>
 								<tr>
 									<td width="60%">
-										<?php echo ucfirst( $item->meta_value ); ?>
+										<?php echo ucfirst( $item->age ); ?>
 									</td>
 									<td>
 										<?php echo $item->items; ?>
@@ -100,47 +105,6 @@ function wsl_component_networks_basicinsights()
 							}
 						?>
 					</table>
-					<?php 
-						$sql = "SELECT meta_value, count( * ) as items FROM `{$wpdb->prefix}usermeta` where meta_key = 'wsl_user_age' group by meta_value order by items desc limit 21"; 
-
-						$rs = $wpdb->get_results( $sql ); 
-					?>
-					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By age", 'wordpress-social-login') ?></h4>
-					<table width="90%">
-						<?php
-							$t_ages = 0;
-							$n_ages = 0;
-							$a_ages = 0;
-
-							foreach( $rs as $item ){
-								if( ! $item->meta_value ){
-									$item->meta_value = "Unknown";
-								}
-								else{
-									$t_ages += (int) $item->meta_value;
-									$n_ages++;
-								}
-							?>
-								<tr>
-									<td width="60%">
-										<?php echo $item->meta_value; ?>
-									</td>
-									<td>
-										<?php echo $item->items; ?>
-									</td>
-								</tr>
-							<?php
-							}
-
-							if( $n_ages ){
-								$a_ages = $t_ages / $n_ages;
-							}
-						?> 
-						</tr>
-						<tr>
-							<td align="right">&nbsp;</td><td style="border-top:1px solid #ccc"><b><?php echo number_format($a_ages, 1, '.', ''); ?></b> <?php _wsl_e("yrs in average", 'wordpress-social-login') ?></td>
-						</tr>
-					</table> 
 				</div> 
 			</div>  
 		</div>

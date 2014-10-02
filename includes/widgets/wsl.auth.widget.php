@@ -335,7 +335,7 @@ function wsl_render_login_form_admin_head_user_profile_generate_html()
 
 	$user_id = $current_user->ID;
 
-	$linked_accounts = wsl_get_user_linked_accounts_by_user_id( $user_id );
+	$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );
 
 	// if not WSL user, then nothing to show, yet
 	if( ! $linked_accounts ){

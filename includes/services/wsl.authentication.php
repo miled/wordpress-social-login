@@ -22,6 +22,39 @@
 * If he exist on the database as WSL user, then fine we cut things short.
 * If not, attempt to recognize users based on his email (this only when users authenticate through a provider who give an verified email, ex: Facebook, Google, Yahoo, Foursquare). 
 * Otherwise create new account for him. 
+*
+* Functions call order is the following (short story):
+*
+* - New user:
+*     wsl_process_login()
+*     .    wsl_process_login_begin()
+*     .    .    Hybrid_Auth::authenticate()
+*     .    .    .    wsl_process_login_render_error_page()
+*     .
+*     .    wsl_process_login_end()
+*     .    .    wsl_process_login_end_get_userdata()
+*     .    .    .    Hybrid_Auth::authenticate()
+*     .    .    .    .    wsl_process_login_render_error_page()
+*     .    .    .
+*     .    .    .    wsl_process_login_complete_registration()
+*     .    .
+*     .    .    wsl_process_login_create_wp_user()
+*     .    .    wsl_process_login_create_wsl_user()
+*     .    .    wsl_process_login_authenticate_wp_user()
+*
+* - Returning User:
+*     wsl_process_login()
+*     .    wsl_process_login_begin()
+*     .    .    Hybrid_Auth::authenticate()
+*     .    .    .    wsl_process_login_render_error_page()
+*     .
+*     .    wsl_process_login_end()
+*     .    .    wsl_process_login_end_get_userdata()
+*     .    .    .    Hybrid_Auth::authenticate()
+*     .    .    .    .    wsl_process_login_render_error_page()
+*     .    .
+*     .    .    wsl_process_login_authenticate_wp_user()
+*
 */
 
 // Exit if accessed directly
@@ -277,7 +310,7 @@ function wsl_process_login_begin()
 * Steps:
 *     1. Get the user profile from provider
 *     2. Create new wordpress user if he didn't exist in database
-*     3. Import the user contacts, if enabled
+*     3. Store his Hybridauth profile, contacts and BP mapping
 *     4. Authenticate the user within wordpress
 */
 function wsl_process_login_end()
@@ -310,21 +343,19 @@ function wsl_process_login_end()
 	)
 	= wsl_process_login_end_get_userdata( $provider, $redirect_to );
 
-	// if user found on database, we get his wordpress data
+	// if user found on wslusersprofiles, we try to get his wordpress data
 	if( $user_id ){
 		$user_data  = get_userdata( $user_id );
 
-		// if user is found on wslusersprofiles but do not really exist in users table 
-		// > this should not happen! but just in case: we delete the user wslusersprofiles/wsluserscontacts entries and we reset the process
 		if( $user_data ){
 			$user_login = $user_data->user_login; 
 			$user_email = $hybridauth_user_profile->email; 
 		}
-		else{
-			update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier . "#USER_NOT_FOUND" );
 
-			wsl_delete_userprofiles( $user_id );
-			wsl_delete_usercontacts( $user_id );
+		// if user is found on wslusersprofiles but do not really exist in users table 
+		// > this should not happen! but just in case: we delete the user wslusersprofiles/wsluserscontacts entries and we reset the process
+		else{
+			wsl_delete_stored_hybridauth_user_data( $user_id );
 
 			return wsl_render_notice_page( _wsl__("Sorry, we couldn't connect you. Please try again.", 'wordpress-social-login') );
 		}
@@ -347,17 +378,8 @@ function wsl_process_login_end()
 		return wsl_render_notice_page( _wsl__("Invalid user_id returned by create_wp_user.", 'wordpress-social-login') );
 	}
 
-	// store user hybridauth user profile in table wslusersprofiles
-	wsl_store_hybridauth_user_data( $user_id, $provider, $hybridauth_user_profile );
-
-	// map hybridauth profile to buddypress xprofile table, if enabled
-	// > Profile mapping will only work with new users. Profile mapping for returning users will implemented in future version of WSL.
-	if( $is_new_user ){
-		wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile );
-	}
-
-	// launch contact import, if enabled
-	wsl_import_user_contacts( $user_id, $provider, $adapter );
+	// Create a wsl user (Hybridauth profile, contacts and BP mapping)
+	wsl_process_login_create_wsl_user( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile );
 
 	// finally create a wordpress session for the user
 	return wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile );
@@ -422,8 +444,8 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 
 			$hybridauth_user_profile = $adapter->getUserProfile();
 
-			// check hybridauth user email
-			$hybridauth_user_id    = (int) wsl_get_user_by_meta( $provider, $hybridauth_user_profile->identifier ); 
+			// check hybridauth profile
+			$hybridauth_user_id    = (int) wsl_get_stored_hybridauth_user_profile_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier ); 
 			$hybridauth_user_email = sanitize_email( $hybridauth_user_profile->email ); 
 			$hybridauth_user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
 
@@ -492,7 +514,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 			}
 
-			// if user do not exist
+			// if user do not exist in wslusersprofiles
 			if( ! $hybridauth_user_id ){
 				// Bouncer :: Accept new registrations
 				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
@@ -522,21 +544,20 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 	}
 
 	// if the user email is verified, then try to map to legacy account if exist
-	// > Only few idps (like Facebook, Google, Yahoo and Foursquare) provides a verified user email.
 	if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
 		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
 	}
 
 	# http://boku.ru/files/wsl/commit-56b8b84
-	// try to guess (reliably) user profile with filters
-	// this allows for looking at other stuff (such as associated OpenID)
+	// try to guess (reliably) user profile with filters 
 	$user_id = apply_filters( 'wsl_hook_process_login_reliably_guess_user', $user_id, $provider, $hybridauth_user_profile );
 
-	// try to get user by meta if not
-	if( ! $user_id ){
-		$user_id = (int) wsl_get_user_by_meta( $provider, $hybridauth_user_profile->identifier ); 
+	// find user in wslusersprofiles
+	if ( ! $user_id ){
+		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier ); 
 	}
 
+	// 
 	return array( 
 		$user_id,
 		$adapter,
@@ -678,7 +699,8 @@ do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $h
 
 	// update user metadata
 	if( $user_id && is_integer( $user_id ) ){
-		update_user_meta( $user_id, $provider, $hybridauth_user_profile->identifier );
+		update_user_meta( $user_id, 'wsl_current_provider'   , $provider );
+		update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
 	}
 
 	// do not continue without user_id
@@ -716,6 +738,31 @@ do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $
 // --------------------------------------------------------------------
 
 /**
+* Create a wsl user
+*
+* Steps:
+*     1. Store user Hybridauth profile
+*     2. Import the user contacts if enabled
+*     3. Launch BuddyPress Profile mapping if enabled
+*/
+function wsl_process_login_create_wsl_user( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile )
+{
+	// store user hybridauth user profile in table wslusersprofiles
+	wsl_store_hybridauth_user_profile( $user_id, $provider, $hybridauth_user_profile );
+
+	// map hybridauth profile to buddypress xprofile table, if enabled
+	// > Profile mapping will only work with new users. Profile mapping for returning users will implemented in future version of WSL.
+	if( $is_new_user ){
+		wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile );
+	}
+
+	// launch contact import, if enabled
+	wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter );
+}
+
+// --------------------------------------------------------------------
+
+/**
 *
 */
 function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile )
@@ -734,21 +781,9 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 		$user_age = (int) date("Y") - (int) $hybridauth_user_profile->birthYear;
 	}
 
-	// update some field in usermeta for the current user
-	$new_user_metadata                = array();
-	$new_user_metadata['user_id']     = $user_id; //not to be changed
-	$new_user_metadata['user']        = $provider;
-	$new_user_metadata['user_gender'] = $hybridauth_user_profile->gender;
-	$new_user_metadata['user_age']    = $user_age;
-	$new_user_metadata['user_image']  = $hybridauth_user_profile->photoURL;
-
-	// HOOKABLE: 
-	$new_user_metadata = apply_filters( 'wsl_hook_process_login_alter_user_metadata', $new_user_metadata, $hybridauth_user_profile, $provider );
-
-	update_user_meta ( $user_id, 'wsl_user'       , $new_user_metadata['user'] );
-	update_user_meta ( $user_id, 'wsl_user_gender', $new_user_metadata['user_gender'] );
-	update_user_meta ( $user_id, 'wsl_user_age'   , $new_user_metadata['user_age'] );
-	update_user_meta ( $user_id, 'wsl_user_image' , $new_user_metadata['user_image'] );
+	// update some fields in usermeta for the current user
+	update_user_meta( $user_id, 'wsl_current_provider'   , $provider );
+	update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
 
 	# {{{ module Bouncer
 	# http://www.jfarthing.com/development/theme-my-login/user-moderation/

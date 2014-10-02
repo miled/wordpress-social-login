@@ -1,16 +1,14 @@
 <?php
 /*
-* Plugin Name:       Name: WordPress Social Login
-* Plugin URI:        http://hybridauth.sourceforge.net/wsl/index.html
-* Description:       Allow your blog readers to login and comment using social networks such as Twitter, Facebook, Google, Yahoo and many more.
-* Version:           2.1.7
-* Author:            Miled
-* Author URI:        http://hybridauth.sourceforge.net/wsl/index.html
-* Text Domain:       wordpress-social-login
-* License:           GPL-2.0+
-* License URI:       MIT License
-* Domain Path:       /languages
-* GitHub Plugin URI: https://github.com/hybridauth/WordPress-Social-Login
+Plugin Name: WordPress Social Login
+Plugin URI: http://hybridauth.sourceforge.net/wsl/index.html
+Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
+Version: 2.1.7
+Author: Miled
+Author URI: http://hybridauth.sourceforge.net/wsl/index.html
+License: MIT License
+Text Domain: wordpress-social-login
+Domain Path: /languages
 */
 
 /*
@@ -185,8 +183,5 @@ if( is_admin() ){
 // registers wsl_database_migration_hook() to be run when the WSL is activated.
 // this will create/update wslusersprofiles and wsluserscontacts and register/unregister few wp options 
 register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
-
-// toDo: WSL uninstall (drops tables and options)
-// > to be implemented in 'wordpress-social-login/services/uninstall.php'
 
 // --------------------------------------------------------------------
