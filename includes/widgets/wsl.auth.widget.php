@@ -127,7 +127,7 @@ function wsl_render_login_form()
 			}
 
 			// HOOKABLE: allow use of other icon sets
-			$provider_icon_markup = apply_filters( 'wsl_alter_hook_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
+			$provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
 
 			if( $provider_icon_markup != $provider_id ){
 				echo $provider_icon_markup;
