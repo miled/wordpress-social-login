@@ -21,8 +21,6 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // --------------------------------------------------------------------
 
-// function wsl_uninstall()
-// {
 	global $wpdb;
 
 	// 1. Delete wslusersprofiles and wsluserscontacts
@@ -154,7 +152,6 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 			delete_option( 'wsl_settings_Odnoklassniki_app_secret ' );
 			delete_option( 'wsl_settings_PixelPin_app_id' );
 			delete_option( 'wsl_settings_PixelPin_app_secret' );
-	*/
-
+*/
 
 // --------------------------------------------------------------------
