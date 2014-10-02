@@ -143,17 +143,17 @@ function wsl_component_bouncer_setup()
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
-				<td width="200" align="right"><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
+				<td width="200" align="right" nowrap><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
 					<select name="wsl_settings_bouncer_new_users_membership_default_role">
 						<optgroup label="<?php _wsl_e("Safe", 'wordpress-social-login') ?>:">
-							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default" ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
+							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default"   ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
 							<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
-							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber" ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
 						</optgroup>
 
-						<optgroup label="<?php _wsl_e("Be careful with these", 'wordpress-social-login') ?>:">  
-							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author" ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
+						<optgroup label="<?php _wsl_e("Be careful with these roles. You may be automatically giving new users elevated capabilities", 'wordpress-social-login') ?>:">  
+							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber"  ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
+							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author"      ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
 							<option value="contributor" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "contributor" ) echo "selected"; ?> ><?php _wsl_e("Contributor", 'wordpress-social-login') ?></option> 
 						</optgroup>
 					</select>  

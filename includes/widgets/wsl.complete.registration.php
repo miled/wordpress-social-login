@@ -7,7 +7,7 @@
 */
 
 /**
-* Page for users completing their registration (currently used only by Bouncer::Email Validation
+* Page for users completing their registration (currently used only by Bouncer::Email Validation)
 */
 
 // Exit if accessed directly
@@ -136,6 +136,7 @@ function init() {
 					</td>
 				</tr>
 			</table>
+
 			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
 			<input type="hidden" id="action" name="action" value="wordpress_social_profile_completion">

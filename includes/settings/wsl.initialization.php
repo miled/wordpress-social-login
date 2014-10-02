@@ -80,7 +80,7 @@ function wsl_register_component( $component, $config, $tabs )
 
 	// sure it can be overwritten.. just not recommended
 	if( isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] ) ){
-		return wsl_render_notices_pages( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
 	}
 
 	$config["type"] = "plugin";
@@ -108,7 +108,7 @@ function wsl_register_admin_tab( $tab, $config )
 
 	// sure it can be overwritten.. just not recommended
 	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] ) ){
-		return wsl_render_notices_pages( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
 	}
 
 	$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] = $config;  

@@ -11,11 +11,17 @@ WordPress Social Login allow your visitors to comment and login with social netw
 
 == Description ==
 
-Using <strong>WordPress Social Login</strong>, your blog's users will be able to login and comment with social networks such as Twitter, Facebook, Google and Yahoo.
+Using <strong>WordPress Social Login</strong>, your blog's readers will be able to login and comment with social networks such as Twitter, Facebook, Google and Yahoo.
 
 <strong>WordPress Social Login</strong> also allows you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
 
 <strong>WordPress Social Login</strong> gives you absolute control over users access to your website and comes with a painfully long list of rules and restrictions for you to setup.
+
+<strong>Easy to customize and integrate </strong> <br>
+WordPress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
+
+<strong>26 supported social networks</strong> <br>
+Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
 
 <strong>Free, unlimited and white-label</strong> <br>
 Licensed under MIT License, WordPress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a WordPress Social Login in commercial websites as long as the copyright header is left intact.
@@ -23,17 +29,8 @@ Licensed under MIT License, WordPress Social Login available to everyone for com
 <strong>Built on top of an Open Source Library</strong><br>
 HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
 
-<strong>28 supported social networks</strong> <br>
-Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
-
-<strong>Easy to customize and integrate </strong> <br>
-WordPress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
-
-<strong>Even more features are planned</strong> <br>
-The coming release « the definitive social toolkit » will brings even more exciting new features and significant updates to WordPress Social Login. From advanced users management to contacts import and export, social sharing, tweet comments, tweet to download, and more.
-
-<strong>Supported Providers</strong> <br>
-Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursquare, GitHub, Goodreads, Identica, Instagram, AOL, LastFM, Mail.ru, Mixi, Odnoklassniki, OpenID, 500px, Skyrock, Stackoverflow, Steam, Tumblr, Twitch.tv, Vkontakte, Yandex and PixelPin.
+<strong>Supported providers</strong> <br>
+Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
 
 <strong>Special thanks to:</strong>
 
@@ -41,9 +38,9 @@ Facebook, Google, Twitter, LinkedIn, Yahoo, Windows Live, Disqus, Reddit, Foursq
 * [Pat Anvil](http://patanvil.com) for adding Goodreads.
 * [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki.
 * [Social Login plugin author](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
-* [Query Monitor plugin author](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress Plugin developers.
+* [Query Monitor plugin author](https://wordpress.org/plugins/query-monitor/) - QM is must have for Wordpress plugins developers.
 
-Thanks to everyone who have contributed to this project and the Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support.
+Thanks to everyone who have contributed to this project and the to Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support.
 
 == Installation ==
 

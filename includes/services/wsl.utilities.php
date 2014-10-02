@@ -16,6 +16,46 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 /**
+* Return the current used WSL version
+*/
+function wsl_get_version()
+{
+	global $WORDPRESS_SOCIAL_LOGIN_VERSION;
+
+	return $WORDPRESS_SOCIAL_LOGIN_VERSION;
+}
+
+// --------------------------------------------------------------------
+
+/**
+* _e() wrapper
+* 
+* This function was used for the localization widget to generate translations per page. 
+*
+* kept for compatibility.
+*/
+function _wsl_e( $text, $domain )
+{
+	echo __( $text, $domain );
+}
+
+// --------------------------------------------------------------------
+
+/**
+* __() wrapper
+* 
+* This function was used for the localization widget to generate translations per page. 
+*
+* kept for compatibility.
+*/
+function _wsl__( $text, $domain )
+{
+	return __( $text, $domain );
+}
+
+// --------------------------------------------------------------------
+
+/**
 * Check if the current connection is being made over https
 *
 * This functions are borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 

@@ -346,7 +346,7 @@ function wsl_admin_ui_footer()
 
 <script>
 	// check for new versions and updates
-	// jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
+	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
     if( get_option( 'wsl_settings_development_mode_enabled' ) ){ 
@@ -545,10 +545,11 @@ function wsl_admin_welcome_panel()
 
 				<!-- 2.1.7+ -->
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('WSL can be fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation: display of users avatars and xprofiles mapping', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be  <a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be <a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('Introducing three new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('WSL <a href="http://hybridauth.sourceforge.net/wsl/hooks.html" target="_blank">Hooks</a> has been reworked and few hooks have been depreciated in favour of new ones', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>

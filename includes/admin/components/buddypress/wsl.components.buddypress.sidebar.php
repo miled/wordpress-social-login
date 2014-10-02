@@ -23,15 +23,19 @@ function wsl_component_buddypress_sidebar()
 <div class="postbox " id="linksubmitdiv"> 
 	<div class="inside">
 		<div id="submitlink" class="submitbox"> 
-			<h3 style="cursor: default;"><?php _wsl_e("What's This?", 'wordpress-social-login') ?></h3>
+			<h3 style="cursor: default;"><?php _wsl_e("BuddyPress integration", 'wordpress-social-login') ?></h3>
 			<div id="minor-publishing">  
 				<div id="misc-publishing-actions"> 
 					<div style="padding:20px;padding-top:0px;">
-						<h4 style="cursor: default;border-bottom:1px solid #ccc;font-size: 13px;"><?php _wsl_e("BuddyPress integration", 'wordpress-social-login') ?></h4>
 
-						<p style="margin:10px;font-size: 13px;" align="justify"> 
-							<?php _wsl_e("...", 'wordpress-social-login') ?>.
+						<p style="margin:10px;font-size: 13px;"> 
+							<?php _wsl_e( 'WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation. When enabled, user avatars display should work right out of the box with most WordPress themes and your BuddyPress installation', 'wordpress-social-login') ?>.
 						</p> 
+
+						<p style="margin:10px;font-size: 13px;"> 
+							<?php _wsl_e( 'WSL also comes with BuddyPress xProfiles mappings. When this feature is enabled, WSL will try to automatically fill in Buddypress users profiles from their social networks profiles', 'wordpress-social-login') ?>.
+						</p> 
+						
 					</div> 
 				</div> 
 			</div> 
