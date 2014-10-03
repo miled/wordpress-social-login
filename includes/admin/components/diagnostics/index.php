@@ -16,6 +16,8 @@ function wsl_component_diagnostics()
 {
 	// HOOKABLE: 
 	do_action( "wsl_component_diagnostics_start" ); 
+	
+	$wsl_settings_development_mode_enabled = get_option( 'wsl_settings_development_mode_enabled' ); 
 ?> 
 <div style="padding: 20px; border: 1px solid #ddd; background-color: #fff;">
 	<h3><?php _wsl_e("Requirements test", 'wordpress-social-login') ?></h3> 
@@ -67,10 +69,6 @@ function wsl_component_diagnostics()
 	<p>
 		<?php _wsl_e('It\'s highly recommended to keep the <b>Development Mode</b> <b style="color:#da4f49">Disabled</b> on production as it would be a security risk otherwise', 'wordpress-social-login') ?>.
 	</p>
-
-	<?php
-		$wsl_settings_development_mode_enabled = get_option( 'wsl_settings_development_mode_enabled' );
-	?>
 
 	<form method="post" id="wsl_setup_form" action="options.php" <?php if( ! $wsl_settings_development_mode_enabled ) { ?>onsubmit="return confirm('Do you really want to enable Development Mode?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"<?php } ?>>  
 		<?php settings_fields( 'wsl-settings-group-development' ); ?>

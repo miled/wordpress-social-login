@@ -286,7 +286,7 @@ function wsl_display_dev_mode_debugging_area()
 									if(  count( $callers ) ){
 										# God damn it
 										for( $i = count( $callers ) - 1; $i > 0; $i-- ){
-											if( ! stristr( $callers[$i], 'include(' ) && ! stristr( $callers[$i],  'call_user_func_' ) && ! stristr( $callers[$i],  'toplevel_page_' ) ){
+											if( ! stristr( $callers[$i], '.php' ) && ! stristr( $callers[$i],  'call_user_func_' ) ){
 												echo "#$i &nbsp; " . $callers[$i] . '<br />';
 											}
 										}

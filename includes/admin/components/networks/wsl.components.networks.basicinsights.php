@@ -20,12 +20,12 @@ function wsl_component_networks_basicinsights()
 
 	$sql = "SELECT count( * ) AS items FROM `{$wpdb->prefix}users`"; 
 	$rs1 = $wpdb->get_results( $sql );  
+	$total_users = (int) $rs1[0]->items;
 
-	$sql = "SELECT count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles` GROUP BY user_id"; 
+	$sql = "SELECT count( distinct user_id ) AS items FROM `{$wpdb->prefix}wslusersprofiles` "; 
 	$rs2 = $wpdb->get_results( $sql );
+	$total_users_wsl = (int) $rs2[0]->items;
 
-	$total_users      = (int) $rs1[0]->items;
-	$total_users_wsl  = (int) $rs2[0]->items;
 	$users_conversion = ( 100 * $total_users_wsl ) / $total_users;
 
 	if( $total_users_wsl && wsl_is_component_enabled( "basicinsights" ) ){

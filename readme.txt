@@ -3,7 +3,7 @@ Contributors: miled, acvic
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.1.7
+Stable tag: 2.2.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 
@@ -74,7 +74,7 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 == Changelog ==
 
-= 2.1.7 = 
+= 2.2.1 = 
 
 * WSL can be fully integrated with your BuddyPress installation: display of users avatars and xprofiles mapping.
 * WSL is now updated to work with the latest apis changes of the supported social networks.
@@ -97,7 +97,7 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 * An entirely reworked user interface,
 * Improving the documentation and guides,
 * Introducing a new module, and the long awaited, The bouncer,
-* Twitch.tv joins WSL, richer Steam user profiles, and more.
+* Added Twitch.tv and Steam.
 
 = 1.2.4 =
 

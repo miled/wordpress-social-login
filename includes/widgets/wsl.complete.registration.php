@@ -17,6 +17,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_complete_registration_start", $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
+
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// check posted user email & login

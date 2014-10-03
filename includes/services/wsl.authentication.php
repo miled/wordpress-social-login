@@ -86,10 +86,22 @@ function wsl_process_login()
 		return false;
 	}
 
+	// user already logged in?
+	if( is_user_logged_in() ){
+		global $current_user;
+
+		get_currentuserinfo(); 
+
+		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as <b>%s</b>.", 'wordpress-social-login' ), $current_user->display_name ) );
+	}
+
 	// Bouncer :: Allow authentication?
 	if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 ){
-		return wsl_render_notice_page( _wsl__( "Authentication through social networks is currently disabled.", 'wordpress-social-login' ) );
+		return wsl_process_login_render_notice_page( _wsl__( "Authentication through social networks is currently disabled.", 'wordpress-social-login' ) );
 	}
+
+	// HOOKABLE:
+	do_action( "wsl_process_login_start" );
 
 	// if action=wordpress_social_authenticate
 	// > start the first part of authentication (redirect the user to the selected provider)
@@ -118,8 +130,8 @@ add_action( 'init', 'wsl_process_login' );
 */
 function wsl_process_login_begin()
 {
-	// HOOKABLE: a hook in case someone need it
-	do_action( "wsl_hook_process_login_begin_start" );
+	// HOOKABLE:
+	do_action( "wsl_process_login_begin_start" );
 
 	$config     = null;
 	$hybridauth = null;
@@ -142,19 +154,10 @@ function wsl_process_login_begin()
 	// check url args
 	// provider is required and redirect_to_provider eq true
 	if( ! isset( $_REQUEST['provider'] ) || ! isset( $_REQUEST['redirect_to_provider'] )  || $_REQUEST['redirect_to_provider'] != 'true' ){
-		return wsl_render_notice_page( _wsl__( 'Bouncer says this makes no sense.', 'wordpress-social-login' ) ); 
+		return wsl_process_login_render_notice_page( _wsl__( 'Bouncer says this makes no sense.', 'wordpress-social-login' ) ); 
 	}
 
 	try{
-		// user already logged in?
-		if( is_user_logged_in() ){
-			global $current_user;
-
-			get_currentuserinfo(); 
-
-			wp_die( sprintf( _wsl__( "You are already logged in as <b>%s</b>.", 'wordpress-social-login' ), $current_user->display_name ) );
-		}
-
 		// load Hybrid_Auth
 		if ( ! class_exists('Hybrid_Auth', false) ){
 			require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php"; 
@@ -165,7 +168,7 @@ function wsl_process_login_begin()
 
 		// provider enabled?
 		if( ! get_option( 'wsl_settings_' . $provider . '_enabled' ) ){
-			return wsl_render_notice_page( _wsl__( "Unknown or disabled provider.", 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "Unknown or disabled provider.", 'wordpress-social-login' ) );
 		}
 
 		// default endpoint_url/callback_url
@@ -174,7 +177,7 @@ function wsl_process_login_begin()
 
 		// check hybridauth_base_url
 		if( ! strstr( $endpoint_url, "http://" ) && ! strstr( $endpoint_url, "https://" ) ){
-			return wsl_render_notice_page( sprintf( _wsl__( "Invalid base_url: %s.", 'wordpress-social-login' ), $endpoint_url ) );
+			return wsl_process_login_render_notice_page( sprintf( _wsl__( "Invalid base_url: %s.", 'wordpress-social-login' ), $endpoint_url ) );
 		}
 
 		// build required configuration for this provider
@@ -315,8 +318,8 @@ function wsl_process_login_begin()
 */
 function wsl_process_login_end()
 {
-	// HOOKABLE: a hook in case someone need it
-	do_action( "wsl_hook_process_login_end_start" );
+	// HOOKABLE:
+	do_action( "wsl_process_login_end_start" );
 
 	// HOOKABLE: set a custom Redirect URL
 	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', wsl_process_login_get_redirect_to() ) ;
@@ -335,8 +338,7 @@ function wsl_process_login_end()
 	list( 
 		$user_id                , // user_id>0 if found on database
 		$adapter                , // hybriauth adapter for the selected provider
-		$hybridauth_user_profile, // hybriauth user profile
-		$hybridauth_user_id     , // id in table wslusersprofiles
+		$hybridauth_user_profile, // hybriauth user profile 
 		$hybridauth_user_email  , // user email as provided by the provider
 		$request_user_login     , // username typed by users in Profile Completion
 		$request_user_email     , // email typed by users in Profile Completion
@@ -357,7 +359,7 @@ function wsl_process_login_end()
 		else{
 			wsl_delete_stored_hybridauth_user_data( $user_id );
 
-			return wsl_render_notice_page( _wsl__("Sorry, we couldn't connect you. Please try again.", 'wordpress-social-login') );
+			return wsl_process_login_render_notice_page( _wsl__("Sorry, we couldn't connect you. Please try again.", 'wordpress-social-login') );
 		}
 	}
 
@@ -375,7 +377,7 @@ function wsl_process_login_end()
 
 	// we check if it is a valid id, so just in case
 	if( ! is_integer( $user_id ) ){
-		return wsl_render_notice_page( _wsl__("Invalid user_id returned by create_wp_user.", 'wordpress-social-login') );
+		return wsl_process_login_render_notice_page( _wsl__("Invalid user_id returned by create_wp_user.", 'wordpress-social-login') );
 	}
 
 	// Create a wsl user (Hybridauth profile, contacts and BP mapping)
@@ -398,10 +400,16 @@ function wsl_process_login_end()
 */
 function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_end_get_userdata_start", $provider, $redirect_to );
+
 	$user_id    = null;
 	$config     = null;
 	$hybridauth = null; 
 	$adapter    = null;
+
+	$request_user_login    = '';
+	$request_user_email    = '';
 
 	try{
 		// load Hybrid_Auth
@@ -411,7 +419,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 
 		// provider is enabled?
 		if( ! get_option( 'wsl_settings_' . $provider . '_enabled' ) ){
-			return wsl_render_notice_page( _wsl__( "Unknown or disabled provider.", 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "Unknown or disabled provider.", 'wordpress-social-login' ) );
 		}
 
 		// build required configuration for this provider
@@ -438,25 +446,22 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 		// create an instance for Hybridauth
 		$hybridauth = new Hybrid_Auth( $config );
 
-		// try to authenticate the selected $provider
+		// if user authenticated successfully with social network
 		if( $hybridauth->isConnectedWith( $provider ) ){
 			$adapter = $hybridauth->getAdapter( $provider );
 
+			// grab user profile via hybridauth api
 			$hybridauth_user_profile = $adapter->getUserProfile();
 
-			// check hybridauth profile
-			$hybridauth_user_id    = (int) wsl_get_stored_hybridauth_user_profile_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier ); 
+			// check hybridauth profile 
 			$hybridauth_user_email = sanitize_email( $hybridauth_user_profile->email ); 
 			$hybridauth_user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
-
-			$request_user_login    = '';
-			$request_user_email    = '';
 
 			# {{{ module Bouncer
 			// Bouncer::Filters by emails domains name
 			if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 ){ 
 				if( empty( $hybridauth_user_email ) ){
-					return wsl_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
+					return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
 				}
 
 				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_domain_list' );
@@ -472,14 +477,14 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
+					return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
 			// Bouncer::Filters by e-mails addresses
 			if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 ){ 
 				if( empty( $hybridauth_user_email ) ){
-					return wsl_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
+					return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
 				}
 
 				$list = get_option( 'wsl_settings_bouncer_new_users_restrict_email_list' );
@@ -493,7 +498,7 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
+					return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
@@ -510,59 +515,58 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 
 				if( ! $shall_pass ){
-					return wsl_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ), 'wordpress-social-login') );
+					return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ), 'wordpress-social-login') );
 				}
 			}
 
-			// if user do not exist in wslusersprofiles
-			if( ! $hybridauth_user_id ){
-				// Bouncer :: Accept new registrations
-				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
-					return wsl_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) ); 
-				}
+			// check if this user verified email is in use. if true, we link this social network profile to the found WP user
+			if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
+				$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
+				
+				// if user verified email not in use, we try to look in wslusersprofiles if the profile is linked to a WP user
+				if( ! $user_id ){
+					$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 
-				// Bouncer :: Profile Completion
-				if(
-					( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
-					get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-				){
-					do
-					{
-						list( $shall_pass, $request_user_login, $request_user_email ) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
+					// if user not found in wslusersprofiles 
+					if( ! $user_id ){
+						// Bouncer :: Accept new registrations
+						if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
+							return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) ); 
+						}
+
+						// Bouncer :: Profile Completion
+						if(
+							( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
+							get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+						){
+							do
+							{
+								list( 
+									$shall_pass, 
+									$request_user_login, 
+									$request_user_email 
+								) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
+							}
+							while( ! $shall_pass );
+						}
 					}
-					while( ! $shall_pass );
 				}
 			}
 			# }}} module Bouncer
 		}
 		else{
-			return wsl_render_notice_page( sprintf( _wsl__( "User not connected with <b>%s</b>", 'wordpress-social-login' ), $provider ) ); 
+			return wsl_process_login_render_notice_page( sprintf( _wsl__( "User not connected with <b>%s</b>", 'wordpress-social-login' ), $provider ) ); 
 		} 
 	}
 	catch( Exception $e ){
 		return wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter );
 	}
 
-	// if the user email is verified, then try to map to legacy account if exist
-	if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
-		$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
-	}
-
-	# http://boku.ru/files/wsl/commit-56b8b84
-	// try to guess (reliably) user profile with filters 
-	$user_id = apply_filters( 'wsl_hook_process_login_reliably_guess_user', $user_id, $provider, $hybridauth_user_profile );
-
-	// find user in wslusersprofiles
-	if ( ! $user_id ){
-		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier ); 
-	}
-
 	// 
 	return array( 
 		$user_id,
 		$adapter,
-		$hybridauth_user_profile,
-		$hybridauth_user_id,
+		$hybridauth_user_profile, 
 		$hybridauth_user_email, 
 		$request_user_login, 
 		$request_user_email, 
@@ -576,6 +580,9 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 */
 function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_create_wp_user_start", $provider, $hybridauth_user_profile, $request_user_login, $request_user_email );
+
 	$user_login = '';
 	$user_email = '';
 
@@ -706,10 +713,10 @@ do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $h
 	// do not continue without user_id
 	else {
 		if( is_wp_error( $user_id ) ){
-			return wsl_render_notice_page( _wsl__( "An error occurred while creating a new user!" . $user_id->get_error_message(), 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user!" . $user_id->get_error_message(), 'wordpress-social-login' ) );
 		}
 
-		return wsl_render_notice_page( _wsl__( "An error occurred while creating a new user!", 'wordpress-social-login' ) );
+		return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user!", 'wordpress-social-login' ) );
 	}
 
 	// Send notifications 
@@ -747,6 +754,9 @@ do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $
 */
 function wsl_process_login_create_wsl_user( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_create_wsl_user_start", $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile );
+	
 	// store user hybridauth user profile in table wslusersprofiles
 	wsl_store_hybridauth_user_profile( $user_id, $provider, $hybridauth_user_profile );
 
@@ -767,9 +777,12 @@ function wsl_process_login_create_wsl_user( $is_new_user, $user_id, $provider, $
 */
 function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_authenticate_wp_user_start", $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile );
+
 	// There was a bug when this function received non-integer user_id and updated random users, let's be safe
 	if( !is_integer( $user_id ) ){
-		return wsl_render_notice_page( _wsl__("Invalid user_id", 'wordpress-social-login') );
+		return wsl_process_login_render_notice_page( _wsl__("Invalid user_id", 'wordpress-social-login') );
 	}
 
 	// calculate user age
@@ -832,7 +845,7 @@ do_action( 'wsl_hook_process_login_before_set_auth_cookie', $user_id, $provider,
 	// > Note: If you have enabled User Moderation, then the user is NOT NECESSARILY CONNECTED
 	// > within wordpress at this point (in case the user $role == 'pending').
 	// > To be sure the user is connected, use wsl_hook_process_login_before_wp_set_auth_cookie instead.
-	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile );
+	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile, $redirect_to );
 
 
 /** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
@@ -917,6 +930,9 @@ function wsl_process_login_get_selected_provider()
 */
 function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
 {
+	// HOOKABLE:
+	do_action( "wsl_process_login_render_error_page", $e, $config, $hybridauth, $provider, $adapter );
+
 	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 
 	$message = _wsl__("Unspecified error!", 'wordpress-social-login'); 
@@ -947,6 +963,20 @@ function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provide
 	@ session_destroy();
 
 	wsl_render_error_page( $message, $notes, $e, array( $config, $hybridauth, $provider, $adapter ) );
+}
+
+
+// --------------------------------------------------------------------
+
+/**
+* Display an notice message 
+*/
+function wsl_process_login_render_notice_page( $message )
+{
+	// HOOKABLE:
+	do_action( "wsl_process_login_render_notice_page", $message );
+
+	return wsl_render_notice_page( $message );
 }
 
 // --------------------------------------------------------------------

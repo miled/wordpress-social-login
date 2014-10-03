@@ -23,6 +23,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function wsl_render_login_form()
 {
 	if ( is_user_logged_in() && ! is_admin() ){
+		// HOOKABLE:
+		do_action( 'wsl_render_login_form_user_loggedin' );
+
 		return;
 	}
 
@@ -213,7 +216,7 @@ function wsl_render_wsl_widget_in_comment_form()
 {
 	$wsl_settings_widget_display = get_option( 'wsl_settings_widget_display' );
 
-	if( comments_open() && ! is_user_logged_in() ) {
+	if( comments_open() ) {
 		if( 
 				!  $wsl_settings_widget_display
 			|| 
@@ -270,9 +273,7 @@ add_action( 'after_signup_form', 'wsl_render_wsl_widget_in_wp_register_form' );
 # {{{ shortcode, js and css injectors
 function wsl_shortcode_handler($args)
 {
-	if ( ! is_user_logged_in () ){
-		return wsl_render_login_form();
-	}
+	echo wsl_render_login_form();
 }
 
 add_shortcode ( 'wordpress_social_login', 'wsl_shortcode_handler' );

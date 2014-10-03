@@ -147,7 +147,7 @@ function wsl_component_contacts()
 ?>
 <style>
 	.widefatop td, .widefatop th { border: 1px solid #DDDDDD; }
-	widefatop th label { font-weight: bold; }  
+	.widefatop th label { font-weight: bold; }  
 </style>
 
 <h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
