@@ -519,37 +519,37 @@ function wsl_process_login_end_get_userdata( $provider, $redirect_to )
 				}
 			}
 
+			//chech if user already exist in wslusersprofiles
+			if( ! $user_id ){
+				$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
+			}
+
 			// check if this user verified email is in use. if true, we link this social network profile to the found WP user
-			if ( ! empty( $hybridauth_user_profile->emailVerified ) ){
+			if( ! empty( $hybridauth_user_profile->emailVerified ) ){
 				$user_id = (int) email_exists( $hybridauth_user_profile->emailVerified );
-				
-				// if user verified email not in use, we try to look in wslusersprofiles if the profile is linked to a WP user
-				if( ! $user_id ){
-					$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
+			}
 
-					// if user not found in wslusersprofiles 
-					if( ! $user_id ){
-						// Bouncer :: Accept new registrations
-						if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
-							return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) ); 
-						}
+			// if user not found in wslusersprofiles nor have verified email in use
+			if( ! $user_id ){
+				// Bouncer :: Accept new registrations
+				if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ){
+					return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) ); 
+				}
 
-						// Bouncer :: Profile Completion
-						if(
-							( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
-							get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-						){
-							do
-							{
-								list( 
-									$shall_pass, 
-									$request_user_login, 
-									$request_user_email 
-								) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
-							}
-							while( ! $shall_pass );
-						}
+				// Bouncer :: Profile Completion
+				if(
+					( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) || 
+					get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+				){
+					do
+					{
+						list( 
+							$shall_pass, 
+							$request_user_login, 
+							$request_user_email 
+						) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login );
 					}
+					while( ! $shall_pass );
 				}
 			}
 			# }}} module Bouncer
@@ -668,7 +668,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	// when enabled (!= 'default'), it defines the new user role
 	$wsl_settings_bouncer_new_users_membership_default_role = get_option( 'wsl_settings_bouncer_new_users_membership_default_role' );
 
-	if( $wsl_settings_bouncer_new_users_membership_default_role != "default" ){ 
+	if( $wsl_settings_bouncer_new_users_membership_default_role != "default" ){
 		$userdata['role'] = $wsl_settings_bouncer_new_users_membership_default_role;
 	}
 
