@@ -34,36 +34,36 @@ class Hybrid_Providers_Goodreads extends Hybrid_Provider_Model_OAuth1
 	{
 		// in case we get authorize=0
 		if ( ! isset($_REQUEST['oauth_token']) || ( isset( $_REQUEST['authorize'] ) && $_REQUEST['authorize'] == "0" ) ){ 
-			throw new Exception( "Authentification failed! The user denied your request.", 5 );
+			throw new Exception( "Authentication failed! The user denied your request.", 5 );
 		}
 
 		$oauth_verifier = @ $_REQUEST['oauth_token'];
 
 		if ( !$oauth_verifier ){
-			throw new Exception( "Authentification failed! {$this->providerId} returned an invalid oauth verifier.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth verifier.", 5 );
 		}
 
 		// request an access token
 		$tokens = $this->api->accessToken( $oauth_verifier );
 
-		// access tokens as recived from provider
+		// access tokens as received from provider
 		$this->access_tokens_raw = $tokens;
 
 		// check the last HTTP status code returned
 		if ( $this->api->http_code != 200 ){
-			throw new Exception( "Authentification failed! {$this->providerId} returned an error. " . $this->errorMessageByStatus( $this->api->http_code ), 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an error. " . $this->errorMessageByStatus( $this->api->http_code ), 5 );
 		}
 
 		// we should have an access_token, or else, something has gone wrong
 		if ( ! isset( $tokens["oauth_token"] ) ){
-			throw new Exception( "Authentification failed! {$this->providerId} returned an invalid access token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
 		}
 
-		// we no more need to store requet tokens
+		// we no more need to store request tokens
 		$this->deleteToken( "request_token"        );
 		$this->deleteToken( "request_token_secret" );
 
-		// sotre access_token for later user
+		// store access_token for later user
 		$this->token( "access_token"        , $tokens['oauth_token'] );
 		$this->token( "access_token_secret" , $tokens['oauth_token_secret'] ); 
 

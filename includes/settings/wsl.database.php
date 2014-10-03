@@ -3,18 +3,18 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
-* Functions & utililies related to wsl database installation and migrations
+* Functions & utilities related to WSL database installation and migrations
 *
-* After WSl activated, wsl_database_migration_process will attempt to create or upgrade the required database
+* When WSl is activated, wsl_database_migration_process() will attempt to create or upgrade the required database
 * tables.
 *
 * Currently there is 2 tables used by WSL :
-*	- wslusersprofiles:  where sotred the users profile as provided by Hybridauth
-*	- wsluserscontacts:  where sotred the users contact list as provided by Hybridauth
+*	- wslusersprofiles:  where we store users profiles
+*	- wsluserscontacts:  where we store users contact lists
 */
 
 // Exit if accessed directly
@@ -28,12 +28,12 @@ $wsl_database_migration_version = 4;
 
 // --------------------------------------------------------------------
 
-function wsl_database_migration_hook ()
+function wsl_database_migration_hook()
 {
     wsl_database_migration_process();
 }
 
-add_action( 'plugins_loaded', 'wsl_database_migration_process' );
+// add_action( 'plugins_loaded', 'wsl_database_migration_process' );
 
 // --------------------------------------------------------------------
 
@@ -41,9 +41,14 @@ function wsl_database_migration_process()
 {
     global $wpdb;
     global $wsl_database_migration_version;
-	
+
+	// update old/all default wsl-settings
+	wsl_check_compatibilities();
+
+	// install database
     $wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
     $wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
+
     $installed_ver    = get_option( "wsl_database_migration_version" );
 
     if( $installed_ver != $wsl_database_migration_version ) { 

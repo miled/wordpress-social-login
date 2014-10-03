@@ -14,18 +14,18 @@
 */
 class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OpenID
 {
-        var $openidIdentifier = "https://open.login.yahooapis.com/openid20/www.yahoo.com/xrds"; 
+	var $openidIdentifier = "https://open.login.yahooapis.com/openid20/www.yahoo.com/xrds"; 
 
-        /**
-        * finish login step 
-        */
-        function loginFinish()
-        {
-                parent::loginFinish();
+	/**
+	* finish login step 
+	*/
+	function loginFinish()
+	{
+		parent::loginFinish();
 
-                $this->user->profile->emailVerified = $this->user->profile->email;
+		$this->user->profile->emailVerified = $this->user->profile->email;
 
-                // restore the user profile
-                Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
-        }
+		// restore the user profile
+		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
+	}
 }

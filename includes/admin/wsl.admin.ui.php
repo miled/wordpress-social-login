@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /** 
@@ -87,34 +87,9 @@ function wsl_admin_init()
 
 		wsl_admin_ui_error();
 	}
-	
+
 	// HOOKABLE: 
 	do_action( "wsl_admin_init_end" );
-}
-
-// --------------------------------------------------------------------
-
-/**
-* Renders an editor in a page in the typical fashion used in Posts and Pages.
-*/
-function wsl_render_wp_editor( $name, $content )
-{
-	// HOOKABLE: 
-	do_action( "wsl_render_wp_editor_start" );
-?>
-<div class="postbox"> 
-	<div class="wp-editor-textarea" style="background-color: #FFFFFF;">
-	<?php 
-		wp_editor( 
-			$content, $name, 
-			array( 'textarea_name' => $name, 'media_buttons' => true, 'tinymce' => array( 'theme_advanced_buttons1' => 'formatselect,forecolor,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink' ) ) 
-		);
-	?>
-	</div> 
-</div>
-<?php
-	// HOOKABLE: 
-	do_action( "wsl_render_wp_editor_end" );
 }
 
 // --------------------------------------------------------------------
@@ -219,12 +194,6 @@ a.thumbnail:hover {
 }
 .span4 {  
 	width: 220px; 
-}
-#wp-social-login-connect-with {  
-	font-size: 14px; 
-}
-#wp-social-login-connect-options {  
-	margin:5px; 
 }
 .wsl_connect_with_provider {  
 	text-decoration:none; 
@@ -373,13 +342,17 @@ function wsl_admin_ui_footer()
 ?>
 </div> <!-- ./wsl_admin_tab_content -->  
 <div class="clear"></div>
-<?php wsl_admin_localize_widget(); ?>
+<?php wsl_admin_help_us_localize_note(); ?>
 
 <script>
 	// check for new versions and updates
 	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
+    if( get_option( 'wsl_settings_development_mode_enabled' ) ){ 
+		wsl_display_dev_mode_debugging_area();
+ 	}
+
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
 }
@@ -406,7 +379,7 @@ function wsl_admin_ui_error()
 }
 </style>
 <div id="wsl_div_warn">
-	<h3 style="margin:0px;"><?php _wsl_e('Something wrong!', 'wordpress-social-login') ?></h3> 
+	<h3 style="margin:0px;"><?php _wsl_e('Oops! We ran into an issue.', 'wordpress-social-login') ?></h3> 
 
 	<hr />
 
@@ -424,8 +397,7 @@ function wsl_admin_ui_error()
 		<a class="button-secondary" href="http://hybridauth.sourceforge.net/wsl/support.html" target="_blank"><?php _wsl_e( "Report as bug", 'wordpress-social-login' ) ?></a>
 		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:right"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
 	</div> 
-</div> 
-
+</div>  
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_error_end" );
@@ -434,7 +406,7 @@ function wsl_admin_ui_error()
 // --------------------------------------------------------------------
 
 /**
-* Renders wsl #FAIL page
+* Renders WSL #FAIL page
 */
 function wsl_admin_ui_fail()
 {
@@ -448,32 +420,20 @@ h1 {
     font-size: 2.8em;
     font-weight: 200;
     line-height: 1.2em;
-    margin: 0.2em 200px 0 0;
+    margin: 0;
 } 
-hr{ 
-	border-color: #EEEEEE;
-	border-style: none none solid;
-	border-width: 0 0 1px;
-	margin: 2px 0 15px;
-}
 .wsldiv { 
-    margin: 30px 70px 0 70px; 
+    background-color: #fff;
+    border: 1px solid #ddd;
+    margin: 20px;
+    padding: 20px;
+    width: 770px;
 }
 .wsldiv p{ 
     ont-size: 14px;
 	line-height: 1.8em;
 }
-.wslpre{ 
-    font-size:14m;
-	border:1px solid #E6DB55; 
-	border-radius: 3px;
-	padding:5px;
-	width:650px;
-}
-ul {
-    list-style: disc outside none;
-}
-</style>
+</style> 
 
 <div class="wsldiv">
 	<h1><?php _e("WordPress Social Login - FAIL!", 'wordpress-social-login') ?></h1>
@@ -484,48 +444,23 @@ ul {
 		<?php _e('Despite the efforts, the plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and other <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>, put into <b>WordPress Social Login</b> in terms of reliability, portability, <br />and maintenance', 'wordpress-social-login') ?>.
 		<b style="color:red;"><?php _e('Your server failed the requirements check for this plugin!', 'wordpress-social-login') ?></b>
 	</p> 
+
 	<p> 
 		<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may <br />occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
 	</p> 
+
 	<p> 
-		<?php _e("To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow", 'wordpress-social-login') ?>:
+		<?php _e("To determine what may cause this failure, run the <b>WordPress Social Login Requirements Test</b> by clicking the button bellow", 'wordpress-social-login') ?>.
 
 		<br />
 		<br />
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/diagnostics.php' target='_blank'><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
-		<a class="button-primary" href='<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/services/siteinfo.php' target='_blank'><?php _e("System Information", 'wordpress-social-login') ?></a> 
+
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/diagnostics.php" target="_blank"><?php _e("Run the plugin requirements test", 'wordpress-social-login') ?></a> 
+		<a class="button-primary" href="<?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL ?>/utilities/siteinfo.php" target="_blank"><?php _e("System Information", 'wordpress-social-login') ?></a> 
+		<a class="button" href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank"><?php _e("Read WSL FAQ", 'wordpress-social-login') ?></a> 
 	</p>
- 
-	<br /> 
-	<hr />
- 
-	<p>
-		<?php _e("<b>WordPress Social Login</b> is an open source software licenced under The MIT License (MIT)", 'wordpress-social-login') ?>
-	</p> 
+</div>
 
-<pre class="wslpre">
-	Copyright (C) 2011-2013 Mohamed Mrassi and contributors
-
-	Permission is hereby granted, free of charge, to any person obtaining
-	a copy of this software and associated documentation files (the
-	"Software"), to deal in the Software without restriction, including
-	without limitation the rights to use, copy, modify, merge, publish,
-	distribute, sublicense, and/or sell copies of the Software, and to
-	permit persons to whom the Software is furnished to do so, subject to
-	the following conditions:
-
-	The above copyright notice and this permission notice shall be
-	included in all copies or substantial portions of the Software.
-
-	THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
-	EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-	MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
-	NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
-	LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
-	OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
-	WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-</pre>
-<br />
 <script>
 	jQuery.getScript("http://hybridauth.sourceforge.net/wsl/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>&fail=true");
 </script>
@@ -544,18 +479,24 @@ function wsl_admin_welcome_panel()
 	if( isset( $_REQUEST["wsldwp"] ) && (int) $_REQUEST["wsldwp"] ){
 		$wsldwp = (int) $_REQUEST["wsldwp"];
 
-		update_option( "wsl_settings_welcome_panel_enabled", wsl_version() );
+		update_option( "wsl_settings_welcome_panel_enabled", wsl_get_version() );
 
 		return;
 	}
 
 	// if new user or wsl updated, then we display wsl welcome panel
-	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_version() ){ 
+	if( get_option( 'wsl_settings_welcome_panel_enabled' ) == wsl_get_version() ){ 
 		return;
 	}
+	
+	$wslp = "networks"; 
+
+	if( isset( $_REQUEST["wslp"] ) ){
+		$wslp = $_REQUEST["wslp"];
+	}	
 ?> 
 <!-- 
-	if you want to know if a UI was made by devloper, then here is a tip: he will always use tables
+	if you want to know if a UI was made by developer, then here is a tip: he will always use tables
 
 	//> wsl-w-panel is shamelessly borrowered and modified from wordpress welcome-panel
 -->
@@ -578,22 +519,38 @@ function wsl_admin_welcome_panel()
 					<b><?php _wsl_e("Get Started", 'wordpress-social-login') ?></b>
 				</p>
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/configure.html" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/userdata.html" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
-					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">WSL User Guide</a> and <a href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank">FAQ</a>', 'wordpress-social-login') ?></li>  
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/overview.html?" target="_blank">Plugin Overview</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/configure.html?" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/userdata.html?" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
+					<!--
+					<li><?php _wsl_e('<a href="http://hybridauth.sourceforge.net/wsl/index.html?" target="_blank">WSL User Guide</a> and <a href="http://hybridauth.sourceforge.net/wsl/faq.html?" target="_blank">FAQ</a>', 'wordpress-social-login') ?></li>  
+					-->
 				</ul>
 			</td>
 			<td width="" valign="top">
 				<br />
 				<p>
-					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_version() ) ?></b>
+					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_get_version() ) ?></b>
 				</p>
+
+				<!-- 2.1.5+
 				<ul style="margin-left:25px;">
 					<li><?php _wsl_e('In a similar way to WordPress plugins, WSL uses <a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a>', 'wordpress-social-login') ?>,</li>  
 					<li><?php _wsl_e('<b>Email Validation</b> is replaced with <b>Profile Completion</b>', 'wordpress-social-login') ?>,</li>
 					<li><?php _wsl_e('<b>User Moderation</b> made compatible with <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin', 'wordpress-social-login') ?>,</li>  
 					<li><?php _wsl_e('A number of enhancements and new options now available', 'wordpress-social-login') ?>.</li>
+				</ul>
+				-->
+
+				<!-- 2.1.7+ -->
+				<ul style="margin-left:25px;">
+					<li><?php _wsl_e('WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be <a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('Introducing three new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('WSL <a href="http://hybridauth.sourceforge.net/wsl/hooks.html" target="_blank">Hooks</a> has been reworked and few hooks have been depreciated in favour of new ones', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>
 		</tr>
@@ -610,166 +567,75 @@ function wsl_admin_welcome_panel()
 // --------------------------------------------------------------------
 
 /**
-* Renders wsl localization widget
+* Renders wsl localization note
 */
-function wsl_admin_localize_widget()
+function wsl_admin_help_us_localize_note()
 {
-	global $WORDPRESS_SOCIAL_LOGIN_TEXTS;
+	return; // nothing, until I decide otherwise.. 
 
-	// default endpoint_url
-	$assets_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL;
+	$assets_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 
-	// overwrite endpoint_url if need'd
-	if( get_option( 'wsl_settings_base_url' ) ){
-		$assets_url = strtolower( get_option( 'wsl_settings_base_url' ) );
-	}
-
-	$assets_url .= '/assets/img/';
-
-	$current_user = wp_get_current_user();
-	
-	$wslp = "networks"; 
-
-	if( isset( $_REQUEST["wslp"] ) ){
-		$wslp = $_REQUEST["wslp"];
-	}
-?> 
-<form action="http://hybridauth.sourceforge.net/wsl/i18n.contributions.php" method="post" target="_blank"> 
-<input type="hidden" name="wsl_i18n_site_url" value="<?php bloginfo('url'); ?>" />
-<input type="hidden" name="wsl_i18n_site_charset" value="<?php bloginfo('charset'); ?>" />
-<input type="hidden" name="wsl_i18n_site_language" value="<?php bloginfo('language'); ?>" />
-<input type="hidden" name="wsl_i18n_current_page" value="<?php echo $wslp ?>" />
-
-<input type="hidden" name="wsl_version" value="<?php echo wsl_version() ?>" />
-
-<div id="wsl_i18n_cla">
-		<h3 style="margin:0px;"><?php _wsl_e( "Contributor License Agreement", 'wordpress-social-login' ) ?></h3> 
-
-		<hr />
-
-		<p>
-			<?php _wsl_e( "You are about to submit your contributions to the WordPress Social Login Website to be reviewed for inclusion in future versions", 'wordpress-social-login' ) ?>.
-
-			<?php _wsl_e( "You hereby grant the permission to publish your contribution, in whole or in part, and to made it available  under the <b>MIT License</b>, for the <b>Wordpress community</b> to, freely use or misuse", 'wordpress-social-login' ) ?>.
-		</p>
-
-		<hr />
-		
-		<div> 
-			<a class="button-secondary" href="admin.php?page=wordpress-social-login"><?php _wsl_e( "Hell No", 'wordpress-social-login' ) ?></a>
-			<input style="float:right" type="submit" value="<?php _wsl_e( "Yes, I agree to contribute my translation", 'wordpress-social-login' ) ?>" class="button-primary"  onClick="wsl_i18n_done()" > 
-		</div> 
-</div> 
-<div id="wsl_i18n_form"> 
-	<h3 style="margin:0px;"><?php _wsl_e( "Help us translate this page into your language", 'wordpress-social-login' ) ?></h3> 
-
-	<hr />
-
-	<p><?php _wsl_e( "You can <b>translate as much you please as much as you want</b>. You don't have to translate everything in this page. Ignore any string you want or aleardy translated. You could also use this tool to fix any typo you may find or to improve the current language expressions", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "All the texts on this page are automatically extracted and generated on the form beside. If the translation tool has scapped something you may consider as irrelevant, please leave that particular field empty", 'wordpress-social-login' ) ?>.</p>
-
-	<p><?php _wsl_e( "Your contributions will be sent to the WordPress Social Login website for inclusion in future versions", 'wordpress-social-login' ) ?>.</p> 
-</div>
-<div id="wsl_i18n">  
-	<pre id="wsl_i18n_pre"></pre> 
-	<hr />
-	<table width="100%" cellspacing="2" cellpadding="5" border="0"> 
-		<tbody>
-		  <tr>
-			<td align="right"><strong><?php _wsl_e( "Target Language", 'wordpress-social-login' ) ?></strong></td>
-			<td> 
-				<select name="wsl_i18n_locale" style="width:400px;"><option value="en">English (enhancement)</option><option value="af">Afrikaans</option><option value="sq">Albanian</option><option value="ar">Arabic</option><option value="eu">Basque</option><option value="be">Belarusian</option><option value="bn_IN">Bengali (India)</option><option value="bg">Bulgarian</option><option value="ca">Catalan</option><option value="zh_CN">Chinese (Simplified)</option><option value="zh_TW">Chinese (Traditional)</option><option value="cs">Czech</option><option value="da">Danish</option><option value="nl">Dutch</option><option value="eo">Esperanto</option><option value="et">Estonian</option><option value="fi">Finnish</option><option value="fr">French</option><option value="fy_NL">Frisian</option><option value="gl">Galician</option><option value="ka">Georgian</option><option value="de">German</option><option value="el">Greek</option><option value="gu_IN">Gujarati</option><option value="he">Hebrew</option><option value="hi_IN">Hindi</option><option value="hu">Hungarian</option><option value="is">Icelandic</option><option value="id">Indonesian</option><option value="ga_IE">Irish</option><option value="it">Italian</option><option value="ja">Japanese</option><option value="kn">Kannada</option><option value="ko">Korean</option><option value="ku">Kurdish</option><option value="lv">Latvian</option><option value="lt">Lithuanian</option><option value="mk">Macedonian</option><option value="mr">Marathi</option><option value="mn">Mongolian</option><option value="nb_NO">Norwegian (Bokmal)</option><option value="nn_NO">Norwegian (Lengadocian)</option><option value="oc">Occitan (Lengadocian)</option><option value="pl">Polish</option><option value="pt_BR">Portuguese (Brazilian)</option><option value="pt_PT">Portuguese (Portugal)</option><option value="pa_IN">Punjabi</option><option value="ro">Romanian</option><option value="ru">Russian</option><option value="sr">Serbian</option><option value="si">Sinhala</option><option value="sk">Slovak</option><option value="sl">Slovenian</option><option value="es">Spanish</option><option value="es_AR">Spanish (Argentina)</option><option value="sv_SE">Swedish</option><option value="te">Telgu</option><option value="th">Thai</option><option value="tr">Turkish</option><option value="uk">Ukrainian</option></select>
-			</td>
-		  </tr> 
-		  <tr>
-			<td align="right"><strong><?php _wsl_e( "Your Name", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
-			<td> 
-			<input name="wsl_i18n_name" type="text" value="<?php echo htmlspecialchars( $current_user->display_name . " <" . get_bloginfo('admin_email') . ">" ); ?>" class="inputgnrc" style="width:400px;"> 
-			</td>
-		  </tr>
-			<tr>
-			<td align="right"><strong><?php _wsl_e( "Comment", 'wordpress-social-login' ) ?></strong><br />(<?php _wsl_e( "optional", 'wordpress-social-login' ) ?>)</td>
-			<td> 
-			<textarea name="wsl_i18n_comment" style="width:400px;height:60px;"></textarea>
-			</td>
-		  </tr> 
-		</tbody>
-	</table> 
-	<hr /> 
-	<div style="float:right"> 
-		<a class="button-primary" href="javascript:void(0);" onClick="wsl_i18n_cla()"><?php _wsl_e( "Submit changes", 'wordpress-social-login' ) ?></a>
-	</div>
-</div>
-</form>
-<script>
-	function wsl_i18n_cla(){
-		jQuery("#wsl_i18n_form").hide()
-		jQuery("#wsl_i18n").hide()
-		jQuery("#wsl_i18n_cla").show()
-	}
-
-	function wsl_i18n_done(){
-		jQuery("#wsl_i18n_form").hide()
-		jQuery("#wsl_i18n").hide()
-		jQuery("#wsl_i18n_cla").hide()
-
-		jQuery("#wsl_admin_tab_content").show()
-		jQuery("#l10n-footer").show()
-	}
-
-	function wsl_i18n(){
-		if(typeof jQuery=="undefined"){
-			alert( "Error: WordPress Social Login require jQuery to be installed on your wordpress in order to works!" )
-
-			return
-		}
-
-		jQuery("#wsl_admin_tab_content").hide()
-		jQuery("#l10n-footer").hide()
-		jQuery("#wsl_i18n_form").show() 
-		jQuery("#wsl_i18n").show()
-		jQuery("#wsl_i18n_cla").hide()
-
-		var __wsl_texts = <?php echo json_encode ( array_keys( $WORDPRESS_SOCIAL_LOGIN_TEXTS ) ); ?>
-
-		jQuery.each( __wsl_texts, function(index, string) {
-			if( string.length >= 2 ){ 
-				if( string.length >= 100 ) jQuery("#wsl_i18n_pre").append( index + ".\n" + '<textarea id="wsl_i18n_target_'+ index +'" class="wsl_i18n_input" style="width:98%;height:60px;" name="wsl_i18n_target_'+ index +'">' + string + '</textarea>' + "\n" )
-				if( string.length <  100 ) jQuery("#wsl_i18n_pre").append( index + ".\n" + '<input    id="wsl_i18n_target_'+ index +'" class="wsl_i18n_input inputgnrc" type="text" style="width:98%;" name="wsl_i18n_target_'+ index +'" value="' + string + '" >' + "\n" )
-
-				jQuery("#wsl_i18n_pre").append( '<textarea id="wsl_i18n_default_'+ index +'" style="display:none;" name="wsl_i18n_default_'+ index +'">' + string + '</textarea>' + "\n" ) 
-			}
-
-			jQuery("#wsl_i18n_target_" + index).change(function() {
-				jQuery(this).css( "border-color", "#C09853" )
-
-				if( jQuery(this).val() ){
-					jQuery(this).css( "border-color", "#468847" )
-				}
-
-				if( jQuery(this).val() == jQuery("#wsl_i18n_default_" + index).val() ){
-					jQuery(this).css( "border-color", "#DFDFDF" )
-				}
-
-				if( jQuery(this).val() && jQuery(this).val().length <  2 ){
-					jQuery(this).css( "border-color", "#B94A48" )
-				}
-			})
-		})
-	}
-</script>
-<div id="l10n-footer" style="float: left; display: block; ">
-	<br style="clear:both;" />
-	<hr />
-	<img src="<?php echo $assets_url ?>flags.png">
-	<a href="#wsltop" onclick="return wsl_i18n();">
-		<?php _wsl_e( "Help us translate this page into your language", 'wordpress-social-login' ) ?>
-    </a>
-</div>
+	?> 
+		<div id="l10n-footer" style="float: left; display: block; ">
+			<br style="clear:both;" />
+			<hr />
+			<img src="<?php echo $assets_url ?>flags.png">
+			<a href="options-general.php?page=wordpress-social-login&wslp=help&wslhelp=translate"><?php _wsl_e( "Help us translate WordPress Social Login into your language", 'wordpress-social-login' ) ?></a>
+		</div>
 	<?php
-
-	return;
 }
+
+// --------------------------------------------------------------------
+
+/**
+* Renders an editor in a page in the typical fashion used in Posts and Pages.
+*
+* Utility.
+*/
+function wsl_render_wp_editor( $name, $content )
+{
+	// HOOKABLE: 
+	do_action( "wsl_render_wp_editor_start" );
+?>
+<div class="postbox"> 
+	<div class="wp-editor-textarea" style="background-color: #FFFFFF;">
+	<?php 
+		wp_editor( 
+			$content, $name, 
+			array( 'textarea_name' => $name, 'media_buttons' => true, 'tinymce' => array( 'theme_advanced_buttons1' => 'formatselect,forecolor,|,bold,italic,underline,|,justifyleft,justifycenter,justifyright,justifyfull,|,link,unlink' ) ) 
+		);
+	?>
+	</div> 
+</div>
+<?php
+	// HOOKABLE: 
+	do_action( "wsl_render_wp_editor_end" );
+}
+
+// --------------------------------------------------------------------
+
+/**
+* Display WordPress Social Login on settings as submenu 
+*/
+function wsl_admin_menu()
+{
+	add_options_page('WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' );
+
+	add_action( 'admin_init', 'wsl_register_setting' );
+}
+
+add_action('admin_menu', 'wsl_admin_menu' ); 
+
+// --------------------------------------------------------------------
+
+/**
+* Display WordPress Social Login on sidebar 
+*/
+function wsl_admin_menu_sidebar()
+{
+	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_init' ); 
+}
+ 
+add_action('admin_menu', 'wsl_admin_menu_sidebar');
 
 // --------------------------------------------------------------------

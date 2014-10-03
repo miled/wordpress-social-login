@@ -3,11 +3,11 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
-* Page for users completing their registration (currently used only by Bouncer::Email Validation
+* Page for users completing their registration (currently used only by Bouncer::Email Validation)
 */
 
 // Exit if accessed directly
@@ -17,15 +17,13 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login )
 {
-	// print_r( "$provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login" );
-
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// check posted user email & login
-	$request_user_login          = @ $_REQUEST["user_login"];
-	$request_user_email          = @ $_REQUEST["user_email"];
+	$request_user_login          = isset( $_REQUEST["user_login"] ) ? $_REQUEST["user_login"] : '';
+	$request_user_email          = isset( $_REQUEST["user_email"] ) ? $_REQUEST["user_email"] : '';
 
-	$request_user_login          = sanitize_user( $request_user_login );
+	$request_user_login          = sanitize_user( $request_user_login, true );
 	$request_user_email          = sanitize_email( $request_user_email );
 
 	$request_user_login_exists   = username_exists ( $request_user_login );
@@ -48,19 +46,19 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 		if( ! $request_user_email ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid' ) ] = true;
+			$shall_pass_errors[ _wsl__("E-mail is not valid!", 'wordpress-social-login') ] = true;
 		}
 
 		if( ! $request_user_email_validate ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_invalid' ) ] = true;
+			$shall_pass_errors[ _wsl__("E-mail is not valid!", 'wordpress-social-login') ] = true;
 		}
 
 		if( $request_user_email_exists ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_email_exists' ) ] = true;
+			$shall_pass_errors[ _wsl__("That E-mail is already registered!", 'wordpress-social-login') ] = true;
 		}
 	}
 
@@ -68,19 +66,19 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 		if( ! $request_user_login ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid' ) ] = true;
+			$shall_pass_errors[ _wsl__("Username is not valid!", 'wordpress-social-login') ] = true;
 		}
 
 		if( ! $request_user_login_validate ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_invalid' ) ] = true;
+			$shall_pass_errors[ _wsl__("Username is not valid!", 'wordpress-social-login') ] = true;
 		}
 
 		if( $request_user_login_exists ){
 			$shall_pass = false;
 
-			$shall_pass_errors[ get_option( 'wsl_settings_bouncer_profile_completion_text_username_exists' ) ] = true;
+			$shall_pass_errors[ _wsl__("That Username is already registered!", 'wordpress-social-login') ] = true;
 		}
 	}
 
@@ -100,16 +98,11 @@ function init() {
 	if( document.getElementById('user_email') ) document.getElementById('user_email').focus()
 }
 </script>
-<body class="login" onload="init();">
-<!--
-   wsl_process_login_complete_registration
-   WordPress Social Login Plugin ( <?php echo $_SESSION["wsl::plugin"] ?> ) 
-   http://wordpress.org/extend/plugins/wordpress-social-login/
--->
+<body class="login" onload="init();"> 
 	<div id="login">
 		<?php
 			if( ! isset( $_REQUEST["bouncer_profile_completion"] ) ){ 
-				?><p class="message"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_notice' ); ?></p><?php
+				?><p class="message"><?php _wsl_e( "Almost there, we just need to check a couple of things", 'wordpress-social-login' ); ?></p><?php
 			}
 			elseif( $shall_pass_errors ){ 
 				foreach( $shall_pass_errors as $k => $v ){
@@ -119,15 +112,15 @@ function init() {
 		?>
 		<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="loginform" name="loginform"> 
 			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1 ){ ?>
-			<p>
-			<label for="user_login"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_username' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
-			</p>
+				<p>
+					<label for="user_login"><?php _wsl_e( "Username", 'wordpress-social-login' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $hybridauth_user_login ?>" size="25" /></label>
+				</p>
 			<?php } ?>
 
 			<?php if( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 ){ ?>
-			<p>
-			<label for="user_email"><?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_email' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
-			</p>
+				<p>
+					<label for="user_email"><?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?><br><input type="text" name="user_email" id="user_email" class="input" value="<?php echo $request_user_email ?>" size="25" /></label>
+				</p>
 			<?php } ?>
 
 			<table width="100%" border="0">
@@ -135,17 +128,18 @@ function init() {
 					<td valign="bottom">
 						<span class="info">
 							<img src="<?php echo $assets_base_url . strtolower( $provider ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" />
-							<?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_connected_with' ); ?> <b><?php echo ucfirst($provider) ?></b>.
+							<?php _wsl_e("You are now connected via", 'wordpress-social-login' ); ?> <b><?php echo ucfirst($provider) ?></b>.
 						</span>
 					</td>
 					<td>
-						<input type="submit" value="<?php echo get_option( 'wsl_settings_bouncer_profile_completion_text_submit_button' ); ?>" class="button button-primary button-large" id="wp-submit" name="wp-submit"> 
+						<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button button-primary button-large" id="wp-submit" name="wp-submit"> 
 					</td>
 				</tr>
 			</table>
+
 			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
-			<input type="hidden" id="action" name="action" value="wordpress_social_login">
+			<input type="hidden" id="action" name="action" value="wordpress_social_profile_completion">
 			<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 		</form>
 	</div> 

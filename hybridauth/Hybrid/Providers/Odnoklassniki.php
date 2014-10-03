@@ -31,7 +31,7 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
 
 		if( $type == "GET" ){
-			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query( $params );
+			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
 		}
 
 		$this->http_info = array();
@@ -39,13 +39,13 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 
 		curl_setopt($ch, CURLOPT_URL            , $url );
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER , 1 );
-		curl_setopt($ch, CURLOPT_TIMEOUT        , $this->curl_time_out );
-		curl_setopt($ch, CURLOPT_USERAGENT      , $this->curl_useragent );
-		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out );
-		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , $this->curl_ssl_verifypeer );
-		curl_setopt($ch, CURLOPT_HTTPHEADER     , $this->curl_header );
-                if($this->curl_proxy){
-                    curl_setopt( $ch, CURLOPT_PROXY        , $this->curl_proxy);
+		curl_setopt($ch, CURLOPT_TIMEOUT        , $this->api->curl_time_out );
+		curl_setopt($ch, CURLOPT_USERAGENT      , $this->api->curl_useragent );
+		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->api->curl_connect_time_out );
+		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , $this->api->curl_ssl_verifypeer );
+		curl_setopt($ch, CURLOPT_HTTPHEADER     , $this->api->curl_header );
+                if($this->api->curl_proxy){
+                    curl_setopt( $ch, CURLOPT_PROXY        , $this->api->curl_proxy);
                 }
 		if( $type == "POST" ){
 			curl_setopt($ch, CURLOPT_POST, 1); 
@@ -67,11 +67,11 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 	{
 		if( json_decode( $result ) ) return json_decode( $result );
 
-		parse_str( $result, $ouput ); 
+		parse_str( $result, $output );
 
 		$result = new StdClass();
 
-		foreach( $ouput as $k => $v )
+		foreach( $output as $k => $v )
 			$result->$k = $v;
 
 		return $result;
@@ -100,7 +100,14 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 		if( isset( $response->expires_in    ) ) $this->api->access_token_expires_in = $response->expires_in; 
 		
 		// calculate when the access token expire
+		// At this moment Odnoklassniki does not return expire time in response.
+		// 30 minutes expire time staten in dev docs http://apiok.ru/wiki/pages/viewpage.action?pageId=42476652
+		if( isset( $response->expires_in    ) ) {
 		$this->api->access_token_expires_at = time() + $response->expires_in; 
+		}
+		else {
+		    $this->api->access_token_expires_at = time() + 1800; 
+		}
 
 		return $response;  
 	}
@@ -111,10 +118,10 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 
 		// check for errors
 		if ( $error ){ 
-			throw new Exception( "Authentification failed! {$this->providerId} returned an error: $error", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an error: $error", 5 );
 		}
 
-		// try to authenicate user
+		// try to authenticate user
 		$code = (array_key_exists('code',$_REQUEST))?$_REQUEST['code']:"";
 
 		try{
@@ -126,7 +133,7 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 
 		// check if authenticated
 		if ( ! $this->api->access_token ){ 
-			throw new Exception( "Authentification failed! {$this->providerId} returned an invalid access token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
 		}
 
 		// store tokens
@@ -147,10 +154,10 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
     $sig = md5('application_key=' . $this->config['keys']['key'] . 'method=users.getCurrentUser' . md5($this->api->access_token . $this->api->client_secret));
   	$response = $this->api->api( '?application_key=' . $this->config['keys']['key'] . '&method=users.getCurrentUser&sig=' .$sig); 
     if ( ! isset( $response->uid ) ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an invalide response.", 6 );
+			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
     
-    $this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
+		$this->user->profile->identifier    = (property_exists($response,'uid'))?$response->uid:"";
 		$this->user->profile->firstName     = (property_exists($response,'first_name'))?$response->first_name:"";
 		$this->user->profile->lastName      = (property_exists($response,'last_name'))?$response->last_name:"";
 		$this->user->profile->displayName   = (property_exists($response,'name'))?$response->name:"";

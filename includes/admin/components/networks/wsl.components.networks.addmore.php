@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -32,9 +32,8 @@ function wsl_component_networks_addmore()
 
 			$nb_used = count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG );
 			foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
-				$provider_id                = @ $item["provider_id"];
-				$provider_name              = @ $item["provider_name"];
-				$provider_cat               = @ $item["cat"];
+				$provider_id   = isset( $item["provider_id"]   ) ? $item["provider_id"]   : '';
+				$provider_name = isset( $item["provider_name"] ) ? $item["provider_name"] : '';
 
 				if( isset( $item["default_network"] ) && $item["default_network"] ){
 					continue;

@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /** 
@@ -16,8 +16,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 /**
-* send a notification to blog administrator when a new user register using WSL
-* again borrowed from http://wordpress.org/extend/plugins/oa-social-login/
+* Send a notification to blog administrator when a new user register using WSL 
+*
+* also borrowed from http://wordpress.org/extend/plugins/oa-social-login/
 */
 function wsl_admin_notification( $user_id, $provider )
 {

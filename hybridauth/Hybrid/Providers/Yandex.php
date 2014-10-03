@@ -35,7 +35,7 @@ class Hybrid_Providers_Yandex extends Hybrid_Provider_Model_OAuth2
 	{
 		$response = $this->api->api( "?format=json" ); 
 		if ( ! isset( $response->id ) ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an invalide response.", 6 );
+			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
     
     $this->user->profile->identifier    = (property_exists($response,'id'))?$response->id:"";
@@ -48,7 +48,7 @@ class Hybrid_Providers_Yandex extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->email         = (property_exists($response,'default_email'))?$response->default_email:"";
 		$this->user->profile->emailVerified = (property_exists($response,'default_email'))?$response->default_email:"";
 
-		if( property_exists($response,'birthday') ){ 
+		if( property_exists($response,'birthday') && ! empty($response->birthday) ){ 
 			list($birthday_year, $birthday_month, $birthday_day) = explode( '-', $response->birthday );
 
 			$this->user->profile->birthDay   = (int) $birthday_day;

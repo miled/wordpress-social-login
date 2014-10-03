@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -18,6 +18,8 @@ function wsl_component_contacts()
 	do_action( "wsl_component_contacts_start" );
 
 	GLOBAL $wpdb;
+
+	$user_id = null;
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 ?>
@@ -35,9 +37,6 @@ function wsl_component_contacts()
 	<div  id="post-body-content"> 
 
 	<div id="namediv" class="stuffbox">
-		<h3>
-			<label for="name"><?php _wsl_e("Settings", 'wordpress-social-login') ?></label>
-		</h3>
 		<div class="inside"> 
 			<p>
 				<?php _wsl_e("<b>WordPress Social Login</b> is now introducing <b>Contacts Import</b> as a new feature. When enabled, users authenticating through WordPress Social Login will be asked for the authorisation to import their contact list. Note that some social networks do not provide certains of their users information like contacts emails, photos and or profile urls", 'wordpress-social-login') ?>.
@@ -83,7 +82,7 @@ function wsl_component_contacts()
 			  </tr> 
 			</table>  
 			<p>
-				<b  style="color:#CB4B16;"><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
+				<b><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
 				<ul style="margin-left:40px;margin-top:0px;">
 					<li><?php _wsl_e('To enable contacts import from these social network, you need first to enabled them on the <a href="options-general.php?page=wordpress-social-login&wslp=networks"><b>Networks</b></a> tab and register the required application', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e("<b>WSL</b> will try to import as much information about a user contacts as he was able to pull from the social networks APIs.", 'wordpress-social-login') ?></li> 
@@ -101,49 +100,96 @@ function wsl_component_contacts()
 	</div> 
 	</div> 
 	</form> 
-	
-	<br  style="clear:both;" />
-	<hr /> 
-	<h3><?php _wsl_e("Users contacts list preview", 'wordpress-social-login') ?></h3>
 <?php
-	} // if( isset( $_REQUEST["uid"] ) && (int) $_REQUEST["uid"] ){ 
-	
+		// HOOKABLE: 
+		do_action( "wsl_component_contacts_end" );
+
+		return;
+	} // No user selected
+
+	//--
+	$user_data = null;
+
+	$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
+	$limit = 25; // number of rows in page
+	$offset = ( $pagenum - 1 ) * $limit;
+	$num_of_pages = 0;
+
 	if( $user_id ){
-		$display_name = wsl_get_user_data_by_user_id( "display_name", $user_id );
-?> 
-	<h3><?php echo sprintf( _wsl__("%s contact's list", 'wordpress-social-login'), $display_name ) ?></h3>
-<?php
+		$total = $wpdb->get_var( "SELECT COUNT(`id`) FROM {$wpdb->prefix}wsluserscontacts WHERE user_id = '$user_id' " );
+		$num_of_pages = ceil( $total / $limit );
+
+		$user_data = get_userdata( $user_id );
+
+		if( $user_data ){
+			?> 
+				<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+					<p style="float: right; margin: 0px;margin-top: -4px;">
+						<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit user details", 'wordpress-social-login'); ?></a>
+						<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php _wsl_e("Show user WSL profiles", 'wordpress-social-login'); ?></a>
+					</p>
+
+					<?php echo sprintf( _wsl__("<b>%s</b> contact's list", 'wordpress-social-login'), $user_data->display_name ) ?>.
+					<?php echo sprintf( _wsl__("This user have <b>%d</b> contacts in his list in total", 'wordpress-social-login'), $total ) ?>.
+				</div>
+			<?php 
+		}
+		else{
+			?>
+				<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+					<?php _wsl_e( "WordPress user not found!", 'wordpress-social-login' ); ?>. 
+				</div>
+			<?php
+
+			return;
+		}
 	}
-?> 
+?>
+<style>
+	.widefatop td, .widefatop th { border: 1px solid #DDDDDD; }
+	widefatop th label { font-weight: bold; }  
+</style>
+
+<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
+
+<table class="wp-list-table widefat widefatop">
+	<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->ID; ?></td></tr> 
+	<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_login; ?></td></tr> 
+	<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->display_name; ?></td></tr> 
+	<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_data->user_email; ?>" target="_blank"><?php echo $user_data->user_email; ?></a></td></tr> 
+	<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_data->user_url; ?>" target="_blank"><?php echo $user_data->user_url; ?></a></td></tr>   
+	<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_registered; ?></td></tr>  
+	</tr>
+</table>
+
+<hr />
+
+<h3><?php _wsl_e("List of contacts", 'wordpress-social-login'); ?></h3>
+
 <table cellspacing="0" class="wp-list-table widefat fixed users">
 	<thead>
 		<tr> 
-			<th width="100"><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>
-			<th><span><?php _wsl_e("User", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
+			<th width="100"><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>  
+			<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
+			<th width="220"><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Contact Email", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
 		</tr>
 	</thead> 
 	<tfoot>
 		<tr> 
-			<th><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>
-			<th><span><?php _wsl_e("User", 'wordpress-social-login') ?></span></th> 
-			<th><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
+			<th width="100"><span><?php _wsl_e("Provider", 'wordpress-social-login') ?></span></th>  
+			<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
+			<th width="220"><span><?php _wsl_e("Contact Name", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Contact Email", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Contact Profile Url", 'wordpress-social-login') ?></span></th> 
 		</tr>
 	</tfoot> 
 	<tbody id="the-list">
 <?php 
-	$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` order by rand() limit 10"; 
-
-	if( $user_id ){
-		$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '$user_id'"; 
-	}
-
+	$sql = "SELECT * FROM `{$wpdb->prefix}wsluserscontacts` WHERE user_id = '$user_id' LIMIT $offset, $limit";
 	$rs1 = $wpdb->get_results( $sql );  
-	
+
 	// have contacts?
 	if( ! $rs1 ){
 		?>
@@ -153,62 +199,57 @@ function wsl_component_contacts()
 	else{
 		$i = 0; 
 		foreach( $rs1 as $item ){
-			$provider   = $item->provider;
-			$user_id    = $item->user_id; 
-			$contact_id = $item->id;
-?>
-			<tr class="<?php if( ++$i % 2 ) echo "alternate" ?>"> 
-				<td><img src="<?php $provider = wsl_get_contact_data_by_user_id( "provider", $contact_id); echo $assets_base_url . strtolower( $provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $provider ?></td> 
-				<td>
-					<?php 
-						// check if user exists
-						if( wsl_get_user_by_meta_key_and_user_id( "wsl_user", $user_id) ){
-					?>
-						<?php $wsl_user_image = wsl_get_user_by_meta_key_and_user_id( "wsl_user_image", $user_id); if( $wsl_user_image ) { ?>
-							<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $wsl_user_image ?>" > 
+			?>
+				<tr class="<?php if( ++$i % 2 ) echo "alternate" ?>"> 
+					<td><img src="<?php echo $assets_base_url . strtolower( $item->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $item->provider ?></td> 
+					<td>
+						<?php if( $item->photo_url ) { ?>
+							<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $item->photo_url ?>" > 
 						<?php } else { ?>
-							<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
-						<?php } ?> 
-						<strong><a href="user-edit.php?user_id=<?php echo $user_id ?>"><?php echo wsl_get_user_by_meta_key_and_user_id( "nickname", $user_id) ?></a></strong> 
-						(<?php echo wsl_get_user_by_meta_key_and_user_id( "last_name", $user_id) ?> <?php echo wsl_get_user_by_meta_key_and_user_id( "first_name", $user_id) ?>)
-					<?php 
-						}
-						else{
-							echo "User removed";
-						}
-					?>
-					<br>
-				</td>
-				<td>
-					<?php $photo_url = wsl_get_contact_data_by_user_id( "photo_url", $contact_id); if( $photo_url ) { ?>
-						<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $photo_url ?>" > 
-					<?php } else { ?>
-						<img width="32" height="32" class="avatar avatar-32 photo" src="http://1.gravatar.com/avatar/d4ed6debc848ece02976aba03e450d60?s=32" > 
-					<?php } ?>
-					<strong><?php echo wsl_get_contact_data_by_user_id( "full_name", $contact_id) ?></strong>
-					<br>
-				</td> 
-				<td>
-					<?php $email = wsl_get_contact_data_by_user_id( "email", $contact_id); if( $email ) { ?>
-						<a href="mailto:<?php echo $email ?>"><?php echo $email ?></a>
-					<?php } else { ?>
-						-
-					<?php } ?>
-				</td>
-				<td>
-					<?php $profile_url = wsl_get_contact_data_by_user_id( "profile_url", $contact_id); if( $profile_url ) { ?>
-						<a href="<?php echo $profile_url ?>" target="_blank"><?php echo str_ireplace( array("http://www.", "https://www.", "http://","https://"), array('','','','',''), $profile_url ) ?></a>
-					<?php } else { ?>
-						-
-					<?php } ?>
-				</td> 
-			</tr> 
-<?php  
+							<img width="32" height="32" class="avatar avatar-32 photo" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( $item->email ) ) ); ?>" > 
+						<?php } ?>
+					</td> 
+					<td>
+						<strong><?php echo $item->full_name ? $item->full_name : '-'; ?>
+						</strong>
+					</td> 
+					<td>
+						<?php if( $item->email ) { ?>
+							<a href="mailto:<?php echo $item->email; ?>"><?php echo $item->email; ?></a>
+						<?php } else { ?>
+							-
+						<?php } ?>
+					</td>
+					<td>
+						<?php if( $item->profile_url ) { ?>
+							<a href="<?php echo $item->profile_url ?>" target="_blank"><?php echo str_ireplace( array("http://www.", "https://www.", "http://","https://"), array('','','','',''), $item->profile_url ) ?></a>
+						<?php } else { ?>
+							-
+						<?php } ?>
+					</td> 
+				</tr> 
+			<?php  
 		}
 	} 
 ?> 
 	</tbody>
 </table>
+
+<?php  
+	$page_links = paginate_links( array(
+		'base' => add_query_arg( 'pagenum', '%#%' ),
+		'format' => '',
+		'prev_text' => __( '&laquo;', 'text-domain' ),
+		'next_text' => __( '&raquo;', 'text-domain' ),
+		'total' => $num_of_pages,
+		'current' => $pagenum
+	) );
+
+	if ( $page_links ) {
+		echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
+	}
+?> 
+
 </div>
 <?php
 	// HOOKABLE: 

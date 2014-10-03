@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -41,6 +41,19 @@ function wsl_component_loginwidget_sidebar()
 							<?php _wsl_e("If this widget does not show up on your custom theme or you want to add it somewhere else then refer to the next section", 'wordpress-social-login') ?>.
 						</p>
 
+						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h4>
+
+						<p style="margin:10px;"> 
+							<?php _wsl_e("This is a preview of what should be on the comments area", 'wordpress-social-login') ?>. 
+							<br />
+
+							<strong><?php _wsl_e("Please, do not try to connect with the Widget here, it won't work", 'wordpress-social-login') ?></strong>!
+						</p>
+ 
+						<div style="width: 380px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">
+							<?php echo wsl_render_login_form(); ?>
+						</div> 
+
 						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Custom integration", 'wordpress-social-login') ?></h4>
 
 						<p style="margin:10px;"> 
@@ -51,23 +64,14 @@ function wsl_component_loginwidget_sidebar()
 						</p>
 
 						<p style="margin:10px;"> 
-							<?php _wsl_e('<b>[wordpress_social_login]</b> shortcode can be used in combination with <a href="http://wordpress.org/extend/plugins/html-javascript-adder/" target="_blank">HTML Javascript Adder</a> plugin to be add WSL Widget to your website sidebar', 'wordpress-social-login') ?>.
+							<?php _wsl_e('<b>Tip:</b>', 'wordpress-social-login') ?>.
+							<br />
+							<?php _wsl_e('You can use <a href="http://wordpress.org/extend/plugins/html-javascript-adder/" target="_blank">HTML Javascript Adder</a> plugin in combination with WSL to display the Widget in your website sidebar by using the shortcode <b>[wordpress_social_login]</b>', 'wordpress-social-login') ?>.
 						</p>
 
 						<p style="margin:10px;"> 
-							<?php _wsl_e('Also, if you are a developer or designer then you can customize it to your heart\'s content. For more inofmation refer to <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html" target="_blank">User Guide</a></b>', 'wordpress-social-login') ?>.
+							<?php _wsl_e('Also, if you are a developer or designer then you can customize it to your heart\'s content. For more inofmation refer to WSL userguide <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">widget customization</a></b> and <b><a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">widget themes</a></b>', 'wordpress-social-login') ?>.
 						</p>
-
-						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h4>
-
-						<p style="margin:10px;"> 
-							<?php _wsl_e("This is a preview of what should be on the comments area", 'wordpress-social-login') ?>.
-							<strong><?php _wsl_e("Do not test it here", 'wordpress-social-login') ?></strong>!
-						</p>
- 
-						<div style="width: 380px;background-color: #FFEBE8;border:1px solid #CC0000; border-radius: 3px;padding: 10px;margin-left:10px;">
-							<?php wsl_render_login_form(); ?>
-						</div> 
 					</div> 
 				</div> 
 			</div> 

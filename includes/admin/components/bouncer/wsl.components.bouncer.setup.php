@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2013 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 /**
@@ -24,7 +24,7 @@ function wsl_component_bouncer_setup()
  
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("WSL Widget", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("WSL Widget", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
 			<p> 
@@ -55,14 +55,14 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Profile Completion", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Profile Completion", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
 				<?php _wsl_e("Select required fields. If a social network doesn't return them, Bouncer will then ask your visitors to fill additional form to provide them when registering.", 'wordpress-social-login') ?> 
 			</p>
 			<p class="description">
-				<?php _wsl_e("You may activate <b>Profile Completion</b> for both <b>E-mail</b> and <b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to avoid forms and remove all the hassle of registration", 'wordpress-social-login') ?>.
+				<?php _wsl_e("You may activate <b>Profile Completion</b> for both <b>E-mail</b> and <b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to avoid forms and to remove the hassle of registration", 'wordpress-social-login') ?>.
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -89,23 +89,29 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("User Moderation", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("User Moderation", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p> 
-				<?php _wsl_e("<b>User Moderation</b> will define how <b>Bouncer</b> should behave with new regsitred users:", 'wordpress-social-login') ?>
+				<?php _wsl_e("<b>User Moderation</b> will define how <b>Bouncer</b> should behave with new registered users:", 'wordpress-social-login') ?>
 			</p>
 			<ul style="margin-left:30px">
 				<li><?php _wsl_e("<b>None</b>: No moderation required.", 'wordpress-social-login') ?></li>
 				<li><?php _wsl_e('<b>E-mail Confirmation</b>: New users will need to be confirm their e-mail address before they may log in', 'wordpress-social-login') ?>.</li>
 				<li><?php _wsl_e('<b>Admin Approval</b>: New users will need to be approved by an administrator before they may log in', 'wordpress-social-login') ?>.</li>
 			</ul> 
-			<p class="description">
-				<?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin to be installed. As there is no point for <b>WordPress Social Login</b> to reinvent the wheel', 'wordpress-social-login') ?>.
+			<p>
+				<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
 			</p> 
 			<p class="description">
-				<?php _wsl_e('<b>User Moderation</b> was purposely made compatible with the <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> for a number reasons: That plugin is good at what he does, a hell of a lot of people are using it and many have asked for it', 'wordpress-social-login') ?>.
+				1. <?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login Plugin</a> to be installed', 'wordpress-social-login') ?>.
+				<br />
+				2. <?php _wsl_e('<a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a>, is a free and open source plugin and <b>WordPress Social Login User Moderation</b> was purposely made compatible with it because it provides a solid <b>User Moderation</b> module and there is no point to reinvent the wheel', 'wordpress-social-login') ?>.
+				<br />
+				3. <?php _wsl_e('In order for this to work correctly, you will need to go to <b>Theme My Login</b> settings, then enable <b>User Moderation</b> and set <b>Moderation Type</b> to the same thing as the box bellow', 'wordpress-social-login') ?>.
 			</p> 
+			
+			
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
 				<td width="200" align="right"><strong><?php _wsl_e("User Moderation", 'wordpress-social-login') ?> :</strong></td>
@@ -123,31 +129,31 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Membership level", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Membership level", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
 				<?php _wsl_e('Here you can define the default role for new users authenticating through WSL. The <code>Administrator</code> and <code>Editor</code> roles are not available for safety reasons', 'wordpress-social-login') ?>.
 			</p> 
 			<p>
-				<?php _wsl_e('For more information about wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
+				<?php _wsl_e('For more information about Wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
 			</p> 
 			<p>
-				<?php _wsl_e('If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>.
+				<?php _wsl_e('<b>Note:</b> If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>.
 			</p> 
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
-				<td width="200" align="right"><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
+				<td width="200" align="right" nowrap><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
 					<select name="wsl_settings_bouncer_new_users_membership_default_role">
 						<optgroup label="<?php _wsl_e("Safe", 'wordpress-social-login') ?>:">
-							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default" ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
+							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default"   ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
 							<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
-							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber" ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
 						</optgroup>
 
-						<optgroup label="<?php _wsl_e("Be careful with these", 'wordpress-social-login') ?>:">  
-							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author" ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
+						<optgroup label="<?php _wsl_e("Be careful with these roles. You may be automatically giving new users elevated capabilities", 'wordpress-social-login') ?>:">  
+							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber"  ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
+							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author"      ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
 							<option value="contributor" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "contributor" ) echo "selected"; ?> ><?php _wsl_e("Contributor", 'wordpress-social-login') ?></option> 
 						</optgroup>
 					</select>  
@@ -159,12 +165,13 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by emails domains name", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by emails domains name", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside">
 			<p>
 				<?php _wsl_e("Restrict registration to a limited number of domains name.", 'wordpress-social-login') ?>
-				<?php _wsl_e("Insert one email address per line and try to keep this list short. On <code>Bounce text</code> insert the text you want to display for rejected users. ex: <code>gmail.com</code>, without '@'.", 'wordpress-social-login') ?>
+				<br /><?php _wsl_e("Note that filtration domains name takes priority over filtration by e-mails addresses and profile urls", 'wordpress-social-login') ?>.
+				<br /><?php _wsl_e("Insert one domain address per line and try to keep this list short (ex: <code>gmail.com</code>, without '@'). On <b>Bounce text</b> insert the text you want to display for rejected users", 'wordpress-social-login') ?>.
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -196,12 +203,13 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by e-mails addresses", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by e-mails addresses", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
 				<?php _wsl_e("Restrict registration to a limited number of emails addresses.", 'wordpress-social-login') ?> 
-				<?php _wsl_e("Insert one email address per line and try to keep this list short. On <code>Bounce text</code> insert the text you want to display for rejected users. ex: <code>hybridauth@gmail.com</code>", 'wordpress-social-login') ?> 
+				<br /><?php _wsl_e("Note that filtration e-mails addresses takes priority over filtration by profile urls", 'wordpress-social-login') ?>.
+				<br /><?php _wsl_e("Insert one email address per line and try to keep this list short (ex: <code>hybridauth@gmail.com</code>). On <b>Bounce text</b> insert the text you want to display for rejected users", 'wordpress-social-login') ?>.
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>
@@ -233,13 +241,13 @@ function wsl_component_bouncer_setup()
 
 	<div id="namediv" class="stuffbox">
 		<h3>
-			<label for="name"><?php _wsl_e("Filters by profile urls", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("Filters by profile urls", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
-				<?php _wsl_e("Restrict registration to a limited number of profile urls.", 'wordpress-social-login') ?>
-				<?php _wsl_e("<b>Note</b>: If a social network provide the user email, then use 'Filters by e-mails addresses' instead. Providers like Facebook provide multiples profiles URLs per user and WSL won't be able to reconize them.", 'wordpress-social-login') ?>
-				<?php _wsl_e("Insert one email address per line and try to keep this list short. On <code>Bounce text</code> insert the text you want to display for rejected users. ex: <code>http://twitter.com/HybridAuth</code>, <code>https://plus.google.com/u/0/108839241301472312344</code>", 'wordpress-social-login') ?>
+				<?php _wsl_e("Restrict registration to a limited number of profile urls", 'wordpress-social-login') ?>. 
+				<br /><?php _wsl_e("<b>Note</b>: Some providers like Facebook can have multiples profiles URLs per user and WSL won't be able to recognize all them", 'wordpress-social-login') ?>. 
+				<br /><?php _wsl_e("Insert one URL per line and try to keep this list short (ex: <code>https://twitter.com/HybridAuth</code>, <code>https://plus.google.com/u/0/108839241301472312344</code>). On <b>Bounce text</b> insert the text you want to display for rejected users", 'wordpress-social-login') ?>.
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 			  <tr>

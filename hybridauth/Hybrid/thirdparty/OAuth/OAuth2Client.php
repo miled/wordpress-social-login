@@ -1,8 +1,8 @@
 <?php
-/*!
+/**
 * HybridAuth
 * http://hybridauth.sourceforge.net | http://github.com/hybridauth/hybridauth
-* (c) 2009-2012, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
+* (c) 2009-2014, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
 // A service client for the OAuth 2 flow.
@@ -30,6 +30,7 @@ class OAuth2Client
 	public $curl_time_out            = 30;
 	public $curl_connect_time_out    = 30;
 	public $curl_ssl_verifypeer      = false;
+	public $curl_ssl_verifyhost      = false;
 	public $curl_header              = array();
 	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
 	public $curl_authenticate_method = "POST";
@@ -61,11 +62,13 @@ class OAuth2Client
 			foreach( $extras as $k=>$v )
 				$params[$k] = $v;
 
-		return $this->authorize_url . "?" . http_build_query( $params );
+		return $this->authorize_url . "?" . http_build_query($params, '', '&');
 	}
 
 	public function authenticate( $code )
 	{
+		Hybrid_Logger::info( "Enter OAuth2Client::authenticate( $code )" );
+		
 		$params = array(
 			"client_id"     => $this->client_id,
 			"client_secret" => $this->client_secret,
@@ -73,11 +76,15 @@ class OAuth2Client
 			"redirect_uri"  => $this->redirect_uri,
 			"code"          => $code
 		);
+		
+		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request params: ", $params );
 	
 		$response = $this->request( $this->token_url, $params, $this->curl_authenticate_method );
 		
 		$response = $this->parseRequestResult( $response );
 
+		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request response: ", $response );
+		
 		if( ! $response || ! isset( $response->access_token ) ){
 			throw new Exception( "The Authorization Service has return: " . $response->error );
 		}
@@ -146,7 +153,7 @@ class OAuth2Client
 	}
 
 	/** 
-	* GET wrappwer for provider apis request
+	* GET wrapper for provider apis request
 	*/
 	function get( $url, $parameters = array() )
 	{
@@ -154,7 +161,7 @@ class OAuth2Client
 	} 
 
 	/** 
-	* POST wreapper for provider apis request
+	* POST wrapper for provider apis request
 	*/
 	function post( $url, $parameters = array() )
 	{
@@ -191,10 +198,10 @@ class OAuth2Client
 	private function request( $url, $params=false, $type="GET" )
 	{
 		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", $params );
 
 		if( $type == "GET" ){
-			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query( $params );
+			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
 		}
 
 		$this->http_info = array();
@@ -206,6 +213,7 @@ class OAuth2Client
 		curl_setopt($ch, CURLOPT_USERAGENT      , $this->curl_useragent );
 		curl_setopt($ch, CURLOPT_CONNECTTIMEOUT , $this->curl_connect_time_out );
 		curl_setopt($ch, CURLOPT_SSL_VERIFYPEER , $this->curl_ssl_verifypeer );
+		curl_setopt($ch, CURLOPT_SSL_VERIFYHOST , $this->curl_ssl_verifyhost );
 		curl_setopt($ch, CURLOPT_HTTPHEADER     , $this->curl_header );
 
 		if($this->curl_proxy){
@@ -218,8 +226,11 @@ class OAuth2Client
 		}
 
 		$response = curl_exec($ch);
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
+		if( $response === FALSE ) {
+				Hybrid_Logger::error( "OAuth2Client::request(). curl_exec error: ", curl_error($ch) );
+		}
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", curl_getinfo($ch) );
+		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", $response );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));
@@ -233,11 +244,11 @@ class OAuth2Client
 	{
 		if( json_decode( $result ) ) return json_decode( $result );
 
-		parse_str( $result, $ouput ); 
+		parse_str( $result, $output );
 
 		$result = new StdClass();
 
-		foreach( $ouput as $k => $v )
+		foreach( $output as $k => $v )
 			$result->$k = $v;
 
 		return $result;
