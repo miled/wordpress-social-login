@@ -251,6 +251,16 @@ function wsl_process_login_begin()
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
 		$adapter = $hybridauth->authenticate( $provider, $params );
+		
+		$redirect_to = site_url();
+
+        	if( isset( $_REQUEST[ 'redirect_to' ] ) ){
+            		$redirect_to = urldecode( $_REQUEST[ 'redirect_to' ] );
+        	}
+        
+        	?>
+        	<html><head><script>
+        	<?php
 
 		// get Widget::Authentication display
 		$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
@@ -260,38 +270,42 @@ function wsl_process_login_begin()
 		// > (with action=wordpress_social_authenticated), then close popup
 		if( $wsl_settings_use_popup == 1 || ! $wsl_settings_use_popup ){
 			?>
-				<html><head><script>
 				function init() {
-					window.opener.wsl_wordpress_social_login({
-						'action'   : 'wordpress_social_authenticated',
-						'provider' : '<?php echo $provider ?>'
-					});
-
-					window.close()
+                    if ( window.opener )
+                    {
+                        window.opener.wsl_wordpress_social_login({
+                            'action'   : 'wordpress_social_authenticated',
+                            'provider' : '<?php echo $provider ?>'
+                        });
+                        window.close();
+                    }
+                    else
+                    {
+                        document.loginform.submit();
+                    }
 				}
-				</script></head><body onload="init();"></body></html>
 			<?php
 		}
 
 		// if Authentication display eq In Page
 		// > create a from in page then submit it to wp-login.php (with action=wordpress_social_authenticated)
-		elseif( $wsl_settings_use_popup == 2 ){
-			$redirect_to = site_url();
-
-			if( isset( $_REQUEST[ 'redirect_to' ] ) ){
-				$redirect_to = urldecode( $_REQUEST[ 'redirect_to' ] );
-			}
-			?>
-				<html><head><script>
-				function init() { document.loginform.submit() }
-				</script></head><body onload="init();">
-				<form name="loginform" method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>">
-					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
-					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
-					<input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
-				</form></body></html> 
-			<?php
-		}
+		elseif( $wsl_settings_use_popup == 2 )
+        	{
+            	?>
+            		function init() {
+                		document.loginform.submit();
+            		}
+        	<?php
+        	}
+        	?>
+            	</script></head>
+            	<body onload="init();">
+            	<form name="loginform" method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>">
+                	<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
+                	<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
+                	<input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
+            	</form></body></html> 
+		<?php
 	}
 
 	// if hybridauth fails to authenticate the user, then we display an error message
@@ -670,7 +684,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	// > (If User Moderation is set to Admin Approval then Membership level will be ignored)
 	if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) > 100 ){ 
 		// Theme My Login : User Moderation
-		// > Upon activation of this module, a new user role will be created, titled “Pending”. This role has no privileges by default.
+		// > Upon activation of this module, a new user role will be created, titled Â“PendingÂ”. This role has no privileges by default.
 		// > When a user confirms their e-mail address or when you approve a user, they are automatically assigned to the default user role for the blog/site.
 		// http://www.jfarthing.com/development/theme-my-login/user-moderation/
 		$userdata['role'] = "pending";
