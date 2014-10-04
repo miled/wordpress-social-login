@@ -273,7 +273,7 @@ add_action( 'after_signup_form', 'wsl_render_wsl_widget_in_wp_register_form' );
 # {{{ shortcode, js and css injectors
 function wsl_shortcode_handler($args)
 {
-	echo wsl_render_login_form();
+	return wsl_render_login_form();
 }
 
 add_shortcode ( 'wordpress_social_login', 'wsl_shortcode_handler' );

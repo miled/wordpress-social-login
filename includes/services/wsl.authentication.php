@@ -573,6 +573,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 		// remove spaces and dots
 		$user_login = trim( str_replace( array( ' ', '.' ), '_', $user_login ) );
+		$user_login = trim( str_replace( '__', '_', $user_login ) );
 
 		// if user profile display name is not provided
 		if( empty( $user_login ) ){
