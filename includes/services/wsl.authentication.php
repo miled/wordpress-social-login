@@ -261,7 +261,7 @@ function wsl_process_login_begin()
 		$redirect_to = site_url();
 
 		if( isset( $_REQUEST[ 'redirect_to' ] ) ){
-			$redirect_to = urldecode( $_REQUEST[ 'redirect_to' ] );
+			$redirect_to = esc_url_raw( urldecode( $_REQUEST[ 'redirect_to' ] ) );
 		}
 
 		?>

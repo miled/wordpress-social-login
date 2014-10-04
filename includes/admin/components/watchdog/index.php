@@ -71,6 +71,7 @@ function wsl_component_watchdog()
 
 				$abandon    = false;
 				$newattempt = false;
+				$newsession = true;
 			?>
 				<table class="wp-list-table widefat widefatop">
 			<?php
@@ -79,12 +80,16 @@ function wsl_component_watchdog()
 						$abandon = false;
 						$newattempt = true;
 					}
-					
+
+					if(  'wsl_process_login' == $call_data->action_name && ! stristr( $call_data->url, '&redirect_to_provider=true' ) ){
+						$newattempt = true;
+					}
+
 					if( $abandon ){
 						continue; 
 					}
 
-					if( $newattempt ){
+					if( $newattempt && ! $newsession ){
 						?>
 							</table>
 							<h5>New attempt</h5>
@@ -154,6 +159,7 @@ function wsl_component_watchdog()
 						</td>
 					</tr>
 				<?php
+					$newsession = false;
 				}
 			?>
 				</table>
