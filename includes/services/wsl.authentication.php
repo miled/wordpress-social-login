@@ -172,8 +172,7 @@ function wsl_process_login_begin()
 		}
 
 		// default endpoint_url/callback_url
-		$endpoint_url = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
-		$callback_url = null; // specific to hybridauth, kept null for future use
+		$endpoint_url = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; 
 
 		// check hybridauth_base_url
 		if( ! strstr( $endpoint_url, "http://" ) && ! strstr( $endpoint_url, "https://" ) ){
@@ -239,13 +238,8 @@ function wsl_process_login_begin()
 		// create an instance for Hybridauth
 		$hybridauth = new Hybrid_Auth( $config );
 
-		// try to authenticate the selected $provider
-		$params = array();
-
-		// if callback_url defined it will overwrite Hybrid_Auth::getCurrentUrl(); 
-		if( $callback_url ){
-			$params["hauth_return_to"] = $callback_url;
-		}
+		// HOOKABLE:
+		do_action( "wsl_hook_process_login_before_hybridauth_authenticate", $provider, $config );
 
 		// start the authentication process via hybridauth
 		// > if not already connected hybridauth::authenticate() will redirect the user to the provider
@@ -253,7 +247,10 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line). 
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		$adapter = $hybridauth->authenticate( $provider, $params );
+		$adapter = $hybridauth->authenticate( $provider );
+
+		// HOOKABLE:
+		do_action( "wsl_hook_process_login_after_hybridauth_authenticate", $provider, $config );
 
 		// get Widget::Authentication display
 		$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
@@ -264,54 +261,9 @@ function wsl_process_login_begin()
 			$redirect_to = esc_url_raw( urldecode( $_REQUEST[ 'redirect_to' ] ) );
 		}
 
-		?>
-			<html>
-				<head>
-					<script>
-						function init()
-						{
-							<?php
-								// if Authentication display is undefined or eq Popup 
-								// > create a from with javascript in parent window and submit it to wp-login.php
-								// > (with action=wordpress_social_authenticated), then close popup
-								if( $wsl_settings_use_popup == 1 || ! $wsl_settings_use_popup ){
-									?>
-										if( window.opener )
-										{
-											window.opener.wsl_wordpress_social_login({
-												'action'   : 'wordpress_social_authenticated',
-												'provider' : '<?php echo $provider ?>'
-											});
+		$authenticated_url = ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticated&provider=" . $provider;
 
-											window.close();
-										}
-										else
-										{
-											document.loginform.submit();
-										}
-									<?php
-								}
-
-								// if Authentication display eq In Page
-								// > create a from in page then submit it to wp-login.php (with action=wordpress_social_authenticated)
-								elseif( $wsl_settings_use_popup == 2 ){
-									?>
-										document.loginform.submit();
-									<?php
-								}
-							?>
-						}
-					</script>
-				</head>
-				<body onload="init();">
-					<form name="loginform" method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>">
-						<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
-						<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
-						<input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
-					</form>
-				</body>
-			</html> 
-		<?php
+		wsl_render_return_from_provider_loading_screen( $provider, $authenticated_url, $redirect_to, $wsl_settings_use_popup );
 	}
 
 	// if hybridauth fails to authenticate the user, then we display an error message
@@ -613,33 +565,31 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	}
 
 	if ( ! $user_login ){
-		// generate a valid user login
-		$user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
+		// attempt to generate user_login from hybridauth user profile display name
+		$user_login = $hybridauth_user_profile->displayName;
 
-		if( empty( $user_login ) ){
-			$user_login = trim( $hybridauth_user_profile->lastName . " " . $hybridauth_user_profile->firstName );
-		}
+		// sanitize user login
+		$user_login = sanitize_user( $user_login, true );
 
+		// remove spaces and dots
+		$user_login = trim( str_replace( array( ' ', '.' ), '_', $user_login ) );
+
+		// if user profile display name is not provided
 		if( empty( $user_login ) ){
-			$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
+			$user_login = strtolower( $provider ) . "_user";
 		}
 
 		// user name should be unique
-		if ( username_exists ( $user_login ) ){
+		if( username_exists( $user_login ) ){
 			$i = 1;
 			$user_login_tmp = $user_login;
 
 			do{
 				$user_login_tmp = $user_login . "_" . ($i++);
-			} while (username_exists ($user_login_tmp));
+			}
+			while( username_exists ($user_login_tmp));
 
 			$user_login = $user_login_tmp;
-		}
-
-		$user_login = sanitize_user($user_login, true );
-
-		if( ! validate_username( $user_login ) ){
-			$user_login = strtolower( $provider ) . "_user_" . md5( $hybridauth_user_profile->identifier );
 		}
 	}
 
@@ -652,10 +602,11 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		}
 
 		// email should be unique
-		if ( email_exists ( $user_email ) ){
+		if( email_exists ( $user_email ) ){
 			do{
 				$user_email = md5(uniqid(wp_rand(10000,99000)))."@example.com";
-			} while( email_exists( $user_email ) );
+			}
+			while( email_exists( $user_email ) );
 		} 
 	}
 
@@ -663,6 +614,10 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 	if( $request_user_login ){
 		$display_name = sanitize_user( $request_user_login, true );
+	}
+
+	if( empty( $display_name ) ){
+		$display_name = strtolower( $provider ) . "_user";
 	}
 
 	$userdata = array(
@@ -702,15 +657,19 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	# }}} module Bouncer
 
 	// HOOKABLE: change the user data
-	$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
+	$userdata = apply_filters( 'wsl_hook_process_login_alter_new_wp_user_data', $userdata, $provider, $hybridauth_user_profile );
+
+/** IMPORTANT: wsl_hook_process_login_alter_userdata is DEPRECIATED since 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+$userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
+/** IMPORTANT: wsl_hook_process_login_alter_userdata is DEPRECIATED since 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 
 	// HOOKABLE: This action runs just before creating a new wordpress user.
 	do_action( 'wsl_hook_process_login_before_wp_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
 
-/** IMPORTANT: wsl_hook_process_login_before_insert_user is DEPRECIATED since 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_insert_user is DEPRECIATED since 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $hybridauth_user_profile );
-/** IMPORTANT: wsl_hook_process_login_before_insert_user is DEPRECIATED since 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_insert_user is DEPRECIATED since 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 
 
 	// HOOKABLE: This action runs just before creating a new wordpress user, it delegate user insert to a custom function.
@@ -746,9 +705,9 @@ do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $h
 	do_action( 'wsl_hook_process_login_after_wp_insert_user', $user_id, $provider, $hybridauth_user_profile );
 
 
-/** IMPORTANT: wsl_hook_process_login_after_create_wp_user is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_after_create_wp_user is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $hybridauth_user_profile );
-/** IMPORTANT: wsl_hook_process_login_after_create_wp_user is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_after_create_wp_user is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 
 
 	// Returns the user created user info
@@ -849,9 +808,9 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 		do_action( "wsl_hook_process_login_before_wp_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
 
 
-/** IMPORTANT: wsl_hook_process_login_before_set_auth_cookie is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_set_auth_cookie is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 do_action( 'wsl_hook_process_login_before_set_auth_cookie', $user_id, $provider, $hybridauth_user_profile );
-/** IMPORTANT: wsl_hook_process_login_before_set_auth_cookie is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_set_auth_cookie is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 
 
 		# http://codex.wordpress.org/Function_Reference/wp_set_auth_cookie
@@ -865,9 +824,9 @@ do_action( 'wsl_hook_process_login_before_set_auth_cookie', $user_id, $provider,
 	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile, $redirect_to );
 
 
-/** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 do_action( 'wsl_hook_process_login_before_redirect', $user_id, $provider, $hybridauth_user_profile );
-/** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.1.7 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
+/** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/hooks.html */ 
 
 
 	// That's it. We done.

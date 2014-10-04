@@ -22,8 +22,6 @@ function wsl_component_loginwidget()
 
 	include "wsl.components.loginwidget.setup.php";
 	include "wsl.components.loginwidget.sidebar.php";
-
-	wsl_admin_welcome_panel();
 ?>
 <form method="post" id="wsl_setup_form" action="options.php"> 
 	<?php settings_fields( 'wsl-settings-group-customize' ); ?> 

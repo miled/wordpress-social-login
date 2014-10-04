@@ -27,24 +27,27 @@ function wsl_watchdog_main()
 	global $wpdb;
 
 	$sql = "CREATE TABLE IF NOT EXISTS `{$wpdb->prefix}wslwatchdog` ( 
-		`id` int(11) NOT NULL AUTO_INCREMENT,
-		`session_id` varchar(50) NOT NULL,
-		`user_id` int(11) NOT NULL,
-		`user_ip` varchar(50) NOT NULL,
-		`url` varchar(450) NOT NULL,
-		`provider` varchar(50) NOT NULL,
-		`action_name` varchar(255) NOT NULL,
-		`action_args` text NOT NULL,
-		`is_connected` int(11) NOT NULL,
-		`created_at` datetime NOT NULL,
-		PRIMARY KEY (`id`)
-	)"; 
+			  `id` int(11) NOT NULL AUTO_INCREMENT,
+			  `session_id` varchar(50) NOT NULL,
+			  `user_id` int(11) NOT NULL,
+			  `user_ip` varchar(50) NOT NULL,
+			  `url` varchar(450) NOT NULL,
+			  `provider` varchar(50) NOT NULL,
+			  `action_name` varchar(255) NOT NULL,
+			  `action_args` text NOT NULL,
+			  `is_connected` int(11) NOT NULL,
+			  `created_at` varchar(50) NOT NULL,
+			  PRIMARY KEY (`id`) 
+			)"; 
 
 	$wpdb->query( $sql ); 
 
 	add_action( 'wsl_process_login_start', 'wsl_watchdog_wsl_process_login' );
 	add_action( 'wsl_process_login_begin_start', 'wsl_watchdog_wsl_process_login_begin_start' );
 	add_action( 'wsl_process_login_end_start', 'wsl_watchdog_wsl_process_login_end_start' );
+
+	add_action( 'wsl_hook_process_login_before_hybridauth_authenticate', 'wsl_watchdog_wsl_hook_process_login_before_hybridauth_authenticate', 10, 2 );
+	add_action( 'wsl_hook_process_login_after_hybridauth_authenticate', 'wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate', 10, 2 );
 
 	add_action( 'wsl_process_login_end_get_userdata_start', 'wsl_watchdog_wsl_process_login_end_get_userdata_start', 10, 2 );
 
@@ -88,9 +91,9 @@ function wsl_log_database_insert_db( $action_name, $action_args = array(), $user
 				"url" 	        => wsl_get_current_url(), 
 				"provider"      => $provider, 
 				"action_name" 	=> $action_name,
-				"action_args" 	=> serialize( $action_args ),
+				"action_args" 	=> json_encode( $action_args ),
 				"is_connected"  => $get_current_user_id ? 1 : 0, 
-				"created_at"    => date( "Y-m-d h:i:s"), 
+				"created_at"    => microtime( true ), 
 			)
 		); 
 }
@@ -121,6 +124,20 @@ function wsl_watchdog_wsl_process_login_end_start()
 function wsl_watchdog_wsl_process_login_end_get_userdata_start( $provider, $redirect_to )
 {
 	wsl_log_database_insert_db( 'wsl_process_login_end_get_userdata_start', array( $provider, $redirect_to ) );
+}
+
+// --------------------------------------------------------------------
+
+function wsl_watchdog_wsl_hook_process_login_before_hybridauth_authenticate( $provider, $config )
+{
+	wsl_log_database_insert_db( 'wsl_hook_process_login_before_hybridauth_authenticate', array( $provider, $config ) );
+}
+
+// --------------------------------------------------------------------
+
+function wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate( $provider, $config )
+{
+	wsl_log_database_insert_db( 'wsl_hook_process_login_after_hybridauth_authenticate', array( $provider, $config ) );
 }
 
 // --------------------------------------------------------------------

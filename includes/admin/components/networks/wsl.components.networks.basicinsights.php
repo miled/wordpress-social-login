@@ -16,19 +16,13 @@ function wsl_component_networks_basicinsights()
 	// HOOKABLE: 
 	do_action( "wsl_component_networks_basicinsights_start" );
 
-	GLOBAL $wpdb;
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	$sql = "SELECT count( * ) AS items FROM `{$wpdb->prefix}users`"; 
-	$rs1 = $wpdb->get_results( $sql );  
-	$total_users = (int) $rs1[0]->items;
+	$total_users     = get_wordpess_users_count();
+	$total_users_wsl = get_wsl_users_count();
 
-	$sql = "SELECT count( distinct user_id ) AS items FROM `{$wpdb->prefix}wslusersprofiles` "; 
-	$rs2 = $wpdb->get_results( $sql );
-	$total_users_wsl = (int) $rs2[0]->items;
-
-	$users_conversion = ( 100 * $total_users_wsl ) / $total_users;
-
-	if( $total_users_wsl && wsl_is_component_enabled( "basicinsights" ) ){
+	if( $total_users && $total_users_wsl ){
+		$users_conversion = ( 100 * $total_users_wsl ) / $total_users;
 ?> 
 <div class="postbox " id="linksubmitdiv"> 
 	<div class="inside">
@@ -37,6 +31,7 @@ function wsl_component_networks_basicinsights()
 
 			<div id="misc-publishing-actions">
 				<div style="padding:20px;padding-top:0px;"> 
+					<!-- Insights - conversions -->
 					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("Conversions", 'wordpress-social-login') ?></h4>
 					<table width="90%"> 
 						<tr>
@@ -49,19 +44,17 @@ function wsl_component_networks_basicinsights()
 							<td><?php _wsl_e("Conversions", 'wordpress-social-login') ?></td><td style="border-top:1px solid #ccc">+<b><?php echo number_format($users_conversion, 2, '.', ''); ?></b> %</td>
 						</tr>
 					</table>
-					<?php 
-						$sql = "SELECT provider, count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles` GROUP BY provider ORDER BY items DESC ";
 
-						$rs1 = $wpdb->get_results( $sql );  
-
-						$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+					<!-- Insights by provider -->
+					<?php
+						$data = wsl_get_stored_hybridauth_user_profiles_count_by_field( 'provider' );
 					?> 
 					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By provider", 'wordpress-social-login') ?></h4>
 					<table width="90%">
 						<?php 
 							$total_profiles_wsl = 0;
 
-							foreach( $rs1 as $item ){
+							foreach( $data as $item ){
 							?>
 								<tr>
 									<td width="60%">
@@ -82,15 +75,15 @@ function wsl_component_networks_basicinsights()
 							<td align="right">&nbsp;</td><td><b><?php echo $total_users_wsl; ?></b> <?php _wsl_e("WSL users", 'wordpress-social-login') ?></td>
 						</tr>
 					</table> 
+					
+					<!-- Insights by gender -->
 					<?php 
-						$sql = "SELECT age, count( * ) AS items FROM `{$wpdb->prefix}wslusersprofiles`  GROUP BY age ORDER BY items DESC ";
-
-						$rs = $wpdb->get_results( $sql ); 
+						$data = wsl_get_stored_hybridauth_user_profiles_count_by_field( 'age' );  
 					?>
 					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By gender", 'wordpress-social-login') ?></h4>
 					<table width="90%">
 						<?php
-							foreach( $rs as $item ){
+							foreach( $data as $item ){
 								if( ! $item->age ) $item->age = "Unknown";
 							?>
 								<tr>

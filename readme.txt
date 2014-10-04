@@ -1,5 +1,5 @@
 === WordPress Social Login ===
-Contributors: miled, acvic
+Contributors: miled
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
@@ -11,46 +11,47 @@ WordPress Social Login allow your visitors to comment and login with social netw
 
 == Description ==
 
-Using <strong>WordPress Social Login</strong>, your blog's readers will be able to login and comment with social networks such as Twitter, Facebook, Google and Yahoo.
+<strong>Wordpress Social Login</strong> allows your website visitors and customers to register on using their existing social accounts ID, eliminating the need to fill out registration forms and remember usernames and passwords. 
 
-<strong>WordPress Social Login</strong> also allows you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
+Wordpress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
 
-<strong>WordPress Social Login</strong> gives you absolute control over users access to your website and comes with a painfully long list of rules and restrictions for you to setup.
+Wordpress Social Login gives you absolute control over users access to your website and comes a list of rules and restrictions for you to setup.
 
-<strong>Easy to customize and integrate </strong> <br>
-WordPress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
+<strong>Easy to customize and integrate</strong> <br>
+Wordpress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
 
 <strong>26 supported social networks</strong> <br>
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
+<br>
+<br>
+Currently supported providers are:
+Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
 
 <strong>Free, unlimited and white-label</strong> <br>
-Licensed under MIT License, WordPress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a WordPress Social Login in commercial websites as long as the copyright header is left intact.
+Licensed under MIT License, Wordpress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a Wordpress Social Login in commercial websites as long as the copyright header is left intact.
 
 <strong>Built on top of an Open Source Library</strong><br>
 HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
-
-<strong>Supported providers</strong> <br>
-Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
 
 <strong>Special thanks to:</strong>
 
 * [Thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin.
 * [Pat Anvil](http://patanvil.com) for adding Goodreads.
 * [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki.
-* [Social Login plugin author](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
-* [Query Monitor plugin author](https://wordpress.org/plugins/query-monitor/) - QM is must have for Wordpress plugins developers.
+* [Social Login plugin](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
+* [Query Monitor plugin](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress plugins developers.
 
 Thanks to everyone who have contributed to this project and the to Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support.
 
 == Installation ==
 
-= the hard way =
+= The hard way =
 
 1. Download, Unzip and drop the extension on /wp-content/plugins/ directory,
 1. As administrator, activate the plugin through the 'Plugins' menu in WordPress,
 1. Goto the Settings > WP Social Login to get started.
 
-= the easy way =
+= The easy way =
 
 1. As administrator, goto 'Plugins' then Click on 'Add New',
 2. Search for 'WordPress Social Login' then Click on 'Install Now',
@@ -60,8 +61,6 @@ Thanks to everyone who have contributed to this project and the to Wordpress com
 
 
 == Frequently Asked Questions ==
-
-= Where do I find the plugin documentation ? =
 
 The user guide and frequently asked questions can be found at http://hybridauth.sourceforge.net/wsl/index.html
 

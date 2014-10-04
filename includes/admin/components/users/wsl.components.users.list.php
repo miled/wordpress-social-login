@@ -16,64 +16,75 @@ function wsl_component_users_list()
 	// HOOKABLE: 
 	do_action( "wsl_component_users_list_start" );
 
-	GLOBAL $wpdb;
-
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+
+	// If action eq delete WSL user profiles
+	if( isset( $_REQUEST['delete'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'] ) ) {
+		$uid = (int) $_REQUEST['delete'];
+
+		$user_data = get_userdata( $uid );
+
+		if(  $user_data ){ 
+			wsl_delete_stored_hybridauth_user_data( $uid  ); 
+
+			?>
+				<div class="fade updated" style="margin: 0px 0px 10px;">
+					<p>
+						<?php echo sprintf( _wsl__( "WSL user ID #%d: <b>%s</b>  profiles and contacts has been deleted. Note that the associated WordPress user wasn't deleted", 'wordpress-social-login'), $uid, $user_data->user_login ) ?>.
+					</p>
+				</div>
+			<?php
+		}
+	}
 
 	$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
 	$limit = 25; // number of rows in page
-	$offset = ( $pagenum - 1 ) * $limit;
-
-	$total = $wpdb->get_var( "SELECT COUNT(`id`) FROM {$wpdb->prefix}wslusersprofiles" );
-	$num_of_pages = ceil( $total / $limit );
-
-	$sql = "SELECT * FROM `{$wpdb->prefix}wslusersprofiles` GROUP BY user_id LIMIT $offset, $limit";
-	$rs1 = $wpdb->get_results( $sql );
+	$offset = ( $pagenum - 1 ) * $limit; 
+	$total = wsl_get_stored_hybridauth_user_profiles_count(); 
+	$num_of_pages = ceil( $total / $limit ); 
 ?>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
 	<p style="float: right; margin: -5px;">
-		<a class="button button-secondary" href="users.php"><?php _wsl_e("Show all the existing users for your site", 'wordpress-social-login'); ?></a>
+		<a class="button button-secondary" href="users.php"><?php _wsl_e("Show all the existing users on your website", 'wordpress-social-login'); ?></a>
 	</p>
 
-	<?php _wsl_e( "This screen only list the users who have connected via the WSL widget", 'wordpress-social-login' ) ?>.
+	<?php _wsl_e( "This screen only list the users who have connected through WordPress Social Login", 'wordpress-social-login' ) ?>.
 </div>
 
 <table cellspacing="0" class="wp-list-table widefat fixed users">
 	<thead>
 		<tr> 
-			<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
-			<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
+			<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>   
 			<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
-			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th> 
-			<th width="140"><span><?php _wsl_e("Actions", 'wordpress-social-login') ?></span></th>
+			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th>
 		</tr>
 	</thead> 
 	<tfoot>
 		<tr> 
-			<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>  
-			<th width="60"><span><?php _wsl_e("Avatar", 'wordpress-social-login') ?></span></th> 
+			<th width="100"><span><?php _wsl_e("Providers", 'wordpress-social-login') ?></span></th>   
 			<th><span><?php _wsl_e("Username", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Full Name", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
-			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th> 
-			<th width="140"><span><?php _wsl_e("Actions", 'wordpress-social-login') ?></span></th>
+			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th>
 		</tr>
 	</tfoot> 
 	<tbody data-wp-lists="list:user" id="the-list">
 		<?php  
+			$data = wsl_get_stored_hybridauth_user_profiles_grouped_by_user_id( $offset, $limit );
+
 			// have users?
-			if( ! $rs1 ){
+			if( ! $data ){
 				?>
-					<tr class="no-items"><td colspan="6" class="colspanchange"><?php _wsl_e("No users found", 'wordpress-social-login') ?>.</td></tr>
+					<tr class="no-items"><td colspan="5" class="colspanchange"><?php _wsl_e("No users found", 'wordpress-social-login') ?>.</td></tr>
 				<?php
 			}
 			else{
 				$i = 0;
-				foreach( $rs1 as $items ){
+				foreach( $data as $items ){
 					$user_id = $items->user_id; 
 					$wsl_user_image = $items->photourl; 
 
@@ -86,7 +97,7 @@ function wsl_component_users_list()
 					$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );  
 				?>
 					<tr class="<?php if( ++$i % 2 ) echo "alternate" ?> tr-contacts"> 
-						<td>
+						<td nowrap>
 							<?php 
 								foreach( $linked_accounts AS $link ){
 								?> 
@@ -98,15 +109,33 @@ function wsl_component_users_list()
 								} 
 							?> 
 						</td> 
-						<td>
+						<td class="column-author">
 							<?php if( $wsl_user_image ) { ?>
 								<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $wsl_user_image ?>" > 
-							<?php } else { ?>
+							<?php } else { ?>                                              
 								<img width="32" height="32" class="avatar avatar-32 photo" src="http://www.gravatar.com/avatar/<?php echo md5( strtolower( trim( $user_data->user_email ) ) ); ?>" > 
 							<?php } ?>
-						</td>
-						<td>
+
 							<strong><a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php echo $user_data->user_login; ?></a></strong>
+
+							<div class="row-actions">
+								<span class="view">
+									<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php _wsl_e("Profile", 'wordpress-social-login') ?></a>
+									| 
+								</span>
+
+								<span class="view">
+									<a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php _wsl_e("Contacts", 'wordpress-social-login') ?></a>
+									| 
+								</span>
+
+								<span class="delete">
+									<?php
+										$delete_url = wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=users&delete=' . $user_id );
+									?>
+									<a style="color: #a00;" href="<?php echo $delete_url ?>" onClick="return confirmDeleteWSLUser();"><?php _wsl_e("Delete", 'wordpress-social-login') ?></a>
+								</span>
+							</div>
 						</td>
 						<td><?php echo $user_data->display_name; ?></td>
 						<td>
@@ -125,22 +154,17 @@ function wsl_component_users_list()
 						</td> 
 						<td align="center">
 							<?php
-								$sql = "SELECT count( * ) as counts FROM `{$wpdb->prefix}wsluserscontacts` where user_id = '$user_id'";
-								$rs  = $wpdb->get_results( $sql );
+								$counts = wsl_get_stored_hybridauth_user_contacts_count_by_user_id( $user_id );
 
-								if( $rs && $rs[0]->counts ){
+								if( $counts ){
 									?>
-										<a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php echo $rs[0]->counts; ?></a>
+										<a href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php echo $counts; ?></a>
 									<?php
 								}
 								else{
 									echo "0";
 								}
 							?>
-						</td> 
-						<td>
-							<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>">Profile</a>
-							<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>">Contacts</a>
 						</td> 
 					</tr> 
 				<?php 
@@ -164,6 +188,12 @@ function wsl_component_users_list()
 		echo '<div class="tablenav"><div class="tablenav-pages" style="margin: 1em 0">' . $page_links . '</div></div>';
 	}
 ?> 	
+<script>
+	function confirmDeleteWSLUser()
+	{
+		return confirm( <?php echo json_encode( _wsl__("Are you sure to delete this WSL user profiles and contacts?\n\nNote: The associated WordPress user won't deleted.", 'wordpress-social-login') ) ?> );
+	}
+</script>
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_component_users_list_end" );

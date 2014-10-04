@@ -23,7 +23,7 @@ function wsl_component_components_setup()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 ?>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-	<?php _wsl_e( "By default, only four WSL components are enabled. You can selectively enable or disable any of the non-core components by using the form below. Your WSL installation will continue to function. However, the features of the disabled components will no longer be accessible", 'wordpress-social-login' ) ?>.
+	<?php _wsl_e( "By default, only the three WSL core components are enabled. You can selectively enable or disable any of the non-core components by using the form below. Your WSL installation will continue to function. However, the features of the disabled components will no longer be accessible", 'wordpress-social-login' ) ?>.
 </div>
 
 <form action="" method="post">
@@ -89,16 +89,12 @@ function wsl_component_components_setup()
 					<td class="column-action" align="right" style="width: 120px;">
 						<p>
 							<?php if( $plugin_enablable ): ?>
-								<?php if( $settings["type"] == "core" && $settings["enabled"] ): ?>
-									<a class="button-secondary" style="color:#000000" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php _wsl_e( "View", 'wordpress-social-login' ) ?></a>
+								<?php if( $settings["type"] == "core" && $settings["enabled"] ): ?> 
+									<a class="button-secondary" style="color:#000000" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php _wsl_e( "View", 'wordpress-social-login' ) ?></a> 
 								<?php endif; ?>
 
 								<?php if( $settings["type"] != "core" ): ?>
-									<?php if( $settings["enabled"] ): ?>
-										<?php if( $name != "basicinsights" ): ?>
-											<a class="button-secondary" style="color:#000000" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php _wsl_e( "View", 'wordpress-social-login' ) ?></a>
-										<?php endif; ?>
-
+									<?php if( $settings["enabled"] ): ?> 
 										<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=components&disable=<?php echo $name ?>"><?php _wsl_e( "Disable", 'wordpress-social-login' ) ?></a>
 									<?php else: ?>
 										<a class="button-primary" style="color:#ffffff" href="options-general.php?page=wordpress-social-login&wslp=components&enable=<?php echo $name ?>"><?php _wsl_e( "Enable", 'wordpress-social-login' ) ?>&nbsp;</a>

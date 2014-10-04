@@ -72,16 +72,29 @@ function wsl_component_watchdog()
 				$abandon    = false;
 				$newattempt = false;
 				$newsession = true;
+				$exectime   = 0;
+				$oexectime  = 0;
 			?>
 				<table class="wp-list-table widefat widefatop">
+					<tr>
+						<th>#</th>
+						<th>Action</th>
+						<th>Action Args</th>
+						<th>Time</th>
+						<th>Exec</th>
+						<th>User</th>
+					</tr>
 			<?php
 				foreach( $list_calls as $call_data ){
+					$exectime  = (float) $call_data->created_at - ( $oexectime ? $oexectime : (float) $call_data->created_at );
+					$oexectime = (float) $call_data->created_at;
+
 					if( $abandon && 'wsl_process_login' == $call_data->action_name ){
 						$abandon = false;
 						$newattempt = true;
 					}
 
-					if(  'wsl_process_login' == $call_data->action_name && ! stristr( $call_data->url, '&redirect_to_provider=true' ) ){
+					if(  'wsl_process_login' == $call_data->action_name && ! stristr( $call_data->url, 'redirect_to_provider=true' ) && ! stristr( $call_data->url, 'action=wordpress_social_authenticated' ) ){
 						$newattempt = true;
 					}
 
@@ -94,10 +107,21 @@ function wsl_component_watchdog()
 							</table>
 							<h5>New attempt</h5>
 							<table class="wp-list-table widefat widefatop">
+								<tr>
+									<th>#</th>
+									<th>Action</th>
+									<th>Action Args</th>
+									<th>Time</th>
+									<th>Exec</th>
+									<th>User</th>
+								</tr>
 						<?php
+
+						$exectime = 0;
+						$oexectime = 0;
 					}
 					
-					$call_data->action_args = unserialize( $call_data->action_args );
+					$call_data->action_args = json_decode( $call_data->action_args );
 
 					$newattempt = false;
 					
@@ -108,9 +132,6 @@ function wsl_component_watchdog()
 					<tr  style="<?php if( 'wsl_render_login_form_user_loggedin' == $call_data->action_name || $call_data->action_name == 'wsl_hook_process_login_before_wp_set_auth_cookie' ) echo 'background-color:#edfff7;'; ?><?php if( 'wsl_process_login_complete_registration_start' == $call_data->action_name ) echo 'background-color:#fefff0;'; ?><?php if( 'wsl_process_login_render_error_page' == $call_data->action_name || $call_data->action_name == 'wsl_process_login_render_notice_page' ) echo 'background-color:#fffafa;'; ?>">
 						<td nowrap width="10">
 							<?php echo $call_data->id; ?>
-						</td>
-						<td nowrap width="115">
-							<?php echo $call_data->created_at; ?>
 						</td>
 						<td nowrap width="350">
 							<span style="color:#<?php 
@@ -152,7 +173,13 @@ function wsl_component_watchdog()
 									?>
 								</small>
 							</a>
-							<pre style="display:none; overflow:scroll; background-color:#fcfcfc; color:#808080;font-size:11px;max-width:750px;" class="action_args_<?php echo $action_name_uid; ?>"><?php print_r( $call_data->action_args ); ?></pre>
+							<pre style="display:none; overflow:scroll; background-color:#fcfcfc; color:#808080;font-size:11px;max-width:750px;" class="action_args_<?php echo $action_name_uid; ?>"><?php echo htmlentities( print_r( $call_data->action_args, true ) ); ?></pre>
+						</td>
+						<td nowrap width="115">
+							<?php echo date( "Y-m-d h:i:s", $call_data->created_at ); ?>
+						</td>
+						<td nowrap width="10" style="<?php if( $exectime > 0.5 ) echo 'color: #f44 !important;'; ?>">
+							<?php echo number_format( $exectime, 3, '.', '' ); ?>
 						</td>
 						<td nowrap width="40">
 							<?php if( $call_data->user_id ) echo '<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=' . $call_data->user_id . '">#' . $call_data->user_id . '</a>'; ?>

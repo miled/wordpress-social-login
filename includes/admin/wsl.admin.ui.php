@@ -35,7 +35,6 @@ function wsl_admin_init()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_VERSION;
-	GLOBAL $wpdb;
 
 	if( isset( $_REQUEST["enable"] ) && isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $_REQUEST["enable"] ] ) ){
 		$component = $_REQUEST["enable"];
@@ -534,16 +533,6 @@ function wsl_admin_welcome_panel()
 					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_get_version() ) ?></b>
 				</p>
 
-				<!-- 2.1.5+
-				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('In a similar way to WordPress plugins, WSL uses <a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a>', 'wordpress-social-login') ?>,</li>  
-					<li><?php _wsl_e('<b>Email Validation</b> is replaced with <b>Profile Completion</b>', 'wordpress-social-login') ?>,</li>
-					<li><?php _wsl_e('<b>User Moderation</b> made compatible with <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login</a> plugin', 'wordpress-social-login') ?>,</li>  
-					<li><?php _wsl_e('A number of enhancements and new options now available', 'wordpress-social-login') ?>.</li>
-				</ul>
-				-->
-
-				<!-- 2.1.7+ -->
 				<ul style="margin-left:25px;">
 					<li><?php _wsl_e('WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be <a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>

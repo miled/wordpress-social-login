@@ -176,6 +176,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY( 
 		"provider_id"       => "Skyrock",
 		"provider_name"     => "Skyrock", 
+		"callback"          => true,
 		"new_app_link"      => "https://www.skyrock.com/developer/application", 
 
 		"cat"               => "socialnetworks",
@@ -217,7 +218,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_name"     => "Yandex", 
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "http://api.yandex.ru", 
+		"new_app_link"      => "https://oauth.yandex.ru", 
 
 		"cat"               => "misc",
 	),
@@ -269,16 +270,6 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "misc",
 	),
-
-// Latch seems to be down. Scheduled for removal.. 
-// removed
-	// ARRAY( 
-		// "provider_id"       => "Latch",
-		// "provider_name"     => "Latch",
-		// "new_app_link"      => null,
-
-		// "cat"               => "misc",
-	// ),
 );
 
 // --------------------------------------------------------------------

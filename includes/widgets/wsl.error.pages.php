@@ -225,11 +225,12 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 					?>
 				</td> 
 			</tr> 
+		</table>
 
 		<?php 
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
-				// wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_to_debug );
+				wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_to_debug );
 			}
 		?>
 	</body>
@@ -246,7 +247,6 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 */
 function wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_to_debug )
 {
-	global $wpdb;
 ?>
 <hr />
 

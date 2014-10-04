@@ -192,58 +192,7 @@ function wsl_display_dev_mode_debugging_area()
 		}
 	</style>
 
-	<h4>Host</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<tr><th width="150"><label>IP</label></th><td><?php echo $_SERVER['SERVER_ADDR']; ?></td></tr>  
-			<tr><th><label>Domain</label></th><td><?php echo $_SERVER['HTTP_HOST']; ?></td></tr>  
-			<tr><th><label>Port</label></th><td><?php echo isset( $_SERVER['SERVER_PORT'] ) ? 'On (' . $_SERVER['SERVER_PORT'] . ')' : 'N/A'; ?></td></tr>  
-			<tr><th><label>X Forward</label></th><td><?php echo isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ? 'On (' . $_SERVER['HTTP_X_FORWARDED_PROTO'] . ')' : 'N/A';; ?></td></tr>   
-		</tbody>
-	</table>
-	
-	<h4>Software</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<tr><th width="150"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>  
-			<tr><th><label>PHP</label></th><td><?php echo PHP_VERSION; ?></td></tr>  
-			<tr><th><label>MySQL</label></th><td><?php echo $wpdb->db_version(); ?></td></tr>   
-		</tbody>
-	</table>
-
-	<h4>MySQL</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<tr><th width="150"><label>Host</label></th><td><?php echo $wpdb->dbhost; ?></td></tr>  
-			<tr><th><label>User</label></th><td><?php echo $wpdb->dbuser; ?></td></tr>  
-			<tr><th><label>Database</label></th><td><?php echo $wpdb->dbname; ?></td></tr>  
-			<tr><th><label>Prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
-			<tr><th><label>Base_prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
-			<tr><th><label>Num_queries</label></th><td><?php echo$wpdb->num_queries; ?></td></tr>  
-		</tbody>
-	</table>
-
-	<h4>Wordpress</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<tr><th width="150"><label>Version</label></th><td><?php echo get_bloginfo( 'version' ); ?></td></tr>   
-			<tr><th><label>Multi-site</label></th><td><?php echo is_multisite() ? 'Yes' . "\n" : 'No'; ?></td></tr>
-			<tr><th><label>Site url</label></th><td><?php echo site_url(); ?></td></tr>   
-			<tr><th><label>Plugins url</label></th><td><?php echo plugins_url(); ?></td></tr>    
-		</tbody>
-	</table>
-
-	<h4>WSL</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<tr><th width="150"><label>Version</label></th><td><?php echo wsl_get_version(); ?></td></tr>  
-			<tr><th><label>Plugin path</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH; ?></td></tr>  
-			<tr><th><label>Plugin url</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?></td></tr>  
-			<tr><th><label>HA endpoint</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?></td></tr>   
-		</tbody>
-	</table>
-
-	<h4>SQL Queries <?php if( ! defined('SAVEQUERIES') || ! SAVEQUERIES ) echo " ("; ?></h4>
+	<h4>SQL Queries</h4>
 	<table class="wsl-dev-table">
 		<tbody>
 			<tr>
@@ -379,6 +328,57 @@ function wsl_display_dev_mode_debugging_area()
 			?>
 		</tbody>
 	</table> 
+
+	<h4>Wordpress</h4>
+	<table class="wsl-dev-table">
+		<tbody>
+			<tr><th width="150"><label>Version</label></th><td><?php echo get_bloginfo( 'version' ); ?></td></tr>   
+			<tr><th><label>Multi-site</label></th><td><?php echo is_multisite() ? 'Yes' . "\n" : 'No'; ?></td></tr>
+			<tr><th><label>Site url</label></th><td><?php echo site_url(); ?></td></tr>   
+			<tr><th><label>Plugins url</label></th><td><?php echo plugins_url(); ?></td></tr>    
+		</tbody>
+	</table>
+
+	<h4>WSL</h4>
+	<table class="wsl-dev-table">
+		<tbody>
+			<tr><th width="150"><label>Version</label></th><td><?php echo wsl_get_version(); ?></td></tr>  
+			<tr><th><label>Plugin path</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH; ?></td></tr>  
+			<tr><th><label>Plugin url</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?></td></tr>  
+			<tr><th><label>HA endpoint</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?></td></tr>   
+		</tbody>
+	</table>	
+
+	<h4>Website</h4>
+	<table class="wsl-dev-table">
+		<tbody>
+			<tr><th width="150"><label>IP</label></th><td><?php echo $_SERVER['SERVER_ADDR']; ?></td></tr>  
+			<tr><th><label>Domain</label></th><td><?php echo $_SERVER['HTTP_HOST']; ?></td></tr>  
+			<tr><th><label>Port</label></th><td><?php echo isset( $_SERVER['SERVER_PORT'] ) ? 'On (' . $_SERVER['SERVER_PORT'] . ')' : 'N/A'; ?></td></tr>  
+			<tr><th><label>X Forward</label></th><td><?php echo isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ? 'On (' . $_SERVER['HTTP_X_FORWARDED_PROTO'] . ')' : 'N/A';; ?></td></tr>   
+		</tbody>
+	</table>
+	
+	<h4>Software</h4>
+	<table class="wsl-dev-table">
+		<tbody>
+			<tr><th width="150"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>  
+			<tr><th><label>PHP</label></th><td><?php echo PHP_VERSION; ?></td></tr>  
+			<tr><th><label>MySQL</label></th><td><?php echo $wpdb->db_version(); ?></td></tr>   
+		</tbody>
+	</table>
+
+	<h4>MySQL</h4>
+	<table class="wsl-dev-table">
+		<tbody>
+			<tr><th width="150"><label>Host</label></th><td><?php echo $wpdb->dbhost; ?></td></tr>  
+			<tr><th><label>User</label></th><td><?php echo $wpdb->dbuser; ?></td></tr>  
+			<tr><th><label>Database</label></th><td><?php echo $wpdb->dbname; ?></td></tr>  
+			<tr><th><label>Prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
+			<tr><th><label>Base_prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
+			<tr><th><label>Num_queries</label></th><td><?php echo$wpdb->num_queries; ?></td></tr>  
+		</tbody>
+	</table>
 <?php
 }
 

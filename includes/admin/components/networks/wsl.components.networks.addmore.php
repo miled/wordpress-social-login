@@ -26,7 +26,7 @@ function wsl_component_networks_addmore()
 <table width="100%" border="0"> 
   <tr> 
 	<td align="left">
-		<p><?php _wsl_e("And you could add even more of them, <b>Just Click</b> and we will guide you through", 'wordpress-social-login') ?> :</p>
+		<p><?php _wsl_e("And you could add even more of them, <b>Just Click</b> on the icons and we will guide you through", 'wordpress-social-login') ?> :</p>
 		<?php 
 			$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/icondock/';
 

@@ -46,8 +46,6 @@ $WORDPRESS_SOCIAL_LOGIN_COMPONENTS = ARRAY(
 	"networks"       => array( "type" => "core"  , "label" => __("Networks"       , 'wordpress-social-login'), "description" => __("Social networks setup.", 'wordpress-social-login') ),
 	"login-widget"   => array( "type" => "core"  , "label" => __("Widget"         , 'wordpress-social-login'), "description" => __("Authentication widget customization.", 'wordpress-social-login') ),
 	"bouncer"        => array( "type" => "core"  , "label" => __("Bouncer"        , 'wordpress-social-login'), "description" => __("WordPress Social Login advanced configuration.", 'wordpress-social-login') ),
-	"diagnostics"    => array( "type" => "core"  , "label" => __("Diagnostics"    , 'wordpress-social-login'), "description" => __("WordPress Social Login diagnostics.", 'wordpress-social-login') ), 
-	"basicinsights"  => array( "type" => "plugin", "label" => __("Basic Insights" , 'wordpress-social-login'), "description" => __("WordPress Social Login basic insights. When enabled, <b>Basic Insights</b> will be shown in the right sidebar of the <b>Networks</b> page.", 'wordpress-social-login') ), 
 	"users"          => array( "type" => "plugin", "label" => __("Users"          , 'wordpress-social-login'), "description" => __("WordPress Social Login users manager.", 'wordpress-social-login') ),
 	"contacts"       => array( "type" => "plugin", "label" => __("Contacts"       , 'wordpress-social-login'), "description" => __("WordPress Social Login users contacts manager", 'wordpress-social-login') ),
 	"buddypress"     => array( "type" => "plugin", "label" => __("BuddyPress"     , 'wordpress-social-login'), "description" => __("Makes WordPress Social Login compatible with BuddyPress: Widget integration, Users avatars and xProfiles mapping.", 'wordpress-social-login') ),
@@ -55,19 +53,18 @@ $WORDPRESS_SOCIAL_LOGIN_COMPONENTS = ARRAY(
 
 /** list of WSL admin tabs */
 $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(  
-	"networks"     => array( "label" => __("Networks"      , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "networks"      , "default" => true ),
-	"login-widget" => array( "label" => __("Widget"        , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "login-widget" ), 
-	"bouncer"      => array( "label" => __("Bouncer"       , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "bouncer"      ), 
+	"networks"     => array( "label" => __("Networks"      , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "networks"       , "default" => true ),
+	"login-widget" => array( "label" => __("Widget"        , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "login-widget"   ),
+	"bouncer"      => array( "label" => __("Bouncer"       , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "bouncer"        ),
 
-	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "buddypress"   ),
+	"users"        => array( "label" => __("Users"         , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "users"         ),
+	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "contacts"      ),
+	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "buddypress"    ),
 
-	"users"        => array( "label" => __("Users"         , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "users"        ),
-	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "enabled" => false,  "visible" => true  , "component" => "contacts"     ),
-
-	"watchdog"     => array( "label" => __("Watchdog"      , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
-	"diagnostics"  => array( "label" => __("Diagnostics"   , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "diagnostics"   , "pull-right" => true , "welcome-panel" => false ), 
-	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
-	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true , "welcome-panel" => false ), 
+	"watchdog"     => array( "label" => __("Watchdog"      , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "core"          , "pull-right" => true  ), 
+	"diagnostics"  => array( "label" => __("Diagnostics"   , 'wordpress-social-login') , "enabled" => true ,  "visible" => false , "component" => "core"          , "pull-right" => true  ), 
+	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
+	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true ,  "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
 );
 
 // --------------------------------------------------------------------

@@ -20,8 +20,9 @@ function wsl_component_networks_setup()
 	// HOOKABLE: 
 	do_action( "wsl_component_networks_setup_start" );
 
-	GLOBAL $wpdb;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+	
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	// if no idp is enabled then we enable the default providers (facebook, google, twitter)
 	$nok = true; 
@@ -50,7 +51,7 @@ function wsl_component_networks_setup()
 		update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
 	}
 ?> 
-<script>
+<script> 
 	function toggleproviderkeys(idp){
 		if(typeof jQuery=="undefined"){
 			alert( "Error: WordPress Social Login require jQuery to be installed on your wordpress in order to work!" );
@@ -76,16 +77,12 @@ function wsl_component_networks_setup()
 			return false;
 		}
 
-		jQuery('.wsl_div_settings_help_' + idp).show();
-		
+		jQuery('.wsl_div_settings_help_' + idp).toggle();
+
 		return false;
 	}
 </script>
-<?php 
-	$nbprovider = 0;
-
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
-	
+<?php
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ):
 		$provider_id                = isset( $item["provider_id"]       ) ? $item["provider_id"]       : '';
 		$provider_name              = isset( $item["provider_name"]     ) ? $item["provider_name"]     : '';
@@ -122,7 +119,7 @@ function wsl_component_networks_setup()
 				<table class="form-table editcomment">
 					<tbody>
 						<tr>
-							<td style="width:110px"><?php _wsl_e("Enabled", 'wordpress-social-login') ?>:</td>
+							<td style="width:125px"><?php _wsl_e("Enabled", 'wordpress-social-login') ?>:</td>
 							<td>
 								<select 
 									name="<?php echo 'wsl_settings_' . $provider_id . '_enabled' ?>" 
@@ -158,17 +155,27 @@ function wsl_component_networks_setup()
 						<?php } // if require registration ?> 
 					</tbody>
 				</table> 
-				<?php if ( in_array( $provider_id, array( "Twitter", "Identica", "Tumblr", "Goodreads", "500px", "Vkontakte", "Gowalla", "Steam" ) ) ) : ?>
-					<br />
-					<hr />
-					<p style="margin-left:12px;margin-bottom:0px;"> 
-						<b><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
-						
-						<?php echo sprintf( _wsl__("<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", 'wordpress-social-login'), $provider_name ) ?>. 
-						
-						<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Profile Completion</b>', 'wordpress-social-login') ?>.
-					</p>
+
+				<?php if ( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) : ?>
+					<?php if ( $provider_new_app_link && strlen( trim( get_option( 'wsl_settings_' . $provider_id . '_app_secret' ) ) ) == 0 ) : ?>
+						<div class="fade error">
+							<p>
+								<?php echo sprintf( _wsl__('<b>%s</b> requires that you create an external application linking your website to their API. To know how to create this application, click on &ldquo;Where do I get this info?&rdquo; and follow the steps', 'wordpress-social-login'), $provider_name, $provider_name ) ?>.
+							</p>
+						</div>
+					<?php elseif ( in_array( $provider_id, array( "Twitter", "Identica", "Tumblr", "Goodreads", "500px", "Vkontakte", "Gowalla", "Steam" ) ) ) : ?>
+						<div class="fade updated">
+							<p>
+								<b><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
+								
+								<?php echo sprintf( _wsl__("<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", 'wordpress-social-login'), $provider_name ) ?>. 
+								
+								<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Profile Completion</b>', 'wordpress-social-login') ?>.
+							</p>
+						</div>
+					<?php endif; ?> 
 				<?php endif; ?> 
+
 				<?php if ( 0 && in_array( $provider_id, array( "Facebook", "Google" ) ) ) : ?>
 					<br />
 					<hr />
@@ -201,7 +208,7 @@ function wsl_component_networks_setup()
 					<?php else: ?>  
 							<p><?php echo sprintf( _wsl__('<b>Done.</b> Nothing more required for <b>%s</b>', 'wordpress-social-login'), $provider_name) ?>.</p> 
 					<?php endif; ?>  
-					<div class="wsl_div_settings_help_<?php echo $provider_id; ?>" style="margin-left:40px;">
+					<div style="margin-left:40px;">
 						<?php if ( $provider_new_app_link  ) : ?> 
 							<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php echo sprintf( _wsl__( 'First go to: <a href="%s" target ="_blank">%s</a>', 'wordpress-social-login'), $provider_new_app_link, $provider_new_app_link ) ?></p>
 
@@ -214,15 +221,14 @@ function wsl_component_networks_setup()
 								<ul style="margin-left:35px">
 									<li>Select <em style="color:#0147bb;"><?php _wsl_e("Web application</em> as the application type", 'wordpress-social-login') ?>.</li>
 									<li><?php _wsl_e("Put your website domain in the <b>Authorized JavaScript origins</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</li>
-									<li><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Provide this URL as the <b>Authorized redirect URI</b> for your application", 'wordpress-social-login') ?>: <br /><?php echo $provider_callback_url ?></li> 
+									<li><?php _wsl_e("Provide this URL as the <b>Authorized redirect URI</b> for your application", 'wordpress-social-login') ?>: <br /><?php echo $provider_callback_url ?></li> 
 								</ul>
 							<?php elseif ( $provider_id == "Facebook" ) : ?>   
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p> 
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Select <b>Add a New App</b> from the <b>Apps</b> menu at the top", 'wordpress-social-login') ?>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out Display Name, Namespace, choose a category and click <b>Create App</b>", 'wordpress-social-login') ?>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to Settings page and click on <b>Add Platform</b>. Choose website and enter in the new screen your website url in <b>App Domains</b> and <b>Site URL</b> fields", 'wordpress-social-login') ?>.
 									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p> 
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go back to the <b>Dashboard</b> page and the created application credentials into this setup page", 'wordpress-social-login') ?>.</p> 
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p>  
 							<?php else: ?>  
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p> 
@@ -244,39 +250,40 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Choose <b>Live</b> on <b>Live Status</b>.', 'wordpress-social-login') ?></p> 
 							<?php endif; ?> 
 
-							<?php if ( $provider_id != "Facebook" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, copy and past the created application credentials into this setup page", 'wordpress-social-login') ?>.</p> 
+							<?php if ( $provider_id == "Google" ) : ?>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered past the created application credentials (Client ID and Secret) into the boxes above", 'wordpress-social-login') ?>.</p> 
+							<?php elseif ( $provider_id == "Twitter" ) : ?>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials (Customer Key and Secret) into the boxes above", 'wordpress-social-login') ?>.</p> 
+							<?php elseif ( $provider_id == "Facebook" ) : ?>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go back to the <b>Dashboard</b> page and past the created application credentials (APP ID and Secret) into the boxes above", 'wordpress-social-login') ?>.</p> 
+							<?php else: ?>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials into the boxes above", 'wordpress-social-login') ?>.</p> 
 							<?php endif; ?> 
+
 						<?php endif; ?> 
 						
 						<?php if ( $provider_id == "Facebook" ) : ?>
-							<hr /> 
 							<table style="text-align: center;margin-bottom:12px;">
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/facebook/1.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/facebook/1.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/facebook/2.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/facebook/2.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/facebook/3.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/facebook/3.png"></a></td>
 							</table> 
-							<hr />
 						<?php endif; ?> 
 
 						<?php if ( $provider_id == "Google" ) : ?>
-							<hr /> 
 							<table style="text-align: center;margin-bottom:12px;">
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/google/1.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/google/1.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/google/2.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/google/2.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/google/3.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/google/3.png"></a></td>
 							</table> 
-							<hr />
 						<?php endif; ?> 
 
 						<?php if ( $provider_id == "Twitter" ) : ?>
-							<hr /> 
 							<table style="text-align: center;margin-bottom:12px;">
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/twitter/1.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/twitter/1.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/twitter/2.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/twitter/2.png"></a></td>
 								<td><a class="span4 thumbnail" href="http://hybridauth.sf.net/userguide/img/setup/twitter/3.png" target="_blank"><img src="http://hybridauth.sf.net/userguide/img/setup/twitter/3.png"></a></td>
 							</table> 
-							<hr />
 						<?php endif; ?> 
 					</div>
 
@@ -285,7 +292,7 @@ function wsl_component_networks_setup()
 						<p>
 							<b><?php _wsl_e("And that's it!", 'wordpress-social-login') ?></b> 
 							<br />
-							<?php echo sprintf( _wsl__( 'If for some reason you still can\'t figure it out, first try to a) <a class="button-primary" href="https://www.google.com/search?q=%s API create application" target="_blank">Google it</a>, then check it on b) <a class="button-primary" href="http://www.youtube.com/results?search_query=%s API create application " target="_blank">Youtube</a> and if nothing works c) <a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=help">ask for support</a>', 'wordpress-social-login'), $provider_name, $provider_name ) ?>.
+							<?php echo sprintf( _wsl__( 'If for some reason you still can\'t manage to create an application for %s, first try to <a href="https://www.google.com/search?q=%s API create application" target="_blank">Google it</a>, then check it on <a href="http://www.youtube.com/results?search_query=%s API create application " target="_blank">Youtube</a>, and if nothing works <a href="options-general.php?page=wordpress-social-login&wslp=help">ask for support</a>', 'wordpress-social-login'), $provider_name, $provider_name, $provider_name ) ?>.
 						</p> 
 					<?php endif; ?> 
 				</div>

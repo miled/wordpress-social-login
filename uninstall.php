@@ -9,9 +9,9 @@
 /**
 * Uninstall WSL:
 *
-*   1. Delete wslusersprofiles and wsluserscontacts
+*   1. Delete wslusersprofiles, wsluserscontacts and wslwatchdog
 *   2. Delete user metadata from usermeta
-*   3. Delete registered wsl options
+*   3. Delete registered options
 *
 * Ref: http://codex.wordpress.org/Function_Reference/register_uninstall_hook
 */
@@ -23,17 +23,18 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 global $wpdb;
 
-// 1. Delete wslusersprofiles and wsluserscontacts
+// 1. Delete wslusersprofiles, wsluserscontacts and wslwatchdog
 
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wslusersprofiles" ); 
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wsluserscontacts" );
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wslwatchdog" );
 
 // 2. Delete user metadata from usermeta
 
-	$wpdb->query( "DELETE FROM {$wpdb->prefix}usermeta WHERE meta_key = 'wsl_current_provider'"   );
-	$wpdb->query( "DELETE FROM {$wpdb->prefix}usermeta WHERE meta_key = 'wsl_current_user_image'" );
+	$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key = 'wsl_current_provider'"   );
+	$wpdb->query( "DELETE FROM $wpdb->usermeta WHERE meta_key = 'wsl_current_user_image'" );
 
-// 3. Delete registered wsl options
+// 3. Delete registered options
 
 	delete_option( 'wsl_database_migration_version' );
 
@@ -46,9 +47,9 @@ global $wpdb;
 	delete_option( 'wsl_components_login-widget_enabled ' );
 	delete_option( 'wsl_components_bouncer_enabled' );
 	delete_option( 'wsl_components_diagnostics_enabled' );
-	delete_option( 'wsl_components_basicinsights_enabled' );
 	delete_option( 'wsl_components_users_enabled' );
 	delete_option( 'wsl_components_contacts_enabled ' );
+	delete_option( 'wsl_components_buddypress_enabled ' );
 
 	delete_option( 'wsl_settings_redirect_url ' );
 	delete_option( 'wsl_settings_force_redirect_url ' );
@@ -83,75 +84,5 @@ global $wpdb;
 	delete_option( 'wsl_settings_contacts_import_twitter' );
 	delete_option( 'wsl_settings_contacts_import_live ' );
 	delete_option( 'wsl_settings_contacts_import_linkedin ' );
-
-/*
-	# We will keep these for now
-		delete_option( 'wsl_settings_Facebook_enabled ' );
-		delete_option( 'wsl_settings_Google_enabled ' );
-		delete_option( 'wsl_settings_Twitter_enabled' );
-		delete_option( 'wsl_settings_PixelPin_enabled ' );
-		delete_option( 'wsl_settings_Latch_enabled' );
-		delete_option( 'wsl_settings_Facebook_app_id' );
-		delete_option( 'wsl_settings_Facebook_app_secret' );
-		delete_option( 'wsl_settings_Google_app_id' );
-		delete_option( 'wsl_settings_Google_app_secret' );
-		delete_option( 'wsl_settings_Twitter_app_key' );
-		delete_option( 'wsl_settings_Twitter_app_secret ' );
-		delete_option( 'wsl_settings_Live_enabled ' );
-		delete_option( 'wsl_settings_Live_app_id' );
-		delete_option( 'wsl_settings_Live_app_secret' );
-		delete_option( 'wsl_settings_Yahoo_enabled' );
-		delete_option( 'wsl_settings_Foursquare_enabled ' );
-		delete_option( 'wsl_settings_Foursquare_app_id' );
-		delete_option( 'wsl_settings_Foursquare_app_secret' );
-		delete_option( 'wsl_settings_LinkedIn_enabled ' );
-		delete_option( 'wsl_settings_LinkedIn_app_key ' );
-		delete_option( 'wsl_settings_LinkedIn_app_secret' );
-		delete_option( 'wsl_settings_AOL_enabled' );
-		delete_option( 'wsl_settings_Vkontakte_enabled' );
-		delete_option( 'wsl_settings_Vkontakte_app_id ' );
-		delete_option( 'wsl_settings_Vkontakte_app_secret ' );
-		delete_option( 'wsl_settings_LastFM_enabled ' );
-		delete_option( 'wsl_settings_LastFM_app_key ' );
-		delete_option( 'wsl_settings_LastFM_app_secret' );
-		delete_option( 'wsl_settings_Instagram_enabled' );
-		delete_option( 'wsl_settings_Instagram_app_id ' );
-		delete_option( 'wsl_settings_Instagram_app_secret ' );
-		delete_option( 'wsl_settings_Identica_enabled ' );
-		delete_option( 'wsl_settings_Identica_app_key ' );
-		delete_option( 'wsl_settings_Identica_app_secret' );
-		delete_option( 'wsl_settings_Tumblr_enabled ' );
-		delete_option( 'wsl_settings_Tumblr_app_key ' );
-		delete_option( 'wsl_settings_Tumblr_app_secret' );
-		delete_option( 'wsl_settings_Goodreads_enabled' );
-		delete_option( 'wsl_settings_Goodreads_app_key' );
-		delete_option( 'wsl_settings_Goodreads_app_secret ' );
-		delete_option( 'wsl_settings_Stackoverflow_enabled' );
-		delete_option( 'wsl_settings_GitHub_enabled ' );
-		delete_option( 'wsl_settings_GitHub_app_id' );
-		delete_option( 'wsl_settings_GitHub_app_secret' );
-		delete_option( 'wsl_settings_500px_enabled' );
-		delete_option( 'wsl_settings_500px_app_key' );
-		delete_option( 'wsl_settings_500px_app_secret ' );
-		delete_option( 'wsl_settings_Skyrock_enabled' );
-		delete_option( 'wsl_settings_Skyrock_app_key' );
-		delete_option( 'wsl_settings_Skyrock_app_secret ' );
-		delete_option( 'wsl_settings_Mixi_enabled ' );
-		delete_option( 'wsl_settings_Steam_enabled' );
-		delete_option( 'wsl_settings_TwitchTV_enabled ' );
-		delete_option( 'wsl_settings_TwitchTV_app_id' );
-		delete_option( 'wsl_settings_TwitchTV_app_secret' );
-		delete_option( 'wsl_settings_Mailru_enabled ' );
-		delete_option( 'wsl_settings_Mailru_app_id' );
-		delete_option( 'wsl_settings_Mailru_app_secret' );
-		delete_option( 'wsl_settings_Yandex_enabled ' );
-		delete_option( 'wsl_settings_Yandex_app_id' );
-		delete_option( 'wsl_settings_Yandex_app_secret' );
-		delete_option( 'wsl_settings_Odnoklassniki_enabled' );
-		delete_option( 'wsl_settings_Odnoklassniki_app_id ' );
-		delete_option( 'wsl_settings_Odnoklassniki_app_secret ' );
-		delete_option( 'wsl_settings_PixelPin_app_id' );
-		delete_option( 'wsl_settings_PixelPin_app_secret' );
-*/
 
 // --------------------------------------------------------------------
