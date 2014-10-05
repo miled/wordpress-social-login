@@ -35,15 +35,15 @@ Domain Path: /languages
 *  Coding Style :
 *
 *   - Readable code.
-*   - Clear indentations (8 chars). 
-*   - Same name convention of wordpress: those long long and self explanatory functions and variables.
+*   - Clear indentations (8 chars).
+*   - Same name convention of wordpress: those long long and self-explanatory functions and variables.
 *
 *
 *  If you want to translate this plugin into your language (or to improve the current translation), see
 *  wordpress-social-login/languages/readme.txt
 *
-*  If you have fixed, improved or translated something on WSL and you want to contribute to the plugin
-*  then don't hesitate to drop me an email or to submit a PR on https://github.com/hybridauth/WordPress-Social-Login 
+*  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
+*  and the WordPress community by submitting a Pull Request at https://github.com/hybridauth/WordPress-Social-Login
 *
 */
 
@@ -61,17 +61,15 @@ $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_V
 // --------------------------------------------------------------------
 
 /**
-* Allow custom functions
-*
 * This file might be used to :
 *     1. Redefine WSL constants, so you can move WSL folder around.
 *     2. Define wsl_load_plugin_textdomain(), in case you want to use a custom translation.
 *     3. Customize wsl_render_notice_page() and wsl_render_error_page().
-*     4. Customize wsl_render_redirect_to_provider_loading_screen().
+*     4. Customize wsl_render_redirect_to_provider_loading_screen() and wsl_render_return_from_provider_loading_screen().
 *     5. Implement your WSL hooks.
 */
-if( file_exists( WP_PLUGIN_DIR . '/wordpress-social-login-custom.php' ) ){
-	include_once( WP_PLUGIN_DIR . '/wordpress-social-login-custom.php' );
+if( file_exists( WP_PLUGIN_DIR . '/wp-social-login-custom.php' ) ){
+	include_once( WP_PLUGIN_DIR . '/wp-social-login-custom.php' );
 }
 
 // --------------------------------------------------------------------
@@ -97,8 +95,8 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 */
 function wsl_activate()
 {
-	if ( ! function_exists ('register_post_status') ){
-		deactivate_plugins (basename (dirname (__FILE__)) . '/' . basename (__FILE__));
+	if ( ! function_exists('register_post_status') ){
+		deactivate_plugins( basename( dirname( __FILE__ ) ) . '/' . basename (__FILE__) );
 
 		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
 	}
@@ -171,7 +169,7 @@ require_once( dirname(__FILE__) . '/includes/widgets/wsl.complete.registration.p
 require_once( dirname(__FILE__) . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages.
 require_once( dirname(__FILE__) . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens.
 
-# WSL Admin UI. This will only kick in, if the current user is connected as admin
+# WSL Admin UI
 if( is_admin() ){
 	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The entry point to WSL Admin interfaces 
 }

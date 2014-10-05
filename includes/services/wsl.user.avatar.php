@@ -9,7 +9,7 @@
 /** 
 * Displaying the user avatar when available on the comment section and top bar 
 *
-* This functions are borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
+* These functions are borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
 */
 
 // Exit if accessed directly
@@ -83,9 +83,7 @@ add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
 // --------------------------------------------------------------------
 
 /**
-* Display users avatars from social networks when available
-* 
-* Buddypress specific.
+* Display users avatars from social networks on buddypress
 */
 function wsl_bp_user_custom_avatar($text, $args)
 {

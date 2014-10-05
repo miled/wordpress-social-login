@@ -21,3 +21,6 @@ hybridauth/Hybrid/Providers/Mixi.php
 
 hybridauth/Hybrid/Providers/Latch.php
 	Add an unsupported provider
+
+/hybridauth/Hybrid/Provider_Model_OpenID.php
+	Merge PR #324

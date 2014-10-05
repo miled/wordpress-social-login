@@ -19,7 +19,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 * Display a loading screen while the WSL is redirecting the user to a given provider for authentication
 *
 * Note: 
-*   In case you want to customize the content generated, you may define this function in 'wordpress-social-login-custom.php'
+*   In case you want to customize the content generated, you may define this function in 'wp-social-login-custom.php'
 *   This function should redirect to the current url PLUS '&redirect_to_provider=true', see javascript function init() defined bellow 
 *   And make sure the script DIES at the end. 
 *
@@ -94,7 +94,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 * Display a loading screen after a user come back from provider and while WSL is procession his profile, contacts, etc.
 *
 * Note: 
-*   In case you want to customize the content generated, you may define this function in 'wordpress-social-login-custom.php'
+*   In case you want to customize the content generated, you may define this function in 'wp-social-login-custom.php'
 */
 if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 {
@@ -185,8 +185,8 @@ if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 			</tr> 
 		</table>
 
-		<form name="loginform" method="post" action="<?php echo $authenticated_url ?>">
-			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
+		<form name="loginform" method="post" action="<?php echo esc_url_raw( $authenticated_url ); ?>">
+			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo esc_url_raw( $redirect_to ); ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
 			<input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
 		</form>

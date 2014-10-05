@@ -11,27 +11,23 @@ WordPress Social Login allow your visitors to comment and login with social netw
 
 == Description ==
 
-<strong>Wordpress Social Login</strong> allows your website visitors and customers to register on using their existing social accounts ID, eliminating the need to fill out registration forms and remember usernames and passwords. 
+<strong>Wordpress Social Login</strong> allows your website readers or customers to register on using their existing social accounts ID, eliminating the need to fill out registration forms and remember usernames and passwords. 
 
 Wordpress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
 
 Wordpress Social Login gives you absolute control over users access to your website and comes a list of rules and restrictions for you to setup.
 
 <strong>Easy to customize and integrate</strong> <br>
-Wordpress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content, changing the css and icons is a matter of seconds.
+Wordpress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content.
 
-<strong>26 supported social networks</strong> <br>
+<strong>Wide variety of providers</strong> <br>
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
-<br>
-<br>
-Currently supported providers are:
+
+<strong>Currently supported providers</strong><br>
 Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
 
 <strong>Free, unlimited and white-label</strong> <br>
-Licensed under MIT License, Wordpress Social Login available to everyone for completely free, with all features included, at absolutely no cost. You are free to use a Wordpress Social Login in commercial websites as long as the copyright header is left intact.
-
-<strong>Built on top of an Open Source Library</strong><br>
-HybridAuth Library enable developers to easily build social applications to engage websites visitors and customers on a social level by implementing social signin, social sharing, users profiles, friends list, activities stream, status updates and more.
+Licensed under MIT License, Wordpress Social Login available to everyone for completely free of charges. You are free to use a Wordpress Social Login in commercial project as long as the copyright header is left intact.
 
 <strong>Special thanks to:</strong>
 
@@ -69,7 +65,9 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 1. **Comment** - Buttons for 3rd party services are also provided on the comment form.
 2. **Login** - On the login and registration form, buttons for 3rd party services are provided.
 3. **Setup** - To correctly setup these Identity Providers please carefully follow the help section of each one.
-4. **Customize** - WordPress Social Login customization form
+4. **Widget** - WordPress Social Login widget customization
+5. **Bouncer** - WordPress Social Login advanced configuration
+6. **Components** - WordPress Social Login components manager
 
 == Changelog ==
 
@@ -80,7 +78,7 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 * WSL Widget is now more flexible than before and can be fully customized to fit you website theme.
 * Introducing new providers : Reddit, Disqus and PixelPin.
 * A number of bugfixes, small enhancements and visual updates.
-* WSL Hooks has been reworked and few hooks have been depreciated in favour of new ones. For more information, see: http://hybridauth.sourceforge.net/wsl/hooks.html
+* WSL Hooks has been reworked and few hooks have been depreciated in favour of new ones. For more information, see: http://hybridauth.sourceforge.net/wsl/developer.html
 
 = 2.1.3 = 
 

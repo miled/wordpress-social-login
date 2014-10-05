@@ -58,7 +58,7 @@ function _wsl__( $text, $domain )
 /**
 * Check if the current connection is being made over https
 *
-* This functions are borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
+* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
 */
 function wsl_is_https_on()
 {
@@ -94,7 +94,7 @@ function wsl_is_https_on()
 /**
  * Return the current url
 *
-* This functions are borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
+* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
 */
 function wsl_get_current_url()
 {

@@ -21,7 +21,7 @@ if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit;
 
 // --------------------------------------------------------------------
 
-global $wpdb;
+	global $wpdb;
 
 // 1. Delete wslusersprofiles, wsluserscontacts and wslwatchdog
 

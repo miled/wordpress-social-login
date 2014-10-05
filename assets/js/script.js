@@ -6,7 +6,7 @@
 */
 
 /**
-*
+* Manage authentications via a popup
 *
 * Based on http://wordpress.org/extend/plugins/social-connect/
 */

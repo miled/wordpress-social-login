@@ -86,6 +86,7 @@ function wsl_component_watchdog()
 					</tr>
 			<?php
 				foreach( $list_calls as $call_data ){
+
 					$exectime  = (float) $call_data->created_at - ( $oexectime ? $oexectime : (float) $call_data->created_at );
 					$oexectime = (float) $call_data->created_at;
 

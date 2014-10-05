@@ -34,10 +34,7 @@ function wsl_render_login_form()
 		return;
 	}
 
-	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
-	// This allows for output redirection or a kind of "echo=off" feature similar to wp_login_form.
-	// All output to stdout by 'wsl_render_login_form' is captured and returned by the function.
-	// After buffer is returned, it can be output at the correct time / position of function instantiation.
+
 	ob_start();
 
 	// HOOKABLE: This action runs just before generating the WSL Widget.
@@ -183,25 +180,30 @@ function wsl_render_login_form()
 	// Display WSL debugging are bellow the widget.  
 	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :) 
 
-	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
-	// All output to stdout by 'wsl_render_login_form' has finished.
-	// Close and return buffer via PHP - Output Control function.
-	// This stops the output from being dumped to document immediately at function runtime,
-	// which is often at the top of a page or post instead of at the correct position where a shortcode is placed. 
 	return ob_get_clean();
 }
 
 // --------------------------------------------------------------------
 
-# {{{ render widget
+/**
+* WSL Widget hortcode tag
+*
+* Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
+*/
+function wsl_shortcode_handler($args)
+{
+	return wsl_render_login_form();
+}
 
+add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
+
+// --------------------------------------------------------------------
+
+/**
+* WSL Widget action 
+*/
 function wsl_render_login_form_login()
 {
-	# https://github.com/hybridauth/WordPress-Social-Login/pull/35
-	// Captured stdout buffer from 'wsl_render_login_form' is returned on instantiation.
-	// It is now output to screen satisfying appropriate behaviour for 'do_action()' calls.
-	// Since output is returned, other registrations (such as shortcodes) can display returned
-	// output at the correct time and position in the document for when the shortcode is triggered.
 	echo wsl_render_login_form();
 }
 
@@ -216,7 +218,7 @@ function wsl_render_wsl_widget_in_comment_form()
 {
 	$wsl_settings_widget_display = get_option( 'wsl_settings_widget_display' );
 
-	if( comments_open() ) {
+	if( comments_open() ){
 		if( 
 				!  $wsl_settings_widget_display
 			|| 
@@ -266,20 +268,28 @@ function wsl_render_wsl_widget_in_wp_register_form()
 add_action( 'register_form'    , 'wsl_render_wsl_widget_in_wp_register_form' );
 add_action( 'after_signup_form', 'wsl_render_wsl_widget_in_wp_register_form' );
 
-# }}}
-
 // --------------------------------------------------------------------
 
-# {{{ shortcode, js and css injectors
-function wsl_shortcode_handler($args)
+/**
+* Enqueue WSL CSS file
+*/
+function wsl_add_stylesheets()
 {
-	return wsl_render_login_form();
+	if( ! wp_style_is( 'wsl_css', 'registered' ) ) {
+		wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
+	}
+
+	wp_enqueue_style( "wsl_css" ); 
 }
 
-add_shortcode ( 'wordpress_social_login', 'wsl_shortcode_handler' );
+add_action( 'login_head', 'wsl_add_stylesheets' );
+add_action( 'wp_head'   , 'wsl_add_stylesheets' );
 
 // --------------------------------------------------------------------
 
+/**
+* Enqueue WSL Javascript, only if we use popup
+*/
 function wsl_add_javascripts()
 {
 	if( get_option( 'wsl_settings_use_popup' ) != 1 ){
@@ -287,164 +297,14 @@ function wsl_add_javascripts()
 	}
 
 	if( ! wp_script_is( 'wsl_js', 'registered' ) ) {
-		wp_register_script( "wsl_js", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/connect.js" );
+		wp_register_script( "wsl_js", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/script.js" );
 	}
 
-	# https://github.com/hybridauth/WordPress-Social-Login/pull/36
 	wp_enqueue_script( "jquery" );
 	wp_enqueue_script( "wsl_js" );
 }
 
 add_action( 'login_head', 'wsl_add_javascripts' );
-add_action( 'wp_head', 'wsl_add_javascripts' );
-
-// --------------------------------------------------------------------
-
-function wsl_add_stylesheets()
-{
-	if( ! wp_style_is( 'wsl_css', 'registered' ) ) {
-		wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
-	}
-
-	# https://github.com/hybridauth/WordPress-Social-Login/pull/36
-	wp_enqueue_style( "wsl_css" ); 
-}
-
-add_action( 'login_head', 'wsl_add_stylesheets' );
-add_action( 'wp_head', 'wsl_add_stylesheets' );
-# }}}
-
-// --------------------------------------------------------------------
-
-# {{{ linking new accounts 
-
-// render a new widget on wp-admin/profile.php to permit linking profiles 
-// only one linked account per provider is permitted!!
-function wsl_render_login_form_admin_head_user_profile_generate_html()
-{ 
-	if ( ! is_user_logged_in() ){
-		return;
-	}
-
-	# if ob_start()/ob_end_clean() dont work for you then i can do nothing for you
-	ob_start();
-
-	global $current_user;
-	global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
-
-	get_currentuserinfo();
-
-	$user_id = $current_user->ID;
-
-	$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );
-
-	// if not WSL user, then nothing to show, yet
-	if( ! $linked_accounts ){
-		return;
-	}
-
-	$social_icon_set = get_option( 'wsl_settings_social_icon_set' );
-
-	if( empty( $social_icon_set ) ){
-		$social_icon_set = "wpzoom/";
-	}
-	else{
-		$social_icon_set .= "/";
-	}
-
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set; 
-?> 
-<h3><?php _wsl_e("Social networks", 'wordpress-social-login') ?></h3> 
-<table class="form-table">  
-	<tr>  
-		<td valign="top">
-			<table id="wsl-user-profile-injected-table-b">
-				<tr>
-					<th width="80"><?php _wsl_e("Provider", 'wordpress-social-login') ?></th>
-					<th><?php _wsl_e("Identity", 'wordpress-social-login') ?></th> 
-				</tr>
-				<?php
-					foreach( $linked_accounts AS $item ){  
-						$identity = $item->profileurl;
-						$photourl = $item->photourl;
-						
-						if( ! $identity ){
-							$identity = $item->identifier;
-						}
-				?>
-					<tr>
-						<td>
-							<?php if( $photourl ) { ?>
-								<img src="<?php echo $photourl ?>" style="vertical-align: top;width:16px;height:16px;" > 
-							<?php } else { ?>
-								<img src="<?php echo $assets_base_url . strtolower(  $item->provider ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" />
-							<?php } ?> 
-							<?php echo ucfirst( $item->provider ); ?>
-						</td>
-						<td><?php echo $identity; ?></td> 
-					</tr>
-				<?php 
-					}
-				?>
-			</table>
-		</td> 
-	</tr>
-</table>
-<?php
-	$html = ob_get_contents();
-
-	ob_end_clean();
-
-	return addslashes( preg_replace('/\s+/',' ', $html ) );
-}
-
-function wsl_render_login_form_admin_head_user_profile()
-{
-?> 
-	<style> 
-		#wsl-user-profile-injected-table-b
-		{
-			font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-			font-size: 12px;
-			background: #fff; 
-			border-collapse: collapse;
-			text-align: left;
-		}
-		#wsl-user-profile-injected-table-b th
-		{
-			font-size: 14px;
-			font-weight: normal; 
-			padding: 10px 8px;
-			border-bottom: 2px solid #ccc;
-			width: auto;
-		}
-		#wsl-user-profile-injected-table-b td
-		{
-			border-bottom: 1px solid #ccc; 
-			padding: 6px 8px;
-			width: auto;
-		}
-		#wsl-user-profile-injected-table-b tbody tr:hover td
-		{
-			color: #009;
-		} 
-	</style>
-	<script>
-		jQuery(document).ready(function($)
-		{     
-			jQuery( '#user_login' )
-				.parent()
-					.parent()
-						.parent()
-					.parent()
-				.after( '<?php echo wsl_render_login_form_admin_head_user_profile_generate_html() ?>' );
-		});
-	</script>
-<?php
-}
-
-add_action( 'admin_head-profile.php', 'wsl_render_login_form_admin_head_user_profile' );  
-
-# }}} linking new accounts
+add_action( 'wp_head'   , 'wsl_add_javascripts' );
 
 // --------------------------------------------------------------------

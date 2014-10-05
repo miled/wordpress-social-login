@@ -8,6 +8,8 @@
 
 /** 
 * User data functions (database related)
+*
+* This code is loosely commented: functions names should be self-explanatory.
 */
 
 // Exit if accessed directly
@@ -15,7 +17,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-function get_wordpess_users_count()
+function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
 
@@ -26,7 +28,7 @@ function get_wordpess_users_count()
 
 // --------------------------------------------------------------------
 
-function get_wsl_users_count()
+function wsl_get_wsl_users_count()
 {
 	global $wpdb;
 
@@ -146,8 +148,10 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	
 	$rs  = $wpdb->get_results( $wpdb->prepare( $sql, $user_id, $provider ) );
 
+	// we only sotre the user profile if it has change since last login.
 	$object_sha = sha1( serialize( $profile ) );
 
+	// checksum
 	if( ! empty( $rs ) && $rs[0]->object_sha == $object_sha ){
 		return;
 	}
@@ -201,11 +205,6 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 
 // --------------------------------------------------------------------
 
-/**
-* Contacts import
-*
-* We update contact list only one time per provider, this behaviour may change depend on wsl users feedback 
-*/
 function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 {
 	// component contact should be enabled
@@ -224,9 +223,11 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 		return;
 	}
 
-	global $wpdb;
+	global $wpdb; 
 
-	// check if the user already have contacts. we only import once
+	$user_contacts = null;
+
+	// we only import contacts once
 	$sql = "SELECT COUNT(`id`) FROM {$wpdb->prefix}wsluserscontacts WHERE user_id = %d AND provider = %s ";
 
 	$nb_contacts = $wpdb->get_var( $wpdb->prepare( $sql, $user_id, $provider ) );
@@ -234,9 +235,6 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 	if( $nb_contacts ){
 		return;
 	}
-
-	// all check: start import process
-	$user_contacts = null;
 
 	// grab the user's friends list
 	try{
@@ -246,7 +244,6 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 		// well.. we can't do much.
 	}
 
-	// if no contact found, we cut short
 	if( ! $user_contacts ){
 		return;
 	}
@@ -269,11 +266,6 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 
 // --------------------------------------------------------------------
 
-/**
-* Buddypress Profile mappings
-*
-* map hybridauth profile to buddypress xprofile table
-*/
 function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile )
 {
 	// component Buddypress should be enabled
