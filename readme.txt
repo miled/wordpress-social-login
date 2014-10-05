@@ -3,15 +3,16 @@ Contributors: miled
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.2.1
+Stable tag: 2.1.6
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
+Donate link: https://www.redcross.org/quickdonate/index.jsp
 
 WordPress Social Login allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
 
 == Description ==
 
-<strong>Wordpress Social Login</strong> allows your website readers or customers to register on using their existing social accounts ID, eliminating the need to fill out registration forms and remember usernames and passwords. 
+<strong>Wordpress Social Login</strong> allow your website readers and customers to register on using their existing social accounts IDs, eliminating the need to fill out registration forms and remember usernames and passwords. 
 
 Wordpress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
 
@@ -27,7 +28,7 @@ Depending on the audience you're targeting, you can choose from a wide variety o
 Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
 
 <strong>Free, unlimited and white-label</strong> <br>
-Licensed under MIT License, Wordpress Social Login available to everyone for completely free of charges. You are free to use a Wordpress Social Login in commercial project as long as the copyright header is left intact.
+Wordpress Social Login is open-source and completely free. The source code is publicly available on [GitHub](https://github.com/hybridauth/WordPress-Social-Login) for anyone to help and contribute. You are free to use a Wordpress Social Login in commercial projects as long as the copyright header is left intact.
 
 <strong>Special thanks to:</strong>
 
@@ -37,7 +38,7 @@ Licensed under MIT License, Wordpress Social Login available to everyone for com
 * [Social Login plugin](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
 * [Query Monitor plugin](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress plugins developers.
 
-Thanks to everyone who have contributed to this project and the to Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support.
+Thanks to everyone who have contributed to this project and the to Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support forum.
 
 == Installation ==
 
@@ -58,7 +59,7 @@ Thanks to everyone who have contributed to this project and the to Wordpress com
 
 == Frequently Asked Questions ==
 
-The user guide and frequently asked questions can be found at http://hybridauth.sourceforge.net/wsl/index.html
+The user guide and frequently asked questions can be found at http://hybridauth.sourceforge.net/wsl/
 
 == Screenshots ==
 
@@ -77,8 +78,8 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 * WSL is now updated to work with the latest apis changes of the supported social networks.
 * WSL Widget is now more flexible than before and can be fully customized to fit you website theme.
 * Introducing new providers : Reddit, Disqus and PixelPin.
-* A number of bugfixes, small enhancements and visual updates.
 * WSL Hooks has been reworked and few hooks have been depreciated in favour of new ones. For more information, see: http://hybridauth.sourceforge.net/wsl/developer.html
+* A number of bugfixes, small enhancements and visual updates.
 
 = 2.1.3 = 
 

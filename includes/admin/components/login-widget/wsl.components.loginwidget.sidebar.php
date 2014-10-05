@@ -41,6 +41,10 @@ function wsl_component_loginwidget_sidebar()
 							<?php _wsl_e("If this widget does not show up on your custom theme or you want to add it somewhere else then refer to the next section", 'wordpress-social-login') ?>.
 						</p>
 
+						<p style="margin:10px;">  
+							<?php _wsl_e('For more information about the WSL Widget, refer to the online userguide <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">widget customization</a></b> and <b><a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">widget themes</a></b>', 'wordpress-social-login') ?>. 
+						</p>
+
 						<h4 style="cursor: default;border-bottom:1px solid #ccc;"><?php _wsl_e("Custom integration", 'wordpress-social-login') ?></h4>
 
 						<p style="margin:10px;"> 

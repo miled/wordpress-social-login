@@ -8,6 +8,8 @@
 
 /**
 * WordPress Social Login Requirements Test
+*
+* ToDo: need to move this inside WSL admin UIs
 */
 
 // --------------------------------------------------------------------

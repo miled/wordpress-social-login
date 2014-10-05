@@ -54,7 +54,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.1-rc.1";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.1";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -117,8 +117,11 @@ function wsl_add_settings_link( $links, $file )
 
 	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
 
-	if ( $file == $this_plugin ){
-		$settings_link = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+	if ( $file == $this_plugin ){ 
+		$settings_link  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+		array_unshift( $links, $settings_link );
+		
+		$settings_link = '<a href="http://hybridauth.sourceforge.net/wsl/index.html">' . __( "User Guide" ) . '</a>';
 
 		array_unshift( $links, $settings_link );
 	}

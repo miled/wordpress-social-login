@@ -44,6 +44,10 @@ function wsl_check_compatibilities()
 		update_option( 'wsl_settings_connect_with_label', _wsl__("Connect with:", 'wordpress-social-login') );
 	}
 
+	if( ! get_option( 'wsl_settings_users_avatars' ) ){ 
+		update_option( 'wsl_settings_users_avatars', 1 );
+	}
+
 	if( ! get_option( 'wsl_settings_use_popup' ) ){ 
 		update_option( 'wsl_settings_use_popup', 2 );
 	}

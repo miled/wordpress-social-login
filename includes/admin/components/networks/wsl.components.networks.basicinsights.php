@@ -18,8 +18,8 @@ function wsl_component_networks_basicinsights()
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	$total_users     = get_wordpess_users_count();
-	$total_users_wsl = get_wsl_users_count();
+	$total_users     = wsl_get_wordpess_users_count();
+	$total_users_wsl = wsl_get_wsl_users_count();
 
 	if( $total_users && $total_users_wsl ){
 		$users_conversion = ( 100 * $total_users_wsl ) / $total_users;

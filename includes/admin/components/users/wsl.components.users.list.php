@@ -120,7 +120,7 @@ function wsl_component_users_list()
 
 							<div class="row-actions">
 								<span class="view">
-									<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php _wsl_e("Profile", 'wordpress-social-login') ?></a>
+									<a href="options-general.php?page=wordpress-social-login&wslp=users&uid=<?php echo $user_id ?>"><?php _wsl_e("Profiles", 'wordpress-social-login') ?></a>
 									| 
 								</span>
 

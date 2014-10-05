@@ -196,7 +196,7 @@ function wsl_component_networks_setup()
 					<?php if ( $provider_new_app_link  ) : ?> 
 						<?php _wsl_e('<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials', 'wordpress-social-login') ?>. 
 						
-						<?php echo sprintf( _wsl__( 'This application will link your website <code>%s</code> to <code>%s API</code> and these credentials are needed in order for <b>%s</b> users to access your website', 'wordpress-social-login'), $_SERVER["SERVER_NAME"], $provider_name, $provider_name ) ?>. 
+						<?php echo sprintf( _wsl__( 'This application will link your website <code>%s</code> to <code>%s API</code> and these credentials are needed in order for <b>%s</b> users to access your website', 'wordpress-social-login'), site_url(), $provider_name, $provider_name ) ?>. 
 						<br />
 						
 						<?php _wsl_e("These credentials may also differ in format, name and content depending on the social network.", 'wordpress-social-login') ?> 
@@ -220,14 +220,14 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("On the <b>Create Client ID</b> popup", 'wordpress-social-login') ?> :</p>
 								<ul style="margin-left:35px">
 									<li>Select <em style="color:#0147bb;"><?php _wsl_e("Web application</em> as the application type", 'wordpress-social-login') ?>.</li>
-									<li><?php _wsl_e("Put your website domain in the <b>Authorized JavaScript origins</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</li>
+									<li><?php _wsl_e("Put your website domain in the <b>Authorized JavaScript origins</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo site_url(); ?></em>.</li>
 									<li><?php _wsl_e("Provide this URL as the <b>Authorized redirect URI</b> for your application", 'wordpress-social-login') ?>: <br /><?php echo $provider_callback_url ?></li> 
 								</ul>
 							<?php elseif ( $provider_id == "Facebook" ) : ?>   
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Select <b>Add a New App</b> from the <b>Apps</b> menu at the top", 'wordpress-social-login') ?>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out Display Name, Namespace, choose a category and click <b>Create App</b>", 'wordpress-social-login') ?>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to Settings page and click on <b>Add Platform</b>. Choose website and enter in the new screen your website url in <b>App Domains</b> and <b>Site URL</b> fields", 'wordpress-social-login') ?>.
-									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p> 
+									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo site_url(); ?></em>.</p> 
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p>  
 							<?php else: ?>  
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p> 
@@ -243,7 +243,7 @@ function wsl_component_networks_setup()
 							<?php endif; ?> 
 
 							<?php if ( $provider_id == "Live" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"] ?></em>.</p>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo site_url(); ?></em>.</p>
 							<?php endif; ?> 
 
 							<?php if ( $provider_id == "LinkedIn" ) : ?>

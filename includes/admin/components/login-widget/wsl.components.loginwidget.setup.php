@@ -169,9 +169,7 @@ function wsl_component_loginwidget_setup()
 		</h3>
 		<div class="inside"> 
 			<p>
-				<?php _wsl_e("To customize the default widget styles you can either: change the css in the <b>text area</b> bellow, edit the WSL css file <b>assets/css/style.css</b>, or add it to your website <b>theme</b> files", 'wordpress-social-login') ?>. 
-				
-				<?php _wsl_e('For more information refer to WSL userguide <b><a href="http://hybridauth.sourceforge.net/wsl/customize.html?" target="_blank">widget customization</a></b> and <b><a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">widget themes</a></b>', 'wordpress-social-login') ?>. 
+				<?php _wsl_e("To customize the default widget styles you can either: change the css in the <b>text area</b> bellow or add it to your website <b>theme</b> files", 'wordpress-social-login') ?>. 
 			</p>
 			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 			  <tr>  
