@@ -81,7 +81,7 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH' )
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', WP_PLUGIN_DIR . '/wordpress-social-login' );
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' ) 
-	|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', WP_PLUGIN_URL . '/wordpress-social-login' );
+	|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/wordpress-social-login' );
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' ) 
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' );
