@@ -1374,6 +1374,10 @@ abstract class BaseFacebook
     // uncomment this if you want to see the errors on the page
     // print 'error_log: '.$msg."\n";
     // @codeCoverageIgnoreEnd
+
+	//-
+	$_SESSION['WSL::FB_ERROR'] = $msg;
+	//-
   }
 
   /**

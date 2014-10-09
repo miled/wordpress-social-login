@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 * This function is mainly used by bouncer
 *
 * Note: 
-*   In case you want to customize the content generated, you may define this function in 'wordpress-social-login-custom.php'
+*   In case you want to customize the content generated, you may redefine this function
 *   Just make sure the script DIES at the end. 
 *
 *   The $message to display for users is passed as a parameter.
@@ -109,7 +109,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 		</table>
 	</body>
 </html> 
-<?php
+<?php 
 		die();
 	}
 }
@@ -124,8 +124,8 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 * This function is used when WSL fails to authenticated a user with social networks
 * 
 * Note: 
-*   In case you want to customize the content generated, you may define this function in 'wordpress-social-login-custom.php'
-*   Just make sure the script DIES at the end. 
+*   In case you want to customize the content generated, you may redefine this function
+*   Just make sure the script DOES NOT DIE at the end. 
 *
 *   The $message to display for users is passed as a parameter and is required.
 */
@@ -236,7 +236,6 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 	</body>
 </html> 
 <?php
-		die();
 	}
 }
 
@@ -250,29 +249,10 @@ function wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_t
 ?>
 <hr />
 
+<?php wsl_display_dev_mode_debugging_area(); ?>
+
 <h3>Backtrace</h3>
 <pre><?php debug_print_backtrace(); ?></pre>
-
-<h3>PHP Exception</h3>
-<pre><?php print_r( $php_exception ) ?></pre> 
-
-<?php
-	// try to provide the previous if any
-	// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
-	if ( version_compare( PHP_VERSION, '5.3.0', '>=' ) ) { 
-		if ( $php_exception->getPrevious() ) {
-		?>
-			<h3>Previous Exception</h3>
-			<pre><?php print_r( $php_exception->getPrevious() ) ?></pre> 
-		<?php
-		}
-	}						
-?>
-
-<h3>Extras vars to debug</h3>
-<pre><?php print_r( $php_extras_vars_to_debug ) ?></pre>
-
-<?php wsl_display_dev_mode_debugging_area(); ?>
 
 <br />
 

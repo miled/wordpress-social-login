@@ -7,6 +7,8 @@
 */
 
 /**
+* ! Moved to utilities until further notice.
+*
 * Uninstall WSL:
 *
 *   1. Delete wslusersprofiles, wsluserscontacts and wslwatchdog
@@ -17,7 +19,10 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit; 
+if( !defined( 'ABSPATH' ) ) exit;
+
+// Exit if accessed directly
+if( !defined( 'WP_UNINSTALL_PLUGIN' ) ) exit; 
 
 // --------------------------------------------------------------------
 

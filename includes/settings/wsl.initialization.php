@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
@@ -22,18 +22,22 @@ function wsl_check_requirements()
 {
 	if
 	(
-		   ! version_compare( PHP_VERSION, '5.2.0', '>=' )
+		   ! version_compare( PHP_VERSION, '5.3.0', '>=' )
 		|| ! isset( $_SESSION["wsl::plugin"] )
 		|| ! function_exists('curl_init')
 		|| ! function_exists('json_decode')
 		||   ini_get('register_globals')
 	)
+	{
 		return false;
+	}
 
 	$curl_version = curl_version();
 
-	if ( ! ( $curl_version['features'] & CURL_VERSION_SSL ) )
+	if( ! ( $curl_version['features'] & CURL_VERSION_SSL ) )
+	{
 		return false;
+	}
 
 	return true;
 }
@@ -77,15 +81,18 @@ function wsl_register_component( $component, $config, $tabs )
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 
 	// sure it can be overwritten.. just not recommended
-	if( isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] ) ){
+	if( isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] ) )
+	{
 		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
 	}
 
 	$config["type"] = "plugin";
 	$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] = $config;  
 
-	if( is_array( $tabs ) && count( $tabs ) ){
-		foreach( $tabs as $tab => $config ){
+	if( is_array( $tabs ) && count( $tabs ) )
+	{
+		foreach( $tabs as $tab => $config )
+		{
 			$config["component"] = $component; 
 
 			wsl_register_admin_tab( $tab, $config );
@@ -105,7 +112,8 @@ function wsl_register_admin_tab( $tab, $config )
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
 	// sure it can be overwritten.. just not recommended
-	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] ) ){
+	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] ) )
+	{
 		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
 	}
 
@@ -121,7 +129,8 @@ add_action( 'wsl_register_admin_tab', 'wsl_register_admin_tab', 10, 2 );
 */
 function wsl_is_component_enabled( $component )
 { 
-	if( get_option( "wsl_components_" . $component . "_enabled" ) == 1 ){
+	if( get_option( "wsl_components_" . $component . "_enabled" ) == 1 )
+	{
 		return true;
 	}
 
@@ -138,31 +147,39 @@ function wsl_register_components()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config ){
+	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config )
+	{
 		$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = false; 
 	}
 
-	foreach( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS as $component => $config ){
+	foreach( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS as $component => $config )
+	{
 		$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] = false;
 
 		$is_component_enabled = get_option( "wsl_components_" . $component . "_enabled" );
 		
-		if( $is_component_enabled == 1 ){
+		if( $is_component_enabled == 1 )
+		{
 			$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] = true;
 		}
 
-		if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "type" ] == "core" ){
+		if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "type" ] == "core" )
+		{
 			$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] = true;
 
-			if( $is_component_enabled != 1 ){
+			if( $is_component_enabled != 1 )
+			{
 				update_option( "wsl_components_" . $component . "_enabled", 1 );
 			}
 		}
 
-		foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $tconfig ){ 
-			if( $tconfig["component"] == $component ){
+		foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $tconfig )
+		{ 
+			if( $tconfig["component"] == $component )
+			{
 				
-				if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] ){
+				if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] )
+				{
 					$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = true;
 				}
 			}
@@ -187,18 +204,24 @@ function wsl_register_setting()
 	wsl_register_components();
 
 	// idps credentials
-	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+	{
 		$provider_id          = isset( $item["provider_id"]       ) ? $item["provider_id"]       : null; 
 		$require_client_id    = isset( $item["require_client_id"] ) ? $item["require_client_id"] : null;
 		$require_registration = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : null;
 
 		register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_enabled' );
 
-		if ( $require_registration ){ // require application?
-			if ( $require_client_id ){ // key or id ?
+		// require application?
+		if( $require_registration )
+		{
+			// key or id ?
+			if( $require_client_id )
+			{
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' ); 
 			}
-			else{
+			else
+			{
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' ); 
 			}
 

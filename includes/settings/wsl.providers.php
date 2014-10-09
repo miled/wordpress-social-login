@@ -66,12 +66,13 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "microblogging",
 	),
 	ARRAY( 
-		"provider_id"       => "Live",
-		"provider_name"     => "Windows Live", 
+		"provider_id"       => "WordPress",
+		"provider_name"     => "WordPress", 
 		"require_client_id" => true,
-		"new_app_link"      => "https://account.live.com/developers/applications/create", 
+		"callback"          => true,
+		"new_app_link"      => "https://developer.wordpress.com/apps/new/", 
 
-		"cat"               => "pleasedie",
+		"cat"               => "blogging",
 	),
 	ARRAY( 
 		"provider_id"       => "Yahoo",
@@ -79,6 +80,40 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => null, 
 
 		"cat"               => "pleasedie",
+	),
+	ARRAY( 
+		"provider_id"       => "LinkedIn",
+		"provider_name"     => "LinkedIn", 
+		"new_app_link"      => "https://www.linkedin.com/secure/developer", 
+
+		"cat"               => "professional",
+	),
+	ARRAY( 
+		"provider_id"       => "Disqus",
+		"provider_name"     => "Disqus", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://disqus.com/api/applications/", 
+
+		"cat"               => "misc",
+	),
+	ARRAY( 
+		"provider_id"       => "Instagram",
+		"provider_name"     => "Instagram", 
+		"callback"          => true,
+		"require_client_id" => true,
+		"new_app_link"      => "http://instagr.am/developer/clients/manage/", 
+
+		"cat"               => "media",
+	),
+	ARRAY( 
+		"provider_id"       => "Reddit",
+		"provider_name"     => "Reddit", 
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://ssl.reddit.com/prefs/apps", 
+
+		"cat"               => "socialnetworks",
 	),
 	ARRAY( 
 		"provider_id"       => "Foursquare",
@@ -90,41 +125,9 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "microblogging",
 	),
 	ARRAY( 
-		"provider_id"       => "LinkedIn",
-		"provider_name"     => "LinkedIn", 
-		"new_app_link"      => "https://www.linkedin.com/secure/developer", 
-
-		"cat"               => "professional",
-	),
-	ARRAY( 
-		"provider_id"       => "AOL",
-		"provider_name"     => "AOL", 
-		"new_app_link"      => null, 
-
-		"cat"               => "pleasedie",
-	),
-	ARRAY( 
-		"provider_id"       => "Vkontakte",
-		"provider_name"     => "Vkontakte", 
-		"callback"          => true,
-		"require_client_id" => true,
-		"new_app_link"      => "http://vk.com/developers.php", 
-
-		"cat"               => "socialnetworks",
-	),
-	ARRAY( 
 		"provider_id"       => "LastFM",
 		"provider_name"     => "Last.FM", 
 		"new_app_link"      => "http://www.lastfm.com/api/account", 
-
-		"cat"               => "media",
-	),
-	ARRAY( 
-		"provider_id"       => "Instagram",
-		"provider_name"     => "Instagram", 
-		"callback"          => true,
-		"require_client_id" => true,
-		"new_app_link"      => "http://instagr.am/developer/clients/manage/", 
 
 		"cat"               => "media",
 	),
@@ -205,6 +208,15 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "gamers",
 	),
 	ARRAY( 
+		"provider_id"       => "Vkontakte",
+		"provider_name"     => "Vkontakte", 
+		"callback"          => true,
+		"require_client_id" => true,
+		"new_app_link"      => "http://vk.com/developers.php", 
+
+		"cat"               => "socialnetworks",
+	),
+	ARRAY( 
 		"provider_id"       => "Mailru",
 		"provider_name"     => "Mailru", 
 		"require_client_id" => true,
@@ -232,35 +244,20 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "socialnetworks",
 	),
 	ARRAY( 
-		"provider_id"       => "Reddit",
-		"provider_name"     => "Reddit", 
-		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "https://ssl.reddit.com/prefs/apps", 
+		"provider_id"       => "AOL",
+		"provider_name"     => "AOL", 
+		"new_app_link"      => null, 
 
-		"cat"               => "socialnetworks",
+		"cat"               => "pleasedie",
 	),
 	ARRAY( 
-		"provider_id"       => "Disqus",
-		"provider_name"     => "Disqus", 
+		"provider_id"       => "Live",
+		"provider_name"     => "Windows Live", 
 		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "https://disqus.com/api/applications/", 
+		"new_app_link"      => "https://account.live.com/developers/applications/create", 
 
-		"cat"               => "misc",
+		"cat"               => "pleasedie",
 	),
-
-// Paypal needs further testing..
-	// ARRAY( 
-		// "provider_id"       => "Paypal",
-		// "provider_name"     => "Paypal", 
-		// "require_client_id" => true,
-		// "callback"          => true,
-		// "new_app_link"      => "https://developer.paypal.com/webapps/developer/applications/myapps", 
-
-		// "cat"               => "misc",
-	// ),
-
 	ARRAY( 
 		"provider_id"       => "PixelPin",
 		"provider_name"     => "PixelPin",

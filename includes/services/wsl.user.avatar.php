@@ -67,7 +67,7 @@ function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
 	//User found?
 	if( $user_id )
 	{
-		$user_thumbnail = get_user_meta( $user_id, 'wsl_current_user_image', true );
+		$user_thumbnail = wsl_get_user_custom_avatar( $user_id );
 
 		if( $user_thumbnail )
 		{
@@ -112,7 +112,7 @@ function wsl_bp_user_custom_avatar($text, $args)
 				//Retrieve user
 				if( $user_data !== false )
 				{ 
-					$user_thumbnail = get_user_meta( $args ['item_id'], 'wsl_user_image', true );
+					$user_thumbnail = wsl_get_user_custom_avatar( $args['item_id'] );
 
 					//Retrieve Avatar
 					if( $user_thumbnail !== false)

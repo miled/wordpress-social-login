@@ -75,12 +75,35 @@ function wsl_component_networks_basicinsights()
 							<td align="right">&nbsp;</td><td><b><?php echo $total_users_wsl; ?></b> <?php _wsl_e("WSL users", 'wordpress-social-login') ?></td>
 						</tr>
 					</table> 
-					
+
 					<!-- Insights by gender -->
 					<?php 
-						$data = wsl_get_stored_hybridauth_user_profiles_count_by_field( 'age' );  
+						$data = wsl_get_stored_hybridauth_user_profiles_count_by_field( 'gender' );  
 					?>
 					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By gender", 'wordpress-social-login') ?></h4>
+					<table width="90%">
+						<?php
+							foreach( $data as $item ){
+								if( ! $item->gender ) $item->gender = "Unknown";
+							?>
+								<tr>
+									<td width="60%">
+										<?php echo ucfirst( $item->gender ); ?>
+									</td>
+									<td>
+										<?php echo $item->items; ?>
+									</td>
+								</tr>
+							<?php
+							}
+						?>
+					</table>
+
+					<!-- Insights by age -->
+					<?php 
+						$data = wsl_get_stored_hybridauth_user_profiles_count_by_field( 'age' );
+					?>
+					<h4 style="border-bottom:1px solid #ccc"><?php _wsl_e("By age", 'wordpress-social-login') ?></h4>
 					<table width="90%">
 						<?php
 							foreach( $data as $item ){

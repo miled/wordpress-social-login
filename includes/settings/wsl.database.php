@@ -48,7 +48,8 @@ function wsl_database_migration_process()
 
     $installed_ver = get_option( "wsl_database_migration_version" );
 
-    if( $installed_ver != $wsl_database_migration_version ) { 
+    if( $installed_ver != $wsl_database_migration_version )
+	{ 
 		require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
 		$sql = "CREATE TABLE " . $wsluserscontacts . " (

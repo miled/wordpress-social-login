@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://hybridauth.sourceforge.net/wsl/index.html
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.2.1
+Version: 2.2.3
 Author: Miled
 Author URI: http://hybridauth.sourceforge.net/wsl/index.html
 License: MIT License
@@ -27,7 +27,6 @@ Domain Path: /languages
 * 
 *   - Don't hesitate to delete code that doesn't make sense or looks redundant.
 *   - Feel free to create new functions and files when needed.
-*   - Use 'if' and 'foreach' as little as possible.
 *   - No 'switch'. No 'for'.
 *   - Avoid over-commenting.
 *
@@ -35,7 +34,7 @@ Domain Path: /languages
 *  Coding Style :
 *
 *   - Readable code.
-*   - Clear indentations (8 chars).
+*   - Clear indentations (4 chars).
 *   - Same name convention of wordpress: those long long and self-explanatory functions and variables.
 *
 *
@@ -48,13 +47,13 @@ Domain Path: /languages
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
 @ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.1";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -68,14 +67,15 @@ $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_V
 *     4. Customize wsl_render_redirect_to_provider_loading_screen() and wsl_render_return_from_provider_loading_screen().
 *     5. Implement your WSL hooks.
 */
-if( file_exists( WP_PLUGIN_DIR . '/wp-social-login-custom.php' ) ){
+if( file_exists( WP_PLUGIN_DIR . '/wp-social-login-custom.php' ) )
+{
 	include_once( WP_PLUGIN_DIR . '/wp-social-login-custom.php' );
 }
 
 // --------------------------------------------------------------------
 
 /**
-* Define WSL constants, if not defined in 'wordpress-social-login-custom.php'
+* Define WSL constants, if not already defined
 */
 defined( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH' ) 
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', WP_PLUGIN_DIR . '/wordpress-social-login' );
@@ -95,7 +95,8 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 */
 function wsl_activate()
 {
-	if ( ! function_exists('register_post_status') ){
+	if( ! function_exists( 'register_post_status' ) )
+	{
 		deactivate_plugins( basename( dirname( __FILE__ ) ) . '/' . basename (__FILE__) );
 
 		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
@@ -109,34 +110,38 @@ register_activation_hook( __FILE__, 'wsl_activate' );
 // --------------------------------------------------------------------
 
 /**
-* Add a settings link to the Plugins page
+* Add a settings, faq and user guide links to plugin_action_links
 */
-function wsl_add_settings_link( $links, $file )
+function wsl_add_plugin_action_links( $links, $file )
 {
 	static $this_plugin;
 
-	if ( ! $this_plugin ) $this_plugin = plugin_basename(__FILE__);
+	if( ! $this_plugin )
+	{
+		$this_plugin = plugin_basename(__FILE__);
+	}
 
-	if ( $file == $this_plugin ){ 
-		$settings_link  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
-		array_unshift( $links, $settings_link );
-		
-		$settings_link = '<a href="http://hybridauth.sourceforge.net/wsl/index.html">' . __( "User Guide" ) . '</a>';
+	if( $file == $this_plugin )
+	{
+		$wsl_link  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+		array_unshift( $links, $wsl_link );
 
-		array_unshift( $links, $settings_link );
+		$wsl_link = '<a href="http://hybridauth.sourceforge.net/wsl/faq.html">' . __( "FAQ" ) . '</a>';
+		array_unshift( $links, $wsl_link );
+
+		$wsl_link = '<a href="http://hybridauth.sourceforge.net/wsl/">' . __( "User Guide" ) . '</a>';
+		array_unshift( $links, $wsl_link );
 	}
 
 	return $links;
 }
 
-add_filter( 'plugin_action_links', 'wsl_add_settings_link', 10, 2 );
+add_filter( 'plugin_action_links', 'wsl_add_plugin_action_links', 10, 2 );
 
 // --------------------------------------------------------------------
 
 /**
 * Loads the plugin's translated strings.
-*
-* Note: In case you want to use another domain, you may define this function in 'wordpress-social-login-custom.php'
 *
 * http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 */
@@ -173,8 +178,9 @@ require_once( dirname(__FILE__) . '/includes/widgets/wsl.error.pages.php'       
 require_once( dirname(__FILE__) . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens.
 
 # WSL Admin UI
-if( is_admin() ){
-	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'            ); // The entry point to WSL Admin interfaces 
+if( is_admin() )
+{
+	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
 
 // --------------------------------------------------------------------

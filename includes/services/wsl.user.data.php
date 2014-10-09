@@ -39,6 +39,21 @@ function wsl_get_wsl_users_count()
 
 // --------------------------------------------------------------------
 
+function wsl_get_user_custom_avatar( $user_id )
+{
+	$user_avatar = get_user_meta( $user_id, 'wsl_current_user_image', true );
+
+	// prior to 2.2
+	if( ! $user_avatar )
+	{
+		$user_avatar = get_user_meta( $user_id, 'wsl_user_image', true );
+	}
+
+	return $user_avatar;
+}
+
+// --------------------------------------------------------------------
+
 function wsl_get_stored_hybridauth_user_profiles_count()
 {
 	global $wpdb;
@@ -152,7 +167,8 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	$object_sha = sha1( serialize( $profile ) );
 
 	// checksum
-	if( ! empty( $rs ) && $rs[0]->object_sha == $object_sha ){
+	if( ! empty( $rs ) && $rs[0]->object_sha == $object_sha )
+	{
 		return;
 	}
 
@@ -163,7 +179,8 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 		"object_sha" => $object_sha
 	);
 
-	if(  ! empty( $rs ) ){
+	if(  ! empty( $rs ) )
+	{
 		$table_data['id'] = $rs[0]->id;
 	}
 
@@ -192,10 +209,12 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 		'zip'
 	);
 
-	foreach( $profile as $key => $value ) {
+	foreach( $profile as $key => $value )
+	{
 		$key = strtolower($key);
 
-		if( in_array( $key, $fields ) ){
+		if( in_array( $key, $fields ) )
+		{
 			$table_data[ $key ] = (string) $value;
 		}
 	}
@@ -208,18 +227,22 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 {
 	// component contact should be enabled
-	if( ! wsl_is_component_enabled( 'contacts' ) ){
+	if( ! wsl_is_component_enabled( 'contacts' ) )
+	{
 		return;
 	}
 
 	// check if import is enabled for the given provider
-	if( ! (
-		get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ||
-		get_option( 'wsl_settings_contacts_import_google' )   == 1 && strtolower( $provider ) == "google"   ||
-		get_option( 'wsl_settings_contacts_import_twitter' )  == 1 && strtolower( $provider ) == "twitter"  ||
-		get_option( 'wsl_settings_contacts_import_live' )     == 1 && strtolower( $provider ) == "live"     ||
-		get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 && strtolower( $provider ) == "linkedin" 
-	) ){
+	if(
+		! (
+			get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ||
+			get_option( 'wsl_settings_contacts_import_google' )   == 1 && strtolower( $provider ) == "google"   ||
+			get_option( 'wsl_settings_contacts_import_twitter' )  == 1 && strtolower( $provider ) == "twitter"  ||
+			get_option( 'wsl_settings_contacts_import_live' )     == 1 && strtolower( $provider ) == "live"     ||
+			get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 && strtolower( $provider ) == "linkedin" 
+		)
+	)
+	{
 		return;
 	}
 
@@ -232,33 +255,38 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 
 	$nb_contacts = $wpdb->get_var( $wpdb->prepare( $sql, $user_id, $provider ) );
 
-	if( $nb_contacts ){
+	if( $nb_contacts )
+	{
 		return;
 	}
 
 	// grab the user's friends list
-	try{
+	try
+	{
 		$user_contacts = $adapter->getUserContacts();
 	}
-	catch( Exception $e ){ 
+	catch( Exception $e )
+	{ 
 		// well.. we can't do much.
 	}
 
-	if( ! $user_contacts ){
+	if( ! $user_contacts )
+	{
 		return;
 	}
 
-	foreach( $user_contacts as $contact ){
+	foreach( $user_contacts as $contact )
+	{
 		$wpdb->insert(
 			"{$wpdb->prefix}wsluserscontacts", 
 				array( 
-					"user_id" 		=> $user_id,
-					"provider" 		=> $provider,
-					"identifier" 	=> $contact->identifier,
-					"full_name" 	=> $contact->displayName,
-					"email" 		=> $contact->email,
-					"profile_url" 	=> $contact->profileURL,
-					"photo_url" 	=> $contact->photoURL,
+					"user_id"     => $user_id,
+					"provider"    => $provider,
+					"identifier"  => $contact->identifier,
+					"full_name"   => $contact->displayName,
+					"email"       => $contact->email,
+					"profile_url" => $contact->profileURL,
+					"photo_url"   => $contact->photoURL,
 				)
 			); 
 	}
@@ -269,20 +297,23 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_profile )
 {
 	// component Buddypress should be enabled
-	if( ! wsl_is_component_enabled( 'buddypress' ) ){
+	if( ! wsl_is_component_enabled( 'buddypress' ) )
+	{
 		return;
 	}
 	
 	// make sure buddypress is loaded. 
 	// > is this a legit way to check?
-	if( ! function_exists( 'xprofile_set_field_data' ) ){
+	if( ! function_exists( 'xprofile_set_field_data' ) )
+	{
 		return;
 	}
 
 	// check if profiles mapping is enabled
 	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
 	
-	if( $wsl_settings_buddypress_enable_mapping != 1 ){
+	if( $wsl_settings_buddypress_enable_mapping != 1 )
+	{
 		return;
 	}
 
@@ -316,22 +347,27 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 	$hybridauth_user_profile = (array) $hybridauth_user_profile;
 
 	// all check: start mapping process
-	if( $wsl_settings_buddypress_xprofile_map ){
-		foreach( $wsl_settings_buddypress_xprofile_map as $buddypress_field_id => $field_name ){
+	if( $wsl_settings_buddypress_xprofile_map )
+	{
+		foreach( $wsl_settings_buddypress_xprofile_map as $buddypress_field_id => $field_name )
+		{
 			// if data can be found in hybridauth profile
-			if( in_array( $field_name, $hybridauth_fields ) ){
+			if( in_array( $field_name, $hybridauth_fields ) )
+			{
 				$value = $hybridauth_user_profile[ $field_name ];
 
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $value );
 			}
 
 			// if eq provider
-			if( $field_name == 'provider' ){
+			if( $field_name == 'provider' )
+			{
 				xprofile_set_field_data( $buddypress_field_id, $user_id, $provider );
 			}
 
 			// if eq birthDate
-			if( $field_name == 'birthDate' ){
+			if( $field_name == 'birthDate' )
+			{
 				$value = 
 					str_pad( (int) $hybridauth_user_profile[ 'birthYear'  ], 4, '0', STR_PAD_LEFT )
 					. '-' . 

@@ -537,7 +537,7 @@ function wsl_admin_welcome_panel()
 					<li><?php _wsl_e('WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be <a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL is now updated to work with the latest apis changes of the supported social networks', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Introducing three new providers : <a href="https://www.reddit.com" target="_blank">Reddit</a>, <a href="https://disqus.com" target="_blank">Disqus</a> and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('Introducing four new providers : <a href="https://wordpress.com" target="_blank">WordPress.com</a>, <a href="https://disqus.com" target="_blank">Disqus</a>, <a href="https://www.reddit.com" target="_blank">Reddit</a>and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e('WSL <a href="http://hybridauth.sourceforge.net/wsl/developer.html" target="_blank">Hooks</a> has been reworked and few hooks have been depreciated in favour of new ones', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
 				</ul>

@@ -26,7 +26,7 @@ class Hybrid_Storage implements Hybrid_Storage_Interface
 		$this->config( "php_session_id", session_id() );
 		$this->config( "version", Hybrid_Auth::$version );
 	}
-	
+
 	/**
 	 * Config
 	 * @param String $key
@@ -40,12 +40,12 @@ class Hybrid_Storage implements Hybrid_Storage_Interface
 			$_SESSION["HA::CONFIG"][$key] = serialize( $value ); 
 		}
 		elseif( isset( $_SESSION["HA::CONFIG"][$key] ) ){ 
-			return unserialize( $_SESSION["HA::CONFIG"][$key] );  
+			return unserialize( $_SESSION["HA::CONFIG"][$key] );
 		}
 
 		return NULL; 
 	}
-	
+
 	/**
 	 * Get a key
 	 * @param String $key

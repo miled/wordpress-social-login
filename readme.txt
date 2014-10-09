@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.1.6
+Stable tag: 2.2.3-DEV
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -71,6 +71,17 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 6. **Components** - WordPress Social Login components manager
 
 == Changelog ==
+
+= 2.2.3-DEV = 
+
+* ..
+
+= 2.2.2 = 
+
+* Fix an issue where wsl did not display the right user avatar.
+* Fix an issue where providers icons wasn't showing in sites using https.
+* Fix an issue with basic insights, where users counts by age wasn't showing.
+* Add WordPress to list of supported provider.
 
 = 2.2.1 = 
 
