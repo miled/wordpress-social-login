@@ -16,13 +16,13 @@ if( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 /**
-* Display a simple notice to the user and kill WordPress execution.
+* Display a simple notice to the user
 *
 * This function is mainly used by bouncer
 *
 * Note: 
 *   In case you want to customize the content generated, you may redefine this function
-*   Just make sure the script DIES at the end. 
+*   Just make sure the script DOES NOT DIE at the end. 
 *
 *   The $message to display for users is passed as a parameter.
 */
@@ -110,14 +110,13 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 	</body>
 </html> 
 <?php 
-		die();
 	}
 }
 
 // --------------------------------------------------------------------
 
 /**
-* Display an error page to the user and kill WordPress execution.
+* Display an error page to the user
 * 
 * This function differ than wsl_render_notice_page as it have some extra parameters and also should allow debugging
 *

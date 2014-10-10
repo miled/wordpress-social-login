@@ -80,18 +80,16 @@ function wsl_log_database_insert_db( $action_name, $action_args = array(), $user
 		$provider = get_user_meta( $get_current_user_id, 'wsl_current_provider', true );
 	}
 
-	$action_args[] = $_POST;
-
 	$wpdb->insert(
 		"{$wpdb->prefix}wslwatchdog", 
 			array( 
 				"session_id"    => session_id(),
-				"user_id" 		=> $user_id ? $user_id : $get_current_user_id,
-				"user_ip" 		=> $_SERVER['REMOTE_ADDR'],
-				"url" 	        => wsl_get_current_url(), 
+				"user_id"       => $user_id ? $user_id : $get_current_user_id,
+				"user_ip"       => $_SERVER['REMOTE_ADDR'],
+				"url"           => wsl_get_current_url(), 
 				"provider"      => $provider, 
-				"action_name" 	=> $action_name,
-				"action_args" 	=> json_encode( $action_args ),
+				"action_name"   => $action_name,
+				"action_args"   => json_encode( $action_args ),
 				"is_connected"  => $get_current_user_id ? 1 : 0, 
 				"created_at"    => microtime( true ), 
 			)
@@ -137,6 +135,9 @@ function wsl_watchdog_wsl_hook_process_login_before_hybridauth_authenticate( $pr
 
 function wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate( $provider, $config )
 {
+	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
+	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
+
 	wsl_log_database_insert_db( 'wsl_hook_process_login_after_hybridauth_authenticate', array( $provider, $config ) );
 }
 
@@ -158,6 +159,9 @@ function wsl_watchdog_wsl_process_login_create_wp_user_start( $provider, $hybrid
 
 function wsl_watchdog_wsl_process_login_update_wsl_user_data_start( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile  )
 {
+	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
+	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
+
 	wsl_log_database_insert_db( 'wsl_process_login_update_wsl_user_data_start', array( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile ), $user_id );
 }
 
@@ -186,7 +190,10 @@ function wsl_watchdog_wsl_hook_process_login_before_wp_safe_redirect( $user_id, 
 
 function wsl_watchdog_wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
 {
-	wsl_log_database_insert_db( 'wsl_process_login_render_error_page', array( $e, $config, $hybridauth, $provider, $adapter ) );
+	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
+	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
+
+	wsl_log_database_insert_db( 'wsl_process_login_render_error_page', array( $e, $config, $hybridauth, $provider, $adapter, ) );
 }
 
 // --------------------------------------------------------------------

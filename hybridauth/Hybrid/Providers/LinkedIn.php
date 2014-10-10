@@ -50,7 +50,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			Hybrid_Auth::redirect( LINKEDIN::_URL_AUTH . $response['linkedin']['oauth_token'] );
 		}
 		else{
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . print_r( $response, true ), 5 );
 		}
 	}
 
@@ -63,7 +63,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 		$oauth_verifier = $_REQUEST['oauth_verifier'];
 
 		if ( ! $oauth_verifier ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . htmlentities( print_r( $_REQUEST, true ) ), 5 );
 		}
 
 		$response = $this->api->retrieveTokenAccess( $oauth_token, $this->token( "oauth_token_secret" ), $oauth_verifier );
@@ -80,7 +80,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			$this->setUserConnected();
 		}
 		else{
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . print_r( $response, true ), 5 );
 		}
 	}
 
@@ -91,7 +91,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 	{
 		try{
 			// http://developer.linkedin.com/docs/DOC-1061
-			$response = $this->api->profile('~:(id,first-name,last-name,public-profile-url,picture-url,email-address,date-of-birth,phone-numbers,summary)');
+			$response = $this->api->profile('~:(id,first-name,last-name,public-profile-url,picture-url,picture-urls::(original),email-address,date-of-birth,phone-numbers,headline)');
 		}
 		catch( LinkedInException $e ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an error: $e", 6 );
@@ -114,7 +114,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 
 			$this->user->profile->photoURL    = (string) $data->{'picture-url'};
 			$this->user->profile->profileURL  = (string) $data->{'public-profile-url'};
-			$this->user->profile->description = (string) $data->{'summary'};
+			$this->user->profile->description = (string) $data->{'headline'};
 
 			if( $data->{'phone-numbers'} && $data->{'phone-numbers'}->{'phone-number'} ){
 				$this->user->profile->phone = (string) $data->{'phone-numbers'}->{'phone-number'}->{'phone-number'};
@@ -127,6 +127,10 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 				$this->user->profile->birthDay   = (string) $data->{'date-of-birth'}->day;
 				$this->user->profile->birthMonth = (string) $data->{'date-of-birth'}->month;
 				$this->user->profile->birthYear  = (string) $data->{'date-of-birth'}->year;
+			}
+
+			if( (string) $data->{'picture-urls'}->{'picture-url'} ){ 
+				$this->user->profile->photoURL  = (string) $data->{'picture-urls'}->{'picture-url'};
 			}
 
 			return $this->user->profile;

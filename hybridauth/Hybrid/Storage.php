@@ -10,7 +10,7 @@ require_once realpath( dirname( __FILE__ ) )  . "/StorageInterface.php";
 /**
  * HybridAuth storage manager
  */
-class Hybrid_Storage implements Hybrid_Storage_Interface
+class Hybrid_Storage
 {
 	/**
 	 * Constructor

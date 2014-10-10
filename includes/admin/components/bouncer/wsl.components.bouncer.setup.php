@@ -116,7 +116,7 @@ function wsl_component_bouncer_setup()
 			  <tr>
 				<td width="200" align="right"><strong><?php _wsl_e("User Moderation", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
-					<select name="wsl_settings_bouncer_new_users_moderation_level">
+					<select name="wsl_settings_bouncer_new_users_moderation_level" style="width:98%" >
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 1 )   echo "selected"; ?> value="1"><?php _wsl_e("None", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 101 ) echo "selected"; ?> value="101"><?php _wsl_e("E-mail Confirmation &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 102 ) echo "selected"; ?> value="102"><?php _wsl_e("Admin Approval &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
@@ -133,7 +133,7 @@ function wsl_component_bouncer_setup()
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
-				<?php _wsl_e('Here you can define the default role for new users authenticating through WSL. The <code>Administrator</code> and <code>Editor</code> roles are not available for safety reasons', 'wordpress-social-login') ?>.
+				<?php _wsl_e('Here you can define the default role for new users authenticating through WSL. For safety reasons, only two safe WordPress roles are made available', 'wordpress-social-login') ?>.
 			</p> 
 			<p>
 				<?php _wsl_e('For more information about Wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
@@ -145,17 +145,9 @@ function wsl_component_bouncer_setup()
 			  <tr>
 				<td width="200" align="right" nowrap><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
-					<select name="wsl_settings_bouncer_new_users_membership_default_role">
-						<optgroup label="<?php _wsl_e("Safe", 'wordpress-social-login') ?>:">
-							<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default"   ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
-							<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
-						</optgroup>
-
-						<optgroup label="<?php _wsl_e("Be careful with these roles. You may be automatically giving new users elevated capabilities", 'wordpress-social-login') ?>:">  
-							<option value="subscriber"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "subscriber"  ) echo "selected"; ?> ><?php _wsl_e("Subscriber", 'wordpress-social-login') ?></option> 
-							<option value="author"      <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "author"      ) echo "selected"; ?> ><?php _wsl_e("Author", 'wordpress-social-login') ?></option>
-							<option value="contributor" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "contributor" ) echo "selected"; ?> ><?php _wsl_e("Contributor", 'wordpress-social-login') ?></option> 
-						</optgroup>
+					<select name="wsl_settings_bouncer_new_users_membership_default_role" style="width:98%" >
+						<option value="wslnorole" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
+						<option value="default"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default"   ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option>
 					</select>  
 				</td>
 			  </tr>  

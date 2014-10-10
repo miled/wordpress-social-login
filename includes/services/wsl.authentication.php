@@ -90,7 +90,7 @@ function wsl_process_login()
 
 		get_currentuserinfo();
 
-		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as <b>%s</b>.", 'wordpress-social-login' ), $current_user->display_name ) );
+		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?", 'wordpress-social-login' ), $current_user->display_name, wp_logout_url( home_url() ) ) );
 	}
 
 	// Bouncer :: Allow authentication?
@@ -142,7 +142,7 @@ function wsl_process_login_begin()
 	// the loading screen should reflesh it self with a new arg in url: &redirect_to_provider=ture
 	if( ! isset( $_REQUEST["redirect_to_provider"] ) )
 	{
-		$_SESSION["HA::STORE"] = ARRAY();
+		wsl_process_login_clear_user_php_session();
 
 		return wsl_render_redirect_to_provider_loading_screen( wsl_process_login_get_selected_provider() );
 	}
@@ -194,6 +194,7 @@ function wsl_process_login_begin()
 	// set default scope and display mode for facebook
 	if( strtolower( $provider ) == "facebook" )
 	{
+		$config["providers"][$provider]["scope"] = "email, user_about_me, user_birthday, user_hometown, user_website"; 
 		$config["providers"][$provider]["display"] = "popup";
 		$config["providers"][$provider]["trustForwarded"] = true;
 
@@ -204,16 +205,15 @@ function wsl_process_login_begin()
 		}
 	}
 
-	// if contacts import enabled for facebook, we request an extra permission 'read_friendlists'
-	if( get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" )
-	{
-		$config["providers"][$provider]["scope"] .= ", read_friendlists";
-	}
+	// set default scope for google
+	if( strtolower( $provider ) == "google" ){
+		$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read";  
 
-	// if contacts import enabled for google, we request an extra permission 'https://www.google.com/m8/feeds/'
-	if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && strtolower( $provider ) == "google" )
-	{
-		$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
+		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
+		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 )
+		{
+			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
+		}
 	}
 
 	// HOOKABLE: allow to overwrite scopes (some people have asked for a way to lower the number of permissions requested)
@@ -230,7 +230,7 @@ function wsl_process_login_begin()
 
 	// HOOKABLE:
 	do_action( "wsl_hook_process_login_before_hybridauth_authenticate", $provider, $config );
-	
+
 	try
 	{
 		// create an instance oh hybridauth with the generated config 
@@ -399,7 +399,7 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 		// if user not connected to provider (ie: session lost, url forged)
 		else
 		{
-			return wsl_process_login_render_notice_page( sprintf( _wsl__( "User not connected with <b>%s</b>", 'wordpress-social-login' ), $provider ) ); 
+			return wsl_process_login_render_notice_page( sprintf( _wsl__( "Sorry, we couldn't connect you with <b>%s</b>. Please try again.", 'wordpress-social-login' ), $provider ) );
 		} 
 	}
 
@@ -861,6 +861,8 @@ do_action( 'wsl_hook_process_login_before_redirect', $user_id, $provider, $hybri
 /** IMPORTANT: wsl_hook_process_login_before_redirect is DEPRECIATED since WSL 2.2.1 and WILL BE REMOVED, please don't use it. See: http://hybridauth.sourceforge.net/wsl/developer.html */ 
 
 
+	wsl_process_login_clear_user_php_session();
+
 	// That's it. We done. 
 	wp_safe_redirect( $redirect_to );
 
@@ -931,7 +933,7 @@ function wsl_process_login_get_redirect_to()
 // --------------------------------------------------------------------
 
 /**
-* Display an error message in case user authentication fails
+* Display an error message in case user authentication fails and kill WordPress execution
 */
 function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
 {
@@ -967,25 +969,26 @@ function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provide
 
 	wsl_render_error_page( $message, $notes, $e, array( $config, $hybridauth, $provider, $adapter ) );
 
-	$_SESSION = array();
-
-	@ session_destroy();
+	wsl_process_login_clear_user_php_session();
 
 	die();
 }
 
-
 // --------------------------------------------------------------------
 
 /**
-* Display an notice message 
+* Display an notice message and kill WordPress execution
 */
 function wsl_process_login_render_notice_page( $message )
 {
 	// HOOKABLE:
 	do_action( "wsl_process_login_render_notice_page", $message );
 
-	return wsl_render_notice_page( $message );
+	wsl_render_notice_page( $message );
+
+	wsl_process_login_clear_user_php_session();
+
+	die();
 }
 
 // --------------------------------------------------------------------
@@ -996,6 +999,18 @@ function wsl_process_login_render_notice_page( $message )
 function wsl_process_login_get_selected_provider()
 {
 	return ( isset( $_REQUEST["provider"] ) ? sanitize_text_field( $_REQUEST["provider"] ) : null );
+}
+
+// --------------------------------------------------------------------
+
+/**
+* Clear the stored data by hybridauth and wsl in php session
+*/
+function wsl_process_login_clear_user_php_session()
+{
+	$_SESSION["HA::STORE"]  = array();
+	$_SESSION["HA::CONFIG"] = array();
+	$_SESSION["wsl::api"]   = array();
 }
 
 // --------------------------------------------------------------------

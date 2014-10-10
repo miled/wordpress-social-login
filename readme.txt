@@ -72,9 +72,16 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 == Changelog ==
 
-= 2.2.3-DEV = 
+= 2.2.3 = 
 
-* ..
+* Get full avatar form Steam and fetch location
+* Get full avatar form LinkedIn
+* Get LinkedIn members headline as description. Summary no longer work
+* Only two user roles are now available.
+* Rewrite Hybridauth endpoints urls
+* Improve sessions management
+* Improve debugging
+*..
 
 = 2.2.2 = 
 

@@ -89,7 +89,7 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 	{
 		#{{{
 		# This 5 LLOC should be executed only once every three millennium
-		# It means either : 1. Php Sessions ain't working as expected. 2. A crawler got lost. 3. Someone is having fun forging urls.
+		# It means either : 1. Php Sessions ain't working as expected or expired. 2. A crawler got lost. 3. Someone is having fun forging urls.
 		# If wp-load.php does exists in another directory, change it manullay. From now on, you're on your own. Goodbye.
 		$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
 

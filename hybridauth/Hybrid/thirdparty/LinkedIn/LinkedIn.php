@@ -709,11 +709,13 @@ class LinkedIn {
       $return_data['oauth']['header'] = $oauth_req->to_header(self::_API_OAUTH_REALM);
       $return_data['oauth']['string'] = $oauth_req->base_string;
 
-		//-
-		$_SESSION['WSL::HTTP_URL']  = $url;
-		$_SESSION['WSL::HTTP_CODE'] = curl_getinfo($handle, CURLINFO_HTTP_CODE); 
-		if( $_SESSION['WSL::HTTP_CODE'] != 200 ) $_SESSION['WSL::HTTP_RESPONSE'] = $return_data['linkedin'];
-		//-
+	//-
+	$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth1.LinkedIn' );
+	$_SESSION['wsl::api']['URL']  = $url;
+	$_SESSION['wsl::api']['POST'] = $data;
+	$_SESSION['wsl::api']['CODE'] = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+	$_SESSION['wsl::api']['RESPONSE'] = $return_data['linkedin'];
+	//-
         
       // check for throttling
       if(self::isThrottled($return_data['linkedin'])) {

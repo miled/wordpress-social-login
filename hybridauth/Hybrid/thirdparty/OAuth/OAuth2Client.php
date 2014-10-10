@@ -238,9 +238,11 @@ class OAuth2Client
 		curl_close ($ch);
 
 		//-
-		$_SESSION['WSL::HTTP_URL']  = $url;
-		$_SESSION['WSL::HTTP_CODE'] = $this->http_code; 
-		if( $this->http_code != 200 ) $_SESSION['WSL::HTTP_RESPONSE'] = $response;
+		$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth2' );
+		$_SESSION['wsl::api']['URL']  = $url;
+		$_SESSION['wsl::api']['POST'] = $params;
+		$_SESSION['wsl::api']['CODE'] = $this->http_code;
+		$_SESSION['wsl::api']['RESPONSE'] = $response;
 		//-
 
 		return $response; 

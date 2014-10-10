@@ -192,6 +192,38 @@ function wsl_display_dev_mode_debugging_area()
 		}
 	</style>
 
+	<?php
+		if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
+		{
+	?>
+		<h4>Latest API call</h4>
+		<table class="wsl-dev-table">
+			<tbody>
+				<tr><th width="270"><label>CLIENT</label></th><td><?php echo $_SESSION['wsl::api']['CLIENT']; ?></td></tr>
+				<tr><th><label>HTTP_URL</label></th><td><?php echo $_SESSION['wsl::api']['URL']; ?></td></tr>
+			<?php
+				if( $_SESSION['wsl::api']['POST'] )
+				{
+			?>
+				<tr><th><label>HTTP_POST</label></th><td><?php echo $_SESSION['wsl::api']['POST']; ?></td></tr>
+			<?php
+				}
+			?>
+				<tr><th><label>HTTP_CODE</label></th><td><?php echo $_SESSION['wsl::api']['CODE']; ?></td></tr>
+			<?php
+				if( $_SESSION['wsl::api']['RESPONSE'] )
+				{
+			?>
+				<tr><th><label>HTTP_RESPONSE</label></th><td><?php echo $_SESSION['wsl::api']['RESPONSE']; ?></td></tr>
+			<?php
+				}
+			?>
+			</tbody>
+		</table>
+	<?php
+		}
+	?>
+
 	<h4>SQL Queries</h4>
 	<table class="wsl-dev-table">
 		<tbody>
@@ -348,85 +380,6 @@ function wsl_display_dev_mode_debugging_area()
 		</tbody>
 	</table> 
 
-	<h4>HTTP Header</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<?php
-				$headers = getallheaders();
-				
-				if( $headers )
-				{
-					foreach( $headers as $k => $v )
-					{
-						?>
-							<tr>
-								<tr><th width="270" valign="top" nowrap><label><?php echo $k ; ?></th>
-								<td>
-									<?php echo $v ;  ?>
-								</td> 
-							</td>
-						<?php   
-					}
-				}
-			?>
-		</tbody>
-	</table>
-
-	<h4>PHP Session</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<?php
-				if( $_SESSION )
-				{
-					foreach( $_SESSION as $k => $v )
-					{
-						?>
-							<tr>
-								<tr><th width="270" valign="top" nowrap><label><?php echo $k ; ?></th>
-								<td>
-									<?php
-										if( is_array( $v ) )
-										{
-											echo '<pre style="overflow:y-scroll;max-width:1000px">';
-											print_r( $v );
-											echo '</pre>';
-										}
-										else
-										{
-											echo $v ; 
-										}
-									?>
-								</td> 
-							</td>
-						<?php   
-					}
-				}
-			?>
-		</tbody>
-	</table>
-
-	<h4>Cookies</h4>
-	<table class="wsl-dev-table">
-		<tbody>
-			<?php
-				if( $_COOKIE )
-				{
-					foreach( $_COOKIE as $k => $v )
-					{
-						?>
-							<tr>
-								<tr><th width="270" valign="top" nowrap><label><?php echo $k ; ?></th>
-								<td>
-									<?php echo $v ;  ?>
-								</td> 
-							</td>
-						<?php   
-					}
-				}
-			?>
-		</tbody>
-	</table>
-
 	<h4>Wordpress</h4>
 	<table class="wsl-dev-table">
 		<tbody>
@@ -463,6 +416,7 @@ function wsl_display_dev_mode_debugging_area()
 			<tr><th width="270"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>  
 			<tr><th><label>PHP</label></th><td><?php echo PHP_VERSION; ?></td></tr>  
 			<tr><th><label>MySQL</label></th><td><?php echo $wpdb->db_version(); ?></td></tr>   
+			<tr><th><label>Time</label></th><td><?php echo date( DATE_ATOM, time() ); ?> / <?php echo time(); ?></td></tr>   
 		</tbody>
 	</table>
 

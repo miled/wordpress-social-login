@@ -38,6 +38,8 @@ class Hybrid_Providers_Live extends Hybrid_Provider_Model_OAuth2
 		$this->api->curl_authenticate_method  = "GET";
 	}
 
+	// --------------------------------------------------------------------
+
 	/**
 	* grab the user profile from the api client
 	*/
