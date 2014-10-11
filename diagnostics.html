@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Diagnostics - WordPress Social Login</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
+	<link href="assets/css/style.css" rel="stylesheet">   
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="assets/js/prettify.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</head>
+<body id="documentation">
+	<header>
+		<nav class="navbar navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./index.html">WordPress Social Login</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<div id="doc-container" class="container-fluid"> 
+		<div class="row doc-container-row"> 
+			<div class="col-md-3 sidebar">
+				<aside> 
+					<h2>Setup</h2>
+
+					<h3><a href="install.html">Installation</a></h3>
+
+					<p>Tow to install WSL.</p>
+
+					<h3><a href="networks.html">Social Networks Setup</a> <span class="glyphicon glyphicon-flag pull-right"></span></h3>
+
+					<p>Outlines the required steps to allow WSL to connect users through social networks.</p>
+
+					<h3><a href="components.html">WSL Components</a></h3>
+
+					<p class="nob">A quick reference for WSL Components.</p>
+
+					
+					<h2>Customize</h2>
+
+					<h3><a href="widget.html">Widget Settings</a> <span class="glyphicon glyphicon-flag pull-right"></span></h3>
+
+					<p>Customize the way you want WSL Widget to look and behave.</p>
+
+					<h3><a href="themes.html">Widget Themes</a></h3>
+
+					<p>A number of customizations you may find useful to better fit the WSL Widget to your website theme.</p>
+
+					<h3><a href="bouncer.html">Bouncer</a></h3>
+
+					<p class="nob">Advanced WSL Configuration.</p>
+
+
+					<h2>Other Components</h2>
+
+					<h3><a href="userdata.html">User Profiles and Contacts</a></h3>
+
+					<p>Rich and standardized structure for users profiles and contacts across all the social networks APIs.</p>
+
+					<h3><a href="buddypress.html">BuddyPress</a></h3>
+
+					<p class="nob">Outlines how to integrate WSL with BuddyPress.</p>
+
+					
+					<h2>Developer API</h2>
+
+					<h3><a href="developer-api-actions.html">WSL Actions</a></h3>
+
+					<p>A quick reference for WSL Actions.</p>
+
+					<h3><a href="developer-api-filters.html">WSL Filters</a></h3>
+
+					<p>A quick reference for WSL Filters.</p>
+
+					<h3><a href="developer-api-functions.html">Custom PHP Functions</a></h3>
+
+					<p class="nob">A quick reference for the WSL functions that you may "over-write".</p>
+
+					
+					<h2>Troubleshooting</h2>
+
+					<h3><a href="diagnostics.html">WSL Diagnostics</a></h3>
+
+					<p>Small tool to check for minimum system requirements for WSL.</p>
+
+					<h3><a href="devmode.html">WSL Development mode</a></h3>
+
+					<p>A debugging utility for WSL.</p>
+
+					<h3><a href="watchdog.html">WSL Watchdog</a></h3>
+
+					<p class="nob">Internal developement tool to log WSL actions in database.</p>
+				</aside> 
+      
+			</div>
+			
+			<div class="col-md-9">
+				<div id="content" class="container-fluid container-documentation">
+					<div class="block row"> 
+						<div class="col col-md-12">
+
+<h1>WSL Diagnostics <small>Requirements test</small></h1>
+
+<p> 
+	<b>WSL Diagnostics</b> is small tool to check for minimum system requirements for WSL.
+</p>
+
+<p> 
+	In order for this plugin to work properly, your server should meet certain requirements. These "requirements" and "services" are usually offered by default by most "modern" web hosting providers, however some complications may occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>. 
+</p>
+
+<p>
+	To go to <b>WSL Diagnostics</b>, go to the help tab ( <b>« ? »</b>) then the troubleshooting section.
+</p>
+
+<p> 
+	The minimum server requirements are:
+</p>
+
+<ul>
+	<li>PHP &gt;= 5.2.0 installed</li> 
+	<li>WSL Endpoint URLs reachable</li>
+	<li>PHP's default SESSION handling</li>
+	<li>PHP/CURL/SSL Extension enabled</li> 
+	<li>PHP/JSON Extension enabled</li> 
+	<li>PHP/REGISTER_GLOBALS Off</li> 
+	<li>jQuery installed on WordPress backoffice</li> 
+</ul>
+										
+
+							<hr />
+							<br />
+							
+							<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
+								<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
+
+								<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
+							</div>
+							<br />
+							<div id="disqus_thread"></div>
+							<script type="text/javascript">
+								/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+									var disqus_shortname = 'hybridauth'; // required: replace example with your forum shortname
+									var disqus_identifier = 'wsl_diagnostics';
+									var disqus_url = 'http://hybridauth.sourceforge.net/wsl/diagnostics.html';
+
+								/* * * DON'T EDIT BELOW THIS LINE * * */
+									(function() {
+										var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+										dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
+										(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+									})();
+							</script> 
+	
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row"> 
+				<ul>
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
+				</ul> 
+				<span class="pull-right footer-extra-info">Generated on October 9, 2014</span>
+			</div>
+		</div>
+	</footer>
+
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-11037160-1");
+	pageTracker._trackPageview();
+	} catch(err) {}
+	</script>
+</body>
+</html>
