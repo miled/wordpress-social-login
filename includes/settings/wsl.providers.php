@@ -193,8 +193,9 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	), 
 	ARRAY( 
 		"provider_id"       => "Steam",
-		"provider_name"     => "Steam", 
-		"new_app_link"      => null, 
+		"provider_name"     => "Steam",
+		"new_app_link"      => "http://steamcommunity.com/dev/apikey",
+		"require_api_key"   => true,
 
 		"cat"               => "gamers",
 	),
