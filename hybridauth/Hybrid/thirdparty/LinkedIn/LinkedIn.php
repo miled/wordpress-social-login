@@ -708,25 +708,17 @@ class LinkedIn {
       $return_data['info']            = curl_getinfo($handle);
       $return_data['oauth']['header'] = $oauth_req->to_header(self::_API_OAUTH_REALM);
       $return_data['oauth']['string'] = $oauth_req->base_string;
-
-	//-
-	$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth1.LinkedIn' );
-	$_SESSION['wsl::api']['URL']  = $url;
-	$_SESSION['wsl::api']['POST'] = $data;
-	$_SESSION['wsl::api']['CODE'] = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-	$_SESSION['wsl::api']['RESPONSE'] = $return_data['linkedin'];
-	//-
-        
+            
       // check for throttling
       if(self::isThrottled($return_data['linkedin'])) {
         throw new LinkedInException('LinkedIn->fetch(): throttling limit for this user/application has been reached for LinkedIn resource - ' . $url);
       }
-
+      
       //TODO - add check for NO response (http_code = 0) from cURL
       
       // close cURL connection
       curl_close($handle);
-
+      
       // no exceptions thrown, return the data
       return $return_data;
     } catch(OAuthException $e) {

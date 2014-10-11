@@ -1024,14 +1024,6 @@ abstract class BaseFacebook
         }
     }
 
-  //-
-  $_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth2.Facebook' );
-  $_SESSION['wsl::api']['URL']  = $opts[CURLOPT_URL];
-  $_SESSION['wsl::api']['POST'] = $opts[CURLOPT_POSTFIELDS];
-  $_SESSION['wsl::api']['CODE'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  $_SESSION['wsl::api']['RESPONSE'] = $result;
-  //-
-
     if ($result === false) {
       $e = new FacebookApiException(array(
         'error_code' => curl_errno($ch),
@@ -1044,8 +1036,6 @@ abstract class BaseFacebook
       throw $e;
     }
     curl_close($ch);
-
-
     return $result;
   }
 
@@ -1384,10 +1374,6 @@ abstract class BaseFacebook
     // uncomment this if you want to see the errors on the page
     // print 'error_log: '.$msg."\n";
     // @codeCoverageIgnoreEnd
-
-	//-
-	$_SESSION['WSL::FB_ERROR'] = $msg;
-	//-
   }
 
   /**

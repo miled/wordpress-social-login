@@ -30,7 +30,7 @@ function wsl_component_watchdog()
 <div style="padding: 5px 20px; border: 1px solid #ddd; background-color: #fff;">
 
 	<h3><?php _wsl_e("Latest WSL activity", 'wordpress-social-login') ?></h3>
-
+	
 	<!--
 		<p style="float: right;margin-top:-45px">
 			<a class="button button-secondary" style="background-color: #da4f49;border-color: #bd362f;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);color: #ffffff;" href="" onClick="return confirm('Are you sure?');"><?php _wsl_e("Delete WSL Log", 'wordpress-social-login'); ?></a>
@@ -42,13 +42,16 @@ function wsl_component_watchdog()
 	<?php 
 		global $wpdb;
 
-		$list_sessions = $wpdb->get_results( "SELECT user_ip, session_id, provider, max(id) as max_id FROM `{$wpdb->prefix}wslwatchdog` GROUP BY session_id, provider ORDER BY max_id DESC LIMIT 25" );  
+		$list_sessions = $wpdb->get_results( "SELECT user_ip, session_id, provider, max(id) FROM `{$wpdb->prefix}wslwatchdog` GROUP BY session_id, provider LIMIT 50" );  
 
+		// have contacts?
 		if( ! $list_sessions ){
 			_wsl_e("<p>No log found!</p>", 'wordpress-social-login');
 			_wsl_e("<p class='description'>To log WSL authentication process in database, include '/utilities/watchdog.php' in 'wp-social-login.php'.</p>", 'wordpress-social-login');
 		}
 		else{
+			// echo '<pre>';
+			// print_r( $list_sessions );
 			foreach( $list_sessions as $seesion_data ){
 				$user_ip    = $seesion_data->user_ip;
 				$session_id = $seesion_data->session_id;
@@ -127,16 +130,12 @@ function wsl_component_watchdog()
 					
 					$action_desc = 'N.A.';
 					?>
-					<tr  style="<?php if( stristr( $call_data->action_name, 'dbg:' ) ) echo 'background-color:#fffcf5;'; ?> <?php if( 'wsl_render_login_form_user_loggedin' == $call_data->action_name || $call_data->action_name == 'wsl_hook_process_login_before_wp_set_auth_cookie' ) echo 'background-color:#edfff7;'; ?><?php if( 'wsl_process_login_complete_registration_start' == $call_data->action_name ) echo 'background-color:#fefff0;'; ?><?php if( 'wsl_process_login_render_error_page' == $call_data->action_name || $call_data->action_name == 'wsl_process_login_render_notice_page' ) echo 'background-color:#fffafa;'; ?>">
+					<tr  style="<?php if( 'wsl_render_login_form_user_loggedin' == $call_data->action_name || $call_data->action_name == 'wsl_hook_process_login_before_wp_set_auth_cookie' ) echo 'background-color:#edfff7;'; ?><?php if( 'wsl_process_login_complete_registration_start' == $call_data->action_name ) echo 'background-color:#fefff0;'; ?><?php if( 'wsl_process_login_render_error_page' == $call_data->action_name || $call_data->action_name == 'wsl_process_login_render_notice_page' ) echo 'background-color:#fffafa;'; ?>">
 						<td nowrap width="10">
 							<?php echo $call_data->id; ?>
 						</td>
 						<td nowrap width="350">
 							<span style="color:#<?php 
-											if( stristr( $call_data->action_name, 'dbg:' ) ){
-												echo '333333';
-											}
-
 											if( 'wsl_hook_process_login_before_wp_safe_redirect' == $call_data->action_name ){
 												echo 'a6354b';
 											}

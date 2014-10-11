@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.2.3-DEV
+Stable tag: 2.2.2
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -71,17 +71,6 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 6. **Components** - WordPress Social Login components manager
 
 == Changelog ==
-
-= 2.2.3 = 
-
-* Get full avatar form Steam and fetch location
-* Get full avatar form LinkedIn
-* Get LinkedIn members headline as description. Summary no longer work
-* Only two user roles are now available.
-* Rewrite Hybridauth endpoints urls
-* Improve sessions management
-* Improve debugging
-*..
 
 = 2.2.2 = 
 

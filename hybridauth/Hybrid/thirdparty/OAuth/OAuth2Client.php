@@ -237,14 +237,6 @@ class OAuth2Client
 
 		curl_close ($ch);
 
-		//-
-		$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth2' );
-		$_SESSION['wsl::api']['URL']  = $url;
-		$_SESSION['wsl::api']['POST'] = $params;
-		$_SESSION['wsl::api']['CODE'] = $this->http_code;
-		$_SESSION['wsl::api']['RESPONSE'] = $response;
-		//-
-
 		return $response; 
 	}
 

@@ -233,14 +233,6 @@ class OAuth1Client{
 
 		curl_close ($ci);
 
-		//-
-		$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth1' );
-		$_SESSION['wsl::api']['URL']  = $url;
-		$_SESSION['wsl::api']['POST'] = $postfields;
-		$_SESSION['wsl::api']['CODE'] = $this->http_code;
-		$_SESSION['wsl::api']['RESPONSE'] = $response;
-		//-
-
 		return $response; 
 	}
 

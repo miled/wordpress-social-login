@@ -24,43 +24,24 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 		$uid = str_replace( "http://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
 
 		if( $uid ){
-			$url = "http://steamcommunity.com/profiles/$uid/?xml=1";
-
-			$data = @ file_get_contents( $url ); 
-
-			if ( ! $data ){
-				$ch = curl_init();
-
-				$curl_options = array(
-					CURLOPT_URL            => $url,
-					CURLOPT_RETURNTRANSFER => true,
-					CURLOPT_FOLLOWLOCATION => true,
-					CURLOPT_MAXREDIRS      => 3,
-					CURLOPT_TIMEOUT        => 30
-				);
-
-				curl_setopt_array($ch, $curl_options);
-
-				$data = curl_exec($ch);
-			}
+			$data = @ file_get_contents( "http://steamcommunity.com/profiles/$uid/?xml=1" ); 
 
 			$data = @ new SimpleXMLElement( $data );
 
-			if( ! is_object( $data ) ){
+			if ( ! is_object( $data ) ){
 				return false;
 			}
 
 			$this->user->profile->displayName  = (string) $data->{'steamID'};
-			$this->user->profile->photoURL     = (string) $data->{'avatarFull'};
+			$this->user->profile->photoURL     = (string) $data->{'avatarMedium'};
 			$this->user->profile->description  = (string) $data->{'summary'};
-			$this->user->profile->region       = (string) $data->{'location'};
-
+			
 			$realname = (string) $data->{'realname'}; 
 
 			if( $realname ){
 				$this->user->profile->firstName = $realname;
 			}
-
+			
 			$customURL = (string) $data->{'customURL'};
 
 			if( $customURL ){

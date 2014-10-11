@@ -214,14 +214,6 @@ class LightOpenID
             $response = substr($response, 0, strpos($response, "\r\n\r\n"));
         }
 
-        //-
-        $_SESSION['wsl::api']         = array( 'CLIENT' => 'OpenID' );
-        $_SESSION['wsl::api']['URL']  = $url . ($method == 'GET' && $params ? '?' . $params : '');
-        $_SESSION['wsl::api']['POST'] = array();
-        $_SESSION['wsl::api']['CODE'] = curl_getinfo($curl, CURLINFO_HTTP_CODE);
-        $_SESSION['wsl::api']['RESPONSE'] = $response;
-        //-
-
         if($method == 'HEAD' || $method == 'GET') {
             $header_response = $response;
 
