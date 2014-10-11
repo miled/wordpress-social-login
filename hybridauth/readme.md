@@ -39,10 +39,16 @@ http://hybridauth.sourceforge.net
 
 ###### hybridauth/Hybrid/Providers/Yahoo.php
 * Overwritten with the openID adapter
+* L-26 Assign email as user identifier
 
 ###### hybridauth/Hybrid/Providers/Vkontakte.php
 * L-79 Image size
 * L-93 Image size
+
+###### hybridauth/Hybrid/Providers/Steam.php
+* L-29 fall back to curl if file_get_contents didn't work
+* L-53 Image size
+* L-56 user region
 
 ###### hybridauth/Hybrid/Providers/Reddit.php
 * Add an unsupported provider
@@ -58,6 +64,7 @@ http://hybridauth.sourceforge.net
 
 ###### /hybridauth/Hybrid/Provider_Model_OpenID.php
 * Merge PR #324
+* Fix genders
 
 ###### hybridauth/Hybrid/Providers/WordPress.php
 * Add an unsupported provider

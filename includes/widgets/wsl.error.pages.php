@@ -16,7 +16,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 /**
-* Display a simple notice to the user
+* Display a simple notice to the user and kill WordPress execution
 *
 * This function is mainly used by bouncer
 *
@@ -110,13 +110,17 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 	</body>
 </html> 
 <?php 
+	# keep these 2 LOC
+		do_action( 'wsl_process_login_clear_user_php_session' );
+
+		die();
 	}
 }
 
 // --------------------------------------------------------------------
 
 /**
-* Display an error page to the user
+* Display an error page to the user and kill WordPress execution
 * 
 * This function differ than wsl_render_notice_page as it have some extra parameters and also should allow debugging
 *
@@ -235,6 +239,10 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 	</body>
 </html> 
 <?php
+	# keep these 2 LOC
+		do_action( 'wsl_process_login_clear_user_php_session' );
+
+		die();
 	}
 }
 

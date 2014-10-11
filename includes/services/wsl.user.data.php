@@ -163,7 +163,7 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	
 	$rs  = $wpdb->get_results( $wpdb->prepare( $sql, $user_id, $provider ) );
 
-	// we only sotre the user profile if it has change since last login.
+	// we only sotre the user profile if it has changed since last login.
 	$object_sha = sha1( serialize( $profile ) );
 
 	// checksum
@@ -260,7 +260,7 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 		return;
 	}
 
-	// grab the user's friends list
+	// attempt to grab the user's friends list via social network api
 	try
 	{
 		$user_contacts = $adapter->getUserContacts();
@@ -301,7 +301,9 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 	{
 		return;
 	}
-	
+
+	do_action('bp_setup_globals');
+
 	// make sure buddypress is loaded. 
 	// > is this a legit way to check?
 	if( ! function_exists( 'xprofile_set_field_data' ) )
@@ -386,13 +388,13 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 
 function wsl_delete_stored_hybridauth_user_data( $user_id )
 {
-    global $wpdb;
+	global $wpdb;
 
-    $sql = "DELETE FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d";
-    $wpdb->query( $wpdb->prepare( $sql, $user_id ) );
+	$sql = "DELETE FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d";
+	$wpdb->query( $wpdb->prepare( $sql, $user_id ) );
 
-    $sql = "DELETE FROM `{$wpdb->prefix}wsluserscontacts` where user_id = %d";
-    $wpdb->query( $wpdb->prepare( $sql, $user_id ) );
+	$sql = "DELETE FROM `{$wpdb->prefix}wsluserscontacts` where user_id = %d";
+	$wpdb->query( $wpdb->prepare( $sql, $user_id ) );
 
 	delete_user_meta( $user_id, 'wsl_current_provider'   );
 	delete_user_meta( $user_id, 'wsl_current_user_image' );

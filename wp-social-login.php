@@ -53,7 +53,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); // shhhtt keept it a secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3-dev";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -101,8 +101,6 @@ function wsl_activate()
 
 		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
 	}
-
-	do_action( 'wsl_activate' );
 }
 
 register_activation_hook( __FILE__, 'wsl_activate' );

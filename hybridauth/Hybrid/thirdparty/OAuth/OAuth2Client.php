@@ -195,7 +195,7 @@ class OAuth2Client
 
 	// -- utilities
 
-	private function request( $url, $params=false, $type="GET" )
+	function request( $url, $params=false, $type="GET" )
 	{
 		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
 		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", $params );

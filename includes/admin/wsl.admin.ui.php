@@ -64,28 +64,33 @@ function wsl_admin_init()
 		$wslp = trim( strtolower( strip_tags( $_REQUEST["wslp"] ) ) );
 	}
 
-	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["enabled"] ){
-		if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["header_action"] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["header_action"] ){ 
+	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["enabled"] )
+	{
+		if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["header_action"] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["header_action"] )
+		{ 
 			do_action( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["header_action"] );
 		}
 
 		wsl_admin_ui_header( $wslp );
 
-		if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["body_action"] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["body_action"] ){ 
+		if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["body_action"] ) && $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["body_action"] )
+		{ 
 			do_action( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["body_action"] );
 		}
 
-		elseif( ! ( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["admin-url"] ) && ! $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[$wslp]["admin-url"] ) ){
-			include "components/$wslp/index.php";
-
-			wsl_admin_ui_footer();
+		else
+		{
+			include "components/$wslp/index.php"; 
 		}
 	}
-	else{
+	else
+	{
 		wsl_admin_ui_header();
 
 		wsl_admin_ui_error();
 	}
+
+	wsl_admin_ui_footer();
 
 	// HOOKABLE: 
 	do_action( "wsl_admin_init_end" );

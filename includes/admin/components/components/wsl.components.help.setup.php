@@ -32,7 +32,7 @@ function wsl_component_components_setup()
 			<tr>
 				<th scope="col" class="manage-column column-label" style="width: 190px;"><?php _wsl_e( "Component", 'wordpress-social-login' ) ?></th>
 				<th scope="col" class="manage-column column-description"><?php _wsl_e( "Description", 'wordpress-social-login' ) ?></th>
-				<th scope="col" class="manage-column column-action" style="width: 120px;">&nbsp;</th>
+				<th scope="col" class="manage-column column-action" style="width: 140px;">&nbsp;</th>
 			</tr>
 		</thead>
 
@@ -40,7 +40,7 @@ function wsl_component_components_setup()
 			<tr>
 				<th scope="col" class="manage-column column-label" style="width: 190px;"><?php _wsl_e( "Component", 'wordpress-social-login' ) ?></th>
 				<th scope="col" class="manage-column column-description"><?php _wsl_e( "Description", 'wordpress-social-login' ) ?></th>
-				<th scope="col" class="manage-column column-action" style="width: 120px;">&nbsp;</th>
+				<th scope="col" class="manage-column column-action" style="width: 140px;">&nbsp;</th>
 			</tr>
 		</tfoot>
 
@@ -96,6 +96,7 @@ function wsl_component_components_setup()
 								<?php if( $settings["type"] != "core" ): ?>
 									<?php if( $settings["enabled"] ): ?> 
 										<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=components&disable=<?php echo $name ?>"><?php _wsl_e( "Disable", 'wordpress-social-login' ) ?></a>
+										<a class="button-secondary" style="color:#000000" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php _wsl_e( "View", 'wordpress-social-login' ) ?></a> 
 									<?php else: ?>
 										<a class="button-primary" style="color:#ffffff" href="options-general.php?page=wordpress-social-login&wslp=components&enable=<?php echo $name ?>"><?php _wsl_e( "Enable", 'wordpress-social-login' ) ?>&nbsp;</a>
 									<?php endif; ?>

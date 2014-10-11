@@ -144,11 +144,11 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 			$this->user->profile->displayName = trim( $this->user->profile->firstName . " " . $this->user->profile->lastName );
 		}
 
-		if( $this->user->profile->gender == "f" ){
+		if( strtolower( $this->user->profile->gender ) == "f" ){
 			$this->user->profile->gender = "female";
 		}
 
-		if( $this->user->profile->gender == "m" ){
+		if( strtolower( $this->user->profile->gender ) == "m" ){
 			$this->user->profile->gender = "male";
 		}
 

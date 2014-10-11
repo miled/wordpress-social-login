@@ -116,7 +116,7 @@ function wsl_component_bouncer_setup()
 			  <tr>
 				<td width="200" align="right"><strong><?php _wsl_e("User Moderation", 'wordpress-social-login') ?> :</strong></td>
 				<td> 
-					<select name="wsl_settings_bouncer_new_users_moderation_level" style="width:98%" >
+					<select name="wsl_settings_bouncer_new_users_moderation_level">
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 1 )   echo "selected"; ?> value="1"><?php _wsl_e("None", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 101 ) echo "selected"; ?> value="101"><?php _wsl_e("E-mail Confirmation &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
 						<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 102 ) echo "selected"; ?> value="102"><?php _wsl_e("Admin Approval &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
@@ -133,22 +133,57 @@ function wsl_component_bouncer_setup()
 		</h3>
 		<div class="inside hideinside"> 
 			<p>
-				<?php _wsl_e('Here you can define the default role for new users authenticating through WSL. For safety reasons, only two safe WordPress roles are made available', 'wordpress-social-login') ?>.
+				<?php _wsl_e("Here you can define the default role for new users authenticating through WSL", 'wordpress-social-login') ?>.
+				<?php _wsl_e("Please, be extra carefull with this option, you ay be automatically giving someone elevated roles and capabilities", 'wordpress-social-login') ?>.
+				<?php _wsl_e('For more information about WordPress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
+			</p>  
+			<p class="description">
+				<?php _wsl_e('<b>Notes:</b>', 'wordpress-social-login') ?>
+				<br /><?php _wsl_e('1. If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>. 
+				<br /><?php _wsl_e('2. To assign the same default role as in your website <b>General Settings</b>, set this field to <code>default</code>', 'wordpress-social-login') ?>.
+				<br /><?php _wsl_e('3. If you are not sure, leave this field to either <code>wslnorole</code> or blank (omitting the role will create a users with "No Role For This Site")', 'wordpress-social-login') ?>.
 			</p> 
-			<p>
-				<?php _wsl_e('For more information about Wordpress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
-			</p> 
-			<p>
-				<?php _wsl_e('<b>Note:</b> If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>.
-			</p> 
-			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
+			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 			  <tr>
-				<td width="200" align="right" nowrap><strong><?php _wsl_e("New User Default Role", 'wordpress-social-login') ?> :</strong></td>
-				<td> 
-					<select name="wsl_settings_bouncer_new_users_membership_default_role" style="width:98%" >
-						<option value="wslnorole" <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
-						<option value="default"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default"   ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option>
-					</select>  
+				<td width="200" align="right" nowrap><strong><?php _wsl_e("New WSL users default role", 'wordpress-social-login') ?> :</strong></td>
+				<td>
+					<input type="text" name="wsl_settings_bouncer_new_users_membership_default_role" class="inputgnrc" style="width:535px" value="<?php echo get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ); ?>"> 
+				</td>
+			  </tr>  
+			  <tr>
+				<td colspan="2">
+					<div class="fade updated">
+						<p>
+							<?php 
+								$role = get_option( 'wsl_settings_bouncer_new_users_membership_default_role' );
+
+								$role = $role == 'default' ?  get_option ('default_role') : $role;
+
+								$role = get_role( $role );
+
+								if( $role )
+								{
+									echo sprintf( _wsl__( "<b>New WSL users default role</b> is currently set to <b>&ldquo;%s&rdquo;</b>, which gives these capabilities: ", 'wordpress-social-login' ), get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) );
+
+									$capabilities = array();
+
+									foreach ( $role->capabilities as $k => $v )
+									{
+										if( $v && ! stristr( $k, 'level_' ) )
+										{
+											$capabilities[] = '<a href="http://codex.wordpress.org/Roles_and_Capabilities#' . $k . '" target="_blank">' . $k . '</a>' ;
+										}
+									}
+
+									echo implode( ', ', $capabilities );
+								}
+								else
+								{
+									echo sprintf( _wsl__( "<b>New WSL users default role</b> is currently set to <b>&ldquo;%s&rdquo;</b>, which gives NO capabilities", 'wordpress-social-login' ), get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) );
+								}
+							?>.
+						</p>
+					</div>
 				</td>
 			  </tr>  
 			</table>  

@@ -23,6 +23,7 @@ class Hybrid_Providers_Yahoo extends Hybrid_Provider_Model_OpenID
 	{
 		parent::loginFinish();
 
+		$this->user->profile->identifier    = $this->user->profile->email;
 		$this->user->profile->emailVerified = $this->user->profile->email;
 
 		// restore the user profile

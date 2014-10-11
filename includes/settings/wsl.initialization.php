@@ -83,7 +83,9 @@ function wsl_register_component( $component, $config, $tabs )
 	// sure it can be overwritten.. just not recommended
 	if( isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] ) )
 	{
-		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+		wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+
+		die();
 	}
 
 	$config["type"] = "plugin";
@@ -100,8 +102,6 @@ function wsl_register_component( $component, $config, $tabs )
 	}
 }
 
-add_action( 'wsl_register_component', 'wsl_register_component', 10, 3 );
-
 // --------------------------------------------------------------------
 
 /**
@@ -114,13 +114,13 @@ function wsl_register_admin_tab( $tab, $config )
 	// sure it can be overwritten.. just not recommended
 	if( isset( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] ) )
 	{
-		return wsl_render_wsl_die( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+		wsl_render_notice_page( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
+
+		die();
 	}
 
 	$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] = $config;  
 }
-
-add_action( 'wsl_register_admin_tab', 'wsl_register_admin_tab', 10, 2 );
 
 // --------------------------------------------------------------------
 
@@ -146,6 +146,8 @@ function wsl_register_components()
 {
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
+
+	do_action( 'wsl_register_components_begin' );
 
 	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config )
 	{
@@ -185,6 +187,8 @@ function wsl_register_components()
 			}
 		}
 	}
+
+	do_action( 'wsl_register_components_end' );
 }
 
 // --------------------------------------------------------------------

@@ -64,9 +64,6 @@ function wsl_render_login_form()
 
 	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set . '/'; 
 
-	// HOOKABLE: allow use of other icon sets
-	$assets_base_url = apply_filters( 'wsl_hook_alter_assets_base_url', $assets_base_url );
-
 	// get the current page url, which we will use to redirect the user to,
 	// unless Widget::Force redirection is set to 'yes', then this will be ignored and Widget::Redirect URL will be used instead
 	$current_page_url = wsl_get_current_url();

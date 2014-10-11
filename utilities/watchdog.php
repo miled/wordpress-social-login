@@ -54,6 +54,7 @@ function wsl_watchdog_main()
 	add_action( 'wsl_process_login_complete_registration_start', 'wsl_watchdog_wsl_process_login_complete_registration_start', 10, 4 );
 	
 	add_action( 'wsl_process_login_create_wp_user_start', 'wsl_watchdog_wsl_process_login_create_wp_user_start', 10, 4 );
+	add_action( 'wsl_hook_process_login_alter_wp_insert_user_data', 'wsl_watchdog_wsl_hook_process_login_alter_wp_insert_user_data', 10, 3 );
 	add_action( 'wsl_process_login_update_wsl_user_data_start', 'wsl_watchdog_wsl_process_login_update_wsl_user_data_start', 10, 5 );
 
 	add_action( 'wsl_process_login_authenticate_wp_user_start', 'wsl_watchdog_wsl_process_login_authenticate_wp_user_start', 10, 5 );
@@ -153,6 +154,15 @@ function wsl_watchdog_wsl_process_login_complete_registration_start( $provider, 
 function wsl_watchdog_wsl_process_login_create_wp_user_start( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email )
 {
 	wsl_log_database_insert_db( 'wsl_process_login_create_wp_user_start', array( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email ) );
+}
+
+// --------------------------------------------------------------------
+
+function wsl_watchdog_wsl_hook_process_login_alter_wp_insert_user_data( $userdata, $provider, $hybridauth_user_profile )
+{
+	wsl_log_database_insert_db( 'wsl_hook_process_login_alter_wp_insert_user_data', array( $userdata, $provider, $hybridauth_user_profile ) );
+
+	return $userdata;
 }
 
 // --------------------------------------------------------------------

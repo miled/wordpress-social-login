@@ -21,11 +21,12 @@ function wsl_component_users_profile( $user_id )
 	$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );
 
 	// is it a WSL user?
-	if( ! $linked_accounts ){
+	if( ! $linked_accounts )
+	{
 ?>
-	<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-		<?php _wsl_e( "This's not a WSL user!", 'wordpress-social-login' ); ?>. 
-	</div>
+<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+	<?php _wsl_e( "This's not a WSL user!", 'wordpress-social-login' ); ?>. 
+</div>
 <?php
 		return;
 	}
@@ -55,87 +56,109 @@ function wsl_component_users_profile( $user_id )
 		array( 'field' => 'zip'         , 'label' => _wsl__( "Zip"              , 'wordpress-social-login'), 'description' => _wsl__( "User's zipcode"                                                                                                         , 'wordpress-social-login') ),
 	);
 
-	# http://codex.wordpress.org/Function_Reference/get_userdata
 	$user_info = get_userdata( $user_id ); 
+
+	add_thickbox();
+
+	$actions = array(
+		'edit_details'  => array( 'label' => 'Edit user details', 'action' => admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ), 'class' => 'button button-secondary thickbox' ),
+		'show_contacts' => array( 'label' => 'Show user contacts list', 'action' => admin_url( 'options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id ), 'class' => 'button button-secondary' ),
+	);
+
+	// HOOKABLE: 
+	$actions = apply_filters( 'wsl_component_users_profile_alter_actions_list', $actions, $user_id );
 ?>
-	<style>
-		table td, table th { border: 1px solid #DDDDDD; }
-		table th label { font-weight: bold; }
-		.form-table th { width:120px; text-align:right; }
-		p.description { font-size: 11px ! important; margin:0 ! important;}
-	</style>
 
-	<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-		<p style="float: right; margin: -5px;">
-			<a class="button button-secondary" href="user-edit.php?user_id=<?php echo $user_id ?>"><?php _wsl_e("Edit user details", 'wordpress-social-login'); ?></a>
-			<a class="button button-secondary" href="options-general.php?page=wordpress-social-login&wslp=contacts&uid=<?php echo $user_id ?>"><?php _wsl_e("Show user contacts list", 'wordpress-social-login'); ?></a>
-		</p>
-		
-		<b><?php echo $user_info->display_name; ?></b> :
-		<?php echo sprintf( _wsl__("Wordpress user details and list of WSL profiles", 'wordpress-social-login'), $user_info->display_name ) ?>. 
-	</div>
-
-	<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
-
-	<table class="wp-list-table widefat">
-		<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->ID; ?></td></tr> 
-		<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_login; ?></td></tr> 
-		<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->display_name; ?></td></tr> 
-		<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_info->user_email; ?>" target="_blank"><?php echo $user_info->user_email; ?></a></td></tr> 
-		<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_info->user_url; ?>" target="_blank"><?php echo $user_info->user_url; ?></a></td></tr>   
-		<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_registered; ?></td></tr>  
-		</tr>
-	</table>
-
-	<hr />
-<?php
-	foreach( $linked_accounts AS $link ){
-?>
-	<h3><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
-
-	<table class="wp-list-table widefat">
+<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+	<p style="float: right; margin: -5px;">
 		<?php
-			$profile_fields = (array) $link;
-
-			foreach( $ha_profile_fields as $item ){
-				$item['field'] = strtolower( $item['field'] );
-			?>
-				<tr>
-					<th width="200">
-						<label><?php echo $item['label']; ?></label>
-					</th>
-					<td>
-						<?php
-							if( isset( $profile_fields[ $item['field'] ] ) && $profile_fields[ $item['field'] ] ){
-								$field_value = $profile_fields[ $item['field'] ];
-
-								if( in_array( $item['field'], array( 'profileurl', 'websiteurl', 'email' ) ) ){
-									?>
-										<a href="<?php if( $item['field'] == 'email' ) echo 'mailto:'; echo $field_value; ?>" target="_blank"><?php echo $field_value; ?></a>
-									<?php
-								}
-								elseif( $item['field'] == 'photourl' ){
-									?>
-										<a href="<?php echo $field_value; ?>" target="_blank"><img width="36" height="36" align="left" src="<?php echo $field_value; ?>" style="margin-right: 5px;" > <?php echo $field_value; ?></a>
-									<?php
-								}
-								else{
-									echo $field_value; 
-								}
-
-								?>
-									<p class="description">
-										<?php echo $item['description']; ?>. 
-									</p>
-								<?php
-							}
-						?>
-					</td>
-				</tr> 
-			<?php
+			foreach( $actions as $item )
+			{
+				?>
+					<a class="<?php echo $item['class']; ?>" href="<?php echo $item['action']; ?>"><?php _wsl_e( $item['label'], 'wordpress-social-login' ); ?></a>
+				<?php
 			}
 		?>
-	</table>
+	</p>
+	
+	<b><?php echo $user_info->display_name; ?></b> :
+	<?php echo sprintf( _wsl__("Wordpress user details and list of WSL profiles", 'wordpress-social-login'), $user_info->display_name ) ?>. 
+</div>
+
+<style>
+	table td, table th { border: 1px solid #DDDDDD; }
+	table th label { font-weight: bold; }
+	.form-table th { width:120px; text-align:right; }
+	p.description { font-size: 11px ! important; margin:0 ! important;}
+</style>
+
+<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
+
+<table class="wp-list-table widefat">
+	<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->ID; ?></td></tr> 
+	<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_login; ?></td></tr> 
+	<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->display_name; ?></td></tr> 
+	<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_info->user_email; ?>" target="_blank"><?php echo $user_info->user_email; ?></a></td></tr> 
+	<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_info->user_url; ?>" target="_blank"><?php echo $user_info->user_url; ?></a></td></tr>   
+	<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_registered; ?></td></tr>  
+	</tr>
+</table>
+
+<hr />
+<?php
+	foreach( $linked_accounts AS $link )
+	{
+?>
+<h3><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
+
+<table class="wp-list-table widefat">
+	<?php
+		$profile_fields = (array) $link;
+
+		foreach( $ha_profile_fields as $item )
+		{
+			$item['field'] = strtolower( $item['field'] );
+		?>
+			<tr>
+				<th width="200">
+					<label><?php echo $item['label']; ?></label>
+				</th>
+				<td>
+					<?php
+						if( isset( $profile_fields[ $item['field'] ] ) && $profile_fields[ $item['field'] ] )
+						{
+							$field_value = $profile_fields[ $item['field'] ];
+
+							if( in_array( $item['field'], array( 'profileurl', 'websiteurl', 'email' ) ) )
+							{
+								?>
+									<a href="<?php if( $item['field'] == 'email' ) echo 'mailto:'; echo $field_value; ?>" target="_blank"><?php echo $field_value; ?></a>
+								<?php
+							}
+							elseif( $item['field'] == 'photourl' )
+							{
+								?>
+									<a href="<?php echo $field_value; ?>" target="_blank"><img width="36" height="36" align="left" src="<?php echo $field_value; ?>" style="margin-right: 5px;" > <?php echo $field_value; ?></a>
+								<?php
+							}
+							else
+							{
+								echo $field_value; 
+							}
+
+							?>
+								<p class="description">
+									<?php echo $item['description']; ?>. 
+								</p>
+							<?php
+						}
+					?>
+				</td>
+			</tr> 
+		<?php
+		}
+	?>
+</table>
 <?php
 	}
 

@@ -264,21 +264,26 @@ function wsl_display_dev_mode_debugging_area()
 							?>
 								<tr>
 									<td valign="top" width="450">
-										<span class="<?php if( stristr( $caller_name, '_option' ) ) echo 'wsl-dev-optionfunc'; elseif( stristr( $caller_name, 'wsl_' ) ) echo 'wsl-dev-wslfunc'; else echo 'wsl-dev-nonwslfunc'; ?>"><?php echo $caller_name; ?></span>
+										<?php if( stristr( $caller_name, 'wsl_' ) ): ?>
+											<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-wslfunc"><?php echo $caller_name; ?></a>
+										<?php else: ?>
+											<a href="https://developer.wordpress.org/?s=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-nonwslfunc<?php if( stristr( $caller_name, '_option' ) ) echo "- wsl-dev-optionfunc"; ?>"><?php echo $caller_name; ?></a>
+										<?php endif; ?>
+
 										<p style="font-size:11px; margin-left:10px">
-										<?php
-											if(  count( $callers ) )
-											{
-												# God damn it
-												for( $i = count( $callers ) - 1; $i > 0; $i-- )
+											<?php
+												if(  count( $callers ) )
 												{
-													if( ! stristr( $callers[$i], '.php' ) && ! stristr( $callers[$i],  'call_user_func_' ) )
+													# God damn it
+													for( $i = count( $callers ) - 1; $i > 0; $i-- )
 													{
-														echo "#$i &nbsp; " . $callers[$i] . '<br />';
+														if( ! stristr( $callers[$i], '.php' ) && ! stristr( $callers[$i],  'call_user_func_' ) )
+														{
+															echo "#$i &nbsp; " . $callers[$i] . '<br />';
+														}
 													}
 												}
-											}
-										?>
+											?>
 										</p>
 									</td>
 									<td valign="top" class="<?php if( ! stristr( '#' . $sql, '#select ' ) ) echo 'wsl-dev-nonselectsql'; ?>"><?php echo nl2br( $sql ); ?></td>
@@ -354,6 +359,9 @@ function wsl_display_dev_mode_debugging_area()
 														<td valign="top" width="50">
 															<?php echo $priority; ?>
 														</td>
+														<td valign="top" width="50">
+															<?php echo $callback['accepted_args'] ; ?>
+														</td>
 													</td>
 												<?php  
 											} // I hit a record
@@ -369,6 +377,7 @@ function wsl_display_dev_mode_debugging_area()
 									<td valign="top" width="270" nowrap class="wsl-dev-unusedhook">
 										<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
 									</td>
+									<td></td>
 									<td></td>
 									<td></td>
 								</td>
