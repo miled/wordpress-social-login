@@ -2,9 +2,10 @@
 
 WordPress Social Login is a free and open source plug-in that allow your website readers and customers to register on using their existing social accounts IDs, eliminating the need to fill out registration forms and remember usernames and passwords.
 
-By default, WSL will add an authentication widget into the comments, login and register forms enabling users to connect via their preferred social networks. 
+For more information, refer to http://sociallogin.github.io/wordpress-social-login/
 
-For further information, refer to the online user guide at http://sociallogin.github.io/wordpress-social-login/
+![WSL Authentication Widget](https://raw.githubusercontent.com/sociallogin/wordpress-social-login/master/screenshot-1.png)
+===
 
 ### WSL's main features
 
@@ -19,11 +20,15 @@ For further information, refer to the online user guide at http://sociallogin.gi
 * Provides direct access to social networks apis.
 * Comprehensive documentation.
 
+===
+
 ### Installation
 
 * Download the contents of this repo as a zip file, and upload it to your plugins directory,
 * Login to your Wordpress admin panel and activate the plugin through the 'Plugins' menu,
 * Goto the Settings > WP Social Login to get started.
+
+===
 
 ### Version
 
@@ -32,6 +37,29 @@ For further information, refer to the online user guide at http://sociallogin.gi
 Note: this repo is for development only.
 If you want to download stable tags, then refer to https://wordpress.org/plugins/wordpress-social-login/developers/
 
+===
+
 ### License 
 
 MIT (http://opensource.org/licenses/MIT)
+
+===
+
+### Screenshots
+
+###### Authentication Widget
+
+![Number6](http://sociallogin.github.io/wordpress-social-login/assets/img/theme_number6.png)
+===
+![Flat](http://sociallogin.github.io/wordpress-social-login/assets/img/theme_flat.png)
+===
+![Fontawesome](http://sociallogin.github.io/wordpress-social-login/assets/img/theme_fontawesome.png)
+===
+
+###### WSL Admin Panel
+
+![Networks](https://raw.githubusercontent.com/sociallogin/wordpress-social-login/master/screenshot-3.png)
+=
+![Widget](https://raw.githubusercontent.com/sociallogin/wordpress-social-login/master/screenshot-4.png)
+===
+![Bouncer](https://raw.githubusercontent.com/sociallogin/wordpress-social-login/master/screenshot-5.png)
