@@ -30,24 +30,21 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid user ID.", 5 );
 		}
 
-		// grab basic info
-		$userProfile = $this->getUserProfileLegacyAPI();
-
-		foreach( $userProfile as $k => $v )
-		{
-			$this->user->profile->$k = $v;
-		}
-
 		// if api key is provided, we attempt to enrich the user profile
 		// > will add to loading time tho..
 		if( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] )
 		{
 			$userProfile = $this->getUserProfileWebAPI( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] );
+		}
+		// otherwise just grab basic info
+		else
+		{
+			$userProfile = $this->getUserProfileLegacyAPI();
+		}
 
-			foreach( $userProfile as $k => $v )
-			{
-				$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
-			}
+		foreach( $userProfile as $k => $v )
+		{
+			$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
 		}
 
 		// store the user profile
@@ -66,8 +63,8 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName'] = property_exists( $data, 'realname'      ) ? $data->realname       : property_exists( $data, 'realname' ) ? $data->realname : '';
-		$userProfile['firstName'  ] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
+		$userProfile['displayName'] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
+		$userProfile['firstName'  ] = property_exists( $data, 'realname'      ) ? $data->realname       : '';
 		$userProfile['photoURL'   ] = property_exists( $data, 'avatarfull'    ) ? $data->avatarfull     : '';
 		$userProfile['profileURL' ] = property_exists( $data, 'profileurl'    ) ? $data->profileurl     : '';
 		$userProfile['country'    ] = property_exists( $data, 'loccountrycode') ? $data->loccountrycode : '';
@@ -84,12 +81,14 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName' ] = property_exists( $data, 'personaname' ) ? (string) $data->personaname : property_exists( $data, 'steamID' ) ? (string) $data->steamID : '';
-		$userProfile['firstName'   ] = property_exists( $data, 'personaname' ) ? (string) $data->personaname : '';
+		$userProfile['displayName' ] = property_exists( $data, 'steamID'     ) ? (string) $data->steamID     : '';
+		$userProfile['firstName'   ] = property_exists( $data, 'realname'    ) ? (string) $data->realname    : '';
 		$userProfile['photoURL'    ] = property_exists( $data, 'avatarFull'  ) ? (string) $data->avatarFull  : '';
 		$userProfile['description' ] = property_exists( $data, 'summary'     ) ? (string) $data->summary     : '';
 		$userProfile['region'      ] = property_exists( $data, 'location'    ) ? (string) $data->location    : '';
-		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   ) ? 'http://steamcommunity.com/id/' . (string) $data->customURL . '/' : '';
+		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   )
+			? "http://steamcommunity.com/id/{$data->customURL}/"
+			: "http://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
 
 		return $userProfile;
 	}
