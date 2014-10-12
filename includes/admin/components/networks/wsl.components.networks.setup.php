@@ -88,6 +88,7 @@ function wsl_component_networks_setup()
 		$provider_name              = isset( $item["provider_name"]     ) ? $item["provider_name"]     : '';
 
 		$require_client_id          = isset( $item["require_client_id"] ) ? $item["require_client_id"] : '';
+		$require_api_key            = isset( $item["require_api_key"]   ) ? $item["require_api_key"]   : '';
 		$provide_email              = isset( $item["provide_email"]     ) ? $item["provide_email"]     : '';
 
 		$provider_new_app_link      = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : '';
@@ -104,6 +105,10 @@ function wsl_component_networks_setup()
 
 		if( isset( $item["callback"] ) && $item["callback"] ){
 			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
+		}
+
+		if( isset( $item["custom_callback"] ) && $item["custom_callback"] ){
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'endpoints/' . strtolower( $provider_id ) . '.php</span>';
 		}
 
 		$setupsteps = 0;  
@@ -147,11 +152,14 @@ function wsl_component_networks_setup()
 									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>  
 							<?php }; ?>	 
+
+							<?php if( ! $require_api_key ) { ?>	 
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
 									<td><?php _wsl_e("Application Secret", 'wordpress-social-login') ?>:</td>
 									<td><input type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_secret' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_secret' ); ?>" ></td>
 									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>
+							<?php } ?>
 						<?php } // if require registration ?> 
 					</tbody>
 				</table> 

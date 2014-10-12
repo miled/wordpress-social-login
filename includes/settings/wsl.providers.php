@@ -170,6 +170,15 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"cat"               => "programmers",
 	),
 	ARRAY( 
+		"provider_id"       => "Dribbble",
+		"provider_name"     => "Dribbble", 
+		"require_client_id" => true, 
+		"custom_callback"   => true,
+		"new_app_link"      => "https://dribbble.com/account/applications/new", 
+
+		"cat"               => "designers",
+	),
+	ARRAY( 
 		"provider_id"       => "500px",
 		"provider_name"     => "px500", 
 		"new_app_link"      => "http://developers.500px.com/", 
@@ -193,8 +202,9 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	), 
 	ARRAY( 
 		"provider_id"       => "Steam",
-		"provider_name"     => "Steam", 
-		"new_app_link"      => null, 
+		"provider_name"     => "Steam",
+		"new_app_link"      => "http://steamcommunity.com/dev/apikey",
+		"require_api_key"   => true,
 
 		"cat"               => "gamers",
 	),
