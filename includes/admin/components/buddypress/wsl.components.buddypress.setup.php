@@ -20,6 +20,76 @@ function wsl_component_buddypress_setup()
 	// HOOKABLE: 
 	do_action( "wsl_component_buddypress_setup_start" );
 
+	$sections = array(
+		'user_avatar'     => 'wsl_component_buddypress_setup_user_avatar',
+		'profile_mapping' => 'wsl_component_buddypress_setup_profile_mapping', 
+	);
+
+	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
+?>
+<div>
+	<?php
+		foreach( $sections as $section => $action )
+		{
+			do_action( $action . '_start' );
+
+			do_action( $action );
+
+			do_action( $action . '_end' );
+		}
+	?>
+
+	<br />
+
+	<div style="margin-left:5px;margin-top:-20px;"> 
+		<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" /> 
+	</div>
+</div>
+<?php
+	// HOOKABLE: 
+	do_action( "wsl_component_buddypress_setup_end" );
+}
+
+// --------------------------------------------------------------------	
+
+function wsl_component_buddypress_setup_user_avatar()
+{
+?>
+<div class="stuffbox">
+	<h3>
+		<label><?php _wsl_e("Users avatars", 'wordpress-social-login') ?></label>
+	</h3>
+	<div class="inside"> 
+		<p> 
+			<?php 
+				if( get_option( 'wsl_settings_users_avatars' ) == 1 ){
+					_wsl_e("<b>Users avatars</b> is currently set to: <b>Display users avatars from social networks when available</b>", 'wordpress-social-login');
+				}
+				else{
+					_wsl_e("<b>Users avatars</b> is currently set to: <b>Display the default WordPress avatars</b>", 'wordpress-social-login');
+				}
+			?>.
+		</p>
+
+		<p class="description">
+			<?php _wsl_e("To change this setting, go to <b>Widget</b> &gt; <b>Basic Settings</b> &gt <b>Users avatars</b>, then select the type of avatars that you want to display for your users", 'wordpress-social-login') ?>.
+		</p> 
+	</div>
+</div>
+<?php
+}
+
+add_action( 'wsl_component_buddypress_setup_user_avatar', 'wsl_component_buddypress_setup_user_avatar' );
+
+// --------------------------------------------------------------------	
+
+function wsl_component_buddypress_setup_profile_mapping()
+{
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
+
+	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
+	$wsl_settings_buddypress_xprofile_map   = get_option( 'wsl_settings_buddypress_xprofile_map' );
+
 	# http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html 
 	$ha_profile_fields = array(
 		array( 'field' => 'provider'    , 'label' => _wsl__( "Provider name"            , 'wordpress-social-login'), 'description' => _wsl__( "The the provider or social network name the user used to connected"                                                     , 'wordpress-social-login') ),
@@ -45,181 +115,142 @@ function wsl_component_buddypress_setup()
 		array( 'field' => 'region'      , 'label' => _wsl__( "Region"                   , 'wordpress-social-login'), 'description' => _wsl__( "User's state or region"                                                                                                 , 'wordpress-social-login') ),
 		array( 'field' => 'city'        , 'label' => _wsl__( "City"                     , 'wordpress-social-login'), 'description' => _wsl__( "User's city"                                                                                                            , 'wordpress-social-login') ),
 		array( 'field' => 'zip'         , 'label' => _wsl__( "Zip"                      , 'wordpress-social-login'), 'description' => _wsl__( "User's zipcode"                                                                                                         , 'wordpress-social-login') ),
-	);
-
-	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
-	$wsl_settings_buddypress_xprofile_map = get_option( 'wsl_settings_buddypress_xprofile_map' );
-
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
+	); 
 ?>
+<div class="stuffbox">
+	<h3>
+		<label><?php _wsl_e("Profile mappings", 'wordpress-social-login') ?></label>
+	</h3>
+	<div class="inside"> 
+		<p> 
+			<?php _wsl_e("When <b>Profile mapping</b> is enabled, WSL will try to automatically fill in Buddypress users profiles from their social networks profiles", 'wordpress-social-login') ?>.
+		</p>
 
-<div  id="post-body-content">
+		<p>
+			<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
+		</p> 
 
-	<div class="stuffbox">
-		<h3>
-			<label><?php _wsl_e("Users avatars", 'wordpress-social-login') ?></label>
-		</h3>
-		<div class="inside"> 
-			<p> 
-				<?php 
-					if( get_option( 'wsl_settings_users_avatars' ) == 1 ){
-						_wsl_e("<b>Users avatars</b> is currently set to: <b>Display users avatars from social networks when available</b>", 'wordpress-social-login');
-					}
-					else{
-						_wsl_e("<b>Users avatars</b> is currently set to: <b>Display the default WordPress avatars</b>", 'wordpress-social-login');
-					}
-				?>.
-			</p>
+		<p class="description">
+			1. <?php _wsl_e('<b>Profile mapping</b> will only work for new users. Profile mapping for returning users will implemented in future version of WSL', 'wordpress-social-login') ?>.
+			<br />
+			2. <?php _wsl_e('Not all the mapped fields will be filled. Some providers and social networks do not give away many information about their users', 'wordpress-social-login') ?>.
+			<br />
+			3. <?php _wsl_e('WSL can only map <b>Single Fields</b>. Supported fields types are: Multi-line Text Areax, Text Box, URL, Date Selector and Number', 'wordpress-social-login') ?>.
+		</p> 
 
-			<p class="description">
-				<?php _wsl_e("To change this setting, go to <b>Widget</b> &gt; <b>Basic Settings</b> &gt <b>Users avatars</b>, then select the type of avatars that you want to display for your users", 'wordpress-social-login') ?>.
-			</p> 
-		</div>
-	</div>
-	
-	<div class="stuffbox">
-		<h3>
-			<label><?php _wsl_e("Profile mappings", 'wordpress-social-login') ?></label>
-		</h3>
-		<div class="inside"> 
-			<p> 
-				<?php _wsl_e("When <b>Profile mapping</b> is enabled, WSL will try to automatically fill in Buddypress users profiles from their social networks profiles", 'wordpress-social-login') ?>.
-			</p>
-
-			<p>
-				<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
-			</p> 
-
-			<p class="description">
-				1. <?php _wsl_e('<b>Profile mapping</b> will only work for new users. Profile mapping for returning users will implemented in future version of WSL', 'wordpress-social-login') ?>.
-				<br />
-				2. <?php _wsl_e('Not all the mapped fields will be filled. Some providers and social networks do not give away many information about their users', 'wordpress-social-login') ?>.
-				<br />
-				3. <?php _wsl_e('WSL can only map <b>Single Fields</b>. Supported fields types are: Multi-line Text Areax, Text Box, URL, Date Selector and Number', 'wordpress-social-login') ?>.
-			</p> 
-
-			<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
-			  <tr>
-				<td width="200" align="right"><strong><?php _wsl_e("Enable profile mapping", 'wordpress-social-login') ?> :</strong></td>
-				<td> 
-					<select name="wsl_settings_buddypress_enable_mapping" id="wsl_settings_buddypress_enable_mapping" style="width:100px" onChange="toggleMapDiv();">
-						<option <?php if( $wsl_settings_buddypress_enable_mapping == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
-						<option <?php if( $wsl_settings_buddypress_enable_mapping == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
-					</select> 
-				</td>
-			  </tr>
-			</table>
-			<br>  
-		</div>
-	</div>
-
-	<div id="xprofilemapdiv" class="stuffbox" style="<?php if( $wsl_settings_buddypress_enable_mapping == 2 ) echo "display:none;"; ?>">
-		<h3>
-			<label><?php _wsl_e("Fields Map", 'wordpress-social-login') ?></label>
-		</h3>
-
-		<div class="inside">
-			<p>
-				<?php _wsl_e("Here you can create a new map by placing WSL users profiles fields to the appropriate destination fields", 'wordpress-social-login') ?>. 
-				<?php _wsl_e('The left column shows the available <b>WSL users profiles fields</b>: These select boxes are called <b>source</b> fields', 'wordpress-social-login') ?>. 
-				<?php _wsl_e('The right column shows the list of <b>Buddypress profiles fields</b>: Those are the <b>destination</b> fields', 'wordpress-social-login') ?>. 
-				<?php _wsl_e('If you don\'t want to map a particular Buddypress field, then leave the source for that field blank', 'wordpress-social-login') ?>.
-			</p>
-
-			<hr />
-			
-			<?php
-				if ( bp_has_profile() )
-				{
-					while ( bp_profile_groups() )
-					{
-						global $group;
-
-						bp_the_profile_group();
-						?>
-							<h4><?php echo sprintf( _wsl__("Fields Group '%s'", 'wordpress-social-login'), $group->name ) ?> :</h4>  
-							
-							<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
-								<?php 
-									while ( bp_profile_fields() )
-									{
-										global $field;
-
-										bp_the_profile_field();
-										?>
-											<tr>
-												<td width="270" align="right" valign="top">
-													<?php
-														$map = isset( $wsl_settings_buddypress_xprofile_map[$field->id] ) ? $wsl_settings_buddypress_xprofile_map[$field->id] : 0;
-														$can_map_it = true;
-														
-														if( ! in_array( $field->type, array( 'textarea', 'textbox', 'url', 'datebox', 'number' ) ) ){
-															$can_map_it = false;
-														}
-													?>
-													<select name="wsl_settings_buddypress_xprofile_map[<?php echo $field->id; ?>]" style="width:255px" id="bb_profile_mapping_selector_<?php echo $field->id; ?>" onChange="showMappingConfirm( <?php echo $field->id; ?> );" <?php if( ! $can_map_it ) echo "disabled"; ?>>
-														<option value=""></option>
-														<?php 
-															if( $can_map_it ){
-																foreach( $ha_profile_fields as $item ){
-																?>
-																	<option value="<?php echo $item['field']; ?>" <?php if( $item['field'] == $map ) echo "selected"; ?> ><?php echo $item['label']; ?></option>
-																<?php 
-																}
-															}
-														?>
-													</select> 
-												</td>
-												<td valign="top" align="center" width="50">
-													<img src="<?php echo $assets_base_url; ?>arr_right.png" /> 
-												</td>
-												<td valign="top">
-													<strong><?php echo $field->name; ?></strong> 
-													<?php
-														if( ! $can_map_it ){
-														?>
-															<p class="description">
-																<?php _wsl_e("<b>WSL</b> can not map this field. Supported field types are: <em>Multi-line Text Areax, Text Box, URL, Date Selector and Number</em>", 'wordpress-social-login'); ?>.
-															</p>
-														<?php
-														}
-														else{
-														?>
-															<?php
-																foreach( $ha_profile_fields as $item ){
-															?>
-																<p class="description bb_profile_mapping_confirm_<?php echo $field->id; ?>" style="<?php if( $item['field'] != $map ) echo "display:none;"; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
-																	<?php echo sprintf( _wsl__( "WSL <b>%s</b> is mapped to Buddypress <b>%s</b> field", 'wordpress-social-login' ), $item['label'], $field->name ); ?>.
-																	<br />
-																	<em><b><?php echo $item['label']; ?>:</b> <?php echo $item['description']; ?>.</em>
-																</p>
-															<?php
-																}
-															?>
-														<?php
-														}
-													?>
-												</td>
-											</tr>
-										<?php
-									}
-								?>
-							</table>
-						<?php
-					}
-				}
-			?>
-			<br>  
-		</div>
-	</div>
-
-	<br />
-
-	<div style="margin-left:5px;margin-top:-20px;"> 
-		<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" /> 
+		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
+		  <tr>
+			<td width="200" align="right"><strong><?php _wsl_e("Enable profile mapping", 'wordpress-social-login') ?> :</strong></td>
+			<td> 
+				<select name="wsl_settings_buddypress_enable_mapping" id="wsl_settings_buddypress_enable_mapping" style="width:100px" onChange="toggleMapDiv();">
+					<option <?php if( $wsl_settings_buddypress_enable_mapping == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+					<option <?php if( $wsl_settings_buddypress_enable_mapping == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
+				</select> 
+			</td>
+		  </tr>
+		</table>
+		<br>  
 	</div>
 </div>
 
+<div id="xprofilemapdiv" class="stuffbox" style="<?php if( $wsl_settings_buddypress_enable_mapping == 2 ) echo "display:none;"; ?>">
+	<h3>
+		<label><?php _wsl_e("Fields Map", 'wordpress-social-login') ?></label>
+	</h3>
+
+	<div class="inside">
+		<p>
+			<?php _wsl_e("Here you can create a new map by placing WSL users profiles fields to the appropriate destination fields", 'wordpress-social-login') ?>. 
+			<?php _wsl_e('The left column shows the available <b>WSL users profiles fields</b>: These select boxes are called <b>source</b> fields', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('The right column shows the list of <b>Buddypress profiles fields</b>: Those are the <b>destination</b> fields', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('If you don\'t want to map a particular Buddypress field, then leave the source for that field blank', 'wordpress-social-login') ?>.
+		</p>
+
+		<hr />
+		
+		<?php
+			if ( bp_has_profile() )
+			{
+				while ( bp_profile_groups() )
+				{
+					global $group;
+
+					bp_the_profile_group();
+					?>
+						<h4><?php echo sprintf( _wsl__("Fields Group '%s'", 'wordpress-social-login'), $group->name ) ?> :</h4>  
+						
+						<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
+							<?php 
+								while ( bp_profile_fields() )
+								{
+									global $field;
+
+									bp_the_profile_field();
+									?>
+										<tr>
+											<td width="270" align="right" valign="top">
+												<?php
+													$map = isset( $wsl_settings_buddypress_xprofile_map[$field->id] ) ? $wsl_settings_buddypress_xprofile_map[$field->id] : 0;
+													$can_map_it = true;
+													
+													if( ! in_array( $field->type, array( 'textarea', 'textbox', 'url', 'datebox', 'number' ) ) ){
+														$can_map_it = false;
+													}
+												?>
+												<select name="wsl_settings_buddypress_xprofile_map[<?php echo $field->id; ?>]" style="width:255px" id="bb_profile_mapping_selector_<?php echo $field->id; ?>" onChange="showMappingConfirm( <?php echo $field->id; ?> );" <?php if( ! $can_map_it ) echo "disabled"; ?>>
+													<option value=""></option>
+													<?php 
+														if( $can_map_it ){
+															foreach( $ha_profile_fields as $item ){
+															?>
+																<option value="<?php echo $item['field']; ?>" <?php if( $item['field'] == $map ) echo "selected"; ?> ><?php echo $item['label']; ?></option>
+															<?php 
+															}
+														}
+													?>
+												</select> 
+											</td>
+											<td valign="top" align="center" width="50">
+												<img src="<?php echo $assets_base_url; ?>arr_right.png" /> 
+											</td>
+											<td valign="top">
+												<strong><?php echo $field->name; ?></strong> 
+												<?php
+													if( ! $can_map_it ){
+													?>
+														<p class="description">
+															<?php _wsl_e("<b>WSL</b> can not map this field. Supported field types are: <em>Multi-line Text Areax, Text Box, URL, Date Selector and Number</em>", 'wordpress-social-login'); ?>.
+														</p>
+													<?php
+													}
+													else{
+													?>
+														<?php
+															foreach( $ha_profile_fields as $item ){
+														?>
+															<p class="description bb_profile_mapping_confirm_<?php echo $field->id; ?>" style="<?php if( $item['field'] != $map ) echo "display:none;"; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
+																<?php echo sprintf( _wsl__( "WSL <b>%s</b> is mapped to Buddypress <b>%s</b> field", 'wordpress-social-login' ), $item['label'], $field->name ); ?>.
+																<br />
+																<em><b><?php echo $item['label']; ?>:</b> <?php echo $item['description']; ?>.</em>
+															</p>
+														<?php
+															}
+														?>
+													<?php
+													}
+												?>
+											</td>
+										</tr>
+									<?php
+								}
+							?>
+						</table>
+					<?php
+				}
+			}
+		?>
+	</div>
+</div>
 <script>
 	function toggleMapDiv(){
 		if(typeof jQuery=="undefined"){
@@ -249,8 +280,8 @@ function wsl_component_buddypress_setup()
 	}
 </script>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_buddypress_setup_end" );
 }
+
+add_action( 'wsl_component_buddypress_setup_profile_mapping', 'wsl_component_buddypress_setup_profile_mapping' );
 
 // --------------------------------------------------------------------	

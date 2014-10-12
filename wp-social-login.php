@@ -51,7 +51,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-@ session_start(); // shhhtt keept it a secret
+@ session_start(); // shhhtt keept it secret
 
 $WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
 
@@ -108,7 +108,7 @@ register_activation_hook( __FILE__, 'wsl_activate' );
 // --------------------------------------------------------------------
 
 /**
-* Add a settings, faq and user guide links to plugin_action_links
+* Add a settings to plugin_action_links
 */
 function wsl_add_plugin_action_links( $links, $file )
 {
@@ -116,19 +116,13 @@ function wsl_add_plugin_action_links( $links, $file )
 
 	if( ! $this_plugin )
 	{
-		$this_plugin = plugin_basename(__FILE__);
+		$this_plugin = plugin_basename( __FILE__ );
 	}
 
 	if( $file == $this_plugin )
 	{
-		$wsl_link  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
-		array_unshift( $links, $wsl_link );
-
-		$wsl_link = '<a href="http://hybridauth.sourceforge.net/wsl/faq.html">' . __( "FAQ" ) . '</a>';
-		array_unshift( $links, $wsl_link );
-
-		$wsl_link = '<a href="http://hybridauth.sourceforge.net/wsl/">' . __( "User Guide" ) . '</a>';
-		array_unshift( $links, $wsl_link );
+		$wsl_links  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+		array_unshift( $links, $wsl_links );
 	}
 
 	return $links;
@@ -139,13 +133,45 @@ add_filter( 'plugin_action_links', 'wsl_add_plugin_action_links', 10, 2 );
 // --------------------------------------------------------------------
 
 /**
+* Add faq and user guide links to plugin_row_meta
+*/
+function wsl_add_plugin_row_meta( $links, $file )
+{
+	static $this_plugin;
+
+	if( ! $this_plugin )
+	{
+		$this_plugin = plugin_basename( __FILE__ );
+	}
+
+	if( $file == $this_plugin )
+	{
+		$wsl_links = array(
+			'<a href="http://miled.github.io/wordpress-social-login/">' . __( "Manual" ) . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/faq.html">' . __( "FAQ" ) . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . __( "Suppot" ) . '</a>',
+			'<a href="https://github.com/miled/wordpress-social-login">' . __( "Fork me on Github" ) . '</a>',
+		);
+
+		return array_merge( $links, $wsl_links );
+	}
+
+	return $links;
+}
+
+add_filter( 'plugin_row_meta', 'wsl_add_plugin_row_meta', 10, 2 );
+
+// --------------------------------------------------------------------
+
+/**
 * Loads the plugin's translated strings.
 *
 * http://codex.wordpress.org/Function_Reference/load_plugin_textdomain
 */
 if( ! function_exists( 'wsl_load_plugin_textdomain' ) )
 {
-	function wsl_load_plugin_textdomain() {
+	function wsl_load_plugin_textdomain()
+	{
 		load_plugin_textdomain( 'wordpress-social-login', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' ); 
 	}
 }

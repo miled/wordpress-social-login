@@ -192,38 +192,6 @@ function wsl_display_dev_mode_debugging_area()
 		}
 	</style>
 
-	<?php
-		if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
-		{
-	?>
-		<h4>Latest API call</h4>
-		<table class="wsl-dev-table">
-			<tbody>
-				<tr><th width="270"><label>CLIENT</label></th><td><?php echo $_SESSION['wsl::api']['CLIENT']; ?></td></tr>
-				<tr><th><label>HTTP_URL</label></th><td><?php echo $_SESSION['wsl::api']['URL']; ?></td></tr>
-			<?php
-				if( $_SESSION['wsl::api']['POST'] )
-				{
-			?>
-				<tr><th><label>HTTP_POST</label></th><td><?php echo $_SESSION['wsl::api']['POST']; ?></td></tr>
-			<?php
-				}
-			?>
-				<tr><th><label>HTTP_CODE</label></th><td><?php echo $_SESSION['wsl::api']['CODE']; ?></td></tr>
-			<?php
-				if( $_SESSION['wsl::api']['RESPONSE'] )
-				{
-			?>
-				<tr><th><label>HTTP_RESPONSE</label></th><td><?php echo $_SESSION['wsl::api']['RESPONSE']; ?></td></tr>
-			<?php
-				}
-			?>
-			</tbody>
-		</table>
-	<?php
-		}
-	?>
-
 	<h4>SQL Queries</h4>
 	<table class="wsl-dev-table">
 		<tbody>

@@ -74,15 +74,6 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 = 2.2.3 = 
 
-* WSL is now compatible with PHP 5.2 again
-* Get full avatar form Steam and fetch location
-* Get full avatar form LinkedIn
-* Get LinkedIn members headline as description. Summary no longer work
-* New Users roles
-* Rewrite Hybridauth endpoints urls
-* Improve sessions management
-* Improve debugging
-* Optimize wsl tables and for create tables checks every activation
 * ..
 
 = 2.2.2 = 

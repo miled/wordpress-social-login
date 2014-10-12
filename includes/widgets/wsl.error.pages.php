@@ -261,6 +261,9 @@ function wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_t
 <h3>Backtrace</h3>
 <pre><?php debug_print_backtrace(); ?></pre>
 
+<h3>Exception</h3>
+<pre><?php print_r( $php_exception ); ?></pre>
+
 <br />
 
 <small>

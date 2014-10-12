@@ -2,7 +2,7 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
+* http://miled.github.io/wordpress-social-login/index.html | http://github.com/hybridauth/WordPress-Social-Login
 *    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
@@ -41,7 +41,7 @@ function wsl_component_help()
 	<h3><?php _wsl_e("Documentation", 'wordpress-social-login') ?></h3>
 	<p>
 		<?php _wsl_e('The complete <b>User Guide</b> can be found at
-		<a href="http://hybridauth.sourceforge.net/wsl/index.html" target="_blank">hybridauth.sourceforge.net/wsl/index.html</a>', 'wordpress-social-login') ?>
+		<a href="http://miled.github.io/wordpress-social-login/index.html" target="_blank">miled.github.io/wordpress-social-login/index.html</a>', 'wordpress-social-login') ?>
 	</p>
 
 	<hr />
@@ -49,21 +49,21 @@ function wsl_component_help()
 	<h3><?php _wsl_e("FAQs", 'wordpress-social-login') ?></h3>
 	<p>
 		<?php _wsl_e('A list of <b>Frequently asked questions</b> can be found at
-		<a href="http://hybridauth.sourceforge.net/wsl/faq.html" target="_blank">hybridauth.sourceforge.net/wsl/faq.html</a>', 'wordpress-social-login') ?>
+		<a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank">miled.github.io/wordpress-social-login/faq.html</a>', 'wordpress-social-login') ?>
 	</p>
 
 	<hr />
 	
 	<h3><?php _wsl_e("Support", 'wordpress-social-login') ?></h3>
 	<p>
-		<?php _wsl_e('To get help and support refer to <a href="http://hybridauth.sourceforge.net/wsl/support.html" target="_blank">http://hybridauth.sourceforge.net/wsl/support.html</a>', 'wordpress-social-login') ?>
+		<?php _wsl_e('To get help and support refer to <a href="http://miled.github.io/wordpress-social-login/support.html" target="_blank">http://miled.github.io/wordpress-social-login/support.html</a>', 'wordpress-social-login') ?>
 	</p>
  
 	<hr />
 	
 	<h3><?php _wsl_e("Credits", 'wordpress-social-login') ?></h3>
 	<p>
-		<?php _wsl_e('WordPress Social Login was created by <a href="http://profiles.wordpress.org/miled/" target="_blank">Mohamed Mrassi</a> (a.k.a Miled) and <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>.
+		<?php _wsl_e('WordPress Social Login was created by <a href="http://profiles.wordpress.org/miled/" target="_blank">Mohamed Mrassi</a> (a.k.a Miled) and <a href="https://miled.github.io/wordpress-social-login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>.
 		<?php _wsl_e("Many other people have also contributed with <br />constructive discussions, support and by submitting patches", 'wordpress-social-login') ?>.
 	</p>
  

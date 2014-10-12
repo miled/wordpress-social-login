@@ -538,6 +538,7 @@ function wsl_admin_welcome_panel()
 					<b><?php echo sprintf( _wsl__( "What's new on WSL %s", 'wordpress-social-login'), wsl_get_version() ) ?></b>
 				</p>
 
+				<!-- 2.2.2
 				<ul style="margin-left:25px;">
 					<li><?php _wsl_e('WSL can be now fully integrated with your <a href="https://buddypress.org" target="_blank">BuddyPress</a> installation', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL Widget is now more flexible than before and can be <a href="http://hybridauth.sourceforge.net/wsl/themes.html?" target="_blank">fully customized</a> to fit you website theme', 'wordpress-social-login') ?>.</li>
@@ -545,6 +546,11 @@ function wsl_admin_welcome_panel()
 					<li><?php _wsl_e('Introducing four new providers : <a href="https://wordpress.com" target="_blank">WordPress.com</a>, <a href="https://disqus.com" target="_blank">Disqus</a>, <a href="https://www.reddit.com" target="_blank">Reddit</a>and <a href="http://pixelpin.co.uk/" target="_blank">PixelPin</a>', 'wordpress-social-login') ?>.</li> 
 					<li><?php _wsl_e('WSL <a href="http://hybridauth.sourceforge.net/wsl/developer.html" target="_blank">Hooks</a> has been reworked and few hooks have been depreciated in favour of new ones', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('A number of bugfixes, small enhancements and visual updates', 'wordpress-social-login') ?>.</li>
+				</ul>
+				 -->
+				<ul style="margin-left:25px;">
+					<li><?php _wsl_e('Add supporting  for <a href="https://dribbble.com" target="_blank">Dribbble.com</a>', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('<a href="http://store.steampowered.com/" target="_blank">Steam</a> provider has been reworked to fully supporet the Steam Web API', 'wordpress-social-login') ?>.</li> 
 				</ul>
 			</td>
 		</tr>
