@@ -25,12 +25,15 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 #### To Do
 
+- [x] Add support for dribbble.com
 - [x] Make WSL compatible with PHP 5.2 again.
 - [x] Get full avatar form LinkedIn and get LinkedIn members headline as description.
 - [x] Allow bouncer to set new users roles.
 - [x] Rewrite Hybridauth endpoints urls.
 - [x] Optimize wsl tables and for create tables checks every activation.
 - [x] Improve debugging.
+    - [x] debug calls to social apis
+    - [x] improve watchdog
 - [ ] Rework the Steam provider.
     - [x] Get full avatar form Steam and fetch location.
     - [x] Support Steam Web API. See [WSL-2.2.2 Steam branch](https://github.com/miled/wordpress-social-login/tree/wsl-2.2.2-steam).
