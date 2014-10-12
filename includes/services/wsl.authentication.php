@@ -191,6 +191,12 @@ function wsl_process_login_begin()
 		$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
 	}
 
+	// set custom endpoint?
+	if( in_array( strtolower( $provider ), array( 'live', 'dribbble' ) ) )
+	{
+		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
+	}
+
 	// set default scope and display mode for facebook
 	if( strtolower( $provider ) == "facebook" )
 	{
@@ -989,9 +995,26 @@ function wsl_process_login_clear_user_php_session()
 {
 	$_SESSION["HA::STORE"]  = array();
 	$_SESSION["HA::CONFIG"] = array();
-	$_SESSION["wsl::api"]   = array();
 }
 
 add_action( 'wsl_process_login_clear_user_php_session', 'wsl_process_login_clear_user_php_session' );
+
+// --------------------------------------------------------------------
+
+/**
+* Clear the stored data by hybridauth and wsl in php session
+*/
+function wsl_process_login_get_provider_adapter( $provider )
+{
+	// load hybridauth main class
+	if( ! class_exists( 'Hybrid_Auth', false ) )
+	{
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php"; 
+	}
+
+	return Hybrid_Auth::getAdapter( $provider);
+}
+
+add_filter( 'wsl_process_login_get_provider_adapter', 'wsl_process_login_get_provider_adapter', 10, 1 );
 
 // --------------------------------------------------------------------

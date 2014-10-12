@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login | http://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
 class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
@@ -29,12 +29,13 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 		// If we get a hauth.start
 		if ( isset( WSL_Hybrid_Endpoint::$request["hauth_start"] ) && WSL_Hybrid_Endpoint::$request["hauth_start"] ) {
 			WSL_Hybrid_Endpoint::processAuthStart();
-		}
-
+		} 
 		// Else if hauth.done
 		elseif ( isset( WSL_Hybrid_Endpoint::$request["hauth_done"] ) && WSL_Hybrid_Endpoint::$request["hauth_done"] ) {
 			WSL_Hybrid_Endpoint::processAuthDone();
 		}
+		
+		print_r( Hybrid_Endpoint::$request );
 	}
 
 	public static function processAuthStart()
@@ -88,15 +89,10 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 	public static function dieError( $message )
 	{
 		#{{{
-		# This 5 LLOC should be executed only once every three millennium
+		# This should be executed only once every three millennium
 		# It means either : 1. Php Sessions ain't working as expected or expired. 2. A crawler got lost. 3. Someone is having fun forging urls.
-		# If wp-load.php does exists in another directory, change it manullay. From now on, you're on your own. Goodbye.
-		$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
-
-		if( file_exists( $parse_uri[0] . 'wp-load.php' ) )
-		{
-			require_once( $parse_uri[0] . 'wp-load.php' );
-
+		# If wp-load.php is not included in the index.php, then do it manually. From now on, you're on your own. Goodbye.
+		if( function_exists( 'get_option' ) ){
 			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
 				wsl_display_dev_mode_debugging_area();
 			}

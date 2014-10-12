@@ -12,14 +12,20 @@ http://hybridauth.sourceforge.net
 ###### hybridauth/Hybrid/Storage.php 
 * L-13 Remove that stupid interface and make Hybridauth compatible with PHP 5.2 again
 
+###### hybridauth/Hybrid/Provider_Adapter.php
+* L-164 allow custom endpoint from provider config
+
 ###### hybridauth/Hybrid/thirdparty/OAuth/OAuth1Client.php 
 * L-236 API errors responses
+* L-174 make request a public function
 
 ###### hybridauth/Hybrid/thirdparty/OAuth/OAuth2Client.php 
 * L-240 API errors responses
+* L-198 make request a public function
 
 ###### hybridauth/Hybrid/thirdparty/LinkedIn/LinkedIn.php 
 * L-712 API errors responses
+* L-642 make fetch a public function
 
 ###### hybridauth/Hybrid/thirdparty/Facebook/base_facebook.php
 * L-145 add CURLOPT_SSL_VERIFYPEER => false
