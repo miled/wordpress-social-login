@@ -66,7 +66,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName'] = property_exists( $data, 'realname'      ) ? $data->realname       : property_exists( $data, 'realname' ) ? $data->realname : '';
+		$userProfile['displayName'] = property_exists( $data, 'realname'      ) ? $data->realname       : '';
 		$userProfile['firstName'  ] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
 		$userProfile['photoURL'   ] = property_exists( $data, 'avatarfull'    ) ? $data->avatarfull     : '';
 		$userProfile['profileURL' ] = property_exists( $data, 'profileurl'    ) ? $data->profileurl     : '';
