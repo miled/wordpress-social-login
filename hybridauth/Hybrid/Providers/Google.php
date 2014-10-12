@@ -16,7 +16,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 	// or here: http://discovery-check.appspot.com/ (unofficial but up to date)
 
 	// default permissions 
-	public $scope = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read";
+	public $scope = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read  https://www.google.com/m8/feeds/";
 
 	/**
 	* IDp wrappers initializer 
@@ -69,25 +69,13 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		// refresh tokens if needed 
 		$this->refreshToken();
 
-		// ask google api for user infos
-		if (strpos($this->scope, '/auth/plus.profile.emails.read') !== false) {
-			$verified = $this->api->api( "https://www.googleapis.com/plus/v1/people/me" );
-
-			if ( ! isset( $verified->id ) || isset( $verified->error ) )
-				$verified = new stdClass();
-		} else {
-			$verified = $this->api->api( "https://www.googleapis.com/plus/v1/people/me/openIdConnect" );
-
-			if ( ! isset( $verified->sub ) || isset( $verified->error ) )
-				$verified = new stdClass();
-		}
-
 		$response = $this->api->api( "https://www.googleapis.com/plus/v1/people/me" );
+		
 		if ( ! isset( $response->id ) || isset( $response->error ) ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
 
-		$this->user->profile->identifier    = (property_exists($verified,'id'))?$verified->id:((property_exists($response,'id'))?$response->id:"");
+		$this->user->profile->identifier    = (property_exists($response,'id'))?$response->id:((property_exists($response,'id'))?$response->id:"");
 		$this->user->profile->firstName     = (property_exists($response,'name'))?$response->name->givenName:"";
 		$this->user->profile->lastName      = (property_exists($response,'name'))?$response->name->familyName:"";
 		$this->user->profile->displayName   = (property_exists($response,'displayName'))?$response->displayName:"";
@@ -95,8 +83,8 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->profileURL    = (property_exists($response,'url'))?$response->url:"";
 		$this->user->profile->description   = (property_exists($response,'aboutMe'))?$response->aboutMe:"";
 		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:""; 
-		$this->user->profile->language      = (property_exists($response,'locale'))?$response->locale:((property_exists($verified,'locale'))?$verified->locale:"");
-		$this->user->profile->email         = (property_exists($response,'email'))?$response->email:((property_exists($verified,'email'))?$verified->email:"");
+		$this->user->profile->language      = (property_exists($response,'locale'))?$response->locale:'';
+		$this->user->profile->email         = (property_exists($response,'email'))?$response->email:'';
 		
 		if (property_exists($response, 'emails')) {
 			if (count($response->emails) == 1) {

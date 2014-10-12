@@ -234,11 +234,10 @@ class OAuth1Client{
 		curl_close ($ci);
 
 		//-
-		$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth1' );
-		$_SESSION['wsl::api']['URL']  = $url;
-		$_SESSION['wsl::api']['POST'] = $postfields;
-		$_SESSION['wsl::api']['CODE'] = $this->http_code;
-		$_SESSION['wsl::api']['RESPONSE'] = $response;
+		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
+		{
+			do_action( 'wsl_log_provider_api_call', $url, $method, $postfields, $this->http_code, $this->http_info, $response, 'OAuth1', __FILE__, __LINE__, debug_backtrace () );
+		}
 		//-
 
 		return $response; 

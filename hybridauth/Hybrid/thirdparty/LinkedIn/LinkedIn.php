@@ -639,7 +639,7 @@ class LinkedIn {
 	 *             'oauth'     => The OAuth request string that was sent to LinkedIn	 
 	 *           )	 
 	 */
-	protected function fetch($method, $url, $data = NULL, $parameters = array()) {
+	function fetch($method, $url, $data = NULL, $parameters = array()) {
 	  // check for cURL
 	  if(!extension_loaded('curl')) {
 	    // cURL not present

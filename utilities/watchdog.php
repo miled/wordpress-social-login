@@ -16,9 +16,11 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit;
+if( ! defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
+
+define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
 
 wsl_watchdog_main();
 
@@ -45,7 +47,7 @@ function wsl_watchdog_main()
 	add_action( 'wsl_process_login_start', 'wsl_watchdog_wsl_process_login' );
 	add_action( 'wsl_process_login_begin_start', 'wsl_watchdog_wsl_process_login_begin_start' );
 	add_action( 'wsl_process_login_end_start', 'wsl_watchdog_wsl_process_login_end_start' );
-
+	
 	add_action( 'wsl_hook_process_login_before_hybridauth_authenticate', 'wsl_watchdog_wsl_hook_process_login_before_hybridauth_authenticate', 10, 2 );
 	add_action( 'wsl_hook_process_login_after_hybridauth_authenticate', 'wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate', 10, 2 );
 
@@ -66,6 +68,8 @@ function wsl_watchdog_main()
 
 	add_action( 'wsl_process_login_render_error_page', 'wsl_watchdog_wsl_process_login_render_error_page', 10, 5 );
 	add_action( 'wsl_process_login_render_notice_page', 'wsl_watchdog_wsl_process_login_render_notice_page', 10, 1 );
+	
+	add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 10 );
 }
 
 // --------------------------------------------------------------------
@@ -75,11 +79,20 @@ function wsl_log_database_insert_db( $action_name, $action_args = array(), $user
 	global $wpdb;
 
 	$get_current_user_id = get_current_user_id();
+
 	$provider = wsl_process_login_get_selected_provider();
+
+	if( ! $provider ){
+		if( isset( $_REQUEST['hauth_start'] ) ) $provider = $_REQUEST['hauth_start'];
+		if( isset( $_REQUEST['hauth_done'] ) ) $provider = $_REQUEST['hauth_done'];
+	}
 
 	if( $get_current_user_id ){
 		$provider = get_user_meta( $get_current_user_id, 'wsl_current_provider', true );
 	}
+
+	$action_args[] = wsl_watchdog_generate_backtrace();
+	$action_args[] = 'USER: ' . get_current_user() . '. PID: ' . getmypid() . '. MEM: ' . ceil( memory_get_usage() / 1024 ) . 'KB';
 
 	$wpdb->insert(
 		"{$wpdb->prefix}wslwatchdog", 
@@ -136,9 +149,6 @@ function wsl_watchdog_wsl_hook_process_login_before_hybridauth_authenticate( $pr
 
 function wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate( $provider, $config )
 {
-	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
-	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
-
 	wsl_log_database_insert_db( 'wsl_hook_process_login_after_hybridauth_authenticate', array( $provider, $config ) );
 }
 
@@ -169,9 +179,6 @@ function wsl_watchdog_wsl_hook_process_login_alter_wp_insert_user_data( $userdat
 
 function wsl_watchdog_wsl_process_login_update_wsl_user_data_start( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile  )
 {
-	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
-	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
-
 	wsl_log_database_insert_db( 'wsl_process_login_update_wsl_user_data_start', array( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile ), $user_id );
 }
 
@@ -200,10 +207,7 @@ function wsl_watchdog_wsl_hook_process_login_before_wp_safe_redirect( $user_id, 
 
 function wsl_watchdog_wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
 {
-	if( isset( $_SESSION['wsl::api'] ) && $_SESSION['wsl::api'] )
-	wsl_log_database_insert_db( 'dbg:hybridauth_api_call', $_SESSION['wsl::api'] );
-
-	wsl_log_database_insert_db( 'wsl_process_login_render_error_page', array( $e, $config, $hybridauth, $provider, $adapter, ) );
+	wsl_log_database_insert_db( 'wsl_process_login_render_error_page', array( $e, $config, $hybridauth, $provider, $adapter ) );
 }
 
 // --------------------------------------------------------------------
@@ -218,6 +222,42 @@ function wsl_watchdog_wsl_process_login_render_notice_page( $message )
 function wsl_watchdog_wsl_render_login_form_user_loggedin()
 {
 	wsl_log_database_insert_db( 'wsl_render_login_form_user_loggedin' );
+}
+
+// --------------------------------------------------------------------
+
+function wsl_watchdog_wsl_log_provider_api_call( $url, $method, $post_data, $http_code, $http_info, $http_response, $client, $file, $line, $backtrace )
+{
+	wsl_log_database_insert_db( 'dbg:provider_api_call', array( $url, $method, $post_data, $http_code, $http_info, $http_response, $client ) );
+	
+	// echo '<pre>';
+	// echo wsl_watchdog_generate_backtrace(); die();
+}
+
+// --------------------------------------------------------------------
+
+/*
+* http://php.net/manual/en/function.debug-backtrace.php#112238
+*/
+function wsl_watchdog_generate_backtrace()
+{
+    $e = new Exception();
+    $trace = explode( "\n", $e->getTraceAsString() );
+
+    array_shift($trace);
+    array_shift($trace);
+    array_shift($trace);
+    array_shift($trace);
+    array_pop($trace);
+    $length = count($trace);
+    $result = array();
+
+    for ( $i = 0; $i < $length; $i++ )
+    {
+        $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/' ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
+    }
+    
+    return "Backtrace: \n\t" . implode( "\n\t", $result );
 }
 
 // --------------------------------------------------------------------

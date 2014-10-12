@@ -48,10 +48,12 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 				$this->api->setAccessToken( $access_token );
 			}
 
-			$this->api->setAccessToken( $this->token("access_token") );
+			$this->api->setAccessToken( $this->token("access_token") ); 
 		}
-
-		$this->api->getUser();
+		else{
+			// fixme! this cal fb api twice 
+			$this->api->getUser();
+		}
 	}
 
 	/**

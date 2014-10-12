@@ -1024,13 +1024,12 @@ abstract class BaseFacebook
         }
     }
 
-  //-
-  $_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth2.Facebook' );
-  $_SESSION['wsl::api']['URL']  = $opts[CURLOPT_URL];
-  $_SESSION['wsl::api']['POST'] = $opts[CURLOPT_POSTFIELDS];
-  $_SESSION['wsl::api']['CODE'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-  $_SESSION['wsl::api']['RESPONSE'] = $result;
-  //-
+	//-
+	if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
+	{
+		do_action( 'wsl_log_provider_api_call', $opts[CURLOPT_URL], null, $opts[CURLOPT_POSTFIELDS], curl_getinfo($ch, CURLINFO_HTTP_CODE), curl_getinfo($ch), $result, 'OAuth2.Facebook', __FILE__, __LINE__, debug_backtrace () );
+	}
+	//-
 
     if ($result === false) {
       $e = new FacebookApiException(array(
@@ -1384,10 +1383,6 @@ abstract class BaseFacebook
     // uncomment this if you want to see the errors on the page
     // print 'error_log: '.$msg."\n";
     // @codeCoverageIgnoreEnd
-
-	//-
-	$_SESSION['WSL::FB_ERROR'] = $msg;
-	//-
   }
 
   /**

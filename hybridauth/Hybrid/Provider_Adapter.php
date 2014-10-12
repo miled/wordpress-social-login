@@ -161,12 +161,19 @@ class Hybrid_Provider_Adapter
 		# 	auth.done   required  the IDp ID
 		$this->params["login_done"]  = $HYBRID_AUTH_URL_BASE . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.done={$this->id}";
 
+		if( isset( $this->config["endpoint"] ) ){
+			$this->params["login_start"] = $this->config["endpoint"] . ( strpos( $HYBRID_AUTH_URL_BASE, '?' ) ? '&' : '?' ) . "hauth.start={$this->id}&hauth.time={$this->params["hauth_time"]}";
+			$this->params["login_done"]  = $this->config["endpoint"];
+        }
+
         if( isset( $this->params["hauth_return_to"] ) ){
             Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_return_to", $this->params["hauth_return_to"] );
         }
+
         if( isset( $this->params["login_done"] ) ){
             Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.hauth_endpoint" , $this->params["login_done"] ); 
         }
+
         Hybrid_Auth::storage()->set( "hauth_session.{$this->id}.id_provider_params" , $this->params );
 
 		// store config to be used by the end point 

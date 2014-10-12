@@ -84,7 +84,7 @@ class OAuth2Client
 		$response = $this->parseRequestResult( $response );
 
 		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request response: ", $response );
-		
+
 		if( ! $response || ! isset( $response->access_token ) ){
 			throw new Exception( "The Authorization Service has return: " . $response->error );
 		}
@@ -238,17 +238,16 @@ class OAuth2Client
 		curl_close ($ch);
 
 		//-
-		$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth2' );
-		$_SESSION['wsl::api']['URL']  = $url;
-		$_SESSION['wsl::api']['POST'] = $params;
-		$_SESSION['wsl::api']['CODE'] = $this->http_code;
-		$_SESSION['wsl::api']['RESPONSE'] = $response;
+		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
+		{
+			do_action( 'wsl_log_provider_api_call', $url, $type, $params, $this->http_code, $this->http_info, $response, 'OAuth2', __FILE__, __LINE__, debug_backtrace () );
+		}
 		//-
 
 		return $response; 
 	}
 
-	private function parseRequestResult( $result )
+	function parseRequestResult( $result )
 	{
 		if( json_decode( $result ) ) return json_decode( $result );
 
