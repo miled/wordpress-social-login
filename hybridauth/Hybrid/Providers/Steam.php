@@ -89,7 +89,9 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 		$userProfile['photoURL'    ] = property_exists( $data, 'avatarFull'  ) ? (string) $data->avatarFull  : '';
 		$userProfile['description' ] = property_exists( $data, 'summary'     ) ? (string) $data->summary     : '';
 		$userProfile['region'      ] = property_exists( $data, 'location'    ) ? (string) $data->location    : '';
-		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   ) ? 'http://steamcommunity.com/id/' . (string) $data->customURL . '/' : '';
+		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   )
+			? "http://steamcommunity.com/id/{$data->customURL}/"
+			: "http://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
 
 		return $userProfile;
 	}
