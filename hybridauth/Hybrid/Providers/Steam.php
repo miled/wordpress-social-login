@@ -30,24 +30,21 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid user ID.", 5 );
 		}
 
-		// grab basic info
-		$userProfile = $this->getUserProfileLegacyAPI();
-
-		foreach( $userProfile as $k => $v )
-		{
-			$this->user->profile->$k = $v;
-		}
-
 		// if api key is provided, we attempt to enrich the user profile
 		// > will add to loading time tho..
 		if( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] )
 		{
 			$userProfile = $this->getUserProfileWebAPI( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] );
+		}
+		// otherwise just grab basic info
+		else
+		{
+			$userProfile = $this->getUserProfileLegacyAPI();
+		}
 
-			foreach( $userProfile as $k => $v )
-			{
-				$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
-			}
+		foreach( $userProfile as $k => $v )
+		{
+			$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
 		}
 
 		// store the user profile
