@@ -66,8 +66,8 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName'] = property_exists( $data, 'realname'      ) ? $data->realname       : '';
-		$userProfile['firstName'  ] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
+		$userProfile['displayName'] = property_exists( $data, 'personaname'   ) ? $data->personaname    : '';
+		$userProfile['firstName'  ] = property_exists( $data, 'realname'      ) ? $data->realname       : '';
 		$userProfile['photoURL'   ] = property_exists( $data, 'avatarfull'    ) ? $data->avatarfull     : '';
 		$userProfile['profileURL' ] = property_exists( $data, 'profileurl'    ) ? $data->profileurl     : '';
 		$userProfile['country'    ] = property_exists( $data, 'loccountrycode') ? $data->loccountrycode : '';
@@ -84,8 +84,8 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 		$userProfile = array();
 
-		$userProfile['displayName' ] = property_exists( $data, 'personaname' ) ? (string) $data->personaname : property_exists( $data, 'steamID' ) ? (string) $data->steamID : '';
-		$userProfile['firstName'   ] = property_exists( $data, 'personaname' ) ? (string) $data->personaname : '';
+		$userProfile['displayName' ] = property_exists( $data, 'steamID'     ) ? (string) $data->steamID     : '';
+		$userProfile['firstName'   ] = property_exists( $data, 'realname'    ) ? (string) $data->realname    : '';
 		$userProfile['photoURL'    ] = property_exists( $data, 'avatarFull'  ) ? (string) $data->avatarFull  : '';
 		$userProfile['description' ] = property_exists( $data, 'summary'     ) ? (string) $data->summary     : '';
 		$userProfile['region'      ] = property_exists( $data, 'location'    ) ? (string) $data->location    : '';
