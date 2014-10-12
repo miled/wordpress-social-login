@@ -36,7 +36,9 @@ For more information about WordPress Social Login, refer to our [online user gui
     - [x] improve watchdog
 - [ ] Rework the Steam provider.
     - [x] Get full avatar form Steam and fetch location.
-    - [x] Support Steam Web API. See [WSL-2.2.2 Steam branch](https://github.com/miled/wordpress-social-login/tree/wsl-2.2.2-steam).
+    - [x] Support Steam Web API.
+    - [ ] update the section (how to create an app) in the Networks tab
+    - [ ] Convert the old user identifiers in wslusersprofiles (http://steamcommunity.com/openid/id/*) to 64bit SteamIDs.
 - [ ] Make the widget shortcode support attributes.
 - [ ] *Feel free to edit this line.*
 
