@@ -18,16 +18,16 @@ Domain Path: /languages
 *  Please, don't hesitate to:
 *
 *   - Report bugs and issues.
-*   - Contribute: Code, Reviews, Ideas and Design.
+*   - Contribute: code, reviews, ideas and design.
 *   - Point out stupidity, smells and inconsistencies in the code.
 *   - Criticize.
 *
 *
-*  If you want to contribute, please consider these general guide lines:
+*  If you want to contribute, please consider these general "guide lines":
 * 
 *   - Don't hesitate to delete code that doesn't make sense or looks redundant.
 *   - Feel free to create new functions and files when needed.
-*   - No 'switch'. No 'for'.
+*   - Avoid using 'switch' and 'for'.
 *   - Avoid over-commenting.
 *
 *
@@ -38,11 +38,16 @@ Domain Path: /languages
 *   - Same name convention of wordpress: those long long and self-explanatory functions and variables.
 *
 *
-*  If you want to translate this plugin into your language (or to improve the current translation), see
-*  wordpress-social-login/languages/readme.txt
+*  To keep the code accecible by everyone and no-brainer for me, WordPress Social Login is programmed in procedural
+*  PHP and will be kept that way.
 *
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
 *  and the WordPress community by submitting a Pull Request at https://github.com/hybridauth/WordPress-Social-Login
+*
+*  If you want to translate this plugin into your language (or to improve the current translation), see
+*  wordpress-social-login/languages/readme.txt
+*
+*  Peace.
 *
 */
 
@@ -207,7 +212,7 @@ if( is_admin() )
 	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
 
-require_once( dirname(__FILE__) . '/utilities/watchdog.php' ); 
+require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php' );
 
 // --------------------------------------------------------------------
 

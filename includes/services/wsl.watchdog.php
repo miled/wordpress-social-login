@@ -53,7 +53,7 @@ function wsl_watchdog_main()
 
 	add_action( 'wsl_process_login_end_get_user_data_start', 'wsl_watchdog_wsl_process_login_end_get_user_data_start', 10, 2 );
 
-	add_action( 'wsl_process_login_complete_registration_start', 'wsl_watchdog_wsl_process_login_complete_registration_start', 10, 4 );
+	add_action( 'wsl_process_login_complete_registration_start', 'wsl_watchdog_wsl_process_login_complete_registration_start', 10, 3 );
 	
 	add_action( 'wsl_process_login_create_wp_user_start', 'wsl_watchdog_wsl_process_login_create_wp_user_start', 10, 4 );
 	add_action( 'wsl_hook_process_login_alter_wp_insert_user_data', 'wsl_watchdog_wsl_hook_process_login_alter_wp_insert_user_data', 10, 3 );
@@ -91,7 +91,7 @@ function wsl_log_database_insert_db( $action_name, $action_args = array(), $user
 		$provider = get_user_meta( $get_current_user_id, 'wsl_current_provider', true );
 	}
 
-	$action_args[] = wsl_watchdog_generate_backtrace();
+	$action_args[] = "Backtrace: " . wsl_generate_backtrace();
 	$action_args[] = 'USER: ' . get_current_user() . '. PID: ' . getmypid() . '. MEM: ' . ceil( memory_get_usage() / 1024 ) . 'KB';
 
 	$wpdb->insert(
@@ -154,9 +154,9 @@ function wsl_watchdog_wsl_hook_process_login_after_hybridauth_authenticate( $pro
 
 // --------------------------------------------------------------------
 
-function wsl_watchdog_wsl_process_login_complete_registration_start( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login )
+function wsl_watchdog_wsl_process_login_complete_registration_start( $provider, $redirect_to, $hybridauth_user_profile )
 {
-	wsl_log_database_insert_db( 'wsl_process_login_complete_registration_start', array( $provider, $redirect_to, $hybridauth_user_email, $hybridauth_user_login ) );
+	wsl_log_database_insert_db( 'wsl_process_login_complete_registration_start', array( $provider, $redirect_to, $hybridauth_user_profile ) );
 }
 
 // --------------------------------------------------------------------
@@ -229,35 +229,6 @@ function wsl_watchdog_wsl_render_login_form_user_loggedin()
 function wsl_watchdog_wsl_log_provider_api_call( $url, $method, $post_data, $http_code, $http_info, $http_response, $client, $file, $line, $backtrace )
 {
 	wsl_log_database_insert_db( 'dbg:provider_api_call', array( $url, $method, $post_data, $http_code, $http_info, $http_response, $client ) );
-	
-	// echo '<pre>';
-	// echo wsl_watchdog_generate_backtrace(); die();
-}
-
-// --------------------------------------------------------------------
-
-/*
-* http://php.net/manual/en/function.debug-backtrace.php#112238
-*/
-function wsl_watchdog_generate_backtrace()
-{
-    $e = new Exception();
-    $trace = explode( "\n", $e->getTraceAsString() );
-
-    array_shift($trace);
-    array_shift($trace);
-    array_shift($trace);
-    array_shift($trace);
-    array_pop($trace);
-    $length = count($trace);
-    $result = array();
-
-    for ( $i = 0; $i < $length; $i++ )
-    {
-        $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/' ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
-    }
-    
-    return "Backtrace: \n\t" . implode( "\n\t", $result );
 }
 
 // --------------------------------------------------------------------

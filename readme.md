@@ -12,10 +12,10 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 ### WSL's main features
 
-- No premium features, no monthly subscription and no priority support.
+- No premium features.
 - Wide variety of identities providers (currently support 25+).
 - A highly customizable and fully extensible widgets.
-- Easy-to-use and cleans user interfaces.
+- Easy-to-use and clean user interfaces.
 - Contacts import from google, facebook, live and linkedin.
 - User profiles and contacts management.
 - Compatible with WordPress 3.0+, BuddyPress and bbPress.

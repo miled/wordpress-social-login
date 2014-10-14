@@ -129,7 +129,7 @@ function wsl_component_loginwidget_setup_advanced_settings()
 		</p>
 
 		<p> 
-			<?php _wsl_e("<b>Authentication display :</b> Determines how the authentication dialog is rendered. You can chose to open the dialog in a <b>popup</b> or to <b>in page</b>. (Authentication display was previously known as Authentication flow)", 'wordpress-social-login') ?>.
+			<?php _wsl_e("<b>Authentication display :</b> Determines how the authentication dialog is rendered. You can chose to open the dialog in a <b>popup</b> or to <b>in page</b>. If a user is visiting using a mobile device, WSL will fall back to more <b>in page</b>", 'wordpress-social-login') ?>.
 		</p>
 
 		<p> 

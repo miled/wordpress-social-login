@@ -57,7 +57,7 @@ function wsl_component_watchdog()
 		if( ! $list_sessions )
 		{
 			_wsl_e("<p>No log found!</p>", 'wordpress-social-login');
-			_wsl_e("<p class='description'>To log WSL authentication process in database, include '/utilities/watchdog.php' in 'wp-social-login.php'.</p>", 'wordpress-social-login');
+			_wsl_e("<p class='description'>To log WSL authentication process in database, include 'includes/services/wsl.watchdog.php' in 'wp-social-login.php'.</p>", 'wordpress-social-login');
 		}
 		else
 		{

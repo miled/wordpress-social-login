@@ -228,7 +228,7 @@ function wsl_component_buddypress_setup_profile_mapping()
 														<?php
 															foreach( $ha_profile_fields as $item ){
 														?>
-															<p class="description bb_profile_mapping_confirm_<?php echo $field->id; ?>" style="<?php if( $item['field'] != $map ) echo "display:none;"; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
+															<p class="description bb_profile_mapping_confirm_<?php echo $field->id; ?>" style="margin-left:0;<?php if( $item['field'] != $map ) echo "display:none;"; ?>" id="bb_profile_mapping_confirm_<?php echo $field->id; ?>_<?php echo $item['field']; ?>">
 																<?php echo sprintf( _wsl__( "WSL <b>%s</b> is mapped to Buddypress <b>%s</b> field", 'wordpress-social-login' ), $item['label'], $field->name ); ?>.
 																<br />
 																<em><b><?php echo $item['label']; ?>:</b> <?php echo $item['description']; ?>.</em>

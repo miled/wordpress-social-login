@@ -15,24 +15,47 @@
 function wsl_component_contacts()
 {
 	// HOOKABLE: 
-	do_action( "wsl_component_contacts_start" );
+	do_action( 'wsl_component_contacts_start' );
 
-	include "wsl.components.contacts.list.php";
-	include "wsl.components.contacts.settings.php";
+	include 'wsl.components.contacts.list.php';
+	include 'wsl.components.contacts.settings.setup.php';
+	include 'wsl.components.contacts.settings.sidebar.php';
 
-	if( isset( $_REQUEST["uid"] ) && $_REQUEST["uid"] )
+	if( isset( $_REQUEST['uid'] ) && $_REQUEST['uid'] )
 	{
-		$user_id = (int) $_REQUEST["uid"];
+		$user_id = (int) $_REQUEST['uid'];
 
 		wsl_component_contacts_list( $user_id );
 	}
 	else
 	{
-		wsl_component_contacts_settings();
+?>
+<form method="post" id="wsl_setup_form" action="options.php"> 
+	<?php settings_fields( 'wsl-settings-group-customize' ); ?> 
+
+	<div class="metabox-holder columns-2" id="post-body">
+		<table width="100%"> 
+			<tr valign="top">
+				<td>
+					<?php
+						wsl_component_contacts_settings_setup();
+					?> 
+				</td>
+				<td width="10"></td>
+				<td width="400">
+					<?php 
+						wsl_component_contacts_settings_sidebar();
+					?>
+				</td>
+			</tr>
+		</table>
+	</div>
+</form>
+<?php 
 	}
 
 	// HOOKABLE: 
-	do_action( "wsl_component_contacts_end" );
+	do_action( 'wsl_component_contacts_end' );
 }
 
 wsl_component_contacts();

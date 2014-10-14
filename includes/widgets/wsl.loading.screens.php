@@ -29,6 +29,8 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 {
 	function wsl_render_redirect_to_provider_loading_screen( $provider )
 	{
+		// wp_safe_redirect( wsl_get_current_url() . '&redirect_to_provider=true' );
+		
 		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 ?>
 <!DOCTYPE html>
@@ -187,7 +189,7 @@ if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 		</table>
 
 		<form name="loginform" method="post" action="<?php echo $authenticated_url; ?>">
-			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $authenticated_url; ?>"> 
+			<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo esc_url( $redirect_to ); ?>"> 
 			<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
 			<input type="hidden" id="action" name="action" value="wordpress_social_authenticated">
 		</form>

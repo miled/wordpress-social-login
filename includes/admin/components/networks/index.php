@@ -21,12 +21,11 @@ function wsl_component_networks()
 	do_action( "wsl_component_networks_start" );
 
 	include "wsl.components.networks.setup.php";
-	include "wsl.components.networks.addmore.php";
-	include "wsl.components.networks.whyhello.php";
-	include "wsl.components.networks.basicinsights.php";
+	include "wsl.components.networks.sidebar.php"; 
 
 	wsl_admin_welcome_panel();
 ?>
+
 <form method="post" id="wsl_setup_form" action="options.php"> 
 	<?php settings_fields( 'wsl-settings-group' ); ?>
 
@@ -44,11 +43,7 @@ function wsl_component_networks()
 				<td width="10"></td>
 				<td width="400">
 					<?php
-						wsl_component_networks_whyhello();
-
-						wsl_component_networks_addmore();
-
-						wsl_component_networks_basicinsights();
+						wsl_component_networks_sidebar();
 					?>
 				</td>
 			</tr>

@@ -44,10 +44,10 @@ function wsl_database_migration_process()
 
 	$sql = "CREATE TABLE " . $wslusersprofiles . " ( 
 			id int(11) NOT NULL AUTO_INCREMENT,
-			user_id int(11) NOT NULL COMMENT 'refers to wp.users.id',
-			provider varchar(50) NOT NULL COMMENT 'provider id',
-			object_sha varchar(255) NOT NULL COMMENT 'to check if hybridauth user profile object has changed from last time, if yes we update the user profile here ',
-			identifier varchar(255) NOT NULL COMMENT 'The Unique user's ID on the connected provider. Depending on the provider, this field can be an number, Email, URL, etc.',
+			user_id int(11) NOT NULL,
+			provider varchar(50) NOT NULL,
+			object_sha varchar(255) NOT NULL,
+			identifier varchar(255) NOT NULL,
 			profileurl varchar(255) NOT NULL,
 			websiteurl varchar(255) NOT NULL,
 			photourl varchar(255) NOT NULL,
@@ -77,9 +77,9 @@ function wsl_database_migration_process()
 
 	$sql = "CREATE TABLE " . $wsluserscontacts . " (
 			id int(11) NOT NULL AUTO_INCREMENT,
-			user_id int(11) NOT NULL COMMENT 'refers to wp.users.id',
-			provider varchar(50) NOT NULL COMMENT 'provider id',
-			identifier varchar(255) NOT NULL COMMENT 'The Unique user's ID on the connected provider. Depending on the provider, this field can be an number, Email, URL, etc.',
+			user_id int(11) NOT NULL,
+			provider varchar(50) NOT NULL,
+			identifier varchar(255) NOT NULL,
 			full_name varchar(150) NOT NULL,
 			email varchar(255) NOT NULL,
 			profile_url varchar(255) NOT NULL,

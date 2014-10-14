@@ -66,7 +66,7 @@ function wsl_component_loginwidget_sidebar_what_is_this()
 	</p>
 
 	<p>
-		<?php _wsl_e('For more information about the WSL Widget, refer to the online userguide <b><a href="http://hybridauth.sourceforge.net/wsl/widget.html" target="_blank">Widget Customization</a></b> and <b><a href="http://hybridauth.sourceforge.net/wsl/themes.html" target="_blank">Widget Themes</a></b>', 'wordpress-social-login') ?>. 
+		<?php _wsl_e('For more information about the WSL Widget, refer to the online userguide <b><a href="http://miled.github.io/wordpress-social-login/widget.html" target="_blank">Widget Customization</a></b> and <b><a href="http://miled.github.io/wordpress-social-login/themes.html" target="_blank">Widget Themes</a></b>', 'wordpress-social-login') ?>. 
 	</p>
 </div> 
 <?php

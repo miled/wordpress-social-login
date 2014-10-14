@@ -235,6 +235,10 @@ class Hybrid_Auth
 	*/ 
 	public static function getAdapter( $providerId = NULL )
 	{
+		if( ! Hybrid_Auth::$config ) {
+			Hybrid_Auth::initialize( unserialize( $_SESSION["HA::CONFIG"]['config'] ) ); 
+		}
+
 		Hybrid_Logger::info( "Enter Hybrid_Auth::getAdapter( $providerId )" );
 
 		return Hybrid_Auth::setup( $providerId );

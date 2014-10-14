@@ -107,6 +107,14 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				</td> 
 			</tr> 
 		</table>
+
+		<?php 
+			// Development mode on?
+			// if( get_option( 'wsl_settings_development_mode_enabled' ) ){
+			if( 1 ){
+				wsl_render_error_page_debug_section();
+			}
+		?>
 	</body>
 </html> 
 <?php 
@@ -251,7 +259,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 /**
 * Display an extra debugging section to the error page, in case Mode Dev is on
 */
-function wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_to_debug )
+function wsl_render_error_page_debug_section( $php_exception = null, $php_extras_vars_to_debug = null )
 {
 ?>
 <hr />
@@ -259,7 +267,7 @@ function wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_t
 <?php wsl_display_dev_mode_debugging_area(); ?>
 
 <h3>Backtrace</h3>
-<pre><?php debug_print_backtrace(); ?></pre>
+<pre><?php echo wsl_generate_backtrace(); ?></pre>
 
 <h3>Exception</h3>
 <pre><?php print_r( $php_exception ); ?></pre>

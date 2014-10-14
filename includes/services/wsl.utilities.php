@@ -412,3 +412,26 @@ function wsl_display_dev_mode_debugging_area()
 }
 
 // --------------------------------------------------------------------
+
+/*
+* http://php.net/manual/en/function.debug-backtrace.php#112238
+*/
+function wsl_generate_backtrace()
+{
+    $e = new Exception();
+    $trace = explode( "\n", $e->getTraceAsString() );
+
+    // array_shift($trace);
+    array_pop($trace);
+    $length = count($trace);
+    $result = array();
+
+    for ( $i = 0; $i < $length; $i++ )
+    {
+        $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/' ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
+    }
+    
+    return "\n\t" . implode( "\n\t", $result );
+}
+
+// --------------------------------------------------------------------

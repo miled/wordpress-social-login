@@ -17,6 +17,28 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
+/**
+* Checks whether the given email exists in WordPress users tables.
+*
+* This function is not loaded by default in wp 3.0
+*
+* https://core.trac.wordpress.org/browser/tags/4.0/src/wp-includes/user.php#L1565
+*/
+function wsl_wp_email_exists( $email )
+{
+	if( function_exists('email_exists') )
+	{
+		return email_exists( $email );
+	}
+
+	if( $user = get_user_by( 'email', $email ) )
+	{
+		return $user->ID;
+	}
+}
+
+// --------------------------------------------------------------------
+
 function wsl_get_wordpess_users_count()
 {
 	global $wpdb;

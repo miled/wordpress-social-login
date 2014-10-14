@@ -61,16 +61,24 @@ function wsl_component_users_profile( $user_id )
 	add_thickbox();
 
 	$actions = array(
-		'edit_details'  => array( 'label' => 'Edit user details', 'action' => admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ), 'class' => 'button button-secondary thickbox' ),
-		'show_contacts' => array( 'label' => 'Show user contacts list', 'action' => admin_url( 'options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id ), 'class' => 'button button-secondary' ),
+		'edit_details'       => array( 'label' => 'Edit user details', 'action' => admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ), 'class' => 'button button-secondary thickbox' ),
+		'show_contacts'      => array( 'label' => 'Show user contacts list', 'action' => admin_url( 'options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id ), 'class' => 'button button-secondary' ),
 	);
 
 	// HOOKABLE: 
 	$actions = apply_filters( 'wsl_component_users_profile_alter_actions_list', $actions, $user_id );
 ?>
 
+<style>
+	table td, table th { border: 1px solid #DDDDDD; }
+	table th label { font-weight: bold; }
+	.form-table th { width:120px; text-align:right; }
+	p.description { font-size: 11px ! important; margin:0 ! important;}
+</style>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-	<p style="float: right; margin: -5px;">
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_info->display_name ) ?></h3>
+
+	<p style="float: right;margin-top:-23px">
 		<?php
 			foreach( $actions as $item )
 			{
@@ -80,36 +88,19 @@ function wsl_component_users_profile( $user_id )
 			}
 		?>
 	</p>
-	
-	<b><?php echo $user_info->display_name; ?></b> :
-	<?php echo sprintf( _wsl__("Wordpress user details and list of WSL profiles", 'wordpress-social-login'), $user_info->display_name ) ?>. 
-</div>
-
-<style>
-	table td, table th { border: 1px solid #DDDDDD; }
-	table th label { font-weight: bold; }
-	.form-table th { width:120px; text-align:right; }
-	p.description { font-size: 11px ! important; margin:0 ! important;}
-</style>
-
-<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
-
-<table class="wp-list-table widefat">
-	<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->ID; ?></td></tr> 
-	<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_login; ?></td></tr> 
-	<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->display_name; ?></td></tr> 
-	<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_info->user_email; ?>" target="_blank"><?php echo $user_info->user_email; ?></a></td></tr> 
-	<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_info->user_url; ?>" target="_blank"><?php echo $user_info->user_url; ?></a></td></tr>   
-	<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_info->user_registered; ?></td></tr>  
-	</tr>
-</table>
-
-<hr />
+</div> 
+<script>
+	function confirmDeleteWSLUser()
+	{
+		return confirm( <?php echo json_encode( _wsl__("Are you sure you want to delete the user's social profiles and contacts?\n\nNote: The associated WordPress user won't be deleted.", 'wordpress-social-login') ) ?> );
+	}
+</script>
 <?php
 	foreach( $linked_accounts AS $link )
 	{
 ?>
-<h3><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h3> 
+<div style="margin-top:15px;padding: 5px 20px 20px; border: 1px solid #ddd; background-color: #fff;">
+<h4><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h4> 
 
 <table class="wp-list-table widefat">
 	<?php
@@ -159,6 +150,7 @@ function wsl_component_users_profile( $user_id )
 		}
 	?>
 </table>
+</div>
 <?php
 	}
 

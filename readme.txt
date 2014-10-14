@@ -74,7 +74,8 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 = 2.2.3 = 
 
-* ..
+* Fix an issue where redirect_to got overwritten in some cases 
+* Fix an issue where redirect_to were encoded twice for non latin urls
 
 = 2.2.2 = 
 

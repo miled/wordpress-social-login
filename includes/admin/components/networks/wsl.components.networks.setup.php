@@ -15,6 +15,9 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
+/**
+* This should be reworked somehow.. the code has become spaghettis
+*/
 function wsl_component_networks_setup()
 {
 	// HOOKABLE: 
@@ -26,16 +29,20 @@ function wsl_component_networks_setup()
 
 	// if no idp is enabled then we enable the default providers (facebook, google, twitter)
 	$nok = true; 
-	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+	{
 		$provider_id = $item["provider_id"];
 		
-		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ){
+		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
+		{
 			$nok = false;
 		}
 	}
 
-	if( $nok ){
-		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item ){
+	if( $nok )
+	{
+		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+		{
 			$provider_id = $item["provider_id"];
 			
 			if( isset( $item["default_network"] ) && $item["default_network"] ){
@@ -45,24 +52,29 @@ function wsl_component_networks_setup()
 	}
 
 	// save settings?
-	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] ){
+	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] )
+	{
 		$provider_id = $_REQUEST["enable"];
 
 		update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
 	}
 ?> 
 <script> 
-	function toggleproviderkeys(idp){
-		if(typeof jQuery=="undefined"){
+	function toggleproviderkeys(idp)
+	{
+		if(typeof jQuery=="undefined")
+		{
 			alert( "Error: WordPress Social Login require jQuery to be installed on your wordpress in order to work!" );
 
 			return;
 		}
 
-		if(jQuery('#wsl_settings_' + idp + '_enabled').val()==1){
+		if(jQuery('#wsl_settings_' + idp + '_enabled').val()==1)
+		{
 			jQuery('.wsl_tr_settings_' + idp).show();
 		}
-		else{
+		else
+		{
 			jQuery('.wsl_tr_settings_' + idp).hide();
 			jQuery('.wsl_div_settings_help_' + idp).hide();
 		}
@@ -70,8 +82,10 @@ function wsl_component_networks_setup()
 		return false;
 	}
 
-	function toggleproviderhelp(idp){
-		if(typeof jQuery=="undefined"){
+	function toggleproviderhelp(idp)
+	{
+		if(typeof jQuery=="undefined")
+		{
 			alert( "Error: WordPress Social Login require jQuery to be installed on your wordpress in order to work!" );
 
 			return false;
@@ -96,18 +110,21 @@ function wsl_component_networks_setup()
 
 		$provider_callback_url      = "" ;
 
-		if( ! ( ( isset( $item["default_network"] ) && $item["default_network"] ) || get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) ){
+		if( ! ( ( isset( $item["default_network"] ) && $item["default_network"] ) || get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) )
+		{
 			continue;
 		}
 
 		// default endpoint_url
 		$endpoint_url = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
 
-		if( isset( $item["callback"] ) && $item["callback"] ){
+		if( isset( $item["callback"] ) && $item["callback"] )
+		{
 			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
 		}
 
-		if( isset( $item["custom_callback"] ) && $item["custom_callback"] ){
+		if( isset( $item["custom_callback"] ) && $item["custom_callback"] )
+		{
 			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'endpoints/' . strtolower( $provider_id ) . '.php</span>';
 		}
 
@@ -165,7 +182,19 @@ function wsl_component_networks_setup()
 				</table> 
 
 				<?php if ( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) : ?>
-					<?php if ( $provider_new_app_link && strlen( trim( get_option( 'wsl_settings_' . $provider_id . '_app_secret' ) ) ) == 0 ) : ?>
+					<?php if (  $provider_id == "Steam" ) : ?> 
+						<div class="fade updated">
+							<p>
+								<b><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
+							</p>
+							<p>
+								      1. <?php echo sprintf( _wsl__("<b>%s</b> do not require an external application, however if the Web API Key is provided, then WSL will be able to get more information about the connected %s users", 'wordpress-social-login'), $provider_name , $provider_name ) ?>. 
+								<br />2. <?php echo sprintf( _wsl__("<b>%s</b> do not provide their user's email address and by default a random email will then be generated for them instead", 'wordpress-social-login'), $provider_name ) ?>. 
+								
+								<?php _wsl_e('To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="options-general.php?page=wordpress-social-login&wslp=bouncer">Bouncer</a></b> and enable <b>Profile Completion</b>', 'wordpress-social-login') ?>.
+							</p>
+						</div>
+					<?php elseif ( $provider_new_app_link && strlen( trim( get_option( 'wsl_settings_' . $provider_id . '_app_secret' ) ) ) == 0 ) : ?>
 						<div class="fade error">
 							<p>
 								<?php echo sprintf( _wsl__('<b>%s</b> requires that you create an external application linking your website to their API. To know how to create this application, click on &ldquo;Where do I get this info?&rdquo; and follow the steps', 'wordpress-social-login'), $provider_name, $provider_name ) ?>.
@@ -184,24 +213,14 @@ function wsl_component_networks_setup()
 					<?php endif; ?> 
 				<?php endif; ?> 
 
-				<?php if ( 0 && in_array( $provider_id, array( "Facebook", "Google" ) ) ) : ?>
-					<br />
-					<hr />
-					<p style="margin-left:12px;margin-bottom:0px;"> 
-						<b><?php _wsl_e("Note", 'wordpress-social-login') ?>:</b> 
-
-						<?php echo sprintf( _wsl__("<b>WSL</b> will ask <b>%s</b> users for a set number of permissions, however you can change these said permissions using a filter", 'wordpress-social-login'), $provider_name ) ?>. 
-
-						<?php _wsl_e('For more information, please refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help&wslhelp=filters">this page</a></b>', 'wordpress-social-login') ?>.
-					</p>
-				<?php endif; ?> 
 				<br />
 				<div
 					class="wsl_div_settings_help_<?php echo $provider_id; ?>" 
 					style="<?php if( isset( $_REQUEST["enable"] ) && ! isset( $_REQUEST["settings-updated"] ) && $_REQUEST["enable"] == $provider_id ) echo "-"; // <= lolz ?>display:none;" 
 				> 
 					<hr class="wsl" />
-					<?php if ( $provider_new_app_link  ) : ?> 
+					<?php if (  $provider_id == "Steam" ) : ?> 
+					<?php elseif ( $provider_new_app_link  ) : ?> 
 						<?php _wsl_e('<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Customer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials', 'wordpress-social-login') ?>. 
 						
 						<?php echo sprintf( _wsl__( 'This application will link your website <code>%s</code> to <code>%s API</code> and these credentials are needed in order for <b>%s</b> users to access your website', 'wordpress-social-login'), $_SERVER["SERVER_NAME"], $provider_name, $provider_name ) ?>. 
@@ -216,7 +235,7 @@ function wsl_component_networks_setup()
 					<?php else: ?>  
 							<p><?php echo sprintf( _wsl__('<b>Done.</b> Nothing more required for <b>%s</b>', 'wordpress-social-login'), $provider_name) ?>.</p> 
 					<?php endif; ?>  
-					<div style="margin-left:40px;">
+					<div style="margin-left:40px;"> 
 						<?php if ( $provider_new_app_link  ) : ?> 
 							<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php echo sprintf( _wsl__( 'First go to: <a href="%s" target ="_blank">%s</a>', 'wordpress-social-login'), $provider_new_app_link, $provider_new_app_link ) ?></p>
 
