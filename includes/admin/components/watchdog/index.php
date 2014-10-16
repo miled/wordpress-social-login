@@ -16,10 +16,68 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 function wsl_component_watchdog()
- {
-	// HOOKABLE: 
-	do_action( "wsl_component_watchdog_start" ); 
+{
+ 	if( ! get_option( 'wsl_settings_debug_mode_enabled' ) )
+	{
+		return _wsl_e("<p>Debug mode is disabled.</p>", 'wordpress-social-login'); 
+	}
+
+	if( get_option( 'wsl_settings_debug_mode_enabled' ) == 1 )
+	{
+		return wsl_component_watchdog_files();
+	}
+
+	wsl_component_watchdog_database();
+}
+
+wsl_component_watchdog();
+
+// --------------------------------------------------------------------
+
+function wsl_component_watchdog_files()
+{
+?>
+<div style="padding: 5px 20px; border: 1px solid #ddd; background-color: #fff;">
+	<h3></h3>
+	<h3><?php _wsl_e("Authentication log files viewer", 'wordpress-social-login') ?></h3>
 	
+	<form method="post" action="" style="float: right;margin-top:-45px">
+		<select name="log_file">
+			<option value=""> &mdash; <?php _wsl_e("Select a log file to display", 'wordpress-social-login') ?> &mdash;</option>
+			
+			<?php
+				$wp_upload_dir = wp_upload_dir();
+				$wsl_path = $wp_upload_dir['basedir'] . '/wordpress-social-login';
+
+				$selected = isset( $_REQUEST['log_file'] ) ? $_REQUEST['log_file'] : '';
+				
+				$files = scandir( $wsl_path );
+
+				if( $files )
+				foreach( $files as $file )
+				{
+					if( in_array( $file, array( '.', '..', '.htaccess', 'index.html' ) ) )
+					continue;
+
+					?>
+						<option value="<?php echo $file; ?>" <?php if( $selected == $file ) echo 'selected'; ?>><?php echo $file; ?></option>
+					<?php
+				}
+			?>
+		</select>
+
+		<input type="submit" value="<?php _wsl_e("View", 'wordpress-social-login') ?>" class="button">
+	</form>
+
+	<textarea rows="25" cols="70" wrap="off" style="width:100%;height:580px;margin-bottom:15px;white-space: nowrap;font-family: monospace;font-size: 12px;"><?php if( $selected && file_exists( $wsl_path . '/' . $selected ) ) echo file_get_contents( $wsl_path . '/' . $selected ); ?></textarea>
+</div>
+<?php
+}
+
+// --------------------------------------------------------------------
+
+function wsl_component_watchdog_database()
+{
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
 	global $wpdb;
@@ -40,7 +98,7 @@ function wsl_component_watchdog()
 
 <div style="padding: 5px 20px; border: 1px solid #ddd; background-color: #fff;">
 
-	<h3><?php _wsl_e("Latest WSL activity", 'wordpress-social-login') ?></h3>
+	<h3><?php _wsl_e("Authentication log viewer - latest activity", 'wordpress-social-login') ?></h3>
 
 	<p style="float: right;margin-top:-45px">
 		<?php
@@ -56,8 +114,7 @@ function wsl_component_watchdog()
 
 		if( ! $list_sessions )
 		{
-			_wsl_e("<p>No log found!</p>", 'wordpress-social-login');
-			_wsl_e("<p class='description'>To log WSL authentication process in database, include 'includes/services/wsl.watchdog.php' in 'wp-social-login.php'.</p>", 'wordpress-social-login');
+			_wsl_e("<p>No log found!</p>", 'wordpress-social-login'); 
 		}
 		else
 		{
@@ -103,43 +160,6 @@ function wsl_component_watchdog()
 					$oexectime = (float) $call_data->created_at;
 					$texectime += $exectime;
 
-					if( $abandon && 'wsl_process_login' == $call_data->action_name )
-					{
-						$abandon = false;
-						$newattempt = true;
-					}
-
-					if(  'wsl_process_login' == $call_data->action_name && ! stristr( $call_data->url, 'redirect_to_provider=true' ) && ! stristr( $call_data->url, 'action=wordpress_social_authenticated' ) )
-					{
-						$newattempt = true;
-					}
-
-					if( $abandon )
-					{
-						continue; 
-					}
-
-					if( $newattempt && ! $newsession )
-					{
-						?>
-							</table>
-							<h5>New attempt</h5>
-							<table class="wp-list-table widefat widefatop">
-								<tr>
-									<th>#</th>
-									<th>Action</th>
-									<th>Args</th>
-									<th>Time</th>
-									<th>User</th>
-									<th style="text-align:center">&#916;</th>
-								</tr>
-						<?php
-
-						$exectime   = 0;
-						$oexectime  = 0;
-						$texectime  = 0;
-					}
-					
 					$call_data->action_args = json_decode( $call_data->action_args );
 
 					$newattempt = false;
@@ -168,21 +188,11 @@ function wsl_component_watchdog()
 
 											if( 'wsl_process_login_render_error_page' == $call_data->action_name ){
 												echo 'f50505';
-
-												$newattempt = true;
 											}
 
 											if( 'wsl_process_login_render_notice_page' == $call_data->action_name ){
 												echo 'fa1797';
-												
-												$newattempt = true;
 											}
-
-											if( 'wsl_render_login_form_user_loggedin' == $call_data->action_name ){
-												echo '12b0fa';
-
-												$abandon = true;
-											} 
 										?>"
 										><?php echo $call_data->action_name; ?></span>
 						</td>
@@ -209,7 +219,6 @@ function wsl_component_watchdog()
 						</td>
 					</tr>
 				<?php
-					$newsession = false;
 				}
 			?>
 			</table>
@@ -229,10 +238,6 @@ function wsl_component_watchdog()
 	</script>
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_watchdog_end" );
 }
-
-wsl_component_watchdog();
 
 // --------------------------------------------------------------------

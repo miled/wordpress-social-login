@@ -119,7 +119,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 </html> 
 <?php 
 	# keep these 2 LOC
-		do_action( 'wsl_process_login_clear_user_php_session' );
+		do_action( 'wsl_clear_user_php_session' );
 
 		die();
 	}
@@ -248,7 +248,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 </html> 
 <?php
 	# keep these 2 LOC
-		do_action( 'wsl_process_login_clear_user_php_session' );
+		do_action( 'wsl_clear_user_php_session' );
 
 		die();
 	}

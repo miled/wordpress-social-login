@@ -217,7 +217,7 @@ class LightOpenID
         //-
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
-			do_action( 'wsl_log_provider_api_call', $url . ($method == 'GET' && $params ? '?' . $params : ''), $method, $params, curl_getinfo($curl), curl_getinfo($curl), $response, 'OpenID', __FILE__, __LINE__, debug_backtrace () );
+			do_action( 'wsl_log_provider_api_call', 'OpenID', $url . ($method == 'GET' && $params ? '?' . $params : ''), $method, $params, curl_getinfo($curl), curl_getinfo($curl), $response );
 		}
         //-
 

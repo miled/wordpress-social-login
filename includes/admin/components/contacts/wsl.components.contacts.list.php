@@ -52,7 +52,9 @@ function wsl_component_contacts_list( $user_id )
 
 ?> 
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-	<p style="float: right; margin: 0px;margin-top: -4px;">
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's contact list", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
+
+	<p style="float: right;margin-top:-23px">
 		<?php
 			foreach( $actions as $item )
 			{
@@ -62,31 +64,12 @@ function wsl_component_contacts_list( $user_id )
 			}
 		?>
 	</p>
-
-	<?php echo sprintf( _wsl__("<b>%s</b> contact's list", 'wordpress-social-login'), $user_data->display_name ) ?>.
-	<?php echo sprintf( _wsl__("This user have <b>%d</b> contacts in his list in total", 'wordpress-social-login'), $total ) ?>.
-</div>
+</div> 
 
 <style>
 	.widefatop td, .widefatop th { border: 1px solid #DDDDDD; }
 	.widefatop th label { font-weight: bold; }  
 </style>
-
-<h3><?php _wsl_e("Wordpress user profile", 'wordpress-social-login'); ?></h3>
-
-<table class="wp-list-table widefat widefatop">
-	<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->ID; ?></td></tr> 
-	<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_login; ?></td></tr> 
-	<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->display_name; ?></td></tr> 
-	<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_data->user_email; ?>" target="_blank"><?php echo $user_data->user_email; ?></a></td></tr> 
-	<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_data->user_url; ?>" target="_blank"><?php echo $user_data->user_url; ?></a></td></tr>   
-	<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_registered; ?></td></tr>  
-	</tr>
-</table>
-
-<hr />
-
-<h3><?php _wsl_e("List of contacts", 'wordpress-social-login'); ?></h3>
 
 <table cellspacing="0" class="wp-list-table widefat fixed users">
 	<thead>

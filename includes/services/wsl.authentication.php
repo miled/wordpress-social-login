@@ -83,6 +83,9 @@ function wsl_process_login()
 		return false;
 	}
 
+	// start loggin the auth process, if debug mode is enabled
+	wsl_watchdog_init();
+
 	// user already logged in?
 	if( is_user_logged_in() )
 	{
@@ -98,6 +101,8 @@ function wsl_process_login()
 	{
 		return wsl_process_login_render_notice_page( _wsl__( "Authentication through social networks is currently disabled.", 'wordpress-social-login' ) );
 	}
+
+	add_action( 'wsl_clear_user_php_session', 'wsl_process_login_clear_user_php_session' );
 
 	// HOOKABLE:
 	do_action( "wsl_process_login_start" );
@@ -1013,11 +1018,10 @@ function wsl_process_login_get_selected_provider()
 */
 function wsl_process_login_clear_user_php_session()
 {
-	$_SESSION["HA::STORE"]        = array();
-	$_SESSION["HA::CONFIG"]       = array();
-	$_SESSION["wsl::userprofile"] = array();
+	$_SESSION["HA::STORE"]        = array(); // used by hybridauth library. to clear as soon as the auth process end.
+	$_SESSION["HA::CONFIG"]       = array(); // used by hybridauth library. to clear as soon as the auth process end.
+	$_SESSION["wsl::apierror"]    = array(); // used by wsl to temprarly store the latest social api error > only if dev mode is enabled.
+	$_SESSION["wsl::userprofile"] = array(); // used by wsl to temprarly store the user profile so de don't make unnecessary calls to social apis.
 }
-
-add_action( 'wsl_process_login_clear_user_php_session', 'wsl_process_login_clear_user_php_session' );
 
 // --------------------------------------------------------------------

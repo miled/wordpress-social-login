@@ -13,29 +13,25 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_contacts_settings_setup()
 {
-	// HOOKABLE: 
-	do_action( "wsl_component_contacts_settings_setup_start" );
-
 	$sections = array(
 		'google'   => 'wsl_component_contacts_settings_setup_google',
 		'facebook' => 'wsl_component_contacts_settings_setup_facebook', 
 		'twitter'  => 'wsl_component_contacts_settings_setup_twitter', 
-		'live'     => 'wsl_component_contacts_settings_setup_live', 
 		'linkedin' => 'wsl_component_contacts_settings_setup_linkedin', 
+		'live'     => 'wsl_component_contacts_settings_setup_live', 
 	);
 
 	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
+
+	foreach( $sections as $section => $action )
+	{
+		add_action( 'wsl_component_contacts_settings_setup_sections', $action );
+	}	
 ?>
 <div>
 	<?php
-		foreach( $sections as $section => $action )
-		{
-			do_action( $action . '_start' );
-
-			do_action( $action );
-
-			do_action( $action . '_end' );
-		}
+		// HOOKABLE: 
+		do_action( 'wsl_component_contacts_settings_setup_sections' );
 	?>
 
 	<br />
@@ -45,8 +41,6 @@ function wsl_component_contacts_settings_setup()
 	</div>
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_contacts_settings_setup_end" );
 }
 
 // --------------------------------------------------------------------	
@@ -60,7 +54,7 @@ function wsl_component_contacts_settings_setup_google()
 	</h3>
 	<div class="inside"> 
 		<p class="description">
-			<?php _wsl_e( 'To import Google\'s users contacts list you will have to go to <a href="https://console.developers.google.com" target="_blank">https://console.developers.google.com</a>, then <b>APIs &amp; auth</b> &gt; <b>APIs</b> and enable <em style="color:#0147bb;">“Contacts API”</em>', 'wordpress-social-login') ?>
+			<?php _wsl_e( 'To import Google\'s users contacts list you will have to go to <a href="https://console.developers.google.com" target="_blank">https://console.developers.google.com</a>, then <b>APIs &amp; auth</b> &gt; <b>APIs</b> and enable <b>Contacts API</b>', 'wordpress-social-login') ?>
 		</p>
 		<hr />
 		<select name="wsl_settings_contacts_import_google" <?php if( ! get_option( 'wsl_settings_Google_enabled' ) ) echo "disabled" ?> >
@@ -71,8 +65,6 @@ function wsl_component_contacts_settings_setup_google()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_contacts_settings_setup_google', 'wsl_component_contacts_settings_setup_google' );
 
 // --------------------------------------------------------------------	
 
@@ -97,8 +89,6 @@ function wsl_component_contacts_settings_setup_facebook()
 <?php
 }
 
-add_action( 'wsl_component_contacts_settings_setup_facebook', 'wsl_component_contacts_settings_setup_facebook' );
-
 // --------------------------------------------------------------------	
 
 function wsl_component_contacts_settings_setup_twitter()
@@ -109,6 +99,10 @@ function wsl_component_contacts_settings_setup_twitter()
 		<label><?php _wsl_e("Twitter", 'wordpress-social-login') ?></label>
 	</h3>
 	<div class="inside"> 
+		<p class="description">
+			<?php _wsl_e( 'This will only import the Twitter\'s users followed by the connected user on your website', 'wordpress-social-login') ?>
+		</p>
+		<hr />
 		<select name="wsl_settings_contacts_import_twitter" <?php if( ! get_option( 'wsl_settings_Twitter_enabled' ) ) echo "disabled" ?> >
 			<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
 			<option <?php if( get_option( 'wsl_settings_contacts_import_twitter' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
@@ -118,7 +112,28 @@ function wsl_component_contacts_settings_setup_twitter()
 <?php
 }
 
-add_action( 'wsl_component_contacts_settings_setup_twitter', 'wsl_component_contacts_settings_setup_twitter' );
+// --------------------------------------------------------------------	
+
+function wsl_component_contacts_settings_setup_linkedin()
+{
+?>
+<div class="stuffbox">
+	<h3>
+		<label><?php _wsl_e("LinkedIn", 'wordpress-social-login') ?></label>
+	</h3>
+	<div class="inside"> 
+		<p class="description">
+			<?php _wsl_e( 'To import LinkedIn\'s users contacts list you will have to go to <a href="https://www.linkedin.com/secure/developer" target="_blank">https://www.linkedin.com/secure/developer</a>, then <b>Default scope</b> and check <b>r_network</b>', 'wordpress-social-login') ?>
+		</p>
+		<hr />
+		<select name="wsl_settings_contacts_import_linkedin" <?php if( ! get_option( 'wsl_settings_LinkedIn_enabled' ) ) echo "disabled" ?> >
+			<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+			<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
+		</select>
+	</div>
+</div>
+<?php
+}
 
 // --------------------------------------------------------------------	
 
@@ -138,28 +153,5 @@ function wsl_component_contacts_settings_setup_live()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_contacts_settings_setup_live', 'wsl_component_contacts_settings_setup_live' );
-
-// --------------------------------------------------------------------	
-
-function wsl_component_contacts_settings_setup_linkedin()
-{
-?>
-<div class="stuffbox">
-	<h3>
-		<label><?php _wsl_e("LinkedIn", 'wordpress-social-login') ?></label>
-	</h3>
-	<div class="inside"> 
-		<select name="wsl_settings_contacts_import_linkedin" <?php if( ! get_option( 'wsl_settings_LinkedIn_enabled' ) ) echo "disabled" ?> >
-			<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
-			<option <?php if( get_option( 'wsl_settings_contacts_import_linkedin' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
-		</select>
-	</div>
-</div>
-<?php
-}
-
-add_action( 'wsl_component_contacts_settings_setup_linkedin', 'wsl_component_contacts_settings_setup_linkedin' );
 
 // --------------------------------------------------------------------	

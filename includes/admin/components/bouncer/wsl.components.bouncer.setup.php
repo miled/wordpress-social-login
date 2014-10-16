@@ -17,9 +17,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_bouncer_setup()
 {
-	// HOOKABLE:
-	do_action( "wsl_component_bouncer_setup_start" );
-
 	$sections = array(
 		'wsl_widget'         => 'wsl_component_bouncer_setup_wsl_widget'        ,
 		'profile_completion' => 'wsl_component_bouncer_setup_profile_completion',
@@ -30,18 +27,17 @@ function wsl_component_bouncer_setup()
 		'filters_urls'       => 'wsl_component_bouncer_setup_filters_urls'      , 
 	);
 
-	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
+	$sections = apply_filters( 'wsl_component_bouncer_setup_alter_sections', $sections );
+
+	foreach( $sections as $section => $action )
+	{
+		add_action( 'wsl_component_bouncer_setup_sections', $action );
+	}
 ?>
 <div>
 	<?php
-		foreach( $sections as $section => $action )
-		{
-			do_action( $action . '_start' );
-
-			do_action( $action );
-
-			do_action( $action . '_end' );
-		}
+		// HOOKABLE: 
+		do_action( 'wsl_component_bouncer_setup_sections' );
 	?>
 
 	<br />
@@ -51,8 +47,6 @@ function wsl_component_bouncer_setup()
 	</div>
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_bouncer_setup_end" );
 }
 
 // --------------------------------------------------------------------	
@@ -92,8 +86,6 @@ function wsl_component_bouncer_setup_wsl_widget()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_bouncer_setup_wsl_widget', 'wsl_component_bouncer_setup_wsl_widget' );
 
 // --------------------------------------------------------------------	
 
@@ -135,8 +127,6 @@ function wsl_component_bouncer_setup_profile_completion()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_bouncer_setup_profile_completion', 'wsl_component_bouncer_setup_profile_completion' );
 
 // --------------------------------------------------------------------	
 
@@ -184,8 +174,6 @@ function wsl_component_bouncer_setup_user_moderation()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_bouncer_setup_user_moderation', 'wsl_component_bouncer_setup_user_moderation' );
 
 // --------------------------------------------------------------------	
 
@@ -257,8 +245,6 @@ function wsl_component_bouncer_setup_membership_level()
 <?php
 }
 
-add_action( 'wsl_component_bouncer_setup_membership_level', 'wsl_component_bouncer_setup_membership_level' );
-
 // --------------------------------------------------------------------	
 
 function wsl_component_bouncer_setup_filters_domains()
@@ -303,8 +289,6 @@ function wsl_component_bouncer_setup_filters_domains()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_bouncer_setup_filters_domains', 'wsl_component_bouncer_setup_filters_domains' );
 
 // --------------------------------------------------------------------	
 
@@ -351,8 +335,6 @@ function wsl_component_bouncer_setup_filters_mails()
 <?php
 }
 
-add_action( 'wsl_component_bouncer_setup_filters_mails', 'wsl_component_bouncer_setup_filters_mails' );
-
 // --------------------------------------------------------------------	
 
 function wsl_component_bouncer_setup_filters_urls()
@@ -397,7 +379,5 @@ function wsl_component_bouncer_setup_filters_urls()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_bouncer_setup_filters_urls', 'wsl_component_bouncer_setup_filters_urls' );
 
 // --------------------------------------------------------------------	

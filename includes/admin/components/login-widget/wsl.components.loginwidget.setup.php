@@ -26,18 +26,17 @@ function wsl_component_loginwidget_setup()
 		'custom_css'        => 'wsl_component_loginwidget_setup_custom_css', 
 	);
 
-	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
+	$sections = apply_filters( 'wsl_component_loginwidget_setup_alter_sections', $sections );
+
+	foreach( $sections as $section => $action )
+	{
+		add_action( 'wsl_component_loginwidget_setup_sections', $action );
+	}
 ?>
 <div>
 	<?php
-		foreach( $sections as $section => $action )
-		{
-			do_action( $action . '_start' );
-
-			do_action( $action );
-
-			do_action( $action . '_end' );
-		}
+		// HOOKABLE: 
+		do_action( 'wsl_component_loginwidget_setup_sections' );
 	?>
 
 	<br />
@@ -47,8 +46,6 @@ function wsl_component_loginwidget_setup()
 	</div>
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_loginwidget_setup_end" );
 }
 
 // --------------------------------------------------------------------	
@@ -107,8 +104,6 @@ function wsl_component_loginwidget_setup_basic_settings()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_loginwidget_setup_basic_settings', 'wsl_component_loginwidget_setup_basic_settings' );
 
 // --------------------------------------------------------------------	
 
@@ -191,8 +186,6 @@ function wsl_component_loginwidget_setup_advanced_settings()
 <?php
 }
 
-add_action( 'wsl_component_loginwidget_setup_advanced_settings', 'wsl_component_loginwidget_setup_advanced_settings' );
-
 // --------------------------------------------------------------------	
 
 function wsl_component_loginwidget_setup_custom_css()
@@ -244,7 +237,5 @@ function wsl_component_loginwidget_setup_custom_css()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_loginwidget_setup_custom_css', 'wsl_component_loginwidget_setup_custom_css' );
 
 // --------------------------------------------------------------------	

@@ -275,7 +275,7 @@ function wsl_display_dev_mode_debugging_area()
 	<h4>Hooks</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<?php	
+			<?php
 				if( $wp_actions )
 				{
 					foreach( $wp_actions as $name => $count )
@@ -331,7 +331,7 @@ function wsl_display_dev_mode_debugging_area()
 															<?php echo $callback['accepted_args'] ; ?>
 														</td>
 													</td>
-												<?php  
+												<?php   
 											} // I hit a record
 										} 
 									}

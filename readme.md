@@ -13,6 +13,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 ### WSL's main features
 
 - No premium features.
+- Absolute privacy of your website users data.
 - Wide variety of identities providers (currently support 25+).
 - A highly customizable and fully extensible widgets.
 - Easy-to-use and clean user interfaces.
@@ -31,15 +32,16 @@ For more information about WordPress Social Login, refer to our [online user gui
 - [x] Allow bouncer to set new users roles.
 - [x] Rewrite Hybridauth endpoints urls.
 - [x] Optimize wsl tables and for create tables checks every activation.
+- [x] Rework WSL admin interfaces to make them extensible
 - [x] Improve debugging.
     - [x] debug calls to social apis
     - [x] improve watchdog
+    - [x] implement logging files
 - [ ] Rework the Steam provider.
     - [x] Get full avatar form Steam and fetch location.
     - [x] Support Steam Web API.
-    - [ ] update the section (how to create an app) in the Networks tab
+    - [x] update the section (how to create an app) in the Networks tab
     - [ ] Convert the old user identifiers in wslusersprofiles (http://steamcommunity.com/openid/id/*) to 64bit SteamIDs.
-- [ ] Make the widget shortcode support attributes.
 - [ ] *Feel free to edit this line.*
 
 #### License 

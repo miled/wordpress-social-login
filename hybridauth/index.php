@@ -18,9 +18,13 @@ if( file_exists( $parse_uri[0] . 'wp-load.php' ) )
 {
 	include_once( $parse_uri[0] . 'wp-load.php' );
 
-	if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
+	if( get_option( 'wsl_settings_debug_mode_enabled' ) )
 	{
-		do_action( 'wsl_log_provider_api_call', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"], null, __FILE__, __LINE__, debug_backtrace () );
+		define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
+
+		add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
+
+		do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
 	}
 }
 

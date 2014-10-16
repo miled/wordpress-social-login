@@ -17,26 +17,22 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_buddypress_setup()
 {
-	// HOOKABLE: 
-	do_action( "wsl_component_buddypress_setup_start" );
-
 	$sections = array(
 		'user_avatar'     => 'wsl_component_buddypress_setup_user_avatar',
 		'profile_mapping' => 'wsl_component_buddypress_setup_profile_mapping', 
 	);
 
 	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
+
+	foreach( $sections as $section => $action )
+	{
+		add_action( 'wsl_component_buddypress_setup_sections', $action );
+	}	
 ?>
 <div>
 	<?php
-		foreach( $sections as $section => $action )
-		{
-			do_action( $action . '_start' );
-
-			do_action( $action );
-
-			do_action( $action . '_end' );
-		}
+		// HOOKABLE: 
+		do_action( 'wsl_component_buddypress_setup_sections' );
 	?>
 
 	<br />
@@ -46,8 +42,6 @@ function wsl_component_buddypress_setup()
 	</div>
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_component_buddypress_setup_end" );
 }
 
 // --------------------------------------------------------------------	
@@ -78,8 +72,6 @@ function wsl_component_buddypress_setup_user_avatar()
 </div>
 <?php
 }
-
-add_action( 'wsl_component_buddypress_setup_user_avatar', 'wsl_component_buddypress_setup_user_avatar' );
 
 // --------------------------------------------------------------------	
 
@@ -281,7 +273,5 @@ function wsl_component_buddypress_setup_profile_mapping()
 </script>
 <?php
 }
-
-add_action( 'wsl_component_buddypress_setup_profile_mapping', 'wsl_component_buddypress_setup_profile_mapping' );
 
 // --------------------------------------------------------------------	

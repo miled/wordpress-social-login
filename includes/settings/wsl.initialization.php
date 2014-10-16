@@ -65,9 +65,9 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "enabled" => false, "visible" => true  , "component" => "contacts"      ),
 	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "enabled" => false, "visible" => true  , "component" => "buddypress"    ),
 
-	"watchdog"     => array( "label" => __("Watchdog"      , 'wordpress-social-login') , "enabled" => true , "visible" => false , "component" => "core"          , "pull-right" => true  ), 
 	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
-	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "enabled" => true , "visible" => true , "component" => "core"           , "pull-right" => true  ), 
+	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "enabled" => true , "visible" => false , "component" => "core"          , "pull-right" => true  ), 
+	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
 	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
 );
 
@@ -263,7 +263,8 @@ function wsl_register_setting()
 
 	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_enable_mapping' ); 
 	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_xprofile_map' ); 
-	
+
+	register_setting( 'wsl-settings-group-debug'            , 'wsl_settings_debug_mode_enabled' ); 
 	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
 
 	add_option( 'wsl_settings_welcome_panel_enabled' );

@@ -27,18 +27,12 @@ function wsl_render_login_form()
 	// WSL Widget won't show up for connected users
 	if( is_user_logged_in() && ! is_admin() )
 	{
-		// HOOKABLE:
-		do_action( 'wsl_render_login_form_user_loggedin' );
-
 		return;
 	}
 
 	// Bouncer :: Allow authentication 
 	if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 )
 	{
-		// HOOKABLE:
-		do_action( 'wsl_render_login_form_authentication_d' );
-
 		return;
 	}
 

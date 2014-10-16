@@ -236,7 +236,7 @@ class OAuth1Client{
 		//-
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
-			do_action( 'wsl_log_provider_api_call', $url, $method, $postfields, $this->http_code, $this->http_info, $response, 'OAuth1', __FILE__, __LINE__, debug_backtrace () );
+			do_action( 'wsl_log_provider_api_call', 'OAuth1', $url, $method, $postfields, $this->http_code, $this->http_info, $response );
 		}
 		//-
 

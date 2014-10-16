@@ -56,7 +56,7 @@ function wsl_component_users_profile( $user_id )
 		array( 'field' => 'zip'         , 'label' => _wsl__( "Zip"              , 'wordpress-social-login'), 'description' => _wsl__( "User's zipcode"                                                                                                         , 'wordpress-social-login') ),
 	);
 
-	$user_info = get_userdata( $user_id ); 
+	$user_data = get_userdata( $user_id ); 
 
 	add_thickbox();
 
@@ -68,15 +68,8 @@ function wsl_component_users_profile( $user_id )
 	// HOOKABLE: 
 	$actions = apply_filters( 'wsl_component_users_profile_alter_actions_list', $actions, $user_id );
 ?>
-
-<style>
-	table td, table th { border: 1px solid #DDDDDD; }
-	table th label { font-weight: bold; }
-	.form-table th { width:120px; text-align:right; }
-	p.description { font-size: 11px ! important; margin:0 ! important;}
-</style>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
- 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_info->display_name ) ?></h3>
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
 
 	<p style="float: right;margin-top:-23px">
 		<?php
@@ -89,6 +82,12 @@ function wsl_component_users_profile( $user_id )
 		?>
 	</p>
 </div> 
+<style>
+	table td, table th { border: 1px solid #DDDDDD; }
+	table th label { font-weight: bold; }
+	.form-table th { width:120px; text-align:right; }
+	p.description { font-size: 11px ! important; margin:0 ! important;}
+</style>
 <script>
 	function confirmDeleteWSLUser()
 	{

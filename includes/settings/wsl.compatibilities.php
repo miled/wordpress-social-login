@@ -29,7 +29,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function wsl_check_compatibilities()
 {
 	delete_option( 'wsl_settings_development_mode_enabled' );
-
+	delete_option( 'wsl_settings_debug_mode_enabled' );
 	delete_option( 'wsl_settings_welcome_panel_enabled' );
 
 	if( ! get_option( 'wsl_settings_redirect_url' ) )

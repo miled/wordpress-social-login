@@ -132,7 +132,10 @@ function wsl_admin_ui_header( $wslp = null )
 		?>
 			<div class="fade error wsl-error-db-tables" style="margin: 4px 0 20px;">
 				<p>
-					<?php echo sprintf( _wsl__('WSL has detected that some of its database tables does not exist. To fix this issue, navigate to the <b>Tools</b> tabs, then scroll down to <a href="options-general.php?page=wordpress-social-login&wslp=tools">Repair WSL tables</a>', 'wordpress-social-login') ) ?>.
+					<?php _wsl_e('WSL has detected that some of its database tables does not exist. This need to fix in order for this plugin to function correctly', 'wordpress-social-login') ?>.
+				</p>
+				<p>
+					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#repair-tables"><?php _wsl_e('Repair WSL tables', 'wordpress-social-login') ?></a>
 				</p>
 			</div>
 		<?php
@@ -145,7 +148,7 @@ function wsl_admin_ui_header( $wslp = null )
 		?>
 			<div class="fade error wsl-error-itsec-long-url" style="margin: 4px 0 20px;">
 				<p>
-					<?php echo sprintf( _wsl__('WSL has detected that you are running iThemes Security plugin (formerly Better WP Security) with "Prevent long URL strings" option enabled. This will prevent Facebook, Yahoo, Steam and many others providers from working', 'wordpress-social-login') ) ?>.
+					<?php _wsl_e('WSL has detected that you are running iThemes Security plugin (formerly Better WP Security) with "Prevent long URL strings" option enabled. This will prevent Facebook, Yahoo, Steam and many others providers from working', 'wordpress-social-login') ?>.
 				</p>
 			</div>
 		<?php
@@ -155,7 +158,26 @@ function wsl_admin_ui_header( $wslp = null )
 		?>
 			<div class="fade error wsl-error-dev-mode-on" style="margin: 4px 0 20px;">
 				<p>
-					<?php echo sprintf( _wsl__('You are now running WordPress Social Login with DEVELOPMENT MODE enabled. Warning: This mode is not intend for live websites as it might raise serious security risks', 'wordpress-social-login') ) ?>.
+					<?php _wsl_e('<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT MODE enabled. This mode is not intend for live websites as it might raise serious security risks', 'wordpress-social-login') ?>.
+				</p>
+				<p>
+					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#dev-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
+					<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/devmode.html" target="_blank"><?php _wsl_e('Read about the development mode', 'wordpress-social-login') ?></a>
+				</p>
+			</div>
+		<?php
+	}
+
+	if( get_option( 'wsl_settings_debug_mode_enabled' ) ){
+		?>
+			<div class="fade updated wsl-error-debug-mode-on" style="margin: 4px 0 20px;">
+				<p>
+					<?php _wsl_e('<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE enabled. This mode is not intend for live websites as it might add to loading time and store unnecessary data on your server', 'wordpress-social-login') ?>.
+				</p>
+				<p>
+					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#debug-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
+					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=watchdog"><?php _wsl_e('View WSL logs', 'wordpress-social-login') ?></a>
+					<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/debugmode.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
 				</p>
 			</div>
 		<?php
@@ -204,20 +226,19 @@ function wsl_admin_ui_footer()
 ?>
 </div> <!-- ./wsl_admin_tab_content -->  
 <div class="clear"></div>
-<?php wsl_admin_help_us_localize_note(); ?>
 
 <script>
 	// check for new versions and updates
 	jQuery.getScript("http://miled.github.io/wordpress-social-login/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
 </script>
 <?php
-    if( get_option( 'wsl_settings_development_mode_enabled' ) )
+	// HOOKABLE: 
+	do_action( "wsl_admin_ui_footer_end" );
+
+	if( get_option( 'wsl_settings_development_mode_enabled' ) )
 	{ 
 		wsl_display_dev_mode_debugging_area();
  	}
-
-	// HOOKABLE: 
-	do_action( "wsl_admin_ui_footer_end" );
 }
 
 // --------------------------------------------------------------------
@@ -432,9 +453,6 @@ function wsl_admin_help_us_localize_note()
 */
 function wsl_render_wp_editor( $name, $content )
 {
-	// HOOKABLE: 
-	do_action( "wsl_render_wp_editor_start" );
-
 	if( ! function_exists( 'wp_editor' ) )
 	{
 		?>
@@ -454,8 +472,6 @@ function wsl_render_wp_editor( $name, $content )
 	</div> 
 </div>
 <?php
-	// HOOKABLE: 
-	do_action( "wsl_render_wp_editor_end" );
 }
 
 // --------------------------------------------------------------------
@@ -523,7 +539,6 @@ function wsl_admin_ui_css()
 } 
 .wsl-container p{  
 	line-height: 1.8em; 
-	margin-left:20px;
 }
 .wsl-container .wslpre{ 
 	font-size:14m;
@@ -635,6 +650,33 @@ a.thumbnail:hover {
 	width: 55%;
 	margin: 0px auto;
 	margin-top:30px;
+}
+.wsl-container .button-danger {
+	background-color: #da4f49;
+	background-image: linear-gradient(to bottom, #ce3f38, #bd362f);
+	border-color: #bd362f;
+	border-radius: 3px;
+	border-style: solid;
+	border-width: 1px;
+	box-sizing: border-box;
+	color: #fff;
+	cursor: pointer;
+	display: inline-block;
+	float: none;
+	font-size: 13px;
+	height: 30px;
+	margin: 0;
+	padding: 5px;
+	text-decoration: none;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
+	white-space: nowrap; 
+}
+.wsl-container .button-danger:focus, .wsl-container .button-danger:hover{
+	background:#d3534c;
+	border-color:#ce3f38;
+	-webkit-box-shadow:inset 0 1px 0 rgba(206,63,56,.6);
+	box-shadow:inset 0 1px 0 rgba(206,63,56,.6);
+	color:#fff
 }
 <?php
 }

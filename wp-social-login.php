@@ -1,11 +1,11 @@
 <?php
 /*
 Plugin Name: WordPress Social Login
-Plugin URI: http://hybridauth.sourceforge.net/wsl/index.html
+Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
 Version: 2.2.3-dev
 Author: Miled
-Author URI: http://hybridauth.sourceforge.net/wsl/index.html
+Author URI: https://github.com/miled
 License: MIT License
 Text Domain: wordpress-social-login
 Domain Path: /languages
@@ -22,24 +22,21 @@ Domain Path: /languages
 *   - Point out stupidity, smells and inconsistencies in the code.
 *   - Criticize.
 *
-*
 *  If you want to contribute, please consider these general "guide lines":
-* 
+*
 *   - Don't hesitate to delete code that doesn't make sense or looks redundant.
 *   - Feel free to create new functions and files when needed.
 *   - Avoid using 'switch' and 'for'.
 *   - Avoid over-commenting.
 *
-*
 *  Coding Style :
 *
 *   - Readable code.
 *   - Clear indentations (4 chars).
-*   - Same name convention of wordpress: those long long and self-explanatory functions and variables.
+*   - Same name convention of WordPress: those long long and self-explanatory functions and variables.
 *
-*
-*  To keep the code accecible by everyone and no-brainer for me, WordPress Social Login is programmed in procedural
-*  PHP and will be kept that way.
+*  To keep the code accessible to everyone and easy to maintain for me, WordPress Social Login is programmed in
+*  procedural PHP and will be kept that way.
 *
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
 *  and the WordPress community by submitting a Pull Request at https://github.com/hybridauth/WordPress-Social-Login
@@ -58,7 +55,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 @ session_start(); // shhhtt keept it secret
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3-dev";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -152,10 +149,10 @@ function wsl_add_plugin_row_meta( $links, $file )
 	if( $file == $this_plugin )
 	{
 		$wsl_links = array(
-			'<a href="http://miled.github.io/wordpress-social-login/">' . __( "Manual" ) . '</a>',
-			'<a href="http://miled.github.io/wordpress-social-login/faq.html">' . __( "FAQ" ) . '</a>',
-			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . __( "Suppot" ) . '</a>',
-			'<a href="https://github.com/miled/wordpress-social-login">' . __( "Fork me on Github" ) . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/">'             . __( "Manual" )            . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/faq.html">'     . __( "FAQ" )               . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . __( "Suppot" )            . '</a>',
+			'<a href="https://github.com/miled/wordpress-social-login">'            . __( "Fork me on Github" ) . '</a>',
 		);
 
 		return array_merge( $links, $wsl_links );
@@ -199,6 +196,7 @@ require_once( dirname(__FILE__) . '/includes/services/wsl.mail.notification.php'
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
 require_once( dirname(__FILE__) . '/includes/services/wsl.utilities.php'            ); // Few utilities and functions 
+require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php'             ); // Logging agent
 
 # WSL Widget and GUIs generators
 require_once( dirname(__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
@@ -211,8 +209,6 @@ if( is_admin() )
 {
 	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
-
-require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php' );
 
 // --------------------------------------------------------------------
 

@@ -240,7 +240,7 @@ class OAuth2Client
 		//-
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
-			do_action( 'wsl_log_provider_api_call', $url, $type, $params, $this->http_code, $this->http_info, $response, 'OAuth2', __FILE__, __LINE__, debug_backtrace () );
+			do_action( 'wsl_log_provider_api_call', 'OAuth2', $url, $type, $params, $this->http_code, $this->http_info, $response );
 		}
 		//-
 
