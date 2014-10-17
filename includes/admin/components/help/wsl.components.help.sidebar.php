@@ -24,7 +24,7 @@ function wsl_component_help_sidebar()
 	<div class="inside">
 		<h3><?php _wsl_e("About WordPress Social Login", 'wordpress-social-login') ?> <?php echo wsl_get_version(); ?></h3>
 
-		<div style="padding:0 ;">
+		<div style="padding:0 20px;">
 			<p>
 				<?php _wsl_e('WordPress Social Login is a free and open source plugin made by the community, for the community', 'wordpress-social-login') ?>.
 			</p> 
@@ -39,36 +39,15 @@ function wsl_component_help_sidebar()
 </div> 
 <div class="postbox">
 	<div class="inside">
-		<h3><?php _wsl_e("Main features", 'wordpress-social-login') ?></h3>
-
-		<div style="padding:0;margin-left:23px">
-			<ul>
-				<li><?php _wsl_e("No premium features", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Absolute privacy of your website users data", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Wide variety of identities providers", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("A highly customizable and fully extensible widgets", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Easy-to-use and clean user interface", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Contacts import from google, facebook, live and linkedin", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("User profiles and contacts management", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Compatible with WordPress 3+, BuddyPress and bbPress", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("ACL-based security model", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Provides a direct access to social networks apis", 'wordpress-social-login') ?>.</li>
-				<li><?php _wsl_e("Comprehensive documentation", 'wordpress-social-login') ?>.</li>
-			</ul>
-		</div> 
-	</div> 
-</div> 
-<div class="postbox">
-	<div class="inside">
 		<h3><?php _wsl_e("Thanks", 'wordpress-social-login') ?></h3>
 
-		<div style="padding:0;">
+		<div style="padding:0 20px;">
 			<p>
-				<?php _wsl_e('Big thanks to everyone who have contributed to this plugin and the to WordPress community by submitting patches, ideas, reviews or by helping in the plugin support forum', 'wordpress-social-login') ?>.
+				<?php _wsl_e('Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum', 'wordpress-social-login') ?>.
 			</p> 
 		</div> 
 	</div> 
-</div> 
+</div>
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_component_help_sidebar_end" );

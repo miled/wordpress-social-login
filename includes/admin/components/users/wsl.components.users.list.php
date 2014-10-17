@@ -40,7 +40,7 @@ function wsl_component_users_list()
 	}
 
 	$actions = array(
-		'edit_details' => array( 'label' => 'View all your website users', 'action' => admin_url( 'users.php?TB_iframe=true&width=1050&height=550' ), 'class' => 'button button-secondary thickbox' ),
+		'edit_details' => '<a class="button button-secondary thickbox" href="' . admin_url( 'users.php?TB_iframe=true&width=1050&height=550' ) . '">' . _wsl__( 'View all your website users', 'wordpress-social-login' ) . '</a>',
 	);
 
 	// HOOKABLE: 
@@ -49,12 +49,7 @@ function wsl_component_users_list()
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
 	<p style="float: right; margin: -5px;">
 		<?php
-			foreach( $actions as $item )
-			{
-				?>
-					<a class="<?php echo $item['class']; ?>" href="<?php echo $item['action']; ?>"><?php _wsl_e( $item['label'], 'wordpress-social-login' ); ?></a>
-				<?php
-			}
+			echo implode( ' ', $actions );
 		?>
 	</p>
 

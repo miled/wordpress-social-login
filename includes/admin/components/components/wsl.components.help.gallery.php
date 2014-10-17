@@ -34,8 +34,8 @@ function wsl_component_components_gallery()
 			'download_link'  => 'https://github.com/miled', 
 		),
 		array( 
-			'name'           => 'Manual accounts linking', 
-			'description'    => 'As an administrator you will be able to manuallly link WSL social profiles to the existing WordPress users.', 
+			'name'           => 'Emails Bans & Profiles URLs', 
+			'description'    => 'This add-on will make Bouncer even more mean and will help you kick the bad guys out.', 
 			'developer_name' => 'WordPress Social Login', 
 			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
 			'download_link'  => 'https://github.com/miled', 
@@ -43,13 +43,6 @@ function wsl_component_components_gallery()
 		array( 
 			'name'           => 'BuddyPress Auto-Friend', 
 			'description'    => 'Automatically create friendships for WSL users. Requires both BuddyPress and Contacts components.', 
-			'developer_name' => 'WordPress Social Login', 
-			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
-			'download_link'  => 'https://github.com/miled', 
-		),
-		array( 
-			'name'           => 'Emails Bans & Profiles URLs', 
-			'description'    => 'This add-on will make Bouncer even more mean and will help you kick the bad guys out.', 
 			'developer_name' => 'WordPress Social Login', 
 			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
 			'download_link'  => 'https://github.com/miled', 

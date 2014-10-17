@@ -39,7 +39,7 @@ function wsl_component_buddypress_sidebar_what_is_this()
 ?>
 <div class="postbox">
 	<div class="inside">
-		<h3 style="cursor: default;"><?php _wsl_e("BuddyPress integration", 'wordpress-social-login') ?></h3>
+		<h3><?php _wsl_e("BuddyPress integration", 'wordpress-social-login') ?></h3>
 
 		<div style="padding:0 20px;">
 			<p>

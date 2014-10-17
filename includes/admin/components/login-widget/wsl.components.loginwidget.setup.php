@@ -191,6 +191,46 @@ function wsl_component_loginwidget_setup_advanced_settings()
 function wsl_component_loginwidget_setup_custom_css()
 {
 ?>
+<style>
+	.com { color: #6c7c7c; }
+	.lit { color: #195f91; }
+	.pun, .opn, .clo { color: #93a1a1; }
+	.fun { color: #dc322f; }
+	.str, .atv { color: #D14; }
+	.kwd, .prettyprint .tag { color: #1e347b; }
+	.typ, .atn, .dec, .var { color: teal; }
+	.pln { color: #48484c; }
+
+	.prettyprint {
+	  padding: 8px;
+	  background-color: #f7f7f9;
+	  border: 1px solid #e1e1e8;
+	}
+	.prettyprint.linenums {
+	  -webkit-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+		 -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+			  box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
+	}
+
+	/* Specify class=linenums on a pre to get line numbering */
+	ol.linenums {
+	  margin: 0 0 0 33px; /* IE indents via margin-left */
+	}
+	ol.linenums li {
+	  padding-left: 12px;
+	  color: #bebec5;
+	  text-shadow: 0 1px 0 #fff;
+	  margin-bottom: 0;
+	}
+	.prettyprint code {
+		background-color: #ffd88f;
+		border-radius: 4px;
+		color: #c7254e;
+		font-size: 90%;
+		padding: 2px 4px;
+		text-shadow: 0 1px 0 #ffcf75;
+	}
+</style>
 <div class="stuffbox">
 	<h3>
 		<label><?php _wsl_e("Custom CSS", 'wordpress-social-login') ?></label>
@@ -199,40 +239,17 @@ function wsl_component_loginwidget_setup_custom_css()
 		<p>
 			<?php _wsl_e("To customize the default widget styles you can either: change the css in the <b>text area</b> bellow or add it to your website <b>theme</b> files", 'wordpress-social-login') ?>. 
 		</p>
-		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
-		  <tr>  
-			<td>
-			<textarea style="width:100%;height:120px;margin-top:6px;" name="wsl_settings_authentication_widget_css"><?php echo get_option( 'wsl_settings_authentication_widget_css' );  ?></textarea>
-			<br />
-			<p><?php _wsl_e("The basic widget markup is the following", 'wordpress-social-login') ?>:</p>
-<pre style="background-color: #eaffdc;border:1px solid #60cf4e; border-radius: 3px;padding: 10px;margin-top:5px;margin-bottom:0px;">
-&lt;div class=&quot;<code>wp-social-login-widget</code>&quot;&gt;
 
-&lt;div class=&quot;<code>wp-social-login-connect-with</code>&quot;&gt;{connect_with_caption}&lt;/div&gt;
+		<textarea style="width:100%;height:120px;margin-top:6px;" name="wsl_settings_authentication_widget_css"><?php echo get_option( 'wsl_settings_authentication_widget_css' );  ?></textarea>
 
-&lt;div class=&quot;<code>wp-social-login-provider-list</code>&quot;&gt;
+		<br />
 
-   &lt;a class=&quot;<code>wp-social-login-provider wp-social-login-provider-facebook</code>&quot;&gt;
-	  &lt;img src=&quot;{provider_icon_facebook}&quot; /&gt;
-   &lt;/a&gt;
+		<p>
+			<?php _wsl_e("The basic widget markup is the following", 'wordpress-social-login') ?>:
+		</p>
 
-   &lt;a class=&quot;<code>wp-social-login-provider wp-social-login-provider-google</code>&quot;&gt;
-	  &lt;img src=&quot;{provider_icon_google}&quot; /&gt;
-   &lt;/a&gt;
+		<pre class="prettyprint linenums"><ol class="linenums"><li class="L0"><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-widget</span></code><span class="atv">"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">&nbsp;</span></li><li class="L2"><span class="pln">    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-connect-with</span></code><span class="atv">"</span><span class="tag">&gt;</span><span class="pln">{connect_with_caption}</span><span class="tag">&lt;/div&gt;</span></li><li class="L3"><span class="pln">&nbsp;</span></li><li class="L4"><span class="pln">    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-provider-list</span></code><span class="atv">"</span><span class="tag">&gt;</span></li><li class="L5"><span class="pln">    </span></li><li class="L6"><span class="pln">        </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-provider wp-social-login-provider-facebook</span></code><span class="atv">"</span><span class="tag">&gt;</span></li><li class="L7"><span class="pln">            </span><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{provider_icon_facebook}"</span><span class="pln"> </span><span class="tag">/&gt;</span></li><li class="L8"><span class="pln">        </span><span class="tag">&lt;/a&gt;</span></li><li class="L9"><span class="pln">&nbsp;</span></li><li class="L0"><span class="pln">        </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-provider wp-social-login-provider-google</span></code><span class="atv">"</span><span class="tag">&gt;</span></li><li class="L1"><span class="pln">            </span><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{provider_icon_google}"</span><span class="pln"> </span><span class="tag">/&gt;</span></li><li class="L2"><span class="pln">        </span><span class="tag">&lt;/a&gt;</span></li><li class="L3"><span class="pln">&nbsp;</span></li><li class="L4"><span class="pln">        </span><span class="tag">&lt;a</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-provider wp-social-login-provider-twitter</span></code><span class="atv">"</span><span class="tag">&gt;</span></li><li class="L5"><span class="pln">            </span><span class="tag">&lt;img</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"{provider_icon_twitter}"</span><span class="pln"> </span><span class="tag">/&gt;</span></li><li class="L6"><span class="pln">        </span><span class="tag">&lt;/a&gt;</span></li><li class="L7"><span class="pln">&nbsp;</span></li><li class="L8"><span class="pln">    </span><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- / div.wp-social-login-connect-options --&gt;</span></li><li class="L9"><span class="pln">&nbsp;</span></li><li class="L0"><span class="pln">    </span><span class="tag">&lt;div</span><span class="pln"> </span><span class="atn">class</span><span class="pun">=</span><span class="atv">"</span><code><span class="atv">wp-social-login-widget-clearing</span></code><span class="atv">"</span><span class="tag">&gt;&lt;/div&gt;</span></li><li class="L1"><span class="pln">&nbsp;</span></li><li class="L2"><span class="tag">&lt;/div&gt;</span><span class="pln"> </span><span class="com">&lt;!-- / div.wp-social-login-widget --&gt;</span></li></ol></pre>
 
-   &lt;a class=&quot;<code>wp-social-login-provider wp-social-login-provider-twitter</code>&quot;&gt;
-	  &lt;img src=&quot;{provider_icon_twitter}&quot; /&gt;
-   &lt;/a&gt;
-
-&lt;/div&gt; &lt;!-- / div.wp-social-login-connect-options --&gt;
-
-&lt;div class=&quot;<code>wp-social-login-widget-clearing</code>&quot;&gt;&lt;/div&gt;
-
-&lt;/div&gt; &lt;!-- / div.wp-social-login-widget --&gt;
-</pre>
-			</td>
-		  </tr> 
-		</table>
 	</div>
 </div>
 <?php

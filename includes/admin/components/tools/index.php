@@ -25,7 +25,7 @@ function wsl_component_tools()
 
 	$action = isset( $_REQUEST['do'] ) ? $_REQUEST['do'] : null ;
 
-	if( in_array( $action, array( 'requirements', 'sysinfo', 'uninstall' , 'repair' ) ) )
+	if( in_array( $action, array( 'diagnostics', 'sysinfo', 'uninstall' , 'repair' ) ) )
 	{
 		if( isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'] ) )
 		{

@@ -60,6 +60,12 @@ function wsl_render_login_form()
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
 	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticate&";
+
+	// Connect with caption
+	$connect_with_label = _wsl__( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' );
+
+	// HOOKABLE:
+	$connect_with_label = apply_filters( 'wsl_render_login_form_alter_connect_with_label', $connect_with_label, $current_page_url );
 ?>
 
 <!--
@@ -70,10 +76,13 @@ function wsl_render_login_form()
 
 <?php 
 	// Widget::Custom CSS
-	$wsl_settings_authentication_widget_css = get_option( 'wsl_settings_authentication_widget_css' );
+	$widget_css = get_option( 'wsl_settings_authentication_widget_css' );
+
+	// HOOKABLE:
+	$widget_css = apply_filters( 'wsl_render_login_form_alter_widget_css', $widget_css, $current_page_url );
 
 	// show the custom widget css if not empty
-	if( ! empty( $wsl_settings_authentication_widget_css ) )
+	if( ! empty( $widget_css ) )
 	{
 ?> 
 <style>
@@ -82,7 +91,7 @@ function wsl_render_login_form()
 			preg_replace(
 				array( '%/\*(?:(?!\*/).)*\*/%s', '/\s{2,}/', "/\s*([;{}])[\r\n\t\s]/", '/\\s*;\\s*/', '/\\s*{\\s*/', '/;?\\s*}\\s*/' ),
 					array( '', ' ', '$1', ';', '{', '}' ),
-						$wsl_settings_authentication_widget_css );
+						$widget_css );
 	?> 
 </style>
 <?php 
@@ -91,17 +100,17 @@ function wsl_render_login_form()
 
 <div class="wp-social-login-widget">
 
-	<div class="wp-social-login-connect-with"><?php _wsl_e( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login'); ?></div>
+	<div class="wp-social-login-connect-with"><?php echo $connect_with_label; ?></div>
 
 	<div class="wp-social-login-provider-list">
 <?php 
 	// Widget::Authentication display
 	$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
 
-	// If a user is visiting using a mobile device, WSL will fall back to more in page. 
+	// if a user is visiting using a mobile device, WSL will fall back to more in page
 	$wsl_settings_use_popup = function_exists( 'wp_is_mobile' ) ? wp_is_mobile() ? 2 : $wsl_settings_use_popup : $wsl_settings_use_popup;
 
-	$nok = true;
+	$no_idp_used = true;
 
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
@@ -109,20 +118,24 @@ function wsl_render_login_form()
 		$provider_id   = isset( $item["provider_id"]   ) ? $item["provider_id"]   : '' ;
 		$provider_name = isset( $item["provider_name"] ) ? $item["provider_name"] : '' ;
 
-		// build authentication url
-		$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $current_page_url );
-
-		// http://codex.wordpress.org/Function_Reference/esc_url
-		$authenticate_url = esc_url( $authenticate_url );
-
+		// provider enabled?
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
-		{ 
+		{
+			// build authentication url
+			$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $current_page_url );
+
+			// http://codex.wordpress.org/Function_Reference/esc_url
+			$authenticate_url = esc_url( $authenticate_url );
+
 			// in case, Widget::Authentication display is set to 'popup', then we overwrite 'authenticate_url'
 			// > /assets/js/connect.js will take care of the rest
 			if( $wsl_settings_use_popup == 1 )
 			{ 
 				$authenticate_url= "javascript:void(0);";
 			}
+
+			// HOOKABLE: allow user to rebuilt the auth url
+			$authenticate_url = apply_filters( 'wsl_render_login_form_alter_authenticate_url', $authenticate_url, $provider_id, $current_page_url, $wsl_settings_use_popup );
 
 			// HOOKABLE: allow use of other icon sets
 			$provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
@@ -142,16 +155,16 @@ function wsl_render_login_form()
 <?php 
 			}
 
-			$nok = false; 
+			$no_idp_used = false; 
 		} 
 	} 
 
-	// not provider enabled?
-	if( $nok )
+	// no provider enabled?
+	if( $no_idp_used )
 	{
 ?>
 		<p style="background-color: #FFFFE0;border:1px solid #E6DB55;padding:5px;">
-			<?php _wsl_e( '<strong style="color:red;">WordPress Social Login is not configured yet!</strong><br />Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.<br />For more information please refer to the plugin <a href="http://miled.github.io/wordpress-social-login">online user guide</a>' , 'wordpress-social-login') ?>.
+			<?php _wsl_e( '<strong style="color:red;">WordPress Social Login is not configured yet!</strong><br />Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.<br />For more information please refer to the plugin <a href="http://miled.github.io/wordpress-social-login">online user guide</a>', 'wordpress-social-login') ?>.
 		</p>
 		<style>#wp-social-login-connect-with{display:none;}</style>
 <?php
@@ -194,14 +207,7 @@ function wsl_render_login_form()
 */
 function wsl_shortcode_handler($args)
 {
-	$can_user_manage_options = current_user_can('manage_options');
-
-	if( ! $can_user_manage_options )
-	{
-		return wsl_render_login_form();
-	}
-
-	return '<div style="border:1px solid #222; background-color:#222; opacity: 0.95; text-align:center;"><p style="font-size:13px; margin: 5px; color:#eee;">This is a place-holder for WordPress Social Login shortcode.</p><p style="font-size:12px; margin: 5px; color:#eee;">The widget will only show up for unconnected users and this place-holder only show up for the administrators.</p></div>';
+	return wsl_render_login_form();
 }
 
 add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
@@ -213,14 +219,7 @@ add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
 */
 function wsl_render_login_form_login()
 {
-	$can_user_manage_options = current_user_can('manage_options');
-
-	if( ! $can_user_manage_options )
-	{
-		return wsl_render_login_form();
-	}
-
-	return '<div style="border:1px solid #222; background-color:#222; color:#eee; opacity: 0.95; text-align:center;"><p style="font-size:13px; margin: 5px;">This is a place-holder for WordPress Social Login action.</p><p style="font-size:12px;  margin: 5px;">The widget will only show up for unconnected users and this place-holder only show up for the administrators.</p></div>';
+	return wsl_render_login_form();
 }
 
 add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
@@ -267,7 +266,7 @@ function wsl_render_wsl_widget_in_wp_login_form()
 }
 
 add_action( 'login_form'                      , 'wsl_render_wsl_widget_in_wp_login_form' );
-add_action( 'bp_before_account_details_fields', 'wsl_render_wsl_widget_in_wp_login_form' ); 
+add_action( 'bp_before_account_details_fields', 'wsl_render_wsl_widget_in_wp_login_form' );
 add_action( 'bp_before_sidebar_login_form'    , 'wsl_render_wsl_widget_in_wp_login_form' );
 
 // --------------------------------------------------------------------
@@ -295,15 +294,16 @@ add_action( 'after_signup_form', 'wsl_render_wsl_widget_in_wp_register_form' );
 */
 function wsl_add_stylesheets()
 {
-	if( ! wp_style_is( 'wsl_css', 'registered' ) )
+	if( ! wp_style_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_style( "wsl_css", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
+		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/widget.css" ); 
 	}
 
-	wp_enqueue_style( "wsl_css" ); 
+	wp_enqueue_style( "wsl-widget" ); 
 }
 
-add_action( 'wp_enqueue_scripts', 'wsl_add_stylesheets' ); 
+add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' ); 
+add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 
 // --------------------------------------------------------------------
 
@@ -317,16 +317,16 @@ function wsl_add_javascripts()
 		return null;
 	}
 
-	if( ! wp_script_is( 'wsl_js', 'registered' ) )
+	if( ! wp_script_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_script( "wsl_js", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/script.js" );
+		wp_register_script( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/widget.js" );
 	}
 
 	wp_enqueue_script( "jquery" );
-	wp_enqueue_script( "wsl_js" );
+	wp_enqueue_script( "wsl-widget" );
 }
 
-add_action( 'login_head', 'wsl_add_javascripts' );
-add_action( 'wp_head'   , 'wsl_add_javascripts' );
+add_action( 'wp_enqueue_scripts'   , 'wsl_add_javascripts' ); 
+add_action( 'login_enqueue_scripts', 'wsl_add_javascripts' );
 
 // --------------------------------------------------------------------

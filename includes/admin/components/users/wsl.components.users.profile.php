@@ -61,8 +61,8 @@ function wsl_component_users_profile( $user_id )
 	add_thickbox();
 
 	$actions = array(
-		'edit_details'       => array( 'label' => 'Edit user details', 'action' => admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ), 'class' => 'button button-secondary thickbox' ),
-		'show_contacts'      => array( 'label' => 'Show user contacts list', 'action' => admin_url( 'options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id ), 'class' => 'button button-secondary' ),
+		'edit_details'  => '<a class="button button-secondary thickbox" href="' . admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ) . '">' . _wsl__( 'Edit user details', 'wordpress-social-login' ) . '</a>',
+		'show_contacts'  => '<a class="button button-secondary" href="' . admin_url( 'options-general.php?page=wordpress-social-login&wslp=contacts&uid=' . $user_id ) . '">' . _wsl__( 'Show user contacts list', 'wordpress-social-login' ) . '</a>',
 	);
 
 	// HOOKABLE: 
@@ -73,12 +73,7 @@ function wsl_component_users_profile( $user_id )
 
 	<p style="float: right;margin-top:-23px">
 		<?php
-			foreach( $actions as $item )
-			{
-				?>
-					<a class="<?php echo $item['class']; ?>" href="<?php echo $item['action']; ?>"><?php _wsl_e( $item['label'], 'wordpress-social-login' ); ?></a>
-				<?php
-			}
+			echo implode( ' ', $actions );
 		?>
 	</p>
 </div> 

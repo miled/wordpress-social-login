@@ -22,7 +22,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 *
 * Note: 
 *   In case you want to customize the content generated, you may redefine this function
-*   Just make sure the script DOES NOT DIE at the end. 
+*   Just make sure the script DIES at the end. 
 *
 *   The $message to display for users is passed as a parameter.
 */
@@ -51,14 +51,12 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 			}
-			h1 {
-				border-bottom: 1px solid #dadada;
-				clear: both;
+			h4 {
 				color: #666;
-				font: 24px "Open Sans", sans-serif;
-				margin: 30px 0 0 0;
+				font: 20px "Open Sans", sans-serif;
+				margin: 0;
 				padding: 0;
-				padding-bottom: 7px;
+				padding-bottom: 12px;
 			}
 			#notice-page {
 				margin-top: 50px;
@@ -110,8 +108,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 
 		<?php 
 			// Development mode on?
-			// if( get_option( 'wsl_settings_development_mode_enabled' ) ){
-			if( 1 ){
+			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
 				wsl_render_error_page_debug_section();
 			}
 		?>
@@ -136,7 +133,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 * 
 * Note: 
 *   In case you want to customize the content generated, you may redefine this function
-*   Just make sure the script DOES NOT DIE at the end. 
+*   Just make sure the script DIES at the end. 
 *
 *   The $message to display for users is passed as a parameter and is required.
 */

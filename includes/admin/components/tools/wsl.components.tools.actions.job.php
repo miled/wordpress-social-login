@@ -11,139 +11,180 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------	
 
-function wsl_component_tools_do_requirements()
+function wsl_component_tools_do_diagnostics()
 {
 ?>
+<style>
+	table td, table th { border: 1px solid #DDDDDD; }
+	table th label { font-weight: bold; }
+</style>
 <div class="metabox-holder columns-2" id="post-body">
 	<div class="stuffbox">
 		<h3>
-			<label><?php _wsl_e("WSL requirements test", 'wordpress-social-login') ?></label>
+			<label><?php _wsl_e("WordPress Social Login Diagnostics", 'wordpress-social-login') ?></label>
 		</h3>
 		<div class="inside"> 
-			<ul style="padding-left:15px;">
-				<li>Please include your <a href="options-general.php?page=wordpress-social-login&wslp=tools&do=sysinfo" target="_blank"><b>Website Information</b></a> when posting support requests.</li>
-				<li>Make sure to check out <b>WSL</b> <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank"><b>frequently asked questions</b></a>.</li> 
-			</ul>
+			<br />
+			<table class="wp-list-table widefat">
+				<tr>
+					<th width="200">
+						<label>PHP Version</label>
+					</th>
+					<td>
+						PHP >= 5.2.0 installed
+					</td>
+					<td width="60">
+						<?php 
+							if ( version_compare( PHP_VERSION, '5.2.0', '>=' ) )
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+							else
+							{ 
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>PHP Sessions</label>
+					</th>
+					<td>
+						PHP/Session enabled and working
+					</td>
+					<td>
+						<?php 
+							if ( isset( $_SESSION["wsl::plugin"] ) )
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+							else
+							{ 
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>PHP CURL Extension</label>
+					</th>
+					<td>
+						PHP CURL extension enabled.
+					</td>
+					<td>
+						<?php 
+							if ( function_exists('curl_init') )
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+							else
+							{ 
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>PHP CURL/SSL Extension</label>
+					</th>
+					<td>
+						PHP CURL extension with SSL enabled.
+					</td>
+					<td>
+						<?php 
+							if ( function_exists('curl_init') )
+							{
+								$curl_version = curl_version();
 
-			<hr />
+								if ( $curl_version['features'] & CURL_VERSION_SSL )
+								{
+									echo "<b style='color:green;'>OK!</b>";
+								}
+								else
+								{ 
+									echo "<b style='color:red;'>FAIL!</b>";
+								}
+							}
+							else
+							{ 
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>PHP Register Globals</label>
+					</th>
+					<td>
+						PHP REGISTER_GLOBALS OFF
+					</td>
+					<td>
+						<?php 
+							if( ! ini_get('register_globals') )
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+							else
+							{ 
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>WSL database tables</label>
+					</th>
+					<td>
+						WSL database tables <code>wslusersprofiles</code> and <code>wsluserscontacts</code>
+					</td>
+					<td width="60">
+						<?php 
+							global $wpdb;
 
-			<h4>1. PHP Version</h4> 
-			<p>
-			<?php 
-				if ( version_compare( PHP_VERSION, '5.2.0', '>=' ) ){
-					echo "<b style='color:green;'>OK!</b><br />PHP >= 5.2.0 installed.";
-				}
-				else{ 
-					echo "<b style='color:red;'>FAIL!</b><br />PHP >= 5.2.0 not installed.";
-				}
-			?>
-				</p>
+							$db_check_profiles = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wslusersprofiles'" ) === $wpdb->prefix . 'wslusersprofiles' ? 1 : 0;
+							$db_check_contacts = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wsluserscontacts'" ) === $wpdb->prefix . 'wsluserscontacts' ? 1 : 0;
 
-				<h4>2. PHP Sessions</h4> 
-				<p>
-			<?php
-				if ( isset( $_SESSION["wsl::plugin"] ) ){
-					echo "<b style='color:green;'>OK!</b><br />PHP Sessions are working correctly for {$_SESSION["wsl::plugin"]} to work."; 
-				}
-				else{
-					?>
-					<b style='color:red;'>FAIL!</b><br />PHP Sessions are not working correctly or this page has been accessed directly.
-			 
-					
-					<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding:5px;font-size: 12px;">  
-						Most likely an issue with PHP SESSION. The plugin has been made to work with PHP's default SESSION handling (sometimes this occur when the php session is disabled, renamed or when having permissions issues).
-						<br /><br />
-						If you are using a reverse proxy like Varnish it is possible that WordPress's default user cookies are being stripped. If this is the case, please review your VCL file. You may need to configure this file to allow the needed cookies.
-						<br /><br />
-						This problem has also been encountered with WP Engine. 
-						
-						<hr />
-					
-						If you see an error <strong>"Warning: session_start..."</strong> on the top of this page or in the Error log file, then 
+							if( ! $db_check_profiles || ! $db_check_contacts )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+				<tr>
+					<th width="200">
+						<label>iThemes Security</label>
+					</th>
+					<td>
+						iThemes Security (Better WP Security) 'Prevent long URL strings' option disabled
+					</td>
+					<td>
+						<?php 
+							$itsec_tweaks = get_option( 'itsec_tweaks' );
 
-						there is a problem with your PHP server that will prevent this plugin from working with PHP sessions. Sometimes PHP session do not work because of a file permissions problem. The solution is to make a trouble ticket with your web host.
-						
-						<br />
-						<br />
-						Alternatively, you can create the sessions folder in your root directory, then add <strong>session_save_path('/path/to/writable/folder')</strong> at the top of the following files:
-						
-						<br />
-						- wp-config.php<br />
-						- wp-content/plugins/wordpress-social-login/wp-social-login.php<br />
-						- wp-content/plugins/wordpress-social-login/authenticate.php<br />
-						- wp-content/plugins/wordpress-social-login/hybridauth/index.php<br />
-					</div>
-					<?php
-				}
-			?>
-				</p>
+							if( $itsec_tweaks && $itsec_tweaks['long_url_strings'] )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+			</table> 
 
-				<h4>3. cURL Extension</h4> 
-				<p>
-			<?php 
-				if ( function_exists('curl_init') ) {
-					echo "<b style='color:green;'>OK!</b><br />PHP cURL extension installed. [http://www.php.net/manual/en/intro.curl.php]";
-			?>
-				</p>
-
-				<h4>4. cURL / SSL </h4> 
-				<p>
-			<?php 
-					$curl_version = curl_version();
-
-					if ( $curl_version['features'] & CURL_VERSION_SSL ) {
-						echo "<b style='color:green;'>OK!</b><br />PHP cURL/SSL Supported. [http://www.php.net/manual/en/intro.curl.php]";
-					}
-					else{ 
-						echo "<b style='color:red;'>FAIL!</b><br />PHP cURL/SSL Not supported. [http://www.php.net/manual/en/intro.curl.php]";
-					}
-				}
-				else{ 
-					echo "<b style='color:red;'>FAIL!</b><br />PHP cURL extension not installed. [http://www.php.net/manual/en/intro.curl.php]";
-				}
-			?>
-			</p>
-
-			<h4>5. JSON Extension</h4> 
-			<p>
-			<?php 
-				if ( function_exists('json_decode') ) {
-					echo "<b style='color:green;'>OK!</b><br />PHP JSON extension installed. [http://php.net/manual/en/book.json.php]";
-				}
-				else{ 
-					echo "<b style='color:red;'>FAIL!</b><br />PHP JSON extension is disabled. [http://php.net/manual/en/book.json.php]";
-				}
-			?>
-				</p>
-
-				<h4>6. PHP Register Globals</h4> 
-				<p>
-			<?php 
-				if( ini_get('register_globals') ) { 
-					?>
-						<b style='color:red;'>FAIL!</b><br />PHP Register Globals are On!
-					
-						<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding:5px;font-size: 12px;">  
-							<b>What do I do if <b>Register Globals</b> are <b>On</b>?</b>
-							<p> 
-								If <strong>"PHP Register Globals"</strong> are <b>On</b>, then there is a problem with your PHP server that will prevent this plugin from working properly and will result on an enfinite loop on WSL authentication page. Also, <a href="http://php.net/manual/en/security.globals.php" target="_blank"><b>Register Globals</b> has been DEPRECATED as of PHP 5.3.0 and REMOVED as of PHP 5.4.0.</a>
-								<br />
-								<br />
-								The solution is to make a trouble ticket with your web host to disable it,<br />
-								Or, if you have a dedicated server and you know what are you doing then edit php.ini file and turn it Off :
-								<br />
-								<br />
-								<span style="border:1px solid #E6DB55;padding:5px;"> register_globals = Off</span>
-							</p>
-						</div>
-					<?php
-				}
-				else{ 
-					echo "<b style='color:green;'>OK!</b><br />REGISTER_GLOBALS = OFF. [http://php.net/manual/en/security.globals.php]";
-				} 
-			?>
-			</p>  
-
+			<br />
 			<hr />
 
 			<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools">&larr; <?php _wsl_e("Back to Tools", 'wordpress-social-login') ?></a>
@@ -153,7 +194,7 @@ function wsl_component_tools_do_requirements()
 <?php
 }
 
-add_action( 'wsl_component_tools_do_requirements', 'wsl_component_tools_do_requirements' );
+add_action( 'wsl_component_tools_do_diagnostics', 'wsl_component_tools_do_diagnostics' );
 
 // --------------------------------------------------------------------	
 

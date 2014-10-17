@@ -10,11 +10,12 @@ For more information about WordPress Social Login, refer to our [online user gui
     The official release is distributed through WordPress website.
 ![WSL Authentication Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-1.png)
 
-### WSL's main features
+### Key Features
 
 - No premium features.
+- One-click social login.
 - Absolute privacy of your website users data.
-- Wide variety of identities providers (currently support 25+).
+- Wide variety of identities providers (25+ IDP).
 - A highly customizable and fully extensible widgets.
 - Easy-to-use and clean user interfaces.
 - Contacts import from google, facebook, live and linkedin.
@@ -22,27 +23,31 @@ For more information about WordPress Social Login, refer to our [online user gui
 - Compatible with WordPress 3.0+, BuddyPress and bbPress.
 - ACL-based security model.
 - Provides a direct access to social networks apis.
+- Modular design easily extended.
 - Comprehensive documentation.
 
-#### To Do
+#### What's new on WSL 2.2.3
 
 - [x] Add support for dribbble.com
 - [x] Make WSL compatible with PHP 5.2 again.
 - [x] Get full avatar form LinkedIn and get LinkedIn members headline as description.
-- [x] Allow bouncer to set new users roles.
+- [x] Bouncer Membership level can be now set to any user role.
 - [x] Rewrite Hybridauth endpoints urls.
-- [x] Optimize wsl tables and for create tables checks every activation.
+- [x] Optimize wsl tables.
 - [x] Rework WSL admin interfaces to make them extensible
 - [x] Improve debugging.
     - [x] debug calls to social apis
-    - [x] improve watchdog
-    - [x] implement logging files
-- [ ] Rework the Steam provider.
-    - [x] Get full avatar form Steam and fetch location.
+    - [x] implement logging to files
+- [x] Rework the Steam provider.
     - [x] Support Steam Web API.
+    - [x] Get full avatar form Steam and fetch location.
     - [x] update the section (how to create an app) in the Networks tab
-    - [ ] Convert the old user identifiers in wslusersprofiles (http://steamcommunity.com/openid/id/*) to 64bit SteamIDs.
-- [ ] *Feel free to edit this line.*
+    - [x] Convert the old user identifiers in wslusersprofiles (http://steamcommunity.com/openid/id/*) to 64bit SteamIDs.
+
+#### What's next
+
+- [ ] Accounts linking/mapping
+- [ ] ..
 
 #### License 
 

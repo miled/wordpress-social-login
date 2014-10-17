@@ -43,8 +43,8 @@ function wsl_component_contacts_list( $user_id )
 	$user_contacts = wsl_get_stored_hybridauth_user_contacts_by_user_id( $user_id, $offset, $limit );
 	
 	$actions = array(
-		'edit_details'  => array( 'label' => 'Edit user details', 'action' => admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ), 'class' => 'button button-secondary thickbox' ),
-		'show_profiles' => array( 'label' => 'Show user social profiles', 'action' => admin_url( 'options-general.php?page=wordpress-social-login&wslp=users&uid=' . $user_id ), 'class' => 'button button-secondary' ),
+		'edit_details'  => '<a class="button button-secondary thickbox" href="' . admin_url( 'user-edit.php?user_id=' . $user_id . '&TB_iframe=true&width=1150&height=550' ) . '">' . _wsl__( 'Edit user details', 'wordpress-social-login' ) . '</a>',
+		'show_profiles' => '<a class="button button-secondary" href="' . admin_url( 'options-general.php?page=wordpress-social-login&wslp=users&uid=' . $user_id ) . '">' . _wsl__( 'Show user social profiles', 'wordpress-social-login' ) . '</a>',
 	);
 
 	// HOOKABLE: 
@@ -52,16 +52,11 @@ function wsl_component_contacts_list( $user_id )
 
 ?> 
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
- 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's contact list", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's contacts list", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
 
 	<p style="float: right;margin-top:-23px">
 		<?php
-			foreach( $actions as $item )
-			{
-				?>
-					<a class="<?php echo $item['class']; ?>" href="<?php echo $item['action']; ?>"><?php _wsl_e( $item['label'], 'wordpress-social-login' ); ?></a>
-				<?php
-			}
+			echo implode( ' ', $actions );
 		?>
 	</p>
 </div> 

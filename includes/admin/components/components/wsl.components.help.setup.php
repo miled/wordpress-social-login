@@ -21,6 +21,9 @@ function wsl_component_components_setup()
 	do_action( "wsl_component_components_setup_start" );
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
+	
+	// echo '<pre>';
+	// print_r( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS );
 ?>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
 	<?php _wsl_e( "By default, only the three WSL core components are enabled. You can selectively enable or disable any of the non-core components by using the form below. Your WSL installation will continue to function. However, the features of the disabled components will no longer be accessible", 'wordpress-social-login' ) ?>.
@@ -71,7 +74,7 @@ function wsl_component_components_setup()
 					<td class="component-label" style="width: 190px;"> &nbsp;
 						<?php if( $settings["type"] == "core" ): ?>
 							<div class="icon16 icon-generic"></div>
-						<?php elseif( $settings["type"] == "plugin" ): ?>
+						<?php elseif( $settings["type"] == "addon" ): ?>
 							<div class="icon16 icon-plugins"></div>
 						<?php else: ?>
 							<div class="icon16 icon-appearance"></div>
@@ -81,6 +84,36 @@ function wsl_component_components_setup()
 					</td>
 					<td class="column-description">
 						<p><?php _wsl_e( $settings["description"], 'wordpress-social-login' ) ?></p>
+						<?php
+							$meta = array();
+
+							if( isset( $settings["version"] ) )
+							{
+								$meta[] = sprintf( _wsl__( "Version %s", 'wordpress-social-login' ), $settings["version"] );
+							}
+
+							if( isset( $settings["author"] ) )
+							{
+								if( isset( $settings["author_url"] ) )
+								{
+									$meta[] = sprintf( _wsl__( 'By <a href="%s" target="_blank">%s</a>', 'wordpress-social-login' ), $settings["author_url"], $settings["author"] );
+								}
+								else
+								{
+									$meta[] = sprintf( _wsl__( 'By %s', 'wordpress-social-login' ), $settings["author"] );
+								}
+							}
+
+							if( isset( $settings["component_url"] ) )
+							{
+								$meta[] = sprintf( _wsl__( '<a href="%s" target="_blank">View details</a>', 'wordpress-social-login' ), $settings["component_url"] );
+							}
+
+							if( $meta )
+							{
+								?><p><?php echo implode( ' | ', $meta  ); ?></p><?php 
+							}
+						?>
 						
 						<?php if( $plugin_notices ): ?>
 							<p><em><?php echo $plugin_notices ?>.</em></p>

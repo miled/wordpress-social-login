@@ -41,7 +41,7 @@ function wsl_component_loginwidget_sidebar_what_is_this()
 ?>
 <div class="postbox">
 	<div class="inside">
-		<h3 style="cursor: default;"><?php _wsl_e("What is this", 'wordpress-social-login') ?>?</h3>
+		<h3><?php _wsl_e("What is this", 'wordpress-social-login') ?>?</h3>
 
 		<div style="padding:0 20px;">
 			<p>
@@ -49,7 +49,7 @@ function wsl_component_loginwidget_sidebar_what_is_this()
 			</p>
 
 			<p>
-				<?php _wsl_e("<b>WordPress Social Login Widget</b> will be generated into the comments, login and register forms enabling your website vistors and customers to login via social networks", 'wordpress-social-login') ?>.
+				<?php _wsl_e("<b>WordPress Social Login</b> will attempt to display the authentication widget in the default WordPress comments, login and register forms", 'wordpress-social-login') ?>.
 			</p>
 
 			<p>
@@ -73,7 +73,7 @@ function wsl_component_loginwidget_sidebar_auth_widget_preview()
 </style>
 <div class="postbox">
 	<div class="inside">
-		<h3 style="cursor: default;"><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h3>
+		<h3><?php _wsl_e("Widget preview", 'wordpress-social-login') ?></h3>
 
 		<div style="padding:0 20px;">
 			<p>
@@ -99,13 +99,13 @@ function wsl_component_loginwidget_sidebar_custom_integration()
 ?>
 <div class="postbox">
 	<div class="inside">
-		<h3 style="cursor: default;"><?php _wsl_e("Custom integration", 'wordpress-social-login') ?></h3>
+		<h3><?php _wsl_e("Custom integration", 'wordpress-social-login') ?></h3>
 
 		<div style="padding:0 20px;">
 			<p>
-				<?php _wsl_e("If this widget does not show up on your custom theme or if you want to add it to another location in your website, you can insert the following code in that location", 'wordpress-social-login') ?>: 
+				<?php _wsl_e("If you want to add the widget to another location in your website, you can insert the following code in that location", 'wordpress-social-login') ?>: 
 				<pre style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
-				<?php _wsl_e("For posts and pages, you may used this shortcode", 'wordpress-social-login') ?>:
+				<?php _wsl_e("For posts and pages, you may use this shortcode", 'wordpress-social-login') ?>:
 				<pre style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</pre> 
 			</p>
 

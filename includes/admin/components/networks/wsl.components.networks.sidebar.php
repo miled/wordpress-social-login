@@ -53,7 +53,7 @@ function wsl_component_networks_sidebar_what_is_this()
 				<?php _wsl_e('For further information, we recommend to read the online <b><a href="http://miled.github.io/wordpress-social-login" target="_blank">WSL user guide</a></b>', 'wordpress-social-login') ?>.
 			</p> 
 			<p style="padding:0;margin:0 0 12px;">
-				<?php _wsl_e('If you run into any issue, then refer to <b><a href="options-general.php?page=wordpress-social-login&amp;wslp=help">Help &amp; Support</a></b> to konw how to reach me', 'wordpress-social-login') ?>.
+				<?php _wsl_e('If you run into any issue, then refer to <b><a href="http://miled.github.io/wordpress-social-login/support.html" target="_blank">Help &amp; Support</a></b> to konw how to reach me', 'wordpress-social-login') ?>.
 			</p> 
 		</div> 
 	</div> 

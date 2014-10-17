@@ -22,7 +22,7 @@ function wsl_check_requirements()
 {
 	if
 	(
-		   ! version_compare( PHP_VERSION, '5.3.0', '>=' )
+		   ! version_compare( PHP_VERSION, '5.2.0', '>=' )
 		|| ! isset( $_SESSION["wsl::plugin"] )
 		|| ! function_exists('curl_init')
 		|| ! function_exists('json_decode')
@@ -50,25 +50,25 @@ $WORDPRESS_SOCIAL_LOGIN_COMPONENTS = ARRAY(
 	"networks"       => array( "type" => "core"  , "label" => __("Networks"   , 'wordpress-social-login'), "description" => __("Social networks setup."                         , 'wordpress-social-login') ),
 	"login-widget"   => array( "type" => "core"  , "label" => __("Widget"     , 'wordpress-social-login'), "description" => __("Authentication widget customization."           , 'wordpress-social-login') ),
 	"bouncer"        => array( "type" => "core"  , "label" => __("Bouncer"    , 'wordpress-social-login'), "description" => __("WordPress Social Login advanced configuration." , 'wordpress-social-login') ),
-	"users"          => array( "type" => "plugin", "label" => __("Users"      , 'wordpress-social-login'), "description" => __("WordPress Social Login users manager."          , 'wordpress-social-login') ),
-	"contacts"       => array( "type" => "plugin", "label" => __("Contacts"   , 'wordpress-social-login'), "description" => __("WordPress Social Login users contacts manager"  , 'wordpress-social-login') ),
-	"buddypress"     => array( "type" => "plugin", "label" => __("BuddyPress" , 'wordpress-social-login'), "description" => __("Makes WordPress Social Login compatible with BuddyPress: Widget integration, Users avatars and xProfiles mapping.", 'wordpress-social-login') ),
+	"users"          => array( "type" => "addon" , "label" => __("Users"      , 'wordpress-social-login'), "description" => __("WordPress Social Login users manager."          , 'wordpress-social-login') ),
+	"contacts"       => array( "type" => "addon" , "label" => __("Contacts"   , 'wordpress-social-login'), "description" => __("WordPress Social Login users contacts manager"  , 'wordpress-social-login') ),
+	"buddypress"     => array( "type" => "addon" , "label" => __("BuddyPress" , 'wordpress-social-login'), "description" => __("Makes WordPress Social Login compatible with BuddyPress: Widget integration, Users avatars and xProfiles mapping.", 'wordpress-social-login') ),
 );
 
 /** list of WSL admin tabs */
 $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(  
-	"networks"     => array( "label" => __("Networks"      , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "networks"       , "default" => true ),
-	"login-widget" => array( "label" => __("Widget"        , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "login-widget"   ),
-	"bouncer"      => array( "label" => __("Bouncer"       , 'wordpress-social-login') , "enabled" => true,  "visible" => true  , "component" => "bouncer"        ),
+	"networks"     => array( "label" => __("Networks"      , 'wordpress-social-login') , "visible" => true  , "component" => "networks"       , "default" => true ),
+	"login-widget" => array( "label" => __("Widget"        , 'wordpress-social-login') , "visible" => true  , "component" => "login-widget"   ),
+	"bouncer"      => array( "label" => __("Bouncer"       , 'wordpress-social-login') , "visible" => true  , "component" => "bouncer"        ),
 
-	"users"        => array( "label" => __("Users"         , 'wordpress-social-login') , "enabled" => false, "visible" => true  , "component" => "users"         ),
-	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "enabled" => false, "visible" => true  , "component" => "contacts"      ),
-	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "enabled" => false, "visible" => true  , "component" => "buddypress"    ),
+	"users"        => array( "label" => __("Users"         , 'wordpress-social-login') , "visible" => true  , "component" => "users"         ),
+	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "visible" => true  , "component" => "contacts"      ),
+	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "visible" => true  , "component" => "buddypress"    ),
 
-	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
-	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "enabled" => true , "visible" => false , "component" => "core"          , "pull-right" => true  ), 
-	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
-	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "enabled" => true , "visible" => true  , "component" => "core"          , "pull-right" => true  ), 
+	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
+	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "visible" => false , "component" => "core"           , "pull-right" => true  ), 
+	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
+	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
 );
 
 // --------------------------------------------------------------------
@@ -76,30 +76,21 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 /**
 * Register a new WSL component 
 */
-function wsl_register_component( $component, $config, $tabs )
+function wsl_register_component( $component, $label, $description, $version, $author, $author_url, $component_url )
 {
-
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 
-	// sure it can be overwritten.. just not recommended
-	if( isset( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] ) && $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ 'type' ] == 'core' )
-	{
-		return wsl_render_notice_page( _wsl__("An installed plugin is trying to o-ver-write WordPress Social Login config in a bad way.", 'wordpress-social-login') );
-	}
+	$config = array();
 
-	$config["type"] = "plugin";
+	$config["type"]          = "addon"; // < force to addon
+	$config["label"]         = $label;
+	$config["description"]   = $description;
+	$config["version"]       = $version;
+	$config["author"]        = $author;
+	$config["author_url"]    = $author_url;
+	$config["component_url"] = $component_url;
 
-	$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] = $config;  
-
-	if( is_array( $tabs ) && count( $tabs ) )
-	{
-		foreach( $tabs as $tab => $config )
-		{
-			$config["component"] = $component; 
-
-			wsl_register_admin_tab( $tab, $config );
-		}
-	}
+	$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ] = $config;
 }
 
 // --------------------------------------------------------------------
@@ -107,11 +98,20 @@ function wsl_register_component( $component, $config, $tabs )
 /**
 * Register new WSL admin tab
 */
-function wsl_register_admin_tab( $tab, $config ) 
+function wsl_register_admin_tab( $component, $tab, $label, $action, $visible = false, $pull_right = false ) 
 { 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-	$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] = $config;  
+	$config = array();
+
+	$config["type"]       = "addon"; // < force to addon
+	$config["component"]  = $component;
+	$config["label"]      = $label;
+	$config["visible"]    = $visible;
+	$config["action"]     = $action;
+	$config["pull_right"] = $pull_right;
+
+	$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ] = $config;
 }
 
 // --------------------------------------------------------------------
@@ -139,7 +139,8 @@ function wsl_register_components()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-	do_action( 'wsl_register_components_begin' );
+	// HOOKABLE:
+	do_action( 'wsl_register_components' );
 
 	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config )
 	{
@@ -166,21 +167,17 @@ function wsl_register_components()
 				update_option( "wsl_components_" . $component . "_enabled", 1 );
 			}
 		}
-
-		foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $tconfig )
-		{ 
-			if( $tconfig["component"] == $component )
-			{
-				
-				if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] )
-				{
-					$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = true;
-				}
-			}
-		}
 	}
 
-	do_action( 'wsl_register_components_end' );
+	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config )
+	{
+		$component = $config[ "component" ] ;
+
+		if( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] )
+		{
+			$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = true;
+		}
+	}
 }
 
 // --------------------------------------------------------------------
@@ -195,7 +192,7 @@ function wsl_register_setting()
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
 	// HOOKABLE:
-	do_action( 'wsl_register_setting_begin' );
+	do_action( 'wsl_register_setting' );
 
 	wsl_register_components();
 
@@ -267,10 +264,7 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-debug'            , 'wsl_settings_debug_mode_enabled' ); 
 	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
 
-	add_option( 'wsl_settings_welcome_panel_enabled' );
-
-	// HOOKABLE:
-	do_action( 'wsl_register_setting_end' );
+	add_option( 'wsl_settings_welcome_panel_enabled' ); 
 }
 
 // --------------------------------------------------------------------

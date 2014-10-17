@@ -57,7 +57,7 @@ function wsl_component_help_reference()
 	</p>
 
 	<p>
-		<?php _wsl_e("If case you're not familiar with The MIT License, it can be summed in three basic things", 'wordpress-social-login') ?>:
+		<?php _wsl_e("In case you're not familiar with The MIT License, it can be summed in three basic things", 'wordpress-social-login') ?>:
 	</p>
 
 	<ul style="margin-left:45px;line-height: 20px;">
