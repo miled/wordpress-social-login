@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.2.3-DEV
+Stable tag: 2.2.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -25,7 +25,7 @@ Wordpress Social Login come with a simple but flexible and fully customizable au
 Depending on the audience you're targeting, you can choose from a wide variety of providers and services including: Social networks, Microblogging platforms, Professional networks, Media, Photo sharing, Programmers and Gamers networks.
 
 <strong>Currently supported providers</strong><br>
-Facebook, Google, Twitter, Windows Live, Yahoo!, Reddit, Disqus, Foursquare, LinkedIn, AOL, Vkontakte, Last.FM, Instagram, Identica, Tumblr, Goodreads, Stackoverflow, GitHub, px500, Skyrock, Mixi, Steam, Twitch.tv, Mailru, Yandex, Odnoklassniki and PixelPin.
+Facebook, Google, Twitter, Windows Live, Yahoo!, LinkedIn, Reddit, Disqus, Tumblr, Stackoverflow, GitHub, Dribbble, Instagram, 500px, Foursquare, Steam, Twitch.tv, Mixi, Vkontakte, Mail.ru, Yandex, Odnoklassniki, Goodreads, Skyrock, Last.fm, AOL and PixelPin.
 
 <strong>Free, unlimited and white-label</strong> <br>
 Wordpress Social Login is open-source and completely free. The source code is publicly available on [GitHub](https://github.com/hybridauth/WordPress-Social-Login) for anyone to help and contribute. You are free to use a Wordpress Social Login in commercial projects as long as the copyright header is left intact.
@@ -38,7 +38,7 @@ Wordpress Social Login is open-source and completely free. The source code is pu
 * [Social Login plugin](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
 * [Query Monitor plugin](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress plugins developers.
 
-Thanks to everyone who have contributed to this project and the to Wordpress community by submitting patches, ideas, reviews or by helping in the plugin support forum.
+Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum.
 
 == Installation ==
 
@@ -59,7 +59,7 @@ Thanks to everyone who have contributed to this project and the to Wordpress com
 
 == Frequently Asked Questions ==
 
-The user guide and frequently asked questions can be found at http://hybridauth.sourceforge.net/wsl/
+The user guide and frequently asked questions can be found at http://miled.github.io/wordpress-social-login/
 
 == Screenshots ==
 
@@ -74,8 +74,27 @@ The user guide and frequently asked questions can be found at http://hybridauth.
 
 = 2.2.3 = 
 
-* Fix an issue where redirect_to got overwritten in some cases 
-* Fix an issue where redirect_to were encoded twice for non latin urls
+* WSL is now compatible with PHP 5.2 again.
+* WSL is now compatible with WordPress 3.0+ again.
+* WSL now support authentications through Dribbble.com.
+* Steam provider has been entirely reworked and now fully support the new Web API.
+* LinkedIn provider has been enhanced. WSL can now get the full LinkedIn's members avatars and headline.
+* WSL can now import users contacts from Vkontakte.
+* WSL admin interfaces have been reworked and can be now extended with hooks.
+* Profile completion form has received a visual update.
+* Bouncer Membership level can be now set to any user role.
+* WSL now provide an easier access to social networks apis.
+* Authentication display now fall back to In Page when WSL is used on a mobile device.
+* WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
+* Added new tool "Repair WSL tables".
+* Added Debug mode.
+* Added new hooks in the authentication widget and auth process.
+* Depreciated hooks from versions prior 2.2.2 has been removed.
+* wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
+* wsl_render_notice_page and wsl_render_error_page has slightly changed.
+* Fix an issue where redirect_to get overwritten in some cases.
+* Fix an issue with redirect_to where the call back url is encoded twice.
+* Minor bugfixes
 
 = 2.2.2 = 
 

@@ -50,7 +50,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			Hybrid_Auth::redirect( LINKEDIN::_URL_AUTH . $response['linkedin']['oauth_token'] );
 		}
 		else{
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . print_r( $response, true ), 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token", 5 );
 		}
 	}
 
@@ -63,7 +63,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 		$oauth_verifier = $_REQUEST['oauth_verifier'];
 
 		if ( ! $oauth_verifier ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . htmlentities( print_r( $_REQUEST, true ) ), 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_verifier", 5 );
 		}
 
 		$response = $this->api->retrieveTokenAccess( $oauth_token, $this->token( "oauth_token_secret" ), $oauth_verifier );
@@ -80,7 +80,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			$this->setUserConnected();
 		}
 		else{
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid Token:" . print_r( $response, true ), 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access_token", 5 );
 		}
 	}
 
@@ -101,7 +101,7 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			$data = @ new SimpleXMLElement( $response['linkedin'] );
 
 			if ( ! is_object( $data ) ){
-				throw new Exception( "User profile request failed! {$this->providerId} returned an invalid xml data.", 6 );
+				throw new Exception( "User profile request failed! {$this->providerId} returned an invalid data.", 6 );
 			}
 
 			$this->user->profile->identifier  = (string) $data->{'id'};

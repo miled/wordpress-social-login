@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -18,7 +18,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function wsl_component_components_gallery()
 {
 	// not for today
-	// return;
+	return;
 
 	// HOOKABLE: 
 	do_action( "wsl_component_components_gallery_start" ); 
@@ -55,32 +55,6 @@ function wsl_component_components_gallery()
 <h2><?php _wsl_e( "Other Components available", 'wordpress-social-login' ) ?></h2>
 
 <p>These components and add-ons can extend the functionality of WordPress Social Login.</p>
-
-<style>
-.wsl_component_div{
-	width: 30%;
-	min-height: 140px; 
-	padding: 10px; 
-	border: 1px solid #ddd; 
-	background-color: #fff;
-	float:left;
-	margin-bottom: 20px;
-	margin-right: 20px;
-	
-	position: relative;
-}
-.wsl_component_div h3{
-	
-	border-bottom: 1px solid #ddd; 
-	padding-bottom: 5px; 
-	margin-bottom: 0px; 
-}
-.wsl_component_about_div{
-	height: 2px; 
-	overflow: hidden; 
-	min-height: 93px; 
-}
-</style>
 
 <?php
 	foreach( $components as $item )

@@ -165,7 +165,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 			$data = $this->api->api('/me'); 
 		}
 		catch( FacebookApiException $e ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an error: $e", 6 );
+			throw new Exception( "User profile request failed! {$this->providerId} returned an error", 6 );
 		} 
 
 		// if the provider identifier is not received, we assume the auth has failed
@@ -247,7 +247,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 				$response = $this->api->api('/me/friends' . $apiCall); 
 			}
 			catch( FacebookApiException $e ){
-				throw new Exception( 'User contacts request failed! {$this->providerId} returned an error: $e' );
+				throw new Exception( 'User contacts request failed! {$this->providerId} returned an error' );
 			} 
 
 			// Prepare the next call if paging links have been returned
@@ -306,7 +306,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
             }
 
             if( is_null( $access_token ) ){
-                throw new Exception( "Update user page failed, page not found or not writable!" );
+                throw new Exception( "Update user page failed, page not found or not writeable!" );
             }
 
             $status[ 'access_token' ] = $access_token;

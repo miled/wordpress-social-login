@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -345,7 +345,7 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 			</div>
 
 			<p class="back-to-home">
-				<a href="<?php echo site_url(); ?>">← Back to <?php echo get_bloginfo('name'); ?></a>
+				<a href="<?php echo site_url(); ?>">&#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo('name') ); ?></a>
 			</p>
 		</div>
 	</body>

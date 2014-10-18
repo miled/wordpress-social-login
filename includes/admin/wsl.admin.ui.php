@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /** 
@@ -63,7 +63,8 @@ function wsl_admin_main()
 	$wsldwp          = 0;
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	if( isset( $_REQUEST["wslp"] ) ){
+	if( isset( $_REQUEST["wslp"] ) )
+	{
 		$wslp = trim( strtolower( strip_tags( $_REQUEST["wslp"] ) ) );
 	}
 
@@ -103,42 +104,68 @@ function wsl_admin_ui_header( $wslp = null )
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_VERSION;
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
+	
 ?>
 <a name="wsltop"></a>
 <div class="wsl-container">
 
-<?php
-	if( get_option( 'wsl_settings_development_mode_enabled' ) )
-	{
-		?>
-			<div class="fade error wsl-error-dev-mode-on" style="margin: 4px 0 20px;">
-				<p>
-					<?php _wsl_e('<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT MODE enabled. This mode is not intend for live websites as it might raise serious security risks', 'wordpress-social-login') ?>.
-				</p>
-				<p>
-					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#dev-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
-					<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/devmode.html" target="_blank"><?php _wsl_e('Read about the development mode', 'wordpress-social-login') ?></a>
-				</p>
-			</div>
-		<?php
-	}
+	<?php
+		// nag
+	
+		if( in_array( $wslp, array( 'networks', 'login-widget' ) ) and ( isset( $_REQUEST['settings-updated'] ) or isset( $_REQUEST['enable'] ) ) )
+		{
+			$active_plugins = implode('', (array) get_option('active_plugins') ); 
+			$cache_enabled  = 
+				strpos( $active_plugins, "w3-total-cache"   ) !== false | 
+				strpos( $active_plugins, "wp-super-cache"   ) !== false | 
+				strpos( $active_plugins, "quick-cache"      ) !== false | 
+				strpos( $active_plugins, "wp-fastest-cache" ) !== false | 
+				strpos( $active_plugins, "wp-widget-cache"  ) !== false | 
+				strpos( $active_plugins, "hyper-cache"      ) !== false;
 
-	if( get_option( 'wsl_settings_debug_mode_enabled' ) )
-	{
-		?>
-			<div class="fade updated wsl-error-debug-mode-on" style="margin: 4px 0 20px;">
-				<p>
-					<?php _wsl_e('<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE enabled. This mode is not intend for live websites as it might add to loading time and store unnecessary data on your server', 'wordpress-social-login') ?>.
-				</p>
-				<p>
-					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#debug-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
-					<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=watchdog"><?php _wsl_e('View WSL logs', 'wordpress-social-login') ?></a>
-					<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/debugmode.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
-				</p>
-			</div>
-		<?php
-	}
-?>
+			if( $cache_enabled )
+			{
+				?>
+					<div class="fade updated" style="margin: 4px 0 20px;">
+						<p>
+							<?php _wsl_e("<b>Note:</b> WSL has detected that you are using a caching plugin. If the saved changes didn't take effect immediately then you might need to empty the cache", 'wordpress-social-login') ?>.
+						</p>
+					</div>
+				<?php
+			}
+		}
+		
+		if( get_option( 'wsl_settings_development_mode_enabled' ) )
+		{
+			?>
+				<div class="fade error wsl-error-dev-mode-on" style="margin: 4px 0 20px;">
+					<p>
+						<?php _wsl_e('<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT MODE enabled. This mode is not intend for live websites as it might raise serious security risks', 'wordpress-social-login') ?>.
+					</p>
+					<p>
+						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#dev-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/devmode.html" target="_blank"><?php _wsl_e('Read about the development mode', 'wordpress-social-login') ?></a>
+					</p>
+				</div>
+			<?php
+		}
+
+		if( get_option( 'wsl_settings_debug_mode_enabled' ) )
+		{
+			?>
+				<div class="fade updated wsl-error-debug-mode-on" style="margin: 4px 0 20px;">
+					<p>
+						<?php _wsl_e('<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE enabled. This mode is not intend for live websites as it might add to loading time and store unnecessary data on your server', 'wordpress-social-login') ?>.
+					</p>
+					<p>
+						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#debug-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=watchdog"><?php _wsl_e('View WSL logs', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/debugmode.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
+					</p>
+				</div>
+			<?php
+		}
+	?>
 
 	<h1>
 		<?php _wsl_e( 'WordPress Social Login', 'wordpress-social-login' ) ?>
@@ -153,14 +180,7 @@ function wsl_admin_ui_header( $wslp = null )
 			{
 				if( $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) )
 				{
-					if( isset( $settings["admin-url"] ) )
-					{
-						?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="<?php echo $settings["admin-url"] ?>"><?php echo $settings["label"] ?></a><?php
-					}
-					else
-					{
-						?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php echo $settings["label"] ?></a><?php
-					}
+					?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php if( isset( $settings["ico"] ) ) echo '<img style="margin: 0px; padding: 0px; border: 0px none;" src="' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/' . $settings["ico"] . '" />'; else echo $settings["label"]; ?></a><?php
 				}
 			}
 		?>
@@ -184,14 +204,10 @@ function wsl_admin_ui_footer()
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_VERSION;
 ?>
-</div> <!-- ./wsl_admin_tab_content -->  
-
+	</div> <!-- ./wsl_admin_tab_content -->  
+	
 <div class="clear"></div>
 
-<script>
-	// check for new versions and updates
-	jQuery.getScript("http://miled.github.io/wordpress-social-login/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>");
-</script>
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
@@ -260,9 +276,11 @@ function wsl_admin_ui_fail()
 	<p> 
 		<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
 	</p> 
+
 	<p>
 		<?php _wsl_e("The minimum server requirements are", 'wordpress-social-login') ?>:
 	</p>
+
 	<ul style="margin-left:60px;">
 		<li><?php _wsl_e("PHP >= 5.2.0 installed", 'wordpress-social-login') ?></li> 
 		<li><?php _wsl_e("WSL Endpoint URLs reachable", 'wordpress-social-login') ?></li>
@@ -274,9 +292,6 @@ function wsl_admin_ui_fail()
 	</ul>
 </div>
 
-<script>
-	jQuery.getScript("http://miled.github.io/wordpress-social-login/wsl.version.check.and.updates.php?v=<?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?>&fail=true");
-</script>
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_fail_end" );
@@ -348,14 +363,12 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('lots of other things to be listed here.. need rewrite..', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('WSL now support authentications throught <a href="https://dribbble.com" target="_blank">Dribbble.com</a>. Hooray for fellow designers', 'wordpress-social-login') ?>!</li> 
-					<li><?php _wsl_e('<a href="http://store.steampowered.com/" target="_blank">Steam</a> has been entirely reworked and now it fully support the Steam Web API', 'wordpress-social-login') ?>.</li> 
-					<li><?php _wsl_e('WSL admin interfaces have been reworked and are now more flexible than before', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('WSL now support authentications through <a href="https://dribbble.com" target="_blank">Dribbble.com</a>. Hooray for fellow designers', 'wordpress-social-login') ?>!</li> 
+					<li><?php _wsl_e('<a href="http://store.steampowered.com/" target="_blank">Steam</a> provider has been entirely reworked and now fully support the new Web API', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('WSL admin interfaces have been reworked and can be now extended with hooks', 'wordpress-social-login') ?>.</li> 
+					<li><?php _wsl_e('Profile completion form has received a visual update', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('Bouncer Membership level can be now set to any user role', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Profile completion form has been reworked', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Tools tabs and we have added a Debug mode to', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('WSL now provide an easier access to social apis', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('WSL now provide an <a href="http://miled.github.io/wordpress-social-login/developer-api-apis.html" target="_blank">easier access</a> to social networks apis', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>
 		</tr>

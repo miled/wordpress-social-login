@@ -85,7 +85,7 @@ class Hybrid_Auth
 
 		if ( ! class_exists("Hybrid_Storage", false) ){
 			require_once $config["path_base"] . "Storage.php";
-        	}
+		}
 
 		// hash given config
 		Hybrid_Auth::$config = $config;
@@ -138,20 +138,12 @@ class Hybrid_Auth
 		if( Hybrid_Error::hasError() ){ 
 			$m = Hybrid_Error::getErrorMessage();
 			$c = Hybrid_Error::getErrorCode();
-			$p = Hybrid_Error::getErrorPrevious();
 
 			Hybrid_Logger::error( "Hybrid_Auth initialize: A stored Error found, Throw an new Exception and delete it from the store: Error#$c, '$m'" );
 
 			Hybrid_Error::clearError();
 
-			// try to provide the previous if any
-			// Exception::getPrevious (PHP 5 >= 5.3.0) http://php.net/manual/en/exception.getprevious.php
-			if ( version_compare( PHP_VERSION, '5.3.0', '>=' ) && ($p instanceof Exception) ) { 
-				throw new Exception( $m, $c, $p );
-			}
-			else{
-				throw new Exception( $m, $c );
-			}
+			throw new Exception( $m, $c );
 		}
 
 		Hybrid_Logger::info( "Hybrid_Auth initialize: no error found. initialization succeed." );
@@ -242,6 +234,16 @@ class Hybrid_Auth
 		Hybrid_Logger::info( "Enter Hybrid_Auth::getAdapter( $providerId )" );
 
 		return Hybrid_Auth::setup( $providerId );
+	}
+
+	// --------------------------------------------------------------------
+
+	/**
+	* Return the latest api error
+	*/ 
+	public static function getLatestApiError()
+	{
+		return Hybrid_Error::getErrorMessage();
 	}
 
 	// --------------------------------------------------------------------

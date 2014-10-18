@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -107,11 +107,11 @@ function wsl_component_tools_debug_mode()
 	</h3>
 	<div class="inside">
 		<p>
-			<?php _wsl_e('For safety reasons, <b>Debug Mode</b> will auto switch to <b>Disabled</b> each time the plugin is <b>reactivated</b>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('If set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em>. The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented', 'wordpress-social-login') ?>.
 		</p>
 
 		<p>
-			<?php _wsl_e('It\'s highly recommended to keep the <b>Debug Mode</b> <b>Disabled</b>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('It\'s recommended to keep the Debug Mode <b>Disabled</b> as will store unnecessary data on your web server', 'wordpress-social-login') ?>.
 		</p>
 
 		<p>

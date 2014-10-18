@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -130,13 +130,6 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "http://www.lastfm.com/api/account", 
 
 		"cat"               => "media",
-	),
-	ARRAY( 
-		"provider_id"       => "Identica",
-		"provider_name"     => "Identica", 
-		"new_app_link"      => "http://identi.ca/settings/oauthapps/new", 
-
-		"cat"               => "microblogging",
 	),
 	ARRAY( 
 		"provider_id"       => "Tumblr",

@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -145,7 +145,7 @@ function wsl_process_login_begin()
 	// check if php session are working as expected by wsl
 	if( ! wsl_process_login_check_php_session() )
 	{
-		return wsl_process_login_render_notice_page( sprintf( _wsl__( '<h4>Oops! We ran into an issue.</h4> WordPress Social Login was unable to start correctly. The session identifier is missing. Please check the <a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">minimum system requirement</a>.', 'wordpress-social-login' ), site_url() ) );
+		return wsl_process_login_render_notice_page( sprintf( _wsl__( 'The session identifier is missing.<br />Please check WSL <a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">minimum system requirements</a> and <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank">FAQ</a>.', 'wordpress-social-login' ), site_url() ) );
 	}
 
 	/* 1. Display a loading screen while hybridauth is redirecting the user to the selected provider */
@@ -153,7 +153,7 @@ function wsl_process_login_begin()
 	// the loading screen should reflesh it self with a new arg in url: &redirect_to_provider=ture
 	if( ! isset( $_REQUEST["redirect_to_provider"] ) )
 	{
-		wsl_process_login_clear_user_php_session();
+		do_action( 'wsl_clear_user_php_session' );
 
 		return wsl_render_redirect_to_provider_loading_screen( wsl_process_login_get_selected_provider() );
 	}
@@ -265,7 +265,7 @@ function wsl_process_login_begin()
 	// if hybridauth fails to authenticate the user, then we display an error message
 	catch( Exception $e )
 	{
-		return wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter );
+		return wsl_process_login_render_error_page( $e, $config, $provider );
 	}
 
 	// HOOKABLE:
@@ -351,8 +351,9 @@ function wsl_process_login_end()
 * Steps:
 *    1. Grab the user profile from hybridauth
 *    2. Run Bouncer::Filters if enabled (domains, emails, profiles urls)
-*    3  Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email
-*    4. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) 
+*    3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email
+*    4. Attempt to recognize other Social Plugins users (eg: sc, sz, nextend, fbauto, fball, wpoauth, lradius)
+*    5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) 
 */
 function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 {
@@ -466,18 +467,52 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 	/* 3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email */
 
 	// check if user already exist in wslusersprofiles
-	if( ! $user_id )
-	{
-		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
-	}
+	$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 
 	// check if this user verified email is in use. if true, we link this social network profile to the found WP user
-	if( ! empty( $hybridauth_user_profile->emailVerified ) )
+	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
 	{
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 	}
 
-	/* 4. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
+	/* 4 Attempt to recognize other Social Plugins users */
+
+	// Bouncer ::Recognize Social Plugins users
+	// > not implemented yet! Planned for WSL 2.3
+	if( get_option( 'wsl_settings_bouncer_recognize_social_plugins_users_enabled' ) == 1 )
+	{
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_social_connect( $provider, $hybridauth_user_profile->identifier );
+		}
+
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_the_champ( $provider, $hybridauth_user_profile->identifier );
+		}
+
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_nextend( $provider, $hybridauth_user_profile->identifier );
+		}
+
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_login_radius( $provider, $hybridauth_user_profile->identifier );
+		}
+
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_fb_auto( $provider, $hybridauth_user_profile->identifier );
+		}
+
+		if( ! $user_id )
+		{
+			$user_id = wsl_get_user_fb_all( $provider, $hybridauth_user_profile->identifier );
+		}
+	}
+
+	/* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
 
 	// if associated WP user not found in wslusersprofiles nor he have verified email in use
 	if( ! $user_id )
@@ -489,6 +524,7 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 		}
 
 		// Bouncer :: Accounts linking/mapping
+		// > > not implemented yet! Planned for WSL 2.3
 		if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
 		{
 			do
@@ -831,7 +867,7 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	// > To be sure the user is connected, use wsl_hook_process_login_before_wp_set_auth_cookie instead.
 	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile, $redirect_to );
 
-	wsl_process_login_clear_user_php_session();
+	do_action( 'wsl_clear_user_php_session' );
 
 	// That's it. We done. 
 	wp_safe_redirect( $redirect_to );
@@ -871,7 +907,7 @@ function wsl_process_login_request_user_social_profile( $provider )
 	// if things didn't go as expected, we dispay the appropriate error message
 	catch( Exception $e )
 	{
-		return wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter );
+		return wsl_process_login_render_error_page( $e, $config, $provider, $adapter );
 	}
 
 	return $hybridauth_user_profile;
@@ -959,15 +995,16 @@ function wsl_process_login_get_redirect_to()
 /**
 * Display an error message in case user authentication fails
 */
-function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
+function wsl_process_login_render_error_page( $e, $config = null, $provider = null, $adapter = null )
 {
 	// HOOKABLE:
-	do_action( "wsl_process_login_render_error_page", $e, $config, $hybridauth, $provider, $adapter );
+	do_action( "wsl_process_login_render_error_page", $e, $config, $provider, $adapter );
 
 	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 
-	$message = _wsl__("Unspecified error!", 'wordpress-social-login'); 
+	$message  = _wsl__("Unspecified error!", 'wordpress-social-login'); 
 	$notes    = ""; 
+	$apierror = substr( $e->getMessage(), 0, 125 );
 
 	switch( $e->getCode() )
 	{
@@ -982,8 +1019,6 @@ function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provide
 		case 6 : $message = sprintf( _wsl__("Request failed. Either you have cancelled the authentication or <b>%s</b> refused the connection.", 'wordpress-social-login'), $provider ); break;
 		case 7 : $message = _wsl__("You're not connected to the provider.", 'wordpress-social-login'); break;
 		case 8 : $message = _wsl__("Provider does not support this feature.", 'wordpress-social-login'); break;
-
-		case 9 : $message = $e->getMessage(); break;
 	}
 
 	if( is_object( $adapter ) )
@@ -991,7 +1026,19 @@ function wsl_process_login_render_error_page( $e, $config, $hybridauth, $provide
 		$adapter->logout();
 	}
 
-	return wsl_render_error_page( $message, $notes, $e, array( $config, $hybridauth, $provider, $adapter ) );
+	// provider api response
+	if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
+	{
+		$apierror = Hybrid_Error::getApiError();
+
+		// network issue
+		if( trim( $apierror ) == '0.' )
+		{
+			$apierror = '0. Unable to connect to the provider api';
+		}
+	}
+
+	return wsl_render_error_page( $message, $notes, $provider, $apierror, $e );
 }
 
 // --------------------------------------------------------------------
@@ -1026,8 +1073,7 @@ function wsl_process_login_clear_user_php_session()
 {
 	$_SESSION["HA::STORE"]        = array(); // used by hybridauth library. to clear as soon as the auth process end.
 	$_SESSION["HA::CONFIG"]       = array(); // used by hybridauth library. to clear as soon as the auth process end.
-	$_SESSION["wsl::apierror"]    = array(); // used by wsl to temprarly store the latest social api error > only if dev mode is enabled.
-	$_SESSION["wsl::userprofile"] = array(); // used by wsl to temprarly store the user profile so de don't make unnecessary calls to social apis.
+	$_SESSION["wsl::userprofile"] = array(); // used by wsl to temporarily store the user profile so de don't make unnecessary calls to social apis.
 }
 
 // --------------------------------------------------------------------

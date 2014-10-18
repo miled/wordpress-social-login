@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /** 
@@ -257,11 +257,12 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 	// check if import is enabled for the given provider
 	if(
 		! (
-			get_option( 'wsl_settings_contacts_import_facebook' ) == 1 && strtolower( $provider ) == "facebook" ||
-			get_option( 'wsl_settings_contacts_import_google' )   == 1 && strtolower( $provider ) == "google"   ||
-			get_option( 'wsl_settings_contacts_import_twitter' )  == 1 && strtolower( $provider ) == "twitter"  ||
-			get_option( 'wsl_settings_contacts_import_live' )     == 1 && strtolower( $provider ) == "live"     ||
-			get_option( 'wsl_settings_contacts_import_linkedin' ) == 1 && strtolower( $provider ) == "linkedin" 
+			get_option( 'wsl_settings_contacts_import_facebook' )  == 1 && strtolower( $provider ) == "facebook"   ||
+			get_option( 'wsl_settings_contacts_import_google' )    == 1 && strtolower( $provider ) == "google"     ||
+			get_option( 'wsl_settings_contacts_import_twitter' )   == 1 && strtolower( $provider ) == "twitter"    ||
+			get_option( 'wsl_settings_contacts_import_linkedin' )  == 1 && strtolower( $provider ) == "linkedin"   || 
+			get_option( 'wsl_settings_contacts_import_live' )      == 1 && strtolower( $provider ) == "live"       ||
+			get_option( 'wsl_settings_contacts_import_vkontakte' ) == 1 && strtolower( $provider ) == "vkontakte"
 		)
 	)
 	{

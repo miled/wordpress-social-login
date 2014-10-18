@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -38,18 +38,8 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><?php bloginfo('name'); ?></title>
 		<style type="text/css">
-			html {
-				background: #f1f1f1;
-			}
 			body {
-				background: #fff;
-				color: #444;
-				font-family: "Open Sans", sans-serif;
-				margin: 2em auto;
-				padding: 1em 2em;
-				max-width: 700px;
-				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
+				background: #f1f1f1;
 			}
 			h4 {
 				color: #666;
@@ -58,13 +48,28 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				padding: 0;
 				padding-bottom: 12px;
 			}
-			#notice-page {
-				margin-top: 50px;
+			a {
+				color: #21759B;
+				text-decoration: none;
 			}
-			#notice-page p {
+			a:hover {
+				color: #D54E21;
+			}
+			p {
 				font-size: 14px;
 				line-height: 1.5;
 				margin: 25px 0 20px;
+			}
+			#notice-page {
+				background: #fff;
+				color: #444;
+				font-family: "Open Sans", sans-serif;
+				margin: 2em auto;
+				padding: 1em 2em;
+				max-width: 700px;
+				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
+				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
+				margin-top: 50px;
 			}
 			#notice-page code {
 				font-family: Consolas, Monaco, monospace;
@@ -79,36 +84,31 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				margin-top:25px;
 			}
-			ul li {
-				margin-bottom: 10px;
-				font-size: 14px ;
-			}
-			a {
-				color: #21759B;
-				text-decoration: none;
-			}
-			a:hover {
-				color: #D54E21;
-			}
 		</style>
+		<script>
+			function xi(){ document.getElementById('debuginfo').style.display = 'block'; }
+		</script>
 	<head>  
-	<body id="notice-page"> 
-		<table width="100%" border="0">
-			<tr>
-				<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
-			</tr>
-			<tr>
-				<td align="center">
-					<div class="notice-message">
-						<?php echo nl2br( $message ); ?> 
-					</div>
-				</td> 
-			</tr> 
-		</table>
+	<body>
+		<div id="notice-page"> 
+			<table width="100%" border="0">
+				<tr>
+					<td align="center"><img id="alert-ico" src="<?php echo $assets_base_url ?>alert.png" onClick="xi()" /></td>
+				</tr>
+				<tr>
+					<td align="center">
+						<div class="notice-message">
+							<?php echo nl2br( $message ); ?> 
+						</div>
+					</td> 
+				</tr> 
+			</table>
+		</div>
 
 		<?php 
 			// Development mode on?
-			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
+			if( get_option( 'wsl_settings_development_mode_enabled' ) )
+			{
 				wsl_render_error_page_debug_section();
 			}
 		?>
@@ -139,7 +139,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 */
 if( ! function_exists( 'wsl_render_error_page' ) )
 {
-	function wsl_render_error_page( $message, $notes = null, $php_exception = null, $php_extras_vars_to_debug = array() )
+	function wsl_render_error_page( $message, $notes = null, $provider = null, $api_error = null, $php_exception = null )
 	{
 		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 ?>
@@ -149,10 +149,32 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><?php bloginfo('name'); ?> - <?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</title>
 		<style type="text/css">
-			html {
-				background: #f1f1f1;
-			}
 			body {
+				background: #f1f1f1;			
+			} 
+			h4 {
+				color: #666;
+				font: 20px "Open Sans", sans-serif;
+				margin: 0;
+				padding: 0;
+				padding-bottom: 7px;
+			}
+			p {
+				font-size: 14px;
+				line-height: 1.5;
+				margin: 15px 0;
+				line-height: 25px; 
+				padding: 10px;
+				text-align:left;
+			}
+			a {
+				color: #21759B;
+				text-decoration: none;
+			}
+			a:hover {
+				color: #D54E21;
+			}
+			#error-page {
 				background: #fff;
 				color: #444;
 				font-family: "Open Sans", sans-serif;
@@ -161,24 +183,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				max-width: 700px;
 				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-			}
-			h4 {
-				color: #666;
-				font: 20px "Open Sans", sans-serif;
-				margin: 0;
-				padding: 0;
-				padding-bottom: 7px;
-			}
-			#error-page {
 				margin-top: 50px;
-			}
-			#error-page p {
-				font-size: 14px;
-				line-height: 1.5;
-				margin: 15px 0;
-				line-height: 25px; 
-				padding: 10px;
-				text-align:left;
 			}
 			#error-page pre {
 				max-width: 680px;
@@ -198,49 +203,61 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				margin-top:25px;
 			}
-			a {
-				color: #21759B;
-				text-decoration: none;
+			#alert-ico {
+				cursor:pointer;
 			}
-			a:hover {
-				color: #D54E21;
+			#debuginfo {
+				display:none;
+				text-align:center;
+				border-top: 1px solid #d2d2d2;
+				margin: 0;
+				padding: 0;
+				padding-top: 15px;
 			}
 		</style>
-	</head>  
-	<body id="error-page">
-		<table width="100%" border="0">
-			<tr>
-				<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
-			</tr>
+		<script>
+			function xi(){ document.getElementById('debuginfo').style.display = 'block'; }
+		</script>
+	</head>
+	<body>
+		<div id="error-page">
+			<table width="100%" border="0">
+				<tr>
+					<td align="center"><img id="alert-ico" src="<?php echo $assets_base_url ?>alert.png" onClick="xi()" /></td>
+				</tr>
 
-			<tr>
-				<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td> 
-			</tr>
+				<tr>
+					<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td> 
+				</tr>
 
-			<tr>
-				<td>
-					<div class="error-message">
-						<?php echo $message ; ?> 
-					</div>
+				<tr>
+					<td>
+						<div class="error-message">
+							<?php echo $message ; ?> 
+						</div>
 
-					<?php
-						// any hint or extra note?
-						if( $notes ) {
-							?>
-								<p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
-							<?php
-						}
-					?>
-				</td> 
-			</tr> 
-		</table>
+						<?php
+							// any hint or extra note?
+							if( $notes ) {
+								?>
+									<p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
+								<?php
+							}
+						?>  
+
+						<p id="debuginfo">&xi; <?php echo $api_error ?></p>
+					</td> 
+				</tr> 
+			</table>
+		</div> 
 
 		<?php 
 			// Development mode on?
-			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
-				wsl_render_error_page_debug_section( $php_exception, $php_extras_vars_to_debug );
+			if( get_option( 'wsl_settings_development_mode_enabled' ) )
+			{
+				wsl_render_error_page_debug_section( $php_exception );
 			}
-		?>
+		?> 
 	</body>
 </html> 
 <?php
@@ -256,7 +273,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 /**
 * Display an extra debugging section to the error page, in case Mode Dev is on
 */
-function wsl_render_error_page_debug_section( $php_exception = null, $php_extras_vars_to_debug = null )
+function wsl_render_error_page_debug_section( $php_exception = null )
 {
 ?>
 <hr />

@@ -28,25 +28,33 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 #### What's new on WSL 2.2.3
 
-- [x] Add support for dribbble.com
-- [x] Make WSL compatible with PHP 5.2 again.
-- [x] Get full avatar form LinkedIn and get LinkedIn members headline as description.
-- [x] Bouncer Membership level can be now set to any user role.
-- [x] Rewrite Hybridauth endpoints urls.
-- [x] Optimize wsl tables.
-- [x] Rework WSL admin interfaces to make them extensible
-- [x] Improve debugging.
-    - [x] debug calls to social apis
-    - [x] implement logging to files
-- [x] Rework the Steam provider.
-    - [x] Support Steam Web API.
-    - [x] Get full avatar form Steam and fetch location.
-    - [x] update the section (how to create an app) in the Networks tab
-    - [x] Convert the old user identifiers in wslusersprofiles (http://steamcommunity.com/openid/id/*) to 64bit SteamIDs.
+* WSL is now compatible with PHP 5.2 again.
+* WSL is now compatible with WordPress 3.0+ again.
+* WSL now support authentications through Dribbble.com.
+* Steam provider has been entirely reworked and now fully support the new Web API.
+* LinkedIn provider has been enhanced. WSL can now get the full LinkedIn's members avatars and headline.
+* WSL can now import users contacts from Vkontakte.
+* WSL admin interfaces have been reworked and can be now extended with hooks.
+* Profile completion form has received a visual update.
+* Bouncer Membership level can be now set to any user role.
+* WSL now provide an easier access to social networks apis.
+* Authentication display now fall back to In Page when WSL is used on a mobile device.
+* WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
+* Added new tool "Repair WSL tables".
+* Added Debug mode.
+* Added new hooks in the authentication widget and auth process.
+* Depreciated hooks from versions prior 2.2.2 has been removed.
+* wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
+* wsl_render_notice_page and wsl_render_error_page has slightly changed.
+* Fix an issue where redirect_to get overwritten in some cases.
+* Fix an issue with redirect_to where the call back url is encoded twice.
+* Minor bugfixes
 
 #### What's next
 
 - [ ] Accounts linking/mapping
+- [ ] Attempt to recognize other Social Plugins users
+- [ ] User moderation will be fully implemented and no longer needs TML.
 - [ ] ..
 
 #### License 
@@ -55,7 +63,8 @@ MIT — That's short for do whatever you want.
 
 #### Thanks
 
-Big thanks to everyone who have contributed to this project and the to WordPress community by submitting patches, ideas, reviews or by helping in the plugin support forum.
+Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum. 
+
 #### Screenshots
 ![Number6](http://miled.github.io/wordpress-social-login/assets/img/theme_number6.png)
 ===

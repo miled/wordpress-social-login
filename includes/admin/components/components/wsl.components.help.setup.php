@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -53,21 +53,18 @@ function wsl_component_components_setup()
 				$plugin_notices   = '';
 				$plugin_enablable = true;
 
-				foreach( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS as $name => $settings ){ 
-					if( $name == "core" ){
+				foreach( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS as $name => $settings )
+				{ 
+					if( $name == "core" )
+					{
 						continue;
 					}
 
 					$plugin_tr_class = $settings["enabled"] ? "active" : "inactive"; 
 
-					if( $name == "buddypress" ){
-						if( ! function_exists( 'bp_has_profile' ) ){
-							$plugin_enablable = false;
-
-							$plugin_tr_class = 'active update';
-
-							$plugin_notices = _wsl__( '<a href="https://buddypress.org/" target="_blank">BuddyPress</a> Plugin was not found on your website', 'wordpress-social-login' );
-						}
+					if( $name == "buddypress" && ! function_exists( 'bp_has_profile' ) )
+					{
+						continue;
 					}
 			?>
 				<tr id="<?php echo $name ?>" class="<?php echo $name ?> <?php echo $plugin_tr_class ?>"> 

@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -14,11 +14,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 function wsl_component_contacts_settings_setup()
 {
 	$sections = array(
-		'google'   => 'wsl_component_contacts_settings_setup_google',
-		'facebook' => 'wsl_component_contacts_settings_setup_facebook', 
-		'twitter'  => 'wsl_component_contacts_settings_setup_twitter', 
-		'linkedin' => 'wsl_component_contacts_settings_setup_linkedin', 
-		'live'     => 'wsl_component_contacts_settings_setup_live', 
+		'google'    => 'wsl_component_contacts_settings_setup_google',
+		'facebook'  => 'wsl_component_contacts_settings_setup_facebook', 
+		'twitter'   => 'wsl_component_contacts_settings_setup_twitter', 
+		'linkedin'  => 'wsl_component_contacts_settings_setup_linkedin', 
+		'live'      => 'wsl_component_contacts_settings_setup_live', 
+		'vkontakte' => 'wsl_component_contacts_settings_setup_vkontakte', 
 	);
 
 	$sections = apply_filters( 'wsl_component_buddypress_setup_alter_sections', $sections );
@@ -148,6 +149,25 @@ function wsl_component_contacts_settings_setup_live()
 		<select name="wsl_settings_contacts_import_live" <?php if( ! get_option( 'wsl_settings_Live_enabled' ) ) echo "disabled" ?> >
 			<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
 			<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
+		</select>
+	</div>
+</div>
+<?php
+}
+
+// --------------------------------------------------------------------	
+
+function wsl_component_contacts_settings_setup_vkontakte()
+{
+?>
+<div class="stuffbox">
+	<h3>
+		<label><?php _wsl_e("Vkontakte", 'wordpress-social-login') ?></label>
+	</h3>
+	<div class="inside"> 
+		<select name="wsl_settings_contacts_import_live" <?php if( ! get_option( 'wsl_settings_Vkontakte_enabled' ) ) echo "disabled" ?> >
+			<option <?php if( get_option( 'wsl_settings_contacts_import_vkontakte' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
+			<option <?php if( get_option( 'wsl_settings_contacts_import_vkontakte' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 		</select>
 	</div>
 </div>

@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.2.3-dev
+Version: 2.2.3-rc.1
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -53,9 +53,9 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-@ session_start(); // shhhtt keept it secret
+session_id() or session_start();
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3-dev";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3-rc.1";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -195,6 +195,7 @@ require_once( dirname(__FILE__) . '/includes/services/wsl.authentication.php'   
 require_once( dirname(__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
+require_once( dirname(__FILE__) . '/includes/services/wsl.user.converter.php'       ); // Attempt to recognize other Social Plugins users
 require_once( dirname(__FILE__) . '/includes/services/wsl.utilities.php'            ); // Few utilities and functions 
 require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php'             ); // Logging agent
 

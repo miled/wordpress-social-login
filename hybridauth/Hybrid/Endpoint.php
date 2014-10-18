@@ -139,7 +139,7 @@ class Hybrid_Endpoint {
 		}
 		catch ( Exception $e ) {
 			Hybrid_Logger::error( "Exception:" . $e->getMessage(), $e );
-			Hybrid_Error::setError( $e->getMessage(), $e->getCode(), $e->getTraceAsString(), $e->getPrevious() );
+			Hybrid_Error::setError( $e->getMessage(), $e->getCode() );
 
 			$hauth->returnToCallbackUrl();
 		}
@@ -173,7 +173,7 @@ class Hybrid_Endpoint {
 		}
 		catch( Exception $e ){
 			Hybrid_Logger::error( "Exception:" . $e->getMessage(), $e );
-			Hybrid_Error::setError( $e->getMessage(), $e->getCode(), $e->getTraceAsString(), $e->getPrevious());
+			Hybrid_Error::setError( $e->getMessage(), $e->getCode() );
 
 			$hauth->adapter->setUserUnconnected(); 
 		}
@@ -198,8 +198,8 @@ class Hybrid_Endpoint {
 				$storage = new Hybrid_Storage(); 
 
 				// Check if Hybrid_Auth session already exist
-				if ( ! $storage->config( "CONFIG" ) ) {
-                                        Hybrid_Logger::error( "Endpoint: Config storage not found when trying to init Hyrid_Auth. " );
+				if ( ! $storage->config( "CONFIG" ) ){
+                    Hybrid_Logger::error( "Endpoint: Config storage not found when trying to init Hyrid_Auth. " );
 
 					throw new Hybrid_Exception( "You cannot access this page directly." );
 				}

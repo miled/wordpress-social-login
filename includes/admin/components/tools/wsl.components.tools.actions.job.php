@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 // Exit if accessed directly
@@ -31,7 +31,7 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP Version</label>
 					</th>
 					<td>
-						PHP >= 5.2.0 installed
+						<p>PHP >= 5.2.0 installed.</p>
 					</td>
 					<td width="60">
 						<?php 
@@ -51,11 +51,35 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP Sessions</label>
 					</th>
 					<td>
-						PHP/Session enabled and working
+						<p>PHP/Session enabled and working.</p>
+						<?php
+							if( ! ( isset( $_SESSION["wsl::plugin"] ) && $_SESSION["wsl::plugin"] ) )
+							{ 
+								?>
+								<hr />
+								
+								<p><b>Error</b>: PHP Sessions are not working as expected.</p>
+
+								<p>
+									WSL has been made to work with PHP's default SESSION handling (sometimes this occur when the php session is disabled, renamed or when having permissions issues).
+							
+									If you are using a reverse proxy like Varnish it is possible that WordPress's default user cookies are being stripped. If this is the case, please review your VCL file.
+								</p>
+								<p>By default, WSL will requires these two urls to be white-listed:</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	echo site_url( 'wp-login.php', 'login_post' );
+	echo '<br />';
+	echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
+?>
+</pre>
+								<?php
+							}
+						?>
 					</td>
 					<td>
 						<?php 
-							if ( isset( $_SESSION["wsl::plugin"] ) )
+							if( isset( $_SESSION["wsl::plugin"] ) && $_SESSION["wsl::plugin"] )
 							{
 								echo "<b style='color:green;'>OK!</b>";
 							}
@@ -71,7 +95,7 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP CURL Extension</label>
 					</th>
 					<td>
-						PHP CURL extension enabled.
+						<p>PHP CURL extension enabled.</p>
 					</td>
 					<td>
 						<?php 
@@ -91,7 +115,7 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP CURL/SSL Extension</label>
 					</th>
 					<td>
-						PHP CURL extension with SSL enabled.
+						<p>PHP CURL extension with SSL enabled.</p>
 					</td>
 					<td>
 						<?php 
@@ -120,7 +144,22 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP Register Globals</label>
 					</th>
 					<td>
-						PHP REGISTER_GLOBALS OFF
+						<p>PHP REGISTER_GLOBALS OFF.</p>
+					<?php 
+						if( ini_get('register_globals') )
+						{ 
+							?>
+								<hr />
+								<p><b>Error</b>: REGISTER_GLOBALS are On. This will prevent WSL from working properly and will result on an infinite loop on WSL authentication page.</p>
+								<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding:5px;font-size: 12px;">  
+										<p>The solution is to make a trouble ticket with your web host to disable it, Or, if you have a dedicated server and you know what are you doing then edit php.ini file and turn it Off :</p>
+
+										<span style="border:1px solid #E6DB55;padding:5px;"> register_globals = Off</span>
+									</p>
+								</div>
+							<?php
+						}
+					?>
 					</td>
 					<td>
 						<?php 
@@ -134,22 +173,79 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
+				</tr>
+
+				<!-- this should keep Mika happy -->
+				<tr>
+					<th width="200">
+						<label>WSL end-points</label>
+					</th>
+					<td>
+						<p>Check if WSL end-points urls are reachable.</p>
+
+						<div id="mod_security_warn" style="display:none;">
+							<hr />
+							<p><b>Error</b>: WSL end-points urls are not reachable! If your hosting provider is using mod_security then request to whitelist your domain.</p>
+							<p>* This problem has been encountered with Host Gator and GoDaddy.</p>
+							<p>By default, WSL will requires these two urls to be white-listed:</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	echo site_url( 'wp-login.php', 'login_post' );
+	echo '<br />';
+	echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
+?>
+</pre>
+						</div>
+					</td>
+					<td width="60">
+						<span id="mod_security">testing..</span>
+						<script>
+							jQuery(document).ready(function($) {
+								jQuery.ajax({
+									url: '<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>',
+									data: 'url=http://example.com',
+									success: function () {
+										jQuery('#mod_security').html( '<b style="color:green;">OK!</b>' );
+									},
+									error: function (xhr, ajaxOptions, thrownError) {
+										jQuery('#mod_security').html( '<b style="color:red;">FAIL!</b>' );
+										jQuery('#mod_security_warn').show();
+									}
+								});
+							});
+						</script>
+					</td>
 				</tr> 
+
+				<?php
+					global $wpdb;
+
+					$db_check_profiles = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wslusersprofiles'" ) === $wpdb->prefix . 'wslusersprofiles' ? 1 : 0;
+					$db_check_contacts = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wsluserscontacts'" ) === $wpdb->prefix . 'wsluserscontacts' ? 1 : 0;
+
+					$test = $db_check_profiles && $db_check_contacts ? false : true;
+				?>
 				<tr>
 					<th width="200">
 						<label>WSL database tables</label>
 					</th>
 					<td>
-						WSL database tables <code>wslusersprofiles</code> and <code>wsluserscontacts</code>
+						<p>Check if WSL database tables (<code>wslusersprofiles</code> and <code>wsluserscontacts</code>) exist.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> One or more of WordPress Social Login tables do not exist. This may prevent this plugin form working correctly. To fix this, navigate to <b>Tools</b> tab then <b><a href="options-general.php?page=wordpress-social-login&wslp=tools#repair-tables">Repair WSL tables</a></b>.
+									</p>
+								<?php
+							}
+						?>
 					</td>
 					<td width="60">
-						<?php 
-							global $wpdb;
-
-							$db_check_profiles = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wslusersprofiles'" ) === $wpdb->prefix . 'wslusersprofiles' ? 1 : 0;
-							$db_check_contacts = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wsluserscontacts'" ) === $wpdb->prefix . 'wsluserscontacts' ? 1 : 0;
-
-							if( ! $db_check_profiles || ! $db_check_contacts )
+						<?php
+							if( $test )
 							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
@@ -160,18 +256,198 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 				</tr> 
+				
+				<?php
+					$test = class_exists( 'OAuthConsumer', false ) ? true : false;
+				?> 
+				<tr>
+					<th width="200">
+						<label>OAUTH Library</label>
+					</th>
+					<td>
+						<p>Check if OAUTH Library is auto-loaded by another plugin.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> OAUTH Library is in use. This will prevent Twitter, LinkedIn and few other providers from working. Please, inform the developer of that plugin not to auto-include the file below and to use OAUTH Library only when required.
+									</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	$reflector = new ReflectionClass( 'OAuthConsumer' );
+	echo $reflector->getFileName();
+?>
+</pre>
+								<?php
+							}
+						?>
+					</td>
+					<td>
+						<?php 
+							if( $test )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+
+				<?php
+					$test = class_exists( 'Hybrid_Auth', false ) ? true : false;
+				?> 				
+				<tr>
+					<th width="200">
+						<label>Hybridauth Library</label>
+					</th>
+					<td>
+						<p>Check if the Hybridauth Library is auto-loaded by another plugin.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> Hybridauth Library is in use. This MAY prevent WSL from working. Please, inform the developer of that plugin not to auto-include the file below and to use Hybridauth only when required.
+									</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	$reflector = new ReflectionClass( 'Hybrid_Auth' );
+	echo $reflector->getFileName();
+?>
+</pre>
+								<?php
+							}
+						?>
+					</td>
+					<td>
+						<?php 
+							if( $test )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr>
+
+				<?php
+					$test = class_exists( 'BaseFacebook', false ) ? true : false;
+				?> 
+				<tr>
+					<th width="200">
+						<label>Facebook SDK</label>
+					</th>
+					<td>
+						<p>Check if Facebook SDK is auto-loaded by another plugin.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> Facebook SDK is in use. This will prevent Facebook from working. Please, inform the developer of that plugin not to auto-include the file below and to use Facebook SDK only when required.
+									</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	$reflector = new ReflectionClass( 'BaseFacebook' );
+	echo $reflector->getFileName();
+?>
+</pre>
+								<?php
+							}
+						?>
+					</td>
+					<td>
+						<?php 
+							if( $test )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr> 
+
+				<?php
+					$test = class_exists( 'LightOpenID', false ) ? true : false;
+				?> 				
+				<tr>
+					<th width="200">
+						<label>Class LightOpenID</label>
+					</th>
+					<td>
+						<p>Check if the LightOpenID Class is auto-loaded by another plugin.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> Class LightOpenID is in use. This will prevent Yahoo, Steam, and few other providers from working. Please, inform the developer of that plugin not to auto-include the file below and to use LightOpenID only when required.
+									</p>
+<pre style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+<?php
+	$reflector = new ReflectionClass( 'LightOpenID' );
+	echo $reflector->getFileName();
+?>
+</pre>
+								<?php
+							}
+						?>
+					</td>
+					<td>
+						<?php 
+							if( $test )
+							{
+								echo "<b style='color:red;'>FAIL!</b>";
+							}
+							else
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+						?>
+					</td>
+				</tr>
+
+				<?php
+					$itsec_tweaks = get_option( 'itsec_tweaks' );
+					
+					$test = $itsec_tweaks && $itsec_tweaks['long_url_strings'] ? true : false;
+				?> 				
 				<tr>
 					<th width="200">
 						<label>iThemes Security</label>
 					</th>
 					<td>
-						iThemes Security (Better WP Security) 'Prevent long URL strings' option disabled
+						<p>Check if 'Prevent long URL strings' option is enabled.</p>
+						<?php 
+							if( $test )
+							{
+								?>
+									<hr />
+									<p>
+										<b>Error:</b> 'Prevent long URL strings' option is in enabled. This will prevent Facebook and few other providers from working.
+									</p>
+								<?php
+							}
+						?>
+						
 					</td>
 					<td>
 						<?php 
-							$itsec_tweaks = get_option( 'itsec_tweaks' );
-
-							if( $itsec_tweaks && $itsec_tweaks['long_url_strings'] )
+							if( $test )
 							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
@@ -233,7 +509,6 @@ WSL TABS:                 <?php foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $
 WSL NETWORKS:             <?php foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG as $provider ){ if( get_option( 'wsl_settings_' . $provider['provider_id'] . '_enabled' ) ){ echo strtoupper( $provider['provider_id'] ) . ' '; } } echo "\n"; ?>
 WSL ABS URL:              <?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "\n"; ?>
 WSL ENDPOINT:             <?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . "\n"; ?>
-WSL ABS PATH:             <?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "\n"; ?>
 
 # WORDPRESS
 
@@ -424,8 +699,9 @@ function wsl_component_tools_do_uninstall()
 	delete_option('wsl_settings_contacts_import_facebook' );
 	delete_option('wsl_settings_contacts_import_google' );
 	delete_option('wsl_settings_contacts_import_twitter' );
-	delete_option('wsl_settings_contacts_import_live' );
 	delete_option('wsl_settings_contacts_import_linkedin' );
+	delete_option('wsl_settings_contacts_import_live' );
+	delete_option('wsl_settings_contacts_import_vkontakte' );
 
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG as $provider )
 	{

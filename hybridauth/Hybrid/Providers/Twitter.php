@@ -62,7 +62,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
  		}
  	
  		if ( ! isset( $tokens["oauth_token"] ) ){
- 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth token.", 5 );
+ 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token.", 5 );
  		}
  	
  		$this->token( "request_token"       , $tokens["oauth_token"] );
@@ -89,7 +89,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
 
 			// we should have an access_token unless something has gone wrong
 			if ( ! isset( $tokens["oauth_token"] ) ){
-				throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
+				throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token.", 5 );
 			}
 
 			// Get rid of tokens we don't need

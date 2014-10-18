@@ -34,8 +34,6 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 		elseif ( isset( WSL_Hybrid_Endpoint::$request["hauth_done"] ) && WSL_Hybrid_Endpoint::$request["hauth_done"] ) {
 			WSL_Hybrid_Endpoint::processAuthDone();
 		}
-		
-		print_r( Hybrid_Endpoint::$request );
 	}
 
 	public static function processAuthStart()
@@ -57,9 +55,8 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 		$storage = new Hybrid_Storage();
 
 		header( 'X-Hybridauth-Version: ' . $storage->config( "version" ) . '/' . PHP_VERSION );
-		header( 'X-Hybridauth-Session: ' . $storage->config( "php_session_id" ) . '/' . session_id() );
-		header( 'X-Hybridauth-Config: '  . strlen( json_encode( $storage->config( "CONFIG" ) ) ) );
-		header( 'X-Hybridauth-Error: '   . ( (bool) $storage->get( "hauth_session.error.status" ) ? $storage->get( "hauth_session.error.code" ) : 'No' ) );
+		header( 'X-Hybridauth-Time: ' . time() );
+		header( 'X-Hybridauth-Init: ' . strlen( json_encode( $storage->config( "CONFIG" ) ) ) );
 
 		if ( ! WSL_Hybrid_Endpoint::$initDone ){
 			WSL_Hybrid_Endpoint::$initDone = TRUE;

@@ -112,17 +112,17 @@ class Hybrid_Provider_Model_OAuth2 extends Hybrid_Provider_Model
 
 		// check for errors
 		if ( $error ){ 
-			throw new Exception( "Authentication failed! {$this->providerId} returned an error: $error", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an error: " . htmlentities( $error ), 5 );
 		}
 
 		// try to authenticate user
-		$code = (array_key_exists('code',$_REQUEST))?$_REQUEST['code']:"";
+		$code = (array_key_exists('code',$_REQUEST))?$_REQUEST['code'] : "";
 
 		try{
 			$this->api->authenticate( $code ); 
 		}
 		catch( Exception $e ){
-			throw new Exception( "User profile request failed! {$this->providerId} returned an error: $e", 6 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid code " . htmlentities( $code ), 5 );
 		}
 
 		// check if authenticated

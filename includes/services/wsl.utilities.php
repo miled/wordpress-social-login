@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /** 
@@ -191,6 +191,22 @@ function wsl_display_dev_mode_debugging_area()
 			text-align: left;
 		}
 	</style>
+
+	<?php
+		if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
+		{
+			?>
+				<h4>Provider API Response</h4>
+				<table class="wsl-dev-table">
+					<tr>
+						<td>
+							<?php echo Hybrid_Error::getApiError(); ?>
+						</td> 
+					</tr>
+				</table>
+			<?php
+		}
+	?>
 
 	<h4>SQL Queries</h4>
 	<table class="wsl-dev-table">

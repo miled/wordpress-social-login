@@ -17,18 +17,14 @@ class Hybrid_Error
 	*
 	* @param String $message
 	* @param Number $code
-	* @param String $trace
-	* @param String $previous
 	*/
-	public static function setError( $message, $code = NULL, $trace = NULL, $previous = NULL )
+	public static function setError( $message, $code = NULL )
 	{
 		Hybrid_Logger::info( "Enter Hybrid_Error::setError( $message )" );
 
 		Hybrid_Auth::storage()->set( "hauth_session.error.status"  , 1         );
 		Hybrid_Auth::storage()->set( "hauth_session.error.message" , $message  );
 		Hybrid_Auth::storage()->set( "hauth_session.error.code"    , $code     );
-		Hybrid_Auth::storage()->set( "hauth_session.error.trace"   , $trace    );
-		Hybrid_Auth::storage()->set( "hauth_session.error.previous", $previous );
 	}
 
 	/**
@@ -41,8 +37,6 @@ class Hybrid_Error
 		Hybrid_Auth::storage()->delete( "hauth_session.error.status"   );
 		Hybrid_Auth::storage()->delete( "hauth_session.error.message"  );
 		Hybrid_Auth::storage()->delete( "hauth_session.error.code"     );
-		Hybrid_Auth::storage()->delete( "hauth_session.error.trace"    );
-		Hybrid_Auth::storage()->delete( "hauth_session.error.previous" );
 	}
 
 	/**
@@ -72,18 +66,18 @@ class Hybrid_Error
 	}
 
 	/**
-	* return string detailed error backtrace as string.
+	* set api error
 	*/
-	public static function getErrorTrace()
+	public static function setApiError( $error )
 	{ 
-		return Hybrid_Auth::storage()->get( "hauth_session.error.trace" );
+		return Hybrid_Auth::storage()->set( "hauth_session.error.apierror", $error );
 	}
 
 	/**
-	* @return string detailed error backtrace as string.
+	* return api error
 	*/
-	public static function getErrorPrevious()
+	public static function getApiError()
 	{ 
-		return Hybrid_Auth::storage()->get( "hauth_session.error.previous" );
+		return Hybrid_Auth::storage()->get( "hauth_session.error.apierror" );
 	}
 }

@@ -70,7 +70,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		$this->refreshToken();
 
 		$response = $this->api->api( "https://www.googleapis.com/plus/v1/people/me" );
-		
+
 		if ( ! isset( $response->id ) || isset( $response->error ) ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an invalid response.", 6 );
 		}
@@ -85,7 +85,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		$this->user->profile->gender        = (property_exists($response,'gender'))?$response->gender:""; 
 		$this->user->profile->language      = (property_exists($response,'locale'))?$response->locale:'';
 		$this->user->profile->email         = (property_exists($response,'email'))?$response->email:'';
-		
+
 		if (property_exists($response, 'emails')) {
 			if (count($response->emails) == 1) {
 				$this->user->profile->email = $response->emails[0]->value;

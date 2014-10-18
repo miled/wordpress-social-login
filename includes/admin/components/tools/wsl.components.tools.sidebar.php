@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -43,8 +43,11 @@ function wsl_component_tools_sidebar_what_is_this()
 
 		<div style="padding:0 20px;">
 			<p>
-				<?php _wsl_e( '', 'wordpress-social-login') ?>.
-			</p>  
+				<?php _wsl_e( 'Here you can found a set of tools to help you find and hopefully fix any issue you may encounter', 'wordpress-social-login') ?>.
+			</p>
+			<p>
+				<?php _wsl_e( 'You can also delete all Wordpress Social Login tables and stored options from the <b>Uninstall</b> section down below', 'wordpress-social-login') ?>.
+			</p>
 		</div> 
 	</div>
 </div>

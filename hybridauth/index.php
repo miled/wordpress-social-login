@@ -12,21 +12,14 @@
 
 //-
 
-$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+/*
+	include_once( '/path/to/file/wp-load.php' );
+	defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' );
+	add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
+	do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
+*/
 
-if( file_exists( $parse_uri[0] . 'wp-load.php' ) )
-{
-	include_once( $parse_uri[0] . 'wp-load.php' );
-
-	if( get_option( 'wsl_settings_debug_mode_enabled' ) )
-	{
-		define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
-
-		add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
-
-		do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
-	}
-}
+//-
 
 if( defined( 'WORDPRESS_SOCIAL_LOGIN_CUSTOM_ENDPOINT' ) && ! isset( $_REQUEST['hauth_start'] ) ) 
 {
@@ -46,6 +39,6 @@ require_once( "Hybrid/Endpoint.php"  );
 
 //-
 
-require_once( "WSL_Endpoint.php" );
+require_once( "endpoints/WSL_Endpoint.php" );
 
 WSL_Hybrid_Endpoint::process();

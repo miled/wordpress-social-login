@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -110,9 +110,11 @@ function wsl_component_loginwidget_sidebar_custom_integration()
 			</p>
 
 			<p>
-				<b><?php _wsl_e('Note', 'wordpress-social-login') ?>:</b>
+				<b><?php _wsl_e('Notes', 'wordpress-social-login') ?>:</b>
 				<br />
-				<?php _wsl_e('WSL Widget will only show up for non connected users', 'wordpress-social-login') ?>.
+				1. <?php _wsl_e('In case you are using a caching plugin on your website, you might need to empty the cache for any change to take effect', 'wordpress-social-login') ?>.
+				<br />
+				2. <?php _wsl_e('WSL Widget will only show up for non connected users', 'wordpress-social-login') ?>.
 			</p>
 
 			<p>

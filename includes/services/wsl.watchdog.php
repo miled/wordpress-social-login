@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /** 
@@ -26,8 +26,6 @@ function wsl_watchdog_init()
 		return;
 	}
 
-	define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
-
 	add_action( 'wsl_process_login_start', 'wsl_watchdog_wsl_process_login' );
 	add_action( 'wsl_process_login_begin_start', 'wsl_watchdog_wsl_process_login_begin_start' );
 	add_action( 'wsl_process_login_end_start', 'wsl_watchdog_wsl_process_login_end_start' );
@@ -48,7 +46,7 @@ function wsl_watchdog_init()
 	add_action( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'wsl_watchdog_wsl_hook_process_login_before_wp_set_auth_cookie', 10, 4 );
 	add_action( 'wsl_hook_process_login_before_wp_safe_redirect', 'wsl_watchdog_wsl_hook_process_login_before_wp_safe_redirect', 10, 5 );
 
-	add_action( 'wsl_process_login_render_error_page', 'wsl_watchdog_wsl_process_login_render_error_page', 10, 5 );
+	add_action( 'wsl_process_login_render_error_page', 'wsl_watchdog_wsl_process_login_render_error_page', 10, 4 );
 	add_action( 'wsl_process_login_render_notice_page', 'wsl_watchdog_wsl_process_login_render_notice_page', 10, 1 );
 
 	add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
@@ -228,9 +226,9 @@ function wsl_watchdog_wsl_hook_process_login_before_wp_safe_redirect( $user_id, 
 
 // --------------------------------------------------------------------
 
-function wsl_watchdog_wsl_process_login_render_error_page( $e, $config, $hybridauth, $provider, $adapter )
+function wsl_watchdog_wsl_process_login_render_error_page( $e, $config, $provider, $adapter )
 {
-	wsl_watchdog_log_action( 'wsl_process_login_render_error_page', array( $e, $config, $hybridauth, $provider, $adapter ) );
+	wsl_watchdog_log_action( 'wsl_process_login_render_error_page', array( $e, $config, $provider, $adapter ) );
 }
 
 // --------------------------------------------------------------------

@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://hybridauth.sourceforge.net/wsl/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -26,7 +26,6 @@ function wsl_check_requirements()
 		|| ! isset( $_SESSION["wsl::plugin"] )
 		|| ! function_exists('curl_init')
 		|| ! function_exists('json_decode')
-		||   ini_get('register_globals')
 	)
 	{
 		return false;
@@ -65,9 +64,9 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "visible" => true  , "component" => "contacts"      ),
 	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "visible" => true  , "component" => "buddypress"    ),
 
-	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
+	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true, 'ico' => 'help.png'  ), 
+	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true, 'ico' => 'tools.png' ), 
 	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "visible" => false , "component" => "core"           , "pull-right" => true  ), 
-	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
 	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true  ), 
 );
 
@@ -235,8 +234,9 @@ function wsl_register_setting()
 	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_facebook'                         ); 
 	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_google'                           ); 
 	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_twitter'                          ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_live'                             ); 
 	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_linkedin'                         ); 
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_live'                             ); 
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_vkontakte'                        ); 
 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_registration_enabled'                     ); 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_authentication_enabled'                   ); 

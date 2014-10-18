@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/index.html | http://github.com/hybridauth/WordPress-Social-Login
-*    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
+* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -44,7 +44,7 @@ function wsl_component_help_reference()
  
 	<hr />
 	
-	<h3 style="padding-left:0px"><?php _wsl_e("Credits", 'wordpress-social-login') ?></h3>
+	<h3 style="padding-left:0px"><?php _wsl_e("Authors", 'wordpress-social-login') ?></h3>
 	<p>
 		<?php _wsl_e('WordPress Social Login was created by <a href="http://profiles.wordpress.org/miled/" target="_blank">Mohamed Mrassi</a> (a.k.a Miled) and <a href="https://miled.github.io/wordpress-social-login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>.
 	</p>
@@ -62,7 +62,7 @@ function wsl_component_help_reference()
 
 	<ul style="margin-left:45px;line-height: 20px;">
 		<li><?php _wsl_e("The MIT License (MIT) is compatible with The GNU Public License (GPL) but it is more liberal", 'wordpress-social-login') ?>.</li>
-		<li><?php _wsl_e("Do no hold the plugin author liable. This software is provided AS IS, WITHOUT WARRANTY OF ANY KIND", 'wordpress-social-login') ?>.</li>
+		<li><?php _wsl_e("Do no hold the plugin authors liable. This software is provided AS IS, WITHOUT WARRANTY OF ANY KIND", 'wordpress-social-login') ?>.</li>
 		<li><?php _wsl_e("You are allowed to use this plugin for whatever purpose, including in commercial projects, as long as the copyright header inside the code is left intact", 'wordpress-social-login') ?>.</li>
 	</ul>
 

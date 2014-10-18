@@ -117,7 +117,7 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
 		}
 
 		if ( ! isset( $tokens["oauth_token"] ) ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token.", 5 );
 		}
 
 		$this->token( "request_token"       , $tokens["oauth_token"] ); 
@@ -132,13 +132,19 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
 	/**
 	* finish login step 
 	*/ 
+
 	function loginFinish()
 	{
+		$denied         = (array_key_exists('denied',$_REQUEST))?$_REQUEST['denied']:"";
 		$oauth_token    = (array_key_exists('oauth_token',$_REQUEST))?$_REQUEST['oauth_token']:"";
 		$oauth_verifier = (array_key_exists('oauth_verifier',$_REQUEST))?$_REQUEST['oauth_verifier']:"";
 
+		if ( $denied ){
+			throw new Exception( "Authentication denied! {$this->providerId} returned denied token: " . htmlentities( $denied ), 5 );
+		}
+
 		if ( ! $oauth_token || ! $oauth_verifier ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth verifier.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_verifier.", 5 );
 		}
 
 		// request an access token
@@ -154,7 +160,7 @@ class Hybrid_Provider_Model_OAuth1 extends Hybrid_Provider_Model
 
 		// we should have an access_token, or else, something has gone wrong
 		if ( ! isset( $tokens["oauth_token"] ) ){
-			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid access token.", 5 );
+			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token.", 5 );
 		}
 
 		// we no more need to store request tokens

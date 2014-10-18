@@ -234,6 +234,11 @@ class OAuth1Client{
 		curl_close ($ci);
 
 		//-
+		if( $this->http_code != 200 )
+		{
+			Hybrid_Error::setApiError( $this->http_code . '. ' . preg_replace('/\s+/', ' ', $response ) );
+		}
+
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
 			do_action( 'wsl_log_provider_api_call', 'OAuth1', $url, $method, $postfields, $this->http_code, $this->http_info, $response );

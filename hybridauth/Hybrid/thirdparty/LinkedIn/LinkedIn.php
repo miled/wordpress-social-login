@@ -710,11 +710,17 @@ class LinkedIn {
       $return_data['oauth']['string'] = $oauth_req->base_string;
 
 	//-
-	$_SESSION['wsl::api']         = array( 'CLIENT' => 'OAuth1.LinkedIn' );
-	$_SESSION['wsl::api']['URL']  = $url;
-	$_SESSION['wsl::api']['POST'] = $data;
-	$_SESSION['wsl::api']['CODE'] = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-	$_SESSION['wsl::api']['RESPONSE'] = $return_data['linkedin'];
+	$http_code = curl_getinfo($handle, CURLINFO_HTTP_CODE);
+
+	if( $http_code != 200 )
+	{
+		Hybrid_Error::setApiError( $http_code . '. ' . preg_replace('/\s+/', ' ', $return_data['linkedin'] ) );
+	}
+
+	if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
+	{
+		do_action( 'wsl_log_provider_api_call', 'OAuth1.LinkedIn', $url, $method, $data, $http_code, $this->http_info, $return_data['linkedin'] );
+	}
 	//-
         
       // check for throttling

@@ -34,7 +34,7 @@ class OAuth2Client
 	public $curl_header              = array();
 	public $curl_useragent           = "OAuth/2 Simple PHP Client v0.1; HybridAuth http://hybridauth.sourceforge.net/";
 	public $curl_authenticate_method = "POST";
-        public $curl_proxy               = null;
+    public $curl_proxy               = null;
 
 	//--
 
@@ -238,6 +238,11 @@ class OAuth2Client
 		curl_close ($ch);
 
 		//-
+		if( $this->http_code != 200 )
+		{
+			Hybrid_Error::setApiError( $this->http_code . '. ' . preg_replace('/\s+/', ' ', $response ) );
+		}
+
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
 			do_action( 'wsl_log_provider_api_call', 'OAuth2', $url, $type, $params, $this->http_code, $this->http_info, $response );
