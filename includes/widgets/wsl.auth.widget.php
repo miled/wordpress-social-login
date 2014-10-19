@@ -9,10 +9,10 @@
 /**
 * Authentication widgets generator
 *
-* http://hybridauth.sourceforge.net/wsl/widget.html
-* http://hybridauth.sourceforge.net/wsl/themes.html
-* http://hybridauth.sourceforge.net/wsl/developer-api-actions.html
-* http://hybridauth.sourceforge.net/wsl/developer-api-filters.html
+* http://miled.github.io/wordpress-social-login/widget.html
+* http://miled.github.io/wordpress-social-login/themes.html
+* http://miled.github.io/wordpress-social-login/developer-api-actions.html
+* http://miled.github.io/wordpress-social-login/developer-api-filters.html
 */
 
 // Exit if accessed directly
@@ -164,7 +164,7 @@ function wsl_render_login_form()
 	{
 ?>
 		<p style="background-color: #FFFFE0;border:1px solid #E6DB55;padding:5px;">
-			<?php _wsl_e( '<strong style="color:red;">WordPress Social Login is not configured yet!</strong><br />Please visit the <strong>Settings\ WP Social Login</strong> administration page to configure this plugin.<br />For more information please refer to the plugin <a href="http://miled.github.io/wordpress-social-login">online user guide</a>', 'wordpress-social-login') ?>.
+			<?php _wsl_e( '<strong>WordPress Social Login is not configured yet</strong>.<br />Please navigate to <strong>Settings &gt; WP Social Login</strong> to configure this plugin.<br />For more information, refer to the <a href="http://miled.github.io/wordpress-social-login">online user guide</a>.', 'wordpress-social-login') ?>.
 		</p>
 		<style>#wp-social-login-connect-with{display:none;}</style>
 <?php

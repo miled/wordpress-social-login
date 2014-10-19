@@ -24,7 +24,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 *
 * https://wordpress.org/plugins/social-connect/
 */
-function wsl_get_user_social_connect( $provider, $identifier )
+function wsl_user_converter_fetch_social_connect( $provider, $identifier )
 {
 	if( ! class_exists( 'WP_User_Query', false ) )
 	{
@@ -33,7 +33,7 @@ function wsl_get_user_social_connect( $provider, $identifier )
 
 	$user_query = new WP_User_Query(array(
 		'meta_key'   => 'social_connect_' . strtolower( $provider ) . '_id',
-		'meta_value' => identifier,
+		'meta_value' => $identifier,
 	));
 
 	$user_data = $user_query->get_results();
@@ -53,7 +53,7 @@ function wsl_get_user_social_connect( $provider, $identifier )
 *
 * https://wordpress.org/plugins/super-socializer/
 */
-function wsl_get_user_the_champ( $provider, $identifier )
+function wsl_user_converter_fetch_thechamp( $provider, $identifier )
 {
 	if( ! class_exists( 'WP_User_Query', false ) )
 	{
@@ -87,21 +87,7 @@ function wsl_get_user_the_champ( $provider, $identifier )
 /**
 *
 */
-function wsl_get_user_nextend( $provider, $identifier )
-{
-	if( in_array( $provider, array( 'Facebook', 'Google', 'Twitter' ) ) )
-	{
-		return;
-	}
-
-}
-
-// --------------------------------------------------------------------
-
-/**
-*
-*/
-function wsl_get_user_fb_auto( $provider, $identifier )
+function wsl_user_converter_fetch_fbauto( $provider, $identifier )
 {
 	if( 'Facebook' != $provider )
 	{
@@ -131,21 +117,7 @@ function wsl_get_user_fb_auto( $provider, $identifier )
 /**
 *
 */
-function wsl_get_user_fb_all( $provider, $identifier )
-{
-	if( 'Facebook' != $provider )
-	{
-		return;
-	}
-
-}
-
-// --------------------------------------------------------------------
-
-/**
-*
-*/
-function wsl_get_user_login_radius( $provider, $identifier )
+function wsl_user_converter_fetch_loginradius( $provider, $identifier )
 {
 	if( ! class_exists( 'WP_User_Query', false ) )
 	{
@@ -155,6 +127,40 @@ function wsl_get_user_login_radius( $provider, $identifier )
 	$user_query = new WP_User_Query(array(
 		'meta_key'   => strtolower( $provider ) . 'Lrid',
 		'meta_value' => $identifier,
+	));
+
+	$user_data = $user_query->get_results();
+
+	if( count( $user_data ) == 1 )
+	{
+		return $user_data[0]->ID;
+	}
+}
+
+// --------------------------------------------------------------------
+
+/**
+*
+*/
+function wsl_user_converter_fetch_janrain( $provider, $identifier )
+{
+	if( ! class_exists( 'WP_User_Query', false ) )
+	{
+		return;
+	}
+
+	$user_query = new WP_User_Query(array(
+		'meta_query' => array(
+			'relation' => 'AND',
+			0 => array(
+				'key'     => 'rpx_identifier',
+				'value'   => $identifier, 
+			),
+			1 => array(
+				'key'     => 'rpx_provider',
+				'value'   =>  strtolower( $provider ), 
+			)
+		)
 	));
 
 	$user_data = $user_query->get_results();

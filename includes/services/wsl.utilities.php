@@ -147,230 +147,226 @@ function wsl_display_dev_mode_debugging_area()
 {
 	global $wpdb, $wp_actions , $wp_filter;
 ?>
-	<style>
-		.wsl-dev-nonselectsql {
-			color: #a0a !important;
-		}
-		.wsl-dev-expensivesql {
-			color: #f44 !important;
-		}
-		.wsl-dev-optionfunc {
-			color: #4a4 !important;
-		}
-		.wsl-dev-wslfunc {
-			color: #1468fa !important;
-		}
-		.wsl-dev-nonwslfunc {
-			color: #a0a !important;
-		}
-		.wsl-dev-usedhook, .wsl-dev-usedhook a {
-			color: #1468fa;
-		} 
-		.wsl-dev-usedwslhook {
-			color: #a0a !important;
-		} 
-		.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
-			color: #a3a3a3 !important;
-		}
-		.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
-			color: #4a4 !important;
-		}
-		.wsl-dev-table { 
-			width:100%
-			border: 1px solid #e5e5e5;
-			box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
-			border-spacing: 0;
-			clear: both;
-			margin: 0;
-			width: 100%;
-		}
-		.wsl-dev-table td, .wsl-dev-table th {
-			border: 1px solid #dddddd;
-			padding: 8px 10px; 
-			background-color: #fff;
-			text-align: left;
-		}
-	</style>
+<style>
+.wsl-dev-nonselectsql {
+	color: #a0a !important;
+}
+.wsl-dev-expensivesql {
+	color: #f44 !important;
+}
+.wsl-dev-optionfunc {
+	color: #4a4 !important;
+}
+.wsl-dev-wslfunc {
+	color: #1468fa !important;
+}
+.wsl-dev-nonwslfunc {
+	color: #a0a !important;
+}
+.wsl-dev-usedhook, .wsl-dev-usedhook a {
+	color: #1468fa;
+} 
+.wsl-dev-usedwslhook {
+	color: #a0a !important;
+} 
+.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
+	color: #a3a3a3 !important;
+}
+.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
+	color: #4a4 !important;
+}
+.wsl-dev-table { 
+	width:100%
+	border: 1px solid #e5e5e5;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
+	border-spacing: 0;
+	clear: both;
+	margin: 0;
+	width: 100%;
+}
+.wsl-dev-table td, .wsl-dev-table th {
+	border: 1px solid #dddddd;
+	padding: 8px 10px; 
+	background-color: #fff;
+	text-align: left;
+}
+</style>
 
-	<?php
-		if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
-		{
-			?>
-				<h4>Provider API Response</h4>
-				<table class="wsl-dev-table">
-					<tr>
-						<td>
-							<?php echo Hybrid_Error::getApiError(); ?>
-						</td> 
-					</tr>
-				</table>
-			<?php
-		}
-	?>
+<?php
+	if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
+	{
+		?>
+			<h4>Provider API Error</h4>
+			<table class="wsl-dev-table">
+				<tr>
+					<td>
+						<?php echo Hybrid_Error::getApiError(); ?>
+					</td> 
+				</tr>
+			</table>
+		<?php
+	}
+?>
 
 	<h4>SQL Queries</h4>
 	<table class="wsl-dev-table">
-		<tbody>
-			<tr>
-				<td colspan="3">
-					1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)
-					<br />
-					2. Calls for get_option() don't necessarily result on a query to the database. WP use both cache and wp_load_alloptions() to load all options at once. Hence, it won't be shown here.
-				</td> 
-			</tr>
-			<?php
-				$queries = $wpdb->queries; 
-				
-				$total_wsl_queries = 0;
-				$total_wsl_queries_time = 0;
-				
-				if( $queries )
+		<tr>
+			<td colspan="3">
+				1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)
+				<br />
+				2. Calls for get_option() don't necessarily result on a query to the database. WP use both cache and wp_load_alloptions() to load all options at once. Hence, it won't be shown here.
+			</td> 
+		</tr>
+		<?php
+			$queries = $wpdb->queries; 
+			
+			$total_wsl_queries = 0;
+			$total_wsl_queries_time = 0;
+			
+			if( $queries )
+			{
+				foreach( $queries as $item )
 				{
-					foreach( $queries as $item )
+					$sql    = trim( $item[0] );
+					$time   = $item[1];
+					$stack  = $item[2];
+					
+					$sql = str_ireplace( array( ' FROM ', ' WHERE ' , ' LIMIT ' , ' GROUP BY ' , ' ORDER BY ' , ' SET ' ), ARRAY( "\n" . 'FROM ', "\n" . 'WHERE ', "\n" . 'LIMIT ', "\n" . 'GROUP BY ', "\n" . 'ORDER BY ', "\n" . 'SET ' ), $sql );
+
+					# https://wordpress.org/plugins/query-monitor/
+					$callers   = explode( ',', $stack );
+					$caller    = trim( end( $callers ) );
+
+					if ( false !== strpos( $caller, '(' ) )
+						$caller_name = substr( $caller, 0, strpos( $caller, '(' ) ) . '()';
+					else
+						$caller_name = $caller;
+
+					if( stristr( $caller_name, 'wsl_' ) || stristr( $sql, 'wsl_' ) || stristr( $stack, 'wsl_' ) )
 					{
-						$sql    = $item[0];
-						$time   = $item[1];
-						$stack  = $item[2];
-						
-						$sql = str_ireplace( array( ' FROM ', ' WHERE ' , ' LIMIT ' , ' GROUP BY ' , ' ORDER BY ' , ' SET ' ), ARRAY( "\n" . 'FROM ', "\n" . 'WHERE ', "\n" . 'LIMIT ', "\n" . 'GROUP BY ', "\n" . 'ORDER BY ', "\n" . 'SET ' ), $sql );
+						?>
+							<tr>
+								<td valign="top" width="450">
+									<?php if( stristr( $caller_name, 'wsl_' ) ): ?>
+										<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-wslfunc"><?php echo $caller_name; ?></a>
+									<?php else: ?>
+										<a href="https://developer.wordpress.org/?s=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-nonwslfunc<?php if( stristr( $caller_name, '_option' ) ) echo "- wsl-dev-optionfunc"; ?>"><?php echo $caller_name; ?></a>
+									<?php endif; ?>
 
-						# https://wordpress.org/plugins/query-monitor/
-						$callers   = explode( ',', $stack );
-						$caller    = trim( end( $callers ) );
-
-						if ( false !== strpos( $caller, '(' ) )
-							$caller_name = substr( $caller, 0, strpos( $caller, '(' ) ) . '()';
-						else
-							$caller_name = $caller;
-
-						if( stristr( $caller_name, 'wsl_' ) || stristr( $sql, 'wsl_' ) || stristr( $stack, 'wsl_' ) )
-						{
-							?>
-								<tr>
-									<td valign="top" width="450">
-										<?php if( stristr( $caller_name, 'wsl_' ) ): ?>
-											<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-wslfunc"><?php echo $caller_name; ?></a>
-										<?php else: ?>
-											<a href="https://developer.wordpress.org/?s=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-nonwslfunc<?php if( stristr( $caller_name, '_option' ) ) echo "- wsl-dev-optionfunc"; ?>"><?php echo $caller_name; ?></a>
-										<?php endif; ?>
-
-										<p style="font-size:11px; margin-left:10px">
-											<?php
-												if(  count( $callers ) )
+									<p style="font-size:11px; margin-left:10px">
+										<?php
+											if(  count( $callers ) )
+											{
+												# God damn it
+												for( $i = count( $callers ) - 1; $i > 0; $i-- )
 												{
-													# God damn it
-													for( $i = count( $callers ) - 1; $i > 0; $i-- )
+													if( ! stristr( $callers[$i], '.php' ) && ! stristr( $callers[$i],  'call_user_func_' ) )
 													{
-														if( ! stristr( $callers[$i], '.php' ) && ! stristr( $callers[$i],  'call_user_func_' ) )
-														{
-															echo "#$i &nbsp; " . $callers[$i] . '<br />';
-														}
+														echo "#$i &nbsp; " . $callers[$i] . '<br />';
 													}
 												}
-											?>
-										</p>
-									</td>
-									<td valign="top" class="<?php if( ! stristr( '#' . $sql, '#select ' ) ) echo 'wsl-dev-nonselectsql'; ?>"><?php echo nl2br( $sql ); ?></td>
-									<td valign="top" width="50" nowrap class="<?php if( $time > 0.05 ) echo 'wsl-dev-expensivesql'; ?>"><?php echo number_format( $time, 4, '.', '' ); ?></td>
-								</tr>   
-							<?php 
+											}
+										?>
+									</p>
+								</td>
+								<td valign="top" class="<?php if( ! stristr( '#' . $sql, '#select ' ) ) echo 'wsl-dev-nonselectsql'; ?>"><?php echo nl2br( $sql ); ?></td>
+								<td valign="top" width="50" nowrap class="<?php if( $time > 0.05 ) echo 'wsl-dev-expensivesql'; ?>"><?php echo number_format( $time, 4, '.', '' ); ?></td>
+							</tr>   
+						<?php 
 
-							$total_wsl_queries++;
-							$total_wsl_queries_time += $time;
-						}
+						$total_wsl_queries++;
+						$total_wsl_queries_time += $time;
 					}
 				}
-			?>
-			<tr>
-				<td colspan="2">Total SQL Queries by WSL : <?php echo $total_wsl_queries; ?></td>
-				<td width="50" nowrap><?php echo number_format( $total_wsl_queries_time, 4, '.', '' ); ?></td>
-			</tr>
-		</tbody>
+			}
+		?>
+		<tr>
+			<td colspan="2">Total SQL Queries by WSL : <?php echo $total_wsl_queries; ?></td>
+			<td width="50" nowrap><?php echo number_format( $total_wsl_queries_time, 4, '.', '' ); ?></td>
+		</tr>
 	</table>
 
 	<h4>Hooks</h4>
 	<table class="wsl-dev-table">
-		<tbody>
-			<?php
-				if( $wp_actions )
+		<?php
+			if( $wp_actions )
+			{
+				foreach( $wp_actions as $name => $count )
 				{
-					foreach( $wp_actions as $name => $count )
+					if ( isset( $wp_filter[$name] ) )
 					{
-						if ( isset( $wp_filter[$name] ) )
-						{
-							$action = $wp_filter[$name]; 
+						$action = $wp_filter[$name]; 
 
-							if( $action )
+						if( $action )
+						{
+							foreach( $action as $priority => $callbacks )
 							{
-								foreach( $action as $priority => $callbacks )
-								{
-									foreach( $callbacks as $callback )
-									{ 
-										if( isset( $callback['function'] ) && is_string( $callback['function'] ) )
+								foreach( $callbacks as $callback )
+								{ 
+									if( isset( $callback['function'] ) && is_string( $callback['function'] ) )
+									{
+										if( stristr( $callback['function'], 'wsl_' ) || stristr( $name, 'wsl_' ) )
 										{
-											if( stristr( $callback['function'], 'wsl_' ) || stristr( $name, 'wsl_' ) )
-											{
-												?>
-													<tr>
-														<td valign="top" width="270" nowrap class="wsl-dev-usedhook">
-															<?php
-																if( stristr( $name, 'wsl_' ) )
-																{
-																	?>
-																		<a class="wsl-dev-usedwslhook" href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
-																	<?php
-																}
-																else
-																{
-																	echo $name ;
-																}
-															?>
-														</td>
-														<td valign="top" class="wsl-dev-hookcallback">
-															<?php
-																if( stristr( $callback['function'], 'wsl_' ) )
-																{
-																	?>
-																		<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $callback['function'] ; ?>" target="_blank"><?php echo $callback['function'] ; ?></a>
-																	<?php
-																}
-																else
-																{
-																	echo $callback['function'] ;
-																}
-															?>
-														</td>
-														<td valign="top" width="50">
-															<?php echo $priority; ?>
-														</td>
-														<td valign="top" width="50">
-															<?php echo $callback['accepted_args'] ; ?>
-														</td>
+											?>
+												<tr>
+													<td valign="top" width="270" nowrap class="wsl-dev-usedhook">
+														<?php
+															if( stristr( $name, 'wsl_' ) )
+															{
+																?>
+																	<a class="wsl-dev-usedwslhook" href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
+																<?php
+															}
+															else
+															{
+																echo $name ;
+															}
+														?>
 													</td>
-												<?php   
-											} // I hit a record
-										} 
-									}
+													<td valign="top" class="wsl-dev-hookcallback">
+														<?php
+															if( stristr( $callback['function'], 'wsl_' ) )
+															{
+																?>
+																	<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $callback['function'] ; ?>" target="_blank"><?php echo $callback['function'] ; ?></a>
+																<?php
+															}
+															else
+															{
+																echo $callback['function'] ;
+															}  // I hit a record
+														?>
+													</td>
+													<td valign="top" width="50">
+														<?php echo $priority; ?>
+													</td>
+													<td valign="top" width="50">
+														<?php echo $callback['accepted_args'] ; ?>
+													</td>
+												</tr>
+											<?php   
+										}
+									} 
 								}
 							}
 						}
-						elseif( stristr( $name, 'wsl_' )  )
-						{
-							?>
-								<tr>
-									<td valign="top" width="270" nowrap class="wsl-dev-unusedhook">
-										<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
-									</td>
-									<td></td>
-									<td></td>
-									<td></td>
+					}
+					elseif( stristr( $name, 'wsl_' )  )
+					{
+						?>
+							<tr>
+								<td valign="top" width="270" nowrap class="wsl-dev-unusedhook">
+									<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
 								</td>
-							<?php   
-						}
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						<?php   
 					}
 				}
-			?>
-		</tbody>
+			}
+		?>
 	</table> 
 
 	<h4>Wordpress</h4>
@@ -437,7 +433,6 @@ function wsl_generate_backtrace()
     $e = new Exception();
     $trace = explode( "\n", $e->getTraceAsString() );
 
-    // array_shift($trace);
     array_pop($trace);
     $length = count($trace);
     $result = array();

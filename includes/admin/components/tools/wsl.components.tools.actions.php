@@ -107,7 +107,7 @@ function wsl_component_tools_debug_mode()
 	</h3>
 	<div class="inside">
 		<p>
-			<?php _wsl_e('If set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em>. The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented', 'wordpress-social-login') ?>.
+			<?php _wsl_e('The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented. When <b>Debug mode</b> is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> ', 'wordpress-social-login') ?>.
 		</p>
 
 		<p>

@@ -200,7 +200,6 @@ function wsl_component_loginwidget_setup_custom_css()
 	.kwd, .prettyprint .tag { color: #1e347b; }
 	.typ, .atn, .dec, .var { color: teal; }
 	.pln { color: #48484c; }
-
 	.prettyprint {
 	  padding: 8px;
 	  background-color: #f7f7f9;
@@ -211,8 +210,6 @@ function wsl_component_loginwidget_setup_custom_css()
 		 -moz-box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
 			  box-shadow: inset 40px 0 0 #fbfbfc, inset 41px 0 0 #ececf0;
 	}
-
-	/* Specify class=linenums on a pre to get line numbering */
 	ol.linenums {
 	  margin: 0 0 0 33px; /* IE indents via margin-left */
 	}

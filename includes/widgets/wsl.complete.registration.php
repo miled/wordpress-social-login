@@ -25,7 +25,7 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email ); 
 	$hybridauth_user_login       = sanitize_user( $hybridauth_user_profile->displayName, true );
 	$hybridauth_user_avatar      = $hybridauth_user_profile->photoURL;
-	$hybridauth_user_website     = $hybridauth_user_profile->websiteURL;
+	$hybridauth_user_website     = $hybridauth_user_profile->webSiteURL;
 	$hybridauth_user_link        = $hybridauth_user_profile->profileURL;
 
 	$request_user_login          = isset( $_REQUEST["user_login"] ) ? $_REQUEST["user_login"] : '';
@@ -284,14 +284,14 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 
 				<div id="welcome">
 					<p>
-						Hi <b><?php echo htmlentities( $hybridauth_user_profile->displayName ); ?></b>, you're one step away from completing your account.
+						<?php printf( _wsl__( "Hi %s, you're one step away from completing your account.", 'wordpress-social-login' ), htmlentities( $hybridauth_user_profile->displayName ) ); ?>
 					</p>
 					<p>
-						Please, fill in your information in the form below to continue.
+						<?php _wsl_e( "Please, fill in your information in the form below to continue", 'wordpress-social-login' ); ?>.
 					</p>
 				</div>
 
-				<form method="post" action="wp-login.php" id="login-form"> 
+				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form"> 
 					<table id="mapping-complete-info" border="0">
 						<tr>
 							<td>
@@ -317,7 +317,7 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 									{
 								?>
 									<p>
-										<label for="user_login"><?php _wsl_e( "Username", 'wordpress-social-login' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo htmlentities( $request_user_login ); ?>" size="25" /></label>
+										<label for="user_login"><?php _wsl_e( "Username", 'wordpress-social-login' ); ?><br><input type="text" name="user_login" id="user_login" class="input" value="<?php echo $request_user_login; ?>" size="25" /></label>
 									</p>
 								<?php
 									}
@@ -348,6 +348,14 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 				<a href="<?php echo site_url(); ?>">&#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo('name') ); ?></a>
 			</p>
 		</div>
+
+		<?php 
+			// Development mode on?
+			if( get_option( 'wsl_settings_development_mode_enabled' ) )
+			{
+				wsl_display_dev_mode_debugging_area();
+			}
+		?> 
 	</body>
 </html>
 <?php

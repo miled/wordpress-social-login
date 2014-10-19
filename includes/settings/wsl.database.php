@@ -88,12 +88,6 @@ function wsl_database_migration_process()
 			KEY user_id (user_id)
 		)"; 
 	dbDelta( $sql );
-
-	// migrate steam users id to id64
-	$sql = "UPDATE " . $wslusersprofiles . "
-			SET identifier = REPLACE( identifier, 'http://steamcommunity.com/openid/id/', '' )
-			WHERE provider = 'Steam'";
-	$wpdb->query( $sql );
 }
 
 // --------------------------------------------------------------------
