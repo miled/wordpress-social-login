@@ -13,6 +13,8 @@
 //-
 
 /*
+	In case you want to debug apis call made by hybridauth you can uncomment the LOCs below. 
+
 	include_once( '/path/to/file/wp-load.php' );
 	defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' );
 	add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );

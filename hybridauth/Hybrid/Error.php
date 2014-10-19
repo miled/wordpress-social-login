@@ -78,6 +78,6 @@ class Hybrid_Error
 	*/
 	public static function getApiError()
 	{ 
-		return Hybrid_Auth::storage()->get( "hauth_session.error.apierror" );
+		return Hybrid_Auth::storage() ? Hybrid_Auth::storage()->get( "hauth_session.error.apierror" ) : '';
 	}
 }

@@ -86,16 +86,22 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 	public static function dieError( $message )
 	{
 		#{{{
-		# This should be executed only once every three millennium
-		# It means either : 1. Php Sessions ain't working as expected or expired. 2. A crawler got lost. 3. Someone is having fun forging urls.
-		# If wp-load.php is not included in the index.php, then do it manually. From now on, you're on your own. Goodbye.
-		if( function_exists( 'get_option' ) ){
-			if( get_option( 'wsl_settings_development_mode_enabled' ) ){
+		# This 5 LLOC should be executed only once every three millennium
+		# It means either : 1. Php Sessions ain't working as expected. 2. A crawler got lost. 3. Someone is having fun forging urls.
+		# If wp-load.php does exists in another directory, change it manually. From now on, you're on your own. Goodbye.
+		$parse_uri = explode( 'wp-content', $_SERVER['SCRIPT_FILENAME'] );
+	
+		if( file_exists( $parse_uri[0] . 'wp-load.php' ) )
+		{
+			require_once( $parse_uri[0] . 'wp-load.php' );
+	
+			if( get_option( 'wsl_settings_development_mode_enabled' ) )
+			{
 				wsl_display_dev_mode_debugging_area();
 			}
 		}
 		#}}}
-
+	
 		die( $message );
 	}
 }
