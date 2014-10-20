@@ -302,10 +302,10 @@ function wsl_process_login_end()
 	do_action( "wsl_process_login_end_start" );
 
 	// HOOKABLE: set a custom Redirect URL
-	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', wsl_process_login_get_redirect_to() ) ;
+	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', wsl_process_login_get_redirect_to() );
 
 	// HOOKABLE: selected provider name
-	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() ) ;
+	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() );
 
 	// provider is enabled?
 	if( ! get_option( 'wsl_settings_' . $provider . '_enabled' ) )
@@ -363,7 +363,7 @@ function wsl_process_login_end()
 *    1. Grab the user profile from hybridauth
 *    2. Run Bouncer::Filters if enabled (domains, emails, profiles urls)
 *    3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email
-*    4. Attempt to recognize other Social Plugins users (eg: sc, sz, nextend, fbauto, fball, wpoauth, lradius)
+*    4. Deletegate detection of user id to custom functions / hooks
 *    5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) 
 */
 function wsl_process_login_end_get_user_data( $provider, $redirect_to )
@@ -486,39 +486,10 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 	}
 
-	/* 4 Attempt to recognize other Social Plugins users */
+	/* 4 Deletegate detection of user id to custom functions / hooks */
 
-	// Bouncer::Users Converter
-	// > > not implemented yet! Planned for WSL 2.3
-	$plugins_enabled = (array) get_option( 'wsl_settings_bouncer_users_converter_enabled' );
-
-	if( $plugins_enabled )
-	{
-		if( ! $user_id && in_array( "sc", $plugins_enabled ) )
-		{
-			$user_id = wsl_user_converter_fetch_social_connect( $provider, $hybridauth_user_profile->identifier );
-		}
-
-		if( ! $user_id && in_array( "thechamp", $plugins_enabled ) )
-		{
-			$user_id = wsl_user_converter_fetch_thechamp( $provider, $hybridauth_user_profile->identifier );
-		}
-
-		if( ! $user_id && in_array( "fbauto", $plugins_enabled ) )
-		{
-			$user_id = wsl_user_converter_fetch_fbauto( $provider, $hybridauth_user_profile->identifier );
-		}
-
-		if( ! $user_id && in_array( "loginradius", $plugins_enabled ) )
-		{
-			$user_id = wsl_user_converter_fetch_loginradius( $provider, $hybridauth_user_profile->identifier );
-		}
-
-		if( ! $user_id && in_array( "janrain", $plugins_enabled ) )
-		{
-			$user_id = wsl_user_converter_fetch_janrain( $provider, $hybridauth_user_profile->identifier );
-		}
-	}
+	// HOOKABLE:
+	$user_id = apply_filters( 'wsl_hook_process_login_alter_user_id', $user_id, $provider, $hybridauth_user_profile );
 
 	/* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
 

@@ -47,8 +47,8 @@ function wsl_component_networks_sidebar_what_is_this()
 				<?php _wsl_e('<b>WordPress Social Login</b> allows your website visitors and customers to register on using their existing social account ID, eliminating the need to fill out registration forms and remember usernames and passwords', 'wordpress-social-login') ?>.
 			</p>
 			<p style="padding:0;margin:0 0 12px;">
-				<?php _wsl_e('By default, we have enabled <b>Facebook</b>, <b>Google</b> and <b>Twitter</b>, however you may add even more networks from the section bellow', 'wordpress-social-login') ?>.
-			</p>  
+				<?php _wsl_e('<b>WordPress Social Login</b> come with useful <b><a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a></b> or add-ons that can be essential for your needs', 'wordpress-social-login') ?>.
+			</p> 
 			<p style="padding:0;margin:0 0 12px;">
 				<?php _wsl_e('If you are still new to things, we recommend that you read the <b><a href="http://miled.github.io/wordpress-social-login" target="_blank">WSL user guide</a></b> and to make sure your server meet the minimum system requirements by running <b><a href="http://hybridauth.com/hawp4/wp-admin/options-general.php?page=wordpress-social-login&wslp=tools">WSL Diagnostics</a></b>', 'wordpress-social-login') ?>.
 			</p>
@@ -77,7 +77,7 @@ function wsl_component_networks_sidebar_add_more_idps()
 
 		<div style="padding:0 20px;">
 			<p style="padding:0;margin:0 0 12px;">
-				<?php _wsl_e("And you could add even more of them, <b>Just Click</b> on the icons and we will guide you through", 'wordpress-social-login') ?> :
+				<?php _wsl_e('By default, we have enabled <b>Facebook</b>, <b>Google</b> and <b>Twitter</b>, however you may add even more. <b>Just Click</b> on the icons and we will guide you through', 'wordpress-social-login') ?>.
 			</p>
 
 			<div style="width: 320px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">

@@ -17,48 +17,30 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_components_gallery()
 {
-	// not for today
-	return;
-
 	// HOOKABLE: 
 	do_action( "wsl_component_components_gallery_start" ); 
 
-	add_thickbox();
+	$response = wp_remote_get( 'http://miled.github.io/wordpress-social-login/components-2.2.2.json', array( 'timeout' => 5, 'sslverify' => false ) );
 
-	$components = array(
-		array( 
-			'name'           => 'Export User Data', 
-			'description'    => 'Simple add-on that allows you to export WSL users social profiles and contacts lists to a csv or html file.', 
-			'developer_name' => 'WordPress Social Login', 
-			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
-			'download_link'  => 'https://github.com/miled', 
-		),
-		array( 
-			'name'           => 'Emails Bans & Profiles URLs', 
-			'description'    => 'This add-on will make Bouncer even more mean and will help you kick the bad guys out.', 
-			'developer_name' => 'WordPress Social Login', 
-			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
-			'download_link'  => 'https://github.com/miled', 
-		),
-		array( 
-			'name'           => 'BuddyPress Auto-Friend', 
-			'description'    => 'Automatically create friendships for WSL users. Requires both BuddyPress and Contacts components.', 
-			'developer_name' => 'WordPress Social Login', 
-			'developer_link' => 'http://miled.github.io/wordpress-social-login/', 
-			'download_link'  => 'https://github.com/miled', 
-		),
-	);
+	if ( ! is_wp_error( $response ) )
+	{
+		$response = wp_remote_retrieve_body( $response );
+
+		$components = json_decode ( $response );
+
+		if( $components )
+		{
 ?> 
-
 <br />
 
 <h2><?php _wsl_e( "Other Components available", 'wordpress-social-login' ) ?></h2>
 
-<p>These components and add-ons can extend the functionality of WordPress Social Login.</p>
+<p><?php _wsl_e( "These components and add-ons can extend the functionality of WordPress Social Login", 'wordpress-social-login' ) ?>.</p>
 
 <?php
 	foreach( $components as $item )
 	{
+		$item = (array) $item;
 		?>
 			<div class="wsl_component_div">
 				<h3 style="margin:0px;"><?php _wsl_e( $item['name'], 'wordpress-social-login' ) ?></h3>
@@ -71,7 +53,7 @@ function wsl_component_components_gallery()
 					</p>
 				</div>
 
-				<a class="button button-secondary thickbox" href="#TB_inline?width=600&height=350&inlineId=not-yet-id" target="_blank"><?php _wsl_e( "Get this Component", 'wordpress-social-login' ) ?></a> 
+				<a class="button button-secondary" href="<?php echo $item['download_link']; ?>" target="_blank"><?php _wsl_e( "Get this Component", 'wordpress-social-login' ) ?></a> 
 			</div>	
 		<?php
 	}
@@ -84,15 +66,14 @@ function wsl_component_components_gallery()
 		<p><?php _wsl_e( "Want to build your own custom <b>WordPress Social Login</b> component? It's pretty easy. Just refer to the online developer documentation.", 'wordpress-social-login' ) ?></p>
 	</div>
 
-	<a class="button button-primary" href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank"><?php _wsl_e( "WSL Developer API", 'wordpress-social-login' ) ?></a> 
-	<a class="button button-secondary thickbox" href="#TB_inline?width=600&height=350&inlineId=not-yet-id" target="_blank"><?php _wsl_e( "Submit your WSL Component", 'wordpress-social-login' ) ?></a> 
-</div>
-
-<div id="not-yet-id" style="display:none;">
-    <h5>Not yet p</h5>
+	<a class="button button-primary"   href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank"><?php _wsl_e( "WSL Developer API", 'wordpress-social-login' ) ?></a> 
+	<a class="button button-secondary" href="http://miled.github.io/wordpress-social-login/submit-component.html" target="_blank"><?php _wsl_e( "Submit your WSL Component", 'wordpress-social-login' ) ?></a> 
 </div>
 
 <?php
+		}
+	}
+
 	// HOOKABLE: 
 	do_action( "wsl_component_components_gallery_end" );
 }

@@ -23,7 +23,6 @@ function wsl_component_bouncer_setup()
 		'profile_completion' => 'wsl_component_bouncer_setup_profile_completion',
 		'user_moderation'    => 'wsl_component_bouncer_setup_user_moderation'   , 
 		'membership_level'   => 'wsl_component_bouncer_setup_membership_level'  , 
-		// 'users_converter'    => 'wsl_component_bouncer_setup_users_converter'   , // This is planned for 2.3
 		'filters_domains'    => 'wsl_component_bouncer_setup_filters_domains'   , 
 		'filters_mails'      => 'wsl_component_bouncer_setup_filters_mails'     , 
 		'filters_urls'       => 'wsl_component_bouncer_setup_filters_urls'      , 
@@ -83,55 +82,6 @@ function wsl_component_bouncer_setup_wsl_widget()
 				</select>
 			</td>
 		  </tr> 
-		</table>
-	</div>
-</div>
-<?php
-}
-
-// --------------------------------------------------------------------	
-
-function wsl_component_bouncer_setup_users_converter()
-{
-?>
-<div class="stuffbox">
-	<h3>
-		<label><?php _wsl_e("Users Converter", 'wordpress-social-login') ?></label>
-	</h3>
-	<div class="inside"> 
-		<p> 
-			<?php _wsl_e("Here you can tell Bouncer if you were using another plugin for social authentication. When enabled, Bouncer will take a peek at the selected plugins identification registers to check for the users IDs before he decide to create new users accounts for them or not", 'wordpress-social-login') ?>.
-		</p> 
-		<p> 
-			<b><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b>
-		</p> 
-		<p class="description">
-			      1. <?php _wsl_e("Each social plugin have his own way of storing their users identifications, and Bouncer may not able to recognize every user", 'wordpress-social-login') ?>.
-			<br />2. <?php _wsl_e("Bouncer will access the other plugins identification registers in mode READ-ONLY and it won't change a thing", 'wordpress-social-login') ?>.
-			<br />3. <?php _wsl_e("Try to keep this list relevant. With each enabled plugin in the bow below, Bouncer will make an extra effort to query the database", 'wordpress-social-login') ?>.
-		</p>
-		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
-		  <tr>
-			<td width="200" valign="top" align="right"><p><strong><?php _wsl_e("Used social plugins", 'wordpress-social-login') ?> :</strong></p></td>
-			<td> 
-				<?php
-					$wsl_settings_bouncer_users_converter_enabled = (array) get_option( 'wsl_settings_bouncer_users_converter_enabled' );
-				?>
-				<select style="width:100%;height:145px;" name="wsl_settings_bouncer_users_converter_enabled[]" multiple>
-					<option value="sc"          <?php if( in_array( "sc"         , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Social Connect</option>
-					<option value="thechamp"    <?php if( in_array( "thechamp"   , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Super socializer</option>
-					<option value="nextend"     <?php if( in_array( "nextend"    , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Nextend Connect</option>
-					<option value="usersultra"  <?php if( in_array( "usersultra" , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Users Ultra</option>
-
-					<option value="fbauto"      <?php if( in_array( "fbauto"     , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>WP-FB-AutoConnect</option>
-					<option value="fball"       <?php if( in_array( "fball"      , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Facebook All</option>
-
-					<option value="loginradius" <?php if( in_array( "loginradius", $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Social Login by LoginRadius</option>
-					<option value="janrain"     <?php if( in_array( "janrain"    , $wsl_settings_bouncer_users_converter_enabled ) ) echo 'selected=""'; ?>>Social Login by Janrain</option>
-				</select> 
-				<small><?php _wsl_e("Tip", 'wordpress-social-login') ?>: <?php _wsl_e("Use Command (Mac) / Control (Win) + Left Click to select or unselect multiple fields", 'wordpress-social-login') ?>.</small>
-			</td>
-		  </tr>
 		</table>
 	</div>
 </div>

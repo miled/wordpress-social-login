@@ -112,9 +112,11 @@ function wsl_component_loginwidget_sidebar_custom_integration()
 			<p>
 				<b><?php _wsl_e('Notes', 'wordpress-social-login') ?>:</b>
 				<br />
-				1. <?php _wsl_e('In case you are using a caching plugin on your website, you might need to empty the cache for any change to take effect', 'wordpress-social-login') ?>.
+				1. <?php _wsl_e('WSL Widget will only show up for non connected users', 'wordpress-social-login') ?>.
 				<br />
-				2. <?php _wsl_e('WSL Widget will only show up for non connected users', 'wordpress-social-login') ?>.
+				2. <?php _wsl_e('In case you are using a caching plugin on your website, you might need to empty the cache for any change to take effect', 'wordpress-social-login') ?>.
+				<br />
+				3. <?php _wsl_e('Adblock Plus users with &ldquo;<a href="https://adblockplus.org/en/features#socialmedia" target="_blank">antisocial filter</a>&rdquo; enabled may not see the providers icons', 'wordpress-social-login') ?>.
 			</p>
 
 			<p>

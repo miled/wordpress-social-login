@@ -102,7 +102,6 @@ a.thumbnail:hover {
 	position: relative;
 }
 #wsl-w-panel-dismiss:before {
-    background: url("images/xit.gif") no-repeat scroll 0 17% transparent;
     content: " ";
     height: 100%;
     left: -12px;

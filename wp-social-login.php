@@ -55,7 +55,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 session_id() or session_start();
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3-rc.1";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -195,7 +195,6 @@ require_once( dirname(__FILE__) . '/includes/services/wsl.authentication.php'   
 require_once( dirname(__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
 require_once( dirname(__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
-require_once( dirname(__FILE__) . '/includes/services/wsl.user.converter.php'       ); // Planned for WSL 2.3. Attempt to recognize other Social Plugins users. 
 require_once( dirname(__FILE__) . '/includes/services/wsl.utilities.php'            ); // Few utilities and functions 
 require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php'             ); // Logging agent
 

@@ -32,6 +32,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 * WSL is now compatible with WordPress 3.0+ again.
 * WSL now support authentications through Dribbble.com.
 * Steam provider has been entirely reworked and now fully support the new Web API.
+* Steam users IDs is now converted to SteamID64 rather than http://steamcommunity.com/openid/id/{USER_STEAMID64}.
 * LinkedIn provider has been enhanced. WSL can now get the full LinkedIn's members avatars and headline.
 * WSL can now import users contacts from Vkontakte.
 * WSL admin interfaces have been reworked and can be now extended with hooks.
@@ -53,7 +54,6 @@ For more information about WordPress Social Login, refer to our [online user gui
 #### What's next
 
 - [ ] Accounts linking/mapping
-- [ ] Attempt to recognize other Social Plugins users
 - [ ] User moderation will be fully implemented and no longer needs TML.
 - [ ] ..
 
