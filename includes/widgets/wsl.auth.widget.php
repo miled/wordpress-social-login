@@ -205,7 +205,7 @@ function wsl_render_login_form()
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
 */
-function wsl_shortcode_handler($args)
+function wsl_shortcode_handler()
 {
 	return wsl_render_login_form();
 }
@@ -219,7 +219,7 @@ add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
 */
 function wsl_render_login_form_login()
 {
-	return wsl_render_login_form();
+	echo wsl_render_login_form();
 }
 
 add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
