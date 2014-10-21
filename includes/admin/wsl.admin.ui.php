@@ -451,18 +451,6 @@ add_action('admin_menu', 'wsl_admin_menu' );
 // --------------------------------------------------------------------
 
 /**
-* Display WordPress Social Login on sidebar 
-*/
-function wsl_admin_menu_sidebar()
-{
-	add_menu_page( 'WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_main' ); 
-}
- 
-add_action('admin_menu', 'wsl_admin_menu_sidebar');
-
-// --------------------------------------------------------------------
-
-/**
 * Enqueue WSL admin CSS file
 */
 function wsl_add_admin_stylesheets()

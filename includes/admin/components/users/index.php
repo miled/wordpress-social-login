@@ -21,12 +21,12 @@ function wsl_component_users()
 	do_action( "wsl_component_users_start" );
 
 	include "wsl.components.users.list.php";
-	include "wsl.components.users.profile.php";
+	include "wsl.components.users.profiles.php";
 
 	if( isset( $_REQUEST["uid"] ) && $_REQUEST["uid"] ){
 		$user_id = (int) $_REQUEST["uid"];
 
-		wsl_component_users_profile( $user_id );
+		wsl_component_users_profiles( $user_id );
 	}
 	else{
 		wsl_component_users_list();

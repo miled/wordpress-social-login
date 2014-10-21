@@ -18,26 +18,9 @@ function wsl_component_users_list()
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	// If action eq delete WSL user profiles
-	if( isset( $_REQUEST['delete'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'] ) )
-	{
-		$uid = (int) $_REQUEST['delete'];
+	add_thickbox();
 
-		$user_data = get_userdata( $uid );
-
-		if( $user_data )
-		{ 
-			wsl_delete_stored_hybridauth_user_data( $uid  ); 
-
-			?>
-				<div class="fade updated" style="margin: 0px 0px 10px;">
-					<p>
-						<?php echo sprintf( _wsl__( "WSL user ID #%d: <b>%s</b>  profiles and contacts has been deleted. Note that the associated WordPress user wasn't deleted", 'wordpress-social-login'), $uid, $user_data->user_login ) ?>.
-					</p>
-				</div>
-			<?php
-		}
-	}
+	wsl_component_users_delete_social_profiles();
 
 	$actions = array(
 		'edit_details' => '<a class="button button-secondary thickbox" href="' . admin_url( 'users.php?TB_iframe=true&width=1050&height=550' ) . '">' . _wsl__( 'View all your website users', 'wordpress-social-login' ) . '</a>',
@@ -56,7 +39,6 @@ function wsl_component_users_list()
 	<?php _wsl_e( "This screen only list the users who have connected through WordPress Social Login", 'wordpress-social-login' ) ?>.
 </div>
 <?php
-	add_thickbox();
 
 	$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
 	$limit = 25; // number of rows in page
@@ -75,6 +57,7 @@ function wsl_component_users_list()
 			<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
 			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th>
+			<th width="55"><span><?php _wsl_e("User ID", 'wordpress-social-login') ?></span></th>   
 		</tr>
 	</thead> 
 	<tfoot>
@@ -85,6 +68,7 @@ function wsl_component_users_list()
 			<th><span><?php _wsl_e("E-mail", 'wordpress-social-login') ?></span></th> 
 			<th><span><?php _wsl_e("Profile URL", 'wordpress-social-login') ?></span></th> 
 			<th width="80"><span><?php _wsl_e("Contacts", 'wordpress-social-login') ?></span></th>
+			<th width="55"><span><?php _wsl_e("User ID", 'wordpress-social-login') ?></span></th>   
 		</tr>
 	</tfoot> 
 	<tbody data-wp-lists="list:user" id="the-list">
@@ -128,7 +112,7 @@ function wsl_component_users_list()
 								}
 							} 
 						?> 
-					</td> 
+					</td> 	
 					<td class="column-author">
 						<?php if( $wsl_user_image ) { ?>
 							<img width="32" height="32" class="avatar avatar-32 photo" src="<?php echo $wsl_user_image ?>" > 
@@ -187,7 +171,7 @@ function wsl_component_users_list()
 								echo "0";
 							}
 						?>
-					</td> 
+					<td align="center"><a class="thickbox" href="<?php echo admin_url( 'user-edit.php?user_id=' . $user_data->ID . '&TB_iframe=true&width=1150&height=550' ); ?>"><?php echo $user_data->ID; ?></a></td>
 				</tr> 
 			<?php 
 			}
@@ -218,6 +202,34 @@ function wsl_component_users_list()
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_component_users_list_end" );
+}
+
+// --------------------------------------------------------------------	
+
+
+function wsl_component_users_delete_social_profiles()
+{
+	// If action eq delete WSL user profiles
+	if( isset( $_REQUEST['delete'] ) && isset( $_REQUEST['_wpnonce'] ) && wp_verify_nonce( $_REQUEST['_wpnonce'] ) )
+	{
+		$uid = (int) $_REQUEST['delete'];
+
+		$user_data = get_userdata( $uid );
+
+		if( $user_data )
+		{ 
+			wsl_delete_stored_hybridauth_user_data( $uid  ); 
+
+			?>
+				<div class="fade updated" style="margin: 0px 0px 10px;">
+					<p>
+						<?php echo sprintf( _wsl__( "WSL user ID #%d: <b>%s</b>  profiles and contacts has been deleted. Note that the associated WordPress user wasn't deleted", 'wordpress-social-login'), $uid, $user_data->user_login ) ?>.
+					</p>
+				</div>
+			<?php
+		}
+	}
+
 }
 
 // --------------------------------------------------------------------	

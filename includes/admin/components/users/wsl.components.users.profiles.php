@@ -11,10 +11,10 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-function wsl_component_users_profile( $user_id )
+function wsl_component_users_profiles( $user_id )
 {
 	// HOOKABLE: 
-	do_action( "wsl_component_users_profile_start" );
+	do_action( "wsl_component_users_profiles_start" );
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
@@ -66,34 +66,50 @@ function wsl_component_users_profile( $user_id )
 	);
 
 	// HOOKABLE: 
-	$actions = apply_filters( 'wsl_component_users_profile_alter_actions_list', $actions, $user_id );
+	$actions = apply_filters( 'wsl_component_users_profiles_alter_actions_list', $actions, $user_id );
 ?>
-<div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
- 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
-
-	<p style="float: right;margin-top:-23px">
-		<?php
-			echo implode( ' ', $actions );
-		?>
-	</p>
-</div> 
 <style>
 	table td, table th { border: 1px solid #DDDDDD; }
 	table th label { font-weight: bold; }
 	.form-table th { width:120px; text-align:right; }
 	p.description { font-size: 11px ! important; margin:0 ! important;}
 </style>
+
 <script>
 	function confirmDeleteWSLUser()
 	{
 		return confirm( <?php echo json_encode( _wsl__("Are you sure you want to delete the user's social profiles and contacts?\n\nNote: The associated WordPress user won't be deleted.", 'wordpress-social-login') ) ?> );
 	}
 </script>
+
+<div style="margin-top: 15px;padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_data->display_name ) ?> <small>(<?php echo count( $linked_accounts ); ?>)</small></h3>
+
+	<p style="float: right;margin-top:-23px">
+		<?php
+			echo implode( ' ', $actions );
+		?>
+	</p>
+</div>
+
+<div style="padding: 20px; border: 1px solid #ddd; background-color: #fff;">
+	<table class="wp-list-table widefat">
+		<tr><th width="200"><label><?php _wsl_e("Wordpress User ID", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->ID; ?></td></tr>
+		<tr><th width="200"><label><?php _wsl_e("Username", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_login; ?></td></tr>
+		<tr><th><label><?php _wsl_e("Display name", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->display_name; ?></td></tr>
+		<tr><th><label><?php _wsl_e("E-mail", 'wordpress-social-login'); ?></label></th><td><a href="mailto:<?php echo $user_data->user_email; ?>" target="_blank"><?php echo $user_data->user_email; ?></a></td></tr>
+		<tr><th><label><?php _wsl_e("Website", 'wordpress-social-login'); ?></label></th><td><a href="<?php echo $user_data->user_url; ?>" target="_blank"><?php echo $user_data->user_url; ?></a></td></tr>   
+		<tr><th><label><?php _wsl_e("Registered", 'wordpress-social-login'); ?></label></th><td><?php echo $user_data->user_registered; ?></td></tr> 
+		</tr>
+	 </table>
+</div>
+
 <?php
 	foreach( $linked_accounts AS $link )
 	{
 ?>
 <div style="margin-top:15px;padding: 5px 20px 20px; border: 1px solid #ddd; background-color: #fff;">
+
 <h4><img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e("User profile", 'wordpress-social-login'); ?> <small><?php echo sprintf( _wsl__( "as provided by %s", 'wordpress-social-login'), $link->provider ); ?> </small></h4> 
 
 <table class="wp-list-table widefat">
@@ -149,7 +165,7 @@ function wsl_component_users_profile( $user_id )
 	}
 
 	// HOOKABLE: 
-	do_action( "wsl_component_users_profile_end" );
+	do_action( "wsl_component_users_profiles_end" );
 }
 
 // --------------------------------------------------------------------	

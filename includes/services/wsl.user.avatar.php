@@ -23,14 +23,14 @@ if( !defined( 'ABSPATH' ) ) exit;
 * Note: 
 *   You may redefine this function
 */
-if( ! function_exists( 'wsl_user_custom_avatar' ) )
+if( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) )
 {
-	function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt)
+	function wsl_get_wp_user_custom_avatar($wp_avatar, $mixed, $size, $default, $alt)
 	{
 		//Check if avatars are enabled
 		if( ! get_option( 'wsl_settings_users_avatars' ) )
 		{
-			return $avatar;
+			return $wp_avatar;
 		}
 
 		//Current comment
@@ -72,19 +72,24 @@ if( ! function_exists( 'wsl_user_custom_avatar' ) )
 		//User found?
 		if( $user_id )
 		{
-			$user_thumbnail = wsl_get_user_custom_avatar( $user_id );
+			$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
 
-			if( $user_thumbnail )
+			if( $wsl_avatar )
 			{
-				return '<img src="' . $user_thumbnail . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />'; 
+				$html = '<img src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
+
+				// HOOKABLE: 
+				$html = apply_filters( 'wsl_hook_alter_wp_user_custom_avatar', $html, $user_id, $wsl_avatar, $wp_avatar, $mixed, $size, $default, $alt );
+
+				return $html;
 			}
 		}
 
-		return $avatar;
+		return $wp_avatar;
 	}
 }
 
-add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
+add_filter( 'get_avatar', 'wsl_get_wp_user_custom_avatar', 10, 5 );
 
 // --------------------------------------------------------------------
 
@@ -94,20 +99,22 @@ add_filter( 'get_avatar', 'wsl_user_custom_avatar', 10, 5 );
 * Note: 
 *   You may redefine this function
 */
-if( ! function_exists( 'wsl_bp_user_custom_avatar' ) )
+if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 {
-	function wsl_bp_user_custom_avatar($text, $args)
+	function wsl_get_bp_user_custom_avatar($html, $args)
 	{
 		//Buddypress component should be enabled
 		if( ! wsl_is_component_enabled( 'buddypress' ) ){
-			return $text;
+			return $html;
 		}
 
 		//Check if avatars display is enabled
 		if( ! get_option( 'wsl_settings_users_avatars' ) )
 		{
-			return $text;
+			return $html;
 		}
+
+		$user_id = null;
 
 		//Check arguments
 		if(is_array($args))
@@ -118,18 +125,20 @@ if( ! function_exists( 'wsl_bp_user_custom_avatar' ) )
 				//User Identifier
 				if( ! empty( $args ['item_id'] ) AND is_numeric( $args ['item_id'] ) )
 				{
-					$user_data = get_userdata( $args ['item_id'] );
+					$user_id = $args['item_id'];
+					
+					$user_data = get_userdata( $user_id );
 
 					//Retrieve user
 					if( $user_data !== false )
 					{ 
-						$user_thumbnail = wsl_get_user_custom_avatar( $args['item_id'] );
+						$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
 
 						//Retrieve Avatar
-						if( $user_thumbnail !== false)
+						if( $wsl_avatar !== false)
 						{
 							//Thumbnail retrieved
-							if( strlen( trim( $user_thumbnail ) ) > 0 )
+							if( strlen( trim( $wsl_avatar ) ) > 0 )
 							{
 								//Build Image tags
 								$img_alt = "";
@@ -137,9 +146,13 @@ if( ! function_exists( 'wsl_bp_user_custom_avatar' ) )
 								$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
 								$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : '');
 								$img_height = (!empty($args ['height']) ? 'height="' . $args ['height'] . '" ' : '');
+                                $img_alt    = (!empty( $args['alt'] ) ? 'alt="' . esc_attr( $args['alt'] ) . '" ' : '' );
 
 								//Replace
-								$text = preg_replace('#<img[^>]+>#i', '<img src="' . $user_thumbnail . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $text);
+								$html = preg_replace('#<img[^>]+>#i', '<img src="' . $wsl_avatar . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $html);
+
+								// HOOKABLE: 
+								$html = apply_filters( 'wsl_hook_alter_get_bp_user_custom_avatar', $html, $user_id, $wsl_avatar, $html, $args );
 							}
 						}
 					}
@@ -147,10 +160,10 @@ if( ! function_exists( 'wsl_bp_user_custom_avatar' ) )
 			}
 		} 
 
-		return $text;
+		return $html;
 	}
 }
 
-add_filter( 'bp_core_fetch_avatar', 'wsl_bp_user_custom_avatar', 10, 2 );
+add_filter( 'bp_core_fetch_avatar', 'wsl_get_bp_user_custom_avatar', 10, 2 );
 
 // --------------------------------------------------------------------

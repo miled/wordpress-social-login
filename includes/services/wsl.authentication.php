@@ -484,6 +484,12 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
 	{
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
+
+		// check if this user verified email exist in wslusersprofiles
+		if( ! $user_id )
+		{
+			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
+		}
 	}
 
 	/* 4 Deletegate detection of user id to custom functions / hooks */

@@ -52,7 +52,7 @@ function wsl_component_contacts_list( $user_id )
 
 ?> 
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
- 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's contacts list", 'wordpress-social-login'), $user_data->display_name ) ?></h3>
+ 	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's contacts list", 'wordpress-social-login'), $user_data->display_name ); ?> <small>(<?php echo $total; ?>)</small></h3>
 
 	<p style="float: right;margin-top:-23px">
 		<?php
