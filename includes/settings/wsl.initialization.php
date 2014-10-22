@@ -64,10 +64,10 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"contacts"     => array( "label" => __("Contacts"      , 'wordpress-social-login') , "visible" => true  , "component" => "contacts"      ),
 	"buddypress"   => array( "label" => __("BuddyPress"    , 'wordpress-social-login') , "visible" => true  , "component" => "buddypress"    ),
 
-	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "visible" => false , "component" => "core"           , "pull-right" => true , 'ico' => 'debug.png'      ), 
-	"help"         => array( "label" => __('?'             , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'help.png'       ), 
-	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'tools.png'      ), 
-	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'components.png' ), 
+	"watchdog"     => array( "label" => __("Log viewer"    , 'wordpress-social-login') , "visible" => false , "component" => "core"           , "pull-right" => true , 'ico' => 'debug.png'      ),
+	"help"         => array( "label" => __('Help'          , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'help.png'       ),
+	"tools"        => array( "label" => __("Tools"         , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'tools.png'      ),
+	"components"   => array( "label" => __("Components"    , 'wordpress-social-login') , "visible" => true  , "component" => "core"           , "pull-right" => true , 'ico' => 'components.png' ),
 );
 
 // --------------------------------------------------------------------
@@ -103,7 +103,6 @@ function wsl_register_admin_tab( $component, $tab, $label, $action, $visible = f
 
 	$config = array();
 
-	$config["type"]       = "addon"; // < force to addon
 	$config["component"]  = $component;
 	$config["label"]      = $label;
 	$config["visible"]    = $visible;

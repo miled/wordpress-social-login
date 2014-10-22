@@ -118,11 +118,17 @@ function wsl_get_current_url()
 		$request_port = intval($_SERVER ['SERVER_PORT']);
 	}
 
-	// Remove standard ports
+	//Remove standard ports
 	$request_port = (!in_array($request_port, array (80, 443)) ? $request_port : '');
 
 	//Build url
 	$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
+
+	// overwrite all the above if ajax
+	if( strpos( $current_url, 'admin-ajax.php') && isset( $_SERVER ['HTTP_REFERER'] ) && $_SERVER ['HTTP_REFERER'] )
+	{
+		$current_url = $_SERVER ['HTTP_REFERER']; 
+	}
 
 	// HOOKABLE: 
 	$current_url = apply_filters( 'wsl_hook_alter_current_url', $current_url );

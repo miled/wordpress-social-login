@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.2.3-rc.1
+Version: 2.2.3-rc.2
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -185,30 +185,30 @@ add_action( 'plugins_loaded', 'wsl_load_plugin_textdomain' );
 /* includes */
 
 # WSL Settings
-require_once( dirname(__FILE__) . '/includes/settings/wsl.providers.php'            ); // List of provider supported by WSL (provided by hybridauth library) 
-require_once( dirname(__FILE__) . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
-require_once( dirname(__FILE__) . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
-require_once( dirname(__FILE__) . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.providers.php'            ); // List of provider supported by WSL (provided by hybridauth library) 
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.database.php'             ); // Functions & utilities related to WSL database installation and migrations
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older WSL versions)
 
 # Services & Utilities
-require_once( dirname(__FILE__) . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script.
-require_once( dirname(__FILE__) . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
-require_once( dirname(__FILE__) . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
-require_once( dirname(__FILE__) . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
-require_once( dirname(__FILE__) . '/includes/services/wsl.utilities.php'            ); // Few utilities and functions 
-require_once( dirname(__FILE__) . '/includes/services/wsl.watchdog.php'             ); // Logging agent
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.utilities.php'            ); // Few utilities and functions 
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.watchdog.php'             ); // Logging agent
 
 # WSL Widget and GUIs generators
-require_once( dirname(__FILE__) . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
-require_once( dirname(__FILE__) . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
-require_once( dirname(__FILE__) . '/includes/widgets/wsl.account.linking.php'       ); // Planned for WSL 2.3.
-require_once( dirname(__FILE__) . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages.
-require_once( dirname(__FILE__) . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.account.linking.php'       ); // Planned for WSL 2.3.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens.
 
 # WSL Admin UI
 if( is_admin() )
 {
-	require_once( dirname(__FILE__) . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
+	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
 
 // --------------------------------------------------------------------

@@ -25,7 +25,12 @@ function wsl_admin_main()
 	// HOOKABLE: 
 	do_action( "wsl_admin_main_start" );
 
-	if ( ! wsl_check_requirements() )
+	if ( ! current_user_can('manage_options') )
+	{
+		wp_die( 'You do not have sufficient permissions to access this page.' );
+	}
+
+	if( ! wsl_check_requirements() )
 	{
 		wsl_admin_ui_fail();
 
@@ -167,7 +172,7 @@ function wsl_admin_ui_header( $wslp = null )
 		}
 	?>
 
-	<h1>
+	<h1 <?php if( is_rtl() ) echo 'style="margin: 20px 0;"'; ?>>
 		<?php _wsl_e( 'WordPress Social Login', 'wordpress-social-login' ) ?>
 
 		<small><?php echo $WORDPRESS_SOCIAL_LOGIN_VERSION ?></small>
@@ -180,7 +185,17 @@ function wsl_admin_ui_header( $wslp = null )
 			{
 				if( $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) )
 				{
-					?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" <?php if( isset( $settings["pull-right"] ) && $settings["pull-right"] ) echo 'style="float:right"'; ?> href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php if( isset( $settings["ico"] ) ) echo '<img style="margin: 0px; padding: 0px; border: 0px none;width: 16px; height: 16px;" src="' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/' . $settings["ico"] . '" />'; else echo $settings["label"]; ?></a><?php
+					if( isset( $settings["pull-right"] ) && $settings["pull-right"] )
+					{
+						$css_pull_right = "float:right";
+
+						if( is_rtl() )
+						{
+							$css_pull_right = "float:left";
+						}
+					}
+
+					?><a class="nav-tab <?php if( $wslp == $name ) echo "nav-tab-active"; ?>" style="<?php echo $css_pull_right; ?>" href="options-general.php?page=wordpress-social-login&wslp=<?php echo $name ?>"><?php if( isset( $settings["ico"] ) ) echo '<img style="margin: 0px; padding: 0px; border: 0px none;width: 16px; height: 16px;" src="' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/' . $settings["ico"] . '" />'; else _wsl_e( $settings["label"], 'wordpress-social-login' ); ?></a><?php
 				}
 			}
 		?>
@@ -264,34 +279,42 @@ function wsl_admin_ui_fail()
 	do_action( "wsl_admin_ui_fail_start" );
 ?>
 <div class="wsl-container">
-	<h1><?php _e("WordPress Social Login - FAIL!", 'wordpress-social-login') ?></h1>
+		<div style="background: none repeat scroll 0 0 #fff;border: 1px solid #e5e5e5;box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);padding:20px;">
+			<h1><?php _e("WordPress Social Login - FAIL!", 'wordpress-social-login') ?></h1>
 
-	<hr />
+			<hr />
 
-	<p> 
-		<?php _e('Despite the efforts, put into <b>WordPress Social Login</b> in terms of reliability, portability, and maintenance by this plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>. 
-		<b style="color:red;"><?php _e('Your server failed the requirements check for this plugin', 'wordpress-social-login') ?>.</b>
-	</p> 
+			<p> 
+				<?php _e('Despite the efforts, put into <b>WordPress Social Login</b> in terms of reliability, portability, and maintenance by the plugin <a href="http://profiles.wordpress.org/miled/" target="_blank">author</a> and <a href="https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors" target="_blank">contributors</a>', 'wordpress-social-login') ?>. 
+				<b style="color:red;"><?php _e('Your server failed the requirements check for this plugin', 'wordpress-social-login') ?>:</b>
+			</p> 
 
-	<p> 
-		<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
-	</p> 
+			<p> 
+				<?php _e('These requirements are usually met by default by most "modern" web hosting providers, however some complications may occur with <b>shared hosting</b> and, or <b>custom wordpress installations</b>', 'wordpress-social-login') ?>.
+			</p> 
 
-	<p>
-		<?php _wsl_e("The minimum server requirements are", 'wordpress-social-login') ?>:
-	</p>
+			<p>
+				<?php _wsl_e("The minimum server requirements are", 'wordpress-social-login') ?>:
+			</p>
 
-	<ul style="margin-left:60px;">
-		<li><?php _wsl_e("PHP >= 5.2.0 installed", 'wordpress-social-login') ?></li> 
-		<li><?php _wsl_e("WSL Endpoint URLs reachable", 'wordpress-social-login') ?></li>
-		<li><?php _wsl_e("PHP's default SESSION handling", 'wordpress-social-login') ?></li>
-		<li><?php _wsl_e("PHP/CURL/SSL Extension enabled", 'wordpress-social-login') ?></li> 
-		<li><?php _wsl_e("PHP/JSON Extension enabled", 'wordpress-social-login') ?></li> 
-		<li><?php _wsl_e("PHP/REGISTER_GLOBALS Off", 'wordpress-social-login') ?></li> 
-		<li><?php _wsl_e("jQuery installed on WordPress backoffice", 'wordpress-social-login') ?></li> 
-	</ul>
+			<ul style="margin-left:60px;">
+				<li><?php _wsl_e("PHP >= 5.2.0 installed", 'wordpress-social-login') ?></li> 
+				<li><?php _wsl_e("WSL Endpoint URLs reachable", 'wordpress-social-login') ?></li>
+				<li><?php _wsl_e("PHP's default SESSION handling", 'wordpress-social-login') ?></li>
+				<li><?php _wsl_e("PHP/CURL/SSL Extension enabled", 'wordpress-social-login') ?></li> 
+				<li><?php _wsl_e("PHP/JSON Extension enabled", 'wordpress-social-login') ?></li> 
+				<li><?php _wsl_e("PHP/REGISTER_GLOBALS Off", 'wordpress-social-login') ?></li> 
+				<li><?php _wsl_e("jQuery installed on WordPress backoffice", 'wordpress-social-login') ?></li> 
+			</ul>
+		</div>
+
+<?php
+	include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/components/tools/wsl.components.tools.actions.job.php' );
+
+	wsl_component_tools_do_diagnostics();
+?>
 </div>
-
+<style>.wsl-container .button-secondary { display:none; }</style>
 <?php
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_fail_end" );
@@ -332,7 +355,7 @@ function wsl_admin_welcome_panel()
 	//> wsl-w-panel is shamelessly borrowed and modified from wordpress welcome-panel
 -->
 <div id="wsl-w-panel">
-	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss"><?php _e("Dismiss", 'wordpress-social-login') ?></a>
+	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss" <?php if( is_rtl() ) echo 'style="left: 10px;right: auto;"'; ?>><?php _e("Dismiss", 'wordpress-social-login') ?></a>
 	
 	<table width="100%" border="0" style="margin:0;padding:0;">
 		<tr>
