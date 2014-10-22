@@ -66,14 +66,18 @@ MIT — That's short for do whatever you want.
 Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum. 
 
 #### Screenshots
-![Number6](http://miled.github.io/wordpress-social-login/assets/img/theme_number6.png)
+![Number6](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-2.png)
 ===
-![Flat](http://miled.github.io/wordpress-social-login/assets/img/theme_flat.png)
+![Flat](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-3.png)
 ===
 ![Fontawesome](http://miled.github.io/wordpress-social-login/assets/img/theme_fontawesome.png)
 ===
-![Networks](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-3.png)
+![Networks](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-4.png)
 =
-![Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-4.png)
+![Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-5.png)
 ===
-![Bouncer](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-5.png)
+![Bouncer](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-6.png)
+===
+![BuddyPress](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-7.png)
+===
+![Components](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-8.png)
