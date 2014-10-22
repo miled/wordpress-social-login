@@ -20,7 +20,7 @@ function wsl_component_components_gallery()
 	// HOOKABLE: 
 	do_action( "wsl_component_components_gallery_start" ); 
 
-	$response = wp_remote_get( 'http://miled.github.io/wordpress-social-login/components-' . wsl_get_version() . '.json', array( 'timeout' => 5, 'sslverify' => false ) );
+	$response = wp_remote_get( 'http://miled.github.io/wordpress-social-login/components-' . wsl_get_version() . '.json', array( 'timeout' => 15, 'sslverify' => false ) );
 
 	if ( ! is_wp_error( $response ) )
 	{
