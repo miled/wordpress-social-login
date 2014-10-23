@@ -25,12 +25,12 @@ if( !defined( 'ABSPATH' ) ) exit;
 */
 if( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) )
 {
-	function wsl_get_wp_user_custom_avatar($wp_avatar, $mixed, $size, $default, $alt)
+	function wsl_get_wp_user_custom_avatar($html, $mixed, $size, $default, $alt)
 	{
 		//Check if avatars are enabled
 		if( ! get_option( 'wsl_settings_users_avatars' ) )
 		{
-			return $wp_avatar;
+			return $html;
 		}
 
 		//Current comment
@@ -76,16 +76,14 @@ if( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) )
 
 			if( $wsl_avatar )
 			{
-				$html = '<img src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
+				$wsl_html = '<img src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
 
 				// HOOKABLE: 
-				$html = apply_filters( 'wsl_hook_alter_wp_user_custom_avatar', $html, $user_id, $wsl_avatar, $wp_avatar, $mixed, $size, $default, $alt );
-
-				return $html;
+				return apply_filters( 'wsl_hook_alter_wp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $mixed, $size, $default, $alt );
 			}
 		}
 
-		return $wp_avatar;
+		return $html;
 	}
 }
 
@@ -104,7 +102,8 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 	function wsl_get_bp_user_custom_avatar($html, $args)
 	{
 		//Buddypress component should be enabled
-		if( ! wsl_is_component_enabled( 'buddypress' ) ){
+		if( ! wsl_is_component_enabled( 'buddypress' ) )
+		{
 			return $html;
 		}
 
@@ -125,41 +124,36 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 				//User Identifier
 				if( ! empty( $args ['item_id'] ) AND is_numeric( $args ['item_id'] ) )
 				{
-					$user_id = $args['item_id'];
-					
-					$user_data = get_userdata( $user_id );
+					//Overwrite gravatars
+					if( stristr( $html, 'gravatar.com' ) )
+					{
+						$user_id = $args['item_id'];
 
-					//Retrieve user
-					if( $user_data !== false )
-					{ 
 						$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
 
 						//Retrieve Avatar
-						if( $wsl_avatar !== false)
+						if( $wsl_avatar )
 						{
-							//Thumbnail retrieved
-							if( strlen( trim( $wsl_avatar ) ) > 0 )
-							{
-								//Build Image tags
-								$img_alt = "";
+							$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
+							$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : 'width="' . bp_core_avatar_full_width() . '" ' );
+							$img_height = (!empty($args ['height']) ? 'height="' . $args ['height'] . '" ' : 'height="' . bp_core_avatar_full_height() . '" ' );
+							$img_alt    = (!empty( $args['alt'] ) ? 'alt="' . esc_attr( $args['alt'] ) . '" ' : '' );
 
-								$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
-								$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : '');
-								$img_height = (!empty($args ['height']) ? 'height="' . $args ['height'] . '" ' : '');
-                                $img_alt    = (!empty( $args['alt'] ) ? 'alt="' . esc_attr( $args['alt'] ) . '" ' : '' );
+							//Replace
+							$wsl_html = preg_replace('#<img[^>]+>#i', '<img src="' . $wsl_avatar . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $html );
 
-								//Replace
-								$html = preg_replace('#<img[^>]+>#i', '<img src="' . $wsl_avatar . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $html);
-
-								// HOOKABLE: 
-								$html = apply_filters( 'wsl_hook_alter_get_bp_user_custom_avatar', $html, $user_id, $wsl_avatar, $html, $args );
-							}
+							// HOOKABLE: 
+							return apply_filters( 'wsl_hook_alter_get_bp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $args );
 						}
 					}
 				}
 			}
 		} 
-
+// print_r( $args ); 
+// print_r( $default ); 
+// print_r( "\n" ); 
+// print_r( $html ); 
+// die();
 		return $html;
 	}
 }

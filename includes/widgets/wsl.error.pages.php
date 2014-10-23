@@ -85,15 +85,12 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				margin-top:25px;
 			}
 		</style>
-		<script>
-			function xi(){ document.getElementById('debuginfo').style.display = 'block'; }
-		</script>
 	<head>  
 	<body>
 		<div id="notice-page"> 
 			<table width="100%" border="0">
 				<tr>
-					<td align="center"><img id="alert-ico" src="<?php echo $assets_base_url ?>alert.png" onClick="xi()" /></td>
+					<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
 				</tr>
 				<tr>
 					<td align="center">
@@ -203,16 +200,17 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				margin-top:25px;
 			}
-			#alert-ico {
-				cursor:pointer;
-			}
+			.error-hint{ 
+				margin:0;
+			} 
 			#debuginfo {
 				display:none;
-				text-align:center;
-				border-top: 1px solid #d2d2d2;
+				text-align: center; 
 				margin: 0;
 				padding: 0;
-				padding-top: 15px;
+				padding-top: 28px;
+				margin-top: -6px; 
+				border-top: 1px solid #d2d2d2;
 			}
 		</style>
 		<script>
@@ -223,7 +221,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 		<div id="error-page">
 			<table width="100%" border="0">
 				<tr>
-					<td align="center"><img id="alert-ico" src="<?php echo $assets_base_url ?>alert.png" onClick="xi()" /></td>
+					<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
 				</tr>
 
 				<tr>
@@ -240,10 +238,19 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 							// any hint or extra note?
 							if( $notes ) {
 								?>
-									<p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
+									<p class="error-hint"><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
 								<?php
 							}
-						?>  
+						?>
+					</td> 
+				</tr> 
+
+				<tr>
+					<td>
+						<p style="padding: 0;"> 
+							<a href="javascript:xi();" style="float:right"><?php _wsl_e("Details", 'wordpress-social-login') ?></a>
+							<a href="<?php echo site_url(); ?>" style="float:left">&xlarr;  <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
+						</p>
 
 						<p id="debuginfo">&xi; <?php echo $api_error ?></p>
 					</td> 
