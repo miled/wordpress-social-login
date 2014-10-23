@@ -28,8 +28,6 @@ if ( !defined( 'ABSPATH' ) ) exit;
 */
 function wsl_check_compatibilities()
 {
-	global $wpdb;
-
 	delete_option( 'wsl_settings_development_mode_enabled' );
 	delete_option( 'wsl_settings_debug_mode_enabled' );
 	delete_option( 'wsl_settings_welcome_panel_enabled' );
@@ -177,8 +175,10 @@ function wsl_check_compatibilities()
 		update_option( 'wsl_settings_buddypress_xprofile_map', '' );
 	}
 
+	global $wpdb;
+
 	# migrate steam users id to id64. Prior to 2.2
-	$sql = "UPDATE " . $wslusersprofiles . "
+	$sql = "UPDATE {$wpdb->prefix}wslusersprofiles
 			SET identifier = REPLACE( identifier, 'http://steamcommunity.com/openid/id/', '' )
 			WHERE provider = 'Steam' AND identifier like 'http://steamcommunity.com/openid/id/%' ";
 	$wpdb->query( $sql );
