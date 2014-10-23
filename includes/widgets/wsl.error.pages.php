@@ -205,11 +205,11 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 			} 
 			#debuginfo {
 				display:none;
-				text-align: center; 
+				text-align: center;
 				margin: 0;
 				padding: 0;
-				padding-top: 28px;
-				margin-top: -6px; 
+				padding-top: 10px;
+				margin-top: 10px;
 				border-top: 1px solid #d2d2d2;
 			}
 		</style>
@@ -249,8 +249,10 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 					<td>
 						<p style="padding: 0;"> 
 							<a href="javascript:xi();" style="float:right"><?php _wsl_e("Details", 'wordpress-social-login') ?></a>
-							<a href="<?php echo site_url(); ?>" style="float:left">&xlarr;  <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
+							<a href="<?php echo site_url(); ?>" style="float:left">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
 						</p>
+						
+						<br style="clear:both;" />
 
 						<p id="debuginfo">&xi; <?php echo $api_error ?></p>
 					</td> 
