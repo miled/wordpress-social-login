@@ -33,6 +33,12 @@ if( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) )
 			return $html;
 		}
 
+		//Only Overwrite gravatars
+		if( ! stristr( strtolower( $html ), 'gravatar.com' ) )
+		{
+			return $html;
+		}
+
 		//Current comment
 		global $comment;
 
@@ -113,6 +119,12 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 			return $html;
 		}
 
+		//Only Overwrite gravatars
+		if( ! stristr( strtolower( $html ), 'gravatar.com' ) )
+		{
+			return $html;
+		}
+
 		$user_id = null;
 
 		//Check arguments
@@ -124,31 +136,27 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 				//User Identifier
 				if( ! empty( $args ['item_id'] ) AND is_numeric( $args ['item_id'] ) )
 				{
-					//Overwrite gravatars
-					if( stristr( strtolower( $html ), '.gravatar.com' ) )
+					$user_id = $args['item_id'];
+
+					$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
+
+					//Retrieve Avatar
+					if( $wsl_avatar )
 					{
-						$user_id = $args['item_id'];
+						$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
+						$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : 'width="' . bp_core_avatar_full_width() . '" ' );
+						$img_height = (!empty($args ['height']) ? 'height="' . $args ['height'] . '" ' : 'height="' . bp_core_avatar_full_height() . '" ' );
+						$img_alt    = (!empty( $args['alt'] ) ? 'alt="' . esc_attr( $args['alt'] ) . '" ' : '' );
 
-						$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
+						//Replace
+						$wsl_html = preg_replace('#<img[^>]+>#i', '<img src="' . $wsl_avatar . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $html );
 
-						//Retrieve Avatar
-						if( $wsl_avatar )
-						{
-							$img_class  = ('class="' .(!empty($args ['class']) ?($args ['class'] . ' ') : '') . 'avatar-wordpress-social-login" ');
-							$img_width  = (!empty($args ['width']) ? 'width="' . $args ['width'] . '" ' : 'width="' . bp_core_avatar_full_width() . '" ' );
-							$img_height = (!empty($args ['height']) ? 'height="' . $args ['height'] . '" ' : 'height="' . bp_core_avatar_full_height() . '" ' );
-							$img_alt    = (!empty( $args['alt'] ) ? 'alt="' . esc_attr( $args['alt'] ) . '" ' : '' );
-
-							//Replace
-							$wsl_html = preg_replace('#<img[^>]+>#i', '<img src="' . $wsl_avatar . '" ' . $img_alt . $img_class . $img_height . $img_width . '/>', $html );
-
-							// HOOKABLE: 
-							return apply_filters( 'wsl_hook_alter_get_bp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $args );
-						}
+						// HOOKABLE: 
+						return apply_filters( 'wsl_hook_alter_get_bp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $args );
 					}
 				}
 			}
-		} 
+		}
 
 		return $html;
 	}
