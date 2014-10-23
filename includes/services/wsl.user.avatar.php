@@ -125,7 +125,7 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 				if( ! empty( $args ['item_id'] ) AND is_numeric( $args ['item_id'] ) )
 				{
 					//Overwrite gravatars
-					if( stristr( $html, 'gravatar.com' ) )
+					if( stristr( strtolower( $html ), '.gravatar.com' ) )
 					{
 						$user_id = $args['item_id'];
 
@@ -149,11 +149,7 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 				}
 			}
 		} 
-// print_r( $args ); 
-// print_r( $default ); 
-// print_r( "\n" ); 
-// print_r( $html ); 
-// die();
+
 		return $html;
 	}
 }
