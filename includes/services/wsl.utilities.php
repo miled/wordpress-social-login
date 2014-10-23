@@ -375,6 +375,19 @@ function wsl_display_dev_mode_debugging_area()
 		?>
 	</table> 
 
+	<h4>PHP Session</h4>
+	<table class="wsl-dev-table">
+		<?php
+			foreach( $_SESSION as $k => $v )
+			{
+		?>
+			<tr><th width="270"><label><?php echo $k; ?></label></th><td><?php print_r( $v ); ?></td></tr>   
+		<?php
+			}
+		?>
+		</tbody>
+	</table>
+
 	<h4>Wordpress</h4>
 	<table class="wsl-dev-table">
 		<tbody>

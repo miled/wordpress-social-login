@@ -382,26 +382,59 @@ class Hybrid_Auth
 	*/
 	public static function getCurrentUrl( $request_uri = true ) 
 	{
-		if(
-			isset( $_SERVER['HTTPS'] ) && ( $_SERVER['HTTPS'] == 'on' || $_SERVER['HTTPS'] == 1 )
-		|| 	isset( $_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https'
-		){
-			$protocol = 'https://';
-		}
-		else {
-			$protocol = 'http://';
+		$wsl_is_https_on = false;
+
+		if( ! empty ( $_SERVER ['SERVER_PORT'] ) )
+		{
+			if(trim ( $_SERVER ['SERVER_PORT'] ) == '443')
+			{
+				$wsl_is_https_on = true;
+			}
 		}
 
-		$url = $protocol . $_SERVER['HTTP_HOST'];
-
-		if( $request_uri ){
-			$url .= $_SERVER['REQUEST_URI'];
+		if ( ! empty ( $_SERVER ['HTTP_X_FORWARDED_PROTO'] ) )
+		{
+			if(strtolower (trim ($_SERVER ['HTTP_X_FORWARDED_PROTO'])) == 'https')
+			{
+				$wsl_is_https_on = true;
+			}
 		}
-		else{
-			$url .= $_SERVER['PHP_SELF'];
+
+		if( ! empty ( $_SERVER ['HTTPS'] ) )
+		{
+			if ( strtolower( trim($_SERVER ['HTTPS'] ) ) == 'on' OR trim ($_SERVER ['HTTPS']) == '1')
+			{
+				$wsl_is_https_on = true;
+			}
 		}
 
-		// return current url
-		return $url;
+		//Extract parts
+		$request_uri = (isset ($_SERVER ['REQUEST_URI']) ? $_SERVER ['REQUEST_URI'] : $_SERVER ['PHP_SELF']);
+		$request_protocol = ( $wsl_is_https_on ? 'https' : 'http');
+		$request_host = (isset ($_SERVER ['HTTP_X_FORWARDED_HOST']) ? $_SERVER ['HTTP_X_FORWARDED_HOST'] : (isset ($_SERVER ['HTTP_HOST']) ? $_SERVER ['HTTP_HOST'] : $_SERVER ['SERVER_NAME']));
+
+		//Port of this request
+		$request_port = '';
+
+		//We are using a proxy
+		if( isset( $_SERVER ['HTTP_X_FORWARDED_PORT'] ) )
+		{
+			// SERVER_PORT is usually wrong on proxies, don't use it!
+			$request_port = intval($_SERVER ['HTTP_X_FORWARDED_PORT']);
+		}
+		//Does not seem like a proxy
+		elseif( isset( $_SERVER ['SERVER_PORT'] ) )
+		{
+			$request_port = intval($_SERVER ['SERVER_PORT']);
+		}
+
+		//Remove standard ports
+		$request_port = (!in_array($request_port, array (80, 443)) ? $request_port : '');
+
+		//Build url
+		$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
+
+		//Done
+		return $current_url;
 	}
 }

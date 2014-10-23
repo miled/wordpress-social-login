@@ -28,12 +28,14 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 
 		// If we get a hauth.start
 		if ( isset( WSL_Hybrid_Endpoint::$request["hauth_start"] ) && WSL_Hybrid_Endpoint::$request["hauth_start"] ) {
-			WSL_Hybrid_Endpoint::processAuthStart();
+			return WSL_Hybrid_Endpoint::processAuthStart();
 		} 
 		// Else if hauth.done
 		elseif ( isset( WSL_Hybrid_Endpoint::$request["hauth_done"] ) && WSL_Hybrid_Endpoint::$request["hauth_done"] ) {
-			WSL_Hybrid_Endpoint::processAuthDone();
+			return WSL_Hybrid_Endpoint::processAuthDone();
 		}
+		
+		parent::process( $request );
 	}
 
 	public static function processAuthStart()
