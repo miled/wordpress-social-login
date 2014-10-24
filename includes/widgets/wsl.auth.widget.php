@@ -11,8 +11,7 @@
 *
 * http://miled.github.io/wordpress-social-login/widget.html
 * http://miled.github.io/wordpress-social-login/themes.html
-* http://miled.github.io/wordpress-social-login/developer-api-actions.html
-* http://miled.github.io/wordpress-social-login/developer-api-filters.html
+* http://miled.github.io/wordpress-social-login/developer-api-widget.html
 */
 
 // Exit if accessed directly

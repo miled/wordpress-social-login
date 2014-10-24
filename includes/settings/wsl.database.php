@@ -35,18 +35,17 @@ function wsl_database_migration_process()
 	// update/migrate wsl-settings
 	wsl_check_compatibilities();
 
-	// wsl tables names
-	$wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
-	$wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
-
 	// create wsl tables
+	$wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
+	$wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
+
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-	$sql = "CREATE TABLE " . $wslusersprofiles . " ( 
+	$sql = "CREATE TABLE $wslusersprofiles ( 
 			id int(11) NOT NULL AUTO_INCREMENT,
 			user_id int(11) NOT NULL,
 			provider varchar(50) NOT NULL,
-			object_sha varchar(255) NOT NULL,
+			object_sha varchar(45) NOT NULL,
 			identifier varchar(255) NOT NULL,
 			profileurl varchar(255) NOT NULL,
 			websiteurl varchar(255) NOT NULL,
@@ -70,12 +69,12 @@ function wsl_database_migration_process()
 			city varchar(50) NOT NULL,
 			zip varchar(25) NOT NULL,
 			UNIQUE KEY id (id),
-			KEY idp_uid (provider,identifier),
-			KEY user_id (user_id)
+			KEY user_id (user_id),
+			KEY provider (provider)
 		)"; 
 	dbDelta( $sql );
-
-	$sql = "CREATE TABLE " . $wsluserscontacts . " (
+	
+	$sql = "CREATE TABLE $wsluserscontacts (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			user_id int(11) NOT NULL,
 			provider varchar(50) NOT NULL,

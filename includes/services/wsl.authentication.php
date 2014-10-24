@@ -7,8 +7,9 @@
 */
 
 /**
-* Authenticate users via social networks. 
+* Authenticate users via social networks.
 *
+* Ref: http://miled.github.io/wordpress-social-login/developer-api-authentication.html
 ** 
 * Side note: I don't usually over-comment codes, but this is the main WSL script and I had to since
 * many users with diffrent "skill levels" may want to understand how this piece of code works.
@@ -16,7 +17,6 @@
 * To sum things up, here is how WSL works (bit hard to explain, so bare with me):
 *
 * Let assume a user come to page at our website and he click on of the providers icons in order connect.
-* (for an actual example, see http://hybridauth.sourceforge.net/wsl/assets/img/wsl_redirections.png)
 *
 *   1. By clicking on an icon, the user will be redirected to wp-login.php (with specific args in the url: &action=wordpress_social_authenticate&provider=..)
 *   2. If &action=wordpress_social_authenticate is found in the current url [of wp-login.php], then WSL will display a loading screen,
@@ -28,7 +28,6 @@
 *   8. This loading screen will generate and sumbmit a form with a hidden input action=wordpress_social_authenticated to the current url which will trigger the next step,
 *   9. WSL will grab the user profile from the provider, attempt to identify him and create a new WordPress user if he doesn't exist. In this step, and when enabled, WSL will import the user contacts and map his profile to buddypress,
 *  10. Finally, WSL will authenticate the user within WordPress (give him a sweet cookie) then redirect him back to where he come from
-*
 **
 * Functions execution order is the following:
 *
@@ -223,11 +222,12 @@ function wsl_process_login_begin()
 	}
 
 	// set default scope for google
-	if( strtolower( $provider ) == "google" ){
-		$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read";  
+	if( strtolower( $provider ) == "google" )
+	{
+		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
 
 		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
-		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 )
+		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && wsl_is_component_enabled( 'contacts' ) )
 		{
 			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
 		}
@@ -533,7 +533,6 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 				get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
 		)
 		{
-			die( 'hiii') ;
 			do
 			{
 				list

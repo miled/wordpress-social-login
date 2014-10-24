@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Login\n"
-"POT-Creation-Date: 2014-10-20 09:23+0100\n"
-"PO-Revision-Date: 2014-10-20 09:23+0100\n"
+"POT-Creation-Date: 2014-10-24 23:59+0100\n"
+"PO-Revision-Date: 2014-10-24 23:59+0100\n"
 "Last-Translator: Miled <hybridauth@gmail.com>\n"
 "Language-Team: WordPress Social Login <hybridauth@gmail.com>\n"
 "Language: en\n"
@@ -387,19 +387,19 @@ msgid ""
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:44
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:251
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:256
 msgid ""
 "If you believe you've found a problem with <b>WordPress Social Login</b>, be "
 "sure to let us know so we can fix it"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:50
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:257
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:262
 msgid "Report as bug"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:51
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:258
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:263
 msgid "Check enabled components"
 msgstr ""
 
@@ -1685,53 +1685,53 @@ msgstr ""
 msgid "WordPress Social Login Diagnostics"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:466
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:584
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:616
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:733
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:595
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:713
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:745
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:862
 msgid "Back to Tools"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:488
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:617
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:63
 msgid "System information"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:606
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:735
 msgid "Repair Wordpress Social Login tables"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:610
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:739
 msgid ""
 "All Wordpress Social Login tables and fields <em>should</em> be now restored"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:613
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:742
 msgid "If this still didn't work, please report this as a issue"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:717
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:846
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:195
 msgid "Uninstall"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:721
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:850
 msgid ""
 "All Wordpress Social Login tables and stored options are permanently deleted "
 "from your WordPress database"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:724
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:853
 msgid ""
 "To delete Wordpress Social Login files from your WordPress website, you may "
 "deactivate and uninstall it through the 'Plugins' menu in WordPress"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:727
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:856
 msgid "Thank you for using Wordpress Social Login"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:730
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:859
 msgid "Good bye"
 msgstr ""
 
@@ -1804,7 +1804,7 @@ msgid "Enabled &mdash; Log actions to database"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:133
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:162
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:167
 msgid "View WSL logs"
 msgstr ""
 
@@ -2027,204 +2027,204 @@ msgstr ""
 msgid "<b>%s</b> : %s - %s"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:131
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:136
 msgid ""
 "<b>Note:</b> WSL has detected that you are using a caching plugin. If the "
 "saved changes didn't take effect immediately then you might need to empty "
 "the cache"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:143
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:148
 msgid ""
 "<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT "
 "MODE enabled. This mode is not intend for live websites as it might raise "
 "serious security risks"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:146
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:161
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:151
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:166
 msgid "Change this mode"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:147
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:152
 msgid "Read about the development mode"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:158
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:163
 msgid ""
 "<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE "
 "enabled. This mode is not intend for live websites as it might add to "
 "loading time and store unnecessary data on your server"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:163
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:168
 msgid "Read about the debug mode"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:171
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:176
 msgid "WordPress Social Login"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:242
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:247
 msgid "Oops! We ran into an issue."
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:247
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:252
 msgid ""
 "Unknown or Disabled <b>Component</b>! Check the list of enabled components "
 "or the typed URL"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:277
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:283
 msgid "WordPress Social Login - FAIL!"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:282
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:288
 msgid ""
 "Despite the efforts, put into <b>WordPress Social Login</b> in terms of "
-"reliability, portability, and maintenance by this plugin <a href=\"http://"
+"reliability, portability, and maintenance by the plugin <a href=\"http://"
 "profiles.wordpress.org/miled/\" target=\"_blank\">author</a> and <a href="
 "\"https://github.com/hybridauth/WordPress-Social-Login/graphs/contributors\" "
 "target=\"_blank\">contributors</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:283
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:289
 msgid "Your server failed the requirements check for this plugin"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:287
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:293
 msgid ""
 "These requirements are usually met by default by most \"modern\" web hosting "
 "providers, however some complications may occur with <b>shared hosting</b> "
 "and, or <b>custom wordpress installations</b>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:291
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:297
 msgid "The minimum server requirements are"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:295
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:301
 msgid "PHP >= 5.2.0 installed"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:296
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:302
 msgid "WSL Endpoint URLs reachable"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:297
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:303
 msgid "PHP's default SESSION handling"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:298
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:304
 msgid "PHP/CURL/SSL Extension enabled"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:299
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:305
 msgid "PHP/JSON Extension enabled"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:300
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:306
 msgid "PHP/REGISTER_GLOBALS Off"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:301
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:307
 msgid "jQuery installed on WordPress backoffice"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:345
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:358
 msgid "Dismiss"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:351
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:364
 msgid "Welcome!"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:353
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:366
 msgid ""
 "If you are still new to WordPress Social Login, we have provided a few "
 "walkthroughs to get you started"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:360
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:373
 msgid "Get Started"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:363
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:376
 msgid ""
 "<a href=\"http://miled.github.io/wordpress-social-login/overview.html\" "
 "target=\"_blank\">Plugin Overview</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:364
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:377
 msgid ""
 "<a href=\"http://miled.github.io/wordpress-social-login/networks.html\" "
 "target=\"_blank\">Setup and Configuration</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:365
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:378
 msgid ""
 "<a href=\"http://miled.github.io/wordpress-social-login/widget.html\" target="
 "\"_blank\">Customize WSL Widgets</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:366
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:379
 msgid ""
 "<a href=\"http://miled.github.io/wordpress-social-login/userdata.html\" "
 "target=\"_blank\">Manage users and contacts</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:372
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:385
 #, php-format
 msgid "What's new on WSL %s"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:376
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:389
 msgid ""
 "WSL now support authentications through <a href=\"https://dribbble.com\" "
 "target=\"_blank\">Dribbble.com</a>. Hooray for fellow designers"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:377
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:390
 msgid ""
 "<a href=\"http://store.steampowered.com/\" target=\"_blank\">Steam</a> "
 "provider has been entirely reworked and now fully support the new Web API"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:378
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:391
 msgid ""
 "WSL admin interfaces have been reworked and can be now extended with hooks"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:379
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:392
 msgid "Profile completion form has received a visual update"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:380
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:393
 msgid "Bouncer Membership level can be now set to any user role"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:381
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:394
 msgid ""
 "WSL now provide an <a href=\"http://miled.github.io/wordpress-social-login/"
 "developer-api-apis.html\" target=\"_blank\">easier access</a> to social "
 "networks apis"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/wsl.admin.ui.php:411
+#: wordpress-social-login/includes/admin/wsl.admin.ui.php:424
 msgid "Help us translate WordPress Social Login into your language"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:96
+#: wordpress-social-login/includes/services/wsl.authentication.php:95
 #, php-format
 msgid ""
 "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:102
+#: wordpress-social-login/includes/services/wsl.authentication.php:101
 msgid "Authentication through social networks is currently disabled."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:148
+#: wordpress-social-login/includes/services/wsl.authentication.php:147
 msgid ""
 "The session identifier is missing.<br />Please check WSL <a href=\"http://"
 "miled.github.io/wordpress-social-login/overview.html\" target=\"_blank"
@@ -2232,13 +2232,13 @@ msgid ""
 "wordpress-social-login/faq.html\" target=\"_blank\">FAQ</a>."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:165
+#: wordpress-social-login/includes/services/wsl.authentication.php:164
 msgid "Bouncer says this makes no sense."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:176
+#: wordpress-social-login/includes/services/wsl.authentication.php:175
 #: wordpress-social-login/includes/services/wsl.authentication.php:313
-#: wordpress-social-login/includes/services/wsl.authentication.php:994
+#: wordpress-social-login/includes/services/wsl.authentication.php:993
 msgid "Unknown or disabled provider."
 msgstr ""
 
@@ -2253,41 +2253,41 @@ msgstr ""
 msgid "Registration is now closed."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:727
+#: wordpress-social-login/includes/services/wsl.authentication.php:726
 msgid "An error occurred while creating a new user: "
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:730
+#: wordpress-social-login/includes/services/wsl.authentication.php:729
 msgid "An error occurred while creating a new user!"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:883
+#: wordpress-social-login/includes/services/wsl.authentication.php:882
 #, php-format
 msgid ""
 "Sorry, we couldn't connect you with <b>%s</b>. <a href=\"%s\">Please try "
 "again</a>."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:985
+#: wordpress-social-login/includes/services/wsl.authentication.php:984
 msgid "Unspecified error!"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:991
+#: wordpress-social-login/includes/services/wsl.authentication.php:990
 msgid "Unspecified error."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:992
+#: wordpress-social-login/includes/services/wsl.authentication.php:991
 msgid "WordPress Social Login is not properly configured."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:995
+#: wordpress-social-login/includes/services/wsl.authentication.php:994
 #, php-format
 msgid ""
 "WordPress Social Login is not properly configured.<br /> <b>%s</b> requires "
 "your application credentials."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:996
+#: wordpress-social-login/includes/services/wsl.authentication.php:995
 #, php-format
 msgid ""
 "<b>What does this error mean ?</b><br />Most likely, you didn't setup the "
@@ -2296,31 +2296,31 @@ msgid ""
 "WordPress Social Login to work."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:996
+#: wordpress-social-login/includes/services/wsl.authentication.php:995
 msgid ""
 "<br />Instructions for use can be found in the <a href=\"http://miled.github."
 "io/wordpress-social-login/networks.html\" target=\"_blank\">User Manual</a>."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:998
+#: wordpress-social-login/includes/services/wsl.authentication.php:997
 #, php-format
 msgid ""
 "Authentication failed. Either you have cancelled the authentication or <b>"
 "%s</b> refused the connection."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:999
+#: wordpress-social-login/includes/services/wsl.authentication.php:998
 #, php-format
 msgid ""
 "Request failed. Either you have cancelled the authentication or <b>%s</b> "
 "refused the connection."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1000
+#: wordpress-social-login/includes/services/wsl.authentication.php:999
 msgid "You're not connected to the provider."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1001
+#: wordpress-social-login/includes/services/wsl.authentication.php:1000
 msgid "Provider does not support this feature."
 msgstr ""
 
@@ -2354,13 +2354,13 @@ msgstr ""
 msgid "[%s] New User Registration"
 msgstr ""
 
-#: wordpress-social-login/includes/settings/wsl.compatibilities.php:49
+#: wordpress-social-login/includes/settings/wsl.compatibilities.php:47
 msgid "Connect with:"
 msgstr ""
 
-#: wordpress-social-login/includes/settings/wsl.compatibilities.php:120
-#: wordpress-social-login/includes/settings/wsl.compatibilities.php:130
-#: wordpress-social-login/includes/settings/wsl.compatibilities.php:140
+#: wordpress-social-login/includes/settings/wsl.compatibilities.php:118
+#: wordpress-social-login/includes/settings/wsl.compatibilities.php:128
+#: wordpress-social-login/includes/settings/wsl.compatibilities.php:138
 msgid ""
 "<strong>This website is restricted to invited readers only.</strong><p>It "
 "doesn't look like you have been invited to access this site. If you think "
@@ -2432,7 +2432,7 @@ msgid "Log viewer"
 msgstr ""
 
 #: wordpress-social-login/includes/settings/wsl.initialization.php:68
-msgid "?"
+msgid "Help"
 msgstr ""
 
 #: wordpress-social-login/includes/settings/wsl.initialization.php:69
@@ -2527,13 +2527,13 @@ msgstr ""
 msgid "Back to %s"
 msgstr ""
 
+#: wordpress-social-login/includes/widgets/wsl.auth.widget.php:150
 #: wordpress-social-login/includes/widgets/wsl.auth.widget.php:151
-#: wordpress-social-login/includes/widgets/wsl.auth.widget.php:152
 #, php-format
 msgid "Connect with %s"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.auth.widget.php:167
+#: wordpress-social-login/includes/widgets/wsl.auth.widget.php:166
 msgid ""
 "<strong>WordPress Social Login is not configured yet</strong>.<br />Please "
 "navigate to <strong>Settings &gt; WP Social Login</strong> to configure this "
@@ -2568,12 +2568,20 @@ msgstr ""
 msgid "Please, fill in your information in the form below to continue"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:150
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:230
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:147
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:228
 msgid "Oops! We ran into an issue"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:292
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:251
+msgid "Details"
+msgstr ""
+
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:252
+msgid "Back to home"
+msgstr ""
+
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:301
 msgid ""
 "<strong>Note:</strong> This debugging area can be disabled from the plugin "
 "settings by setting <b>Development mode</b> to <b>Disabled</b>"
@@ -2593,28 +2601,28 @@ msgstr ""
 msgid "Processing, please wait..."
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:104
+#: wordpress-social-login/wp-social-login.php:105
 msgid ""
 "This plugin requires WordPress 3.0 or newer. Please update your WordPress "
 "installation to activate this plugin."
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:126
+#: wordpress-social-login/wp-social-login.php:127
 msgid "Settings"
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:152
+#: wordpress-social-login/wp-social-login.php:153
 msgid "Manual"
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:153
+#: wordpress-social-login/wp-social-login.php:154
 msgid "FAQ"
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:154
+#: wordpress-social-login/wp-social-login.php:155
 msgid "Suppot"
 msgstr ""
 
-#: wordpress-social-login/wp-social-login.php:155
+#: wordpress-social-login/wp-social-login.php:156
 msgid "Fork me on Github"
 msgstr ""

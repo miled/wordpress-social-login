@@ -16,7 +16,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 	// or here: http://discovery-check.appspot.com/ (unofficial but up to date)
 
 	// default permissions 
-	public $scope = "https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read  https://www.google.com/m8/feeds/";
+	public $scope = "profile https://www.googleapis.com/auth/plus.profile.emails.read https://www.google.com/m8/feeds/";
 
 	/**
 	* IDp wrappers initializer 
@@ -170,83 +170,53 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		if( ! isset( $this->config['contacts_param'] ) ){
 			$this->config['contacts_param'] = array( "max-results" => 500 );
 		}
-		
-		// Google Gmail and Android contacts
-		if (strpos($this->scope, '/m8/feeds/') !== false) {
-	
-			$response = $this->api->api( "https://www.google.com/m8/feeds/contacts/default/full?" 
-						. http_build_query( array_merge( array('alt' => 'json', 'v' => '3.0'), $this->config['contacts_param'] ) ) ); 
-	
-			if( ! $response ){
-				return ARRAY();
-			}
 
-			if (isset($response->feed->entry)) {
-				foreach( $response->feed->entry as $idx => $entry ){
-					$uc = new Hybrid_User_Contact();
-					$uc->email 			= isset($entry->{'gd$email'}[0]->address) ? (string) $entry->{'gd$email'}[0]->address : '';
-					$uc->displayName 	= isset($entry->title->{'$t'}) ? (string) $entry->title->{'$t'} : '';
-					$uc->identifier		= ($uc->email!='')?$uc->email:'';
-					$uc->description 	= '';
-					if( property_exists($entry,'link') ){
-						/**
-						 * sign links with access_token
-						 */
-						if(is_array($entry->link)){
-							foreach($entry->link as $l){
-								if( property_exists($l,'gd$etag') && $l->type=="image/*"){
-									$uc->photoURL = $this->addUrlParam($l->href, array('access_token' => $this->api->access_token));
-								} else if($l->type=="self"){
-									$uc->profileURL = $this->addUrlParam($l->href, array('access_token' => $this->api->access_token));
-								}
-							}
-						}
-					} else {
-						$uc->profileURL = '';
-					}
-					if( property_exists($response,'website') ){
-						if(is_array($response->website)){
-							foreach($response->website as $w){
-								if($w->primary == true) $uc->webSiteURL = $w->value;
-							}
-						} else {
-							$uc->webSiteURL = $response->website->value;
-						}
-					} else {
-						$uc->webSiteURL = '';
-					}
+		$response = $this->api->api( "https://www.google.com/m8/feeds/contacts/default/full?" 
+					. http_build_query( array_merge( array('alt' => 'json', 'v' => '3.0'), $this->config['contacts_param'] ) ) ); 
 
-					$contacts[] = $uc;
-				}
-			}
+		if( ! $response ){
+			return ARRAY();
 		}
-		
-		// Google social contacts
-		if (strpos($this->scope, '/auth/plus.login') !== false) {
-			
-			$response = $this->api->api( "https://www.googleapis.com/plus/v1/people/me/people/visible?" 
-						. http_build_query( $this->config['contacts_param'] ) ); 
-	
-			if( ! $response ){
-				return ARRAY();
-			}
-			
-			foreach( $response->items as $idx => $item ){
+
+		if (isset($response->feed->entry)) {
+			foreach( $response->feed->entry as $idx => $entry ){
 				$uc = new Hybrid_User_Contact();
-				$uc->email 			= (property_exists($item,'email'))?$item->email:'';   
-				$uc->displayName 	= (property_exists($item,'displayName'))?$item->displayName:'';  
-				$uc->identifier 	= (property_exists($item,'id'))?$item->id:'';
-				
-				$uc->description 	= (property_exists($item,'objectType'))?$item->objectType:'';
-				$uc->photoURL 		= (property_exists($item,'image'))?((property_exists($item->image,'url'))?$item->image->url:''):'';
-				$uc->profileURL 	= (property_exists($item,'url'))?$item->url:'';
-				$uc->webSiteURL 	= '';
-				
+				$uc->email 			= isset($entry->{'gd$email'}[0]->address) ? (string) $entry->{'gd$email'}[0]->address : '';
+				$uc->displayName 	= isset($entry->title->{'$t'}) ? (string) $entry->title->{'$t'} : '';
+				$uc->identifier		= ($uc->email!='')?$uc->email:'';
+				$uc->description 	= '';
+				if( property_exists($entry,'link') ){
+					/**
+					 * sign links with access_token
+					 */
+					if(is_array($entry->link)){
+						foreach($entry->link as $l){
+							if( property_exists($l,'gd$etag') && $l->type=="image/*"){
+								$uc->photoURL = $this->addUrlParam($l->href, array('access_token' => $this->api->access_token));
+							} else if($l->type=="self"){
+								$uc->profileURL = $this->addUrlParam($l->href, array('access_token' => $this->api->access_token));
+							}
+						}
+					}
+				} else {
+					$uc->profileURL = '';
+				}
+				if( property_exists($response,'website') ){
+					if(is_array($response->website)){
+						foreach($response->website as $w){
+							if($w->primary == true) $uc->webSiteURL = $w->value;
+						}
+					} else {
+						$uc->webSiteURL = $response->website->value;
+					}
+				} else {
+					$uc->webSiteURL = '';
+				}
+
 				$contacts[] = $uc;
 			}
-			
 		}
-		
+	
 		return $contacts;
  	}
 

@@ -39,10 +39,13 @@ Domain Path: /languages
 *  procedural PHP and will be kept that way.
 *
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
-*  and the WordPress community by submitting a Pull Request at https://github.com/hybridauth/WordPress-Social-Login
+*  and the WordPress community by submitting a Pull Request at https://github.com/miled/wordpress-social-login
+*
+*  If you here just looking for the hooks, then refer to the online Developer API
+*  http://miled.github.io/wordpress-social-login/documentation.html
 *
 *  If you want to translate this plugin into your language (or to improve the current translation), see
-*  wordpress-social-login/languages/readme.txt
+*  languages/readme.txt
 *
 *  Peace.
 *
@@ -64,9 +67,7 @@ $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_V
 /**
 * This file might be used to :
 *     1. Redefine WSL constants, so you can move WSL folder around.
-*     2. Define wsl_load_plugin_textdomain(), in case you want to use a custom translation.
-*     3. Customize wsl_render_notice_page() and wsl_render_error_page().
-*     4. Customize wsl_render_redirect_to_provider_loading_screen() and wsl_render_return_from_provider_loading_screen().
+*     2. Define WSL Pluggable PHP Functions. See http://miled.github.io/wordpress-social-login/developer-api-functions.html
 *     5. Implement your WSL hooks.
 */
 if( file_exists( WP_PLUGIN_DIR . '/wp-social-login-custom.php' ) )

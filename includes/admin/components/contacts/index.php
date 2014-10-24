@@ -31,7 +31,7 @@ function wsl_component_contacts()
 	{
 ?>
 <form method="post" id="wsl_setup_form" action="options.php"> 
-	<?php settings_fields( 'wsl-settings-group-customize' ); ?> 
+	<?php settings_fields( 'wsl-settings-group-contacts-import' ); ?> 
 
 	<div class="metabox-holder columns-2" id="post-body">
 		<table width="100%"> 

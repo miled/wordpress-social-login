@@ -242,8 +242,6 @@ class LastFM {
                 $token = $_GET['token'];
         }
         $result = $this->api('auth.getSession', array('token' => $token));
-        //print_r($result);
-        //print_r($result); print_r($result['session']['key']); exit;
         $name = $result['session']['name'];
         $sessionKey = $result['session']['key'];
         $this->setSessionKey($sessionKey);
