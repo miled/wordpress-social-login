@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<title>Diagnostics - WordPress Social Login</title>
+	<title>Debugmode - WordPress Social Login</title>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -47,15 +47,31 @@
 		<div class="block row">
 			<div class="col col-md-12">
 
-<h1>WordPress Social Login Diagnostics <small>Troubleshooting</small></h1>
+<h1>Debug mode</h1>
 
-<p> 
-	This tool will check for the common issues and for the minimum system requirements. If WordPress Social Login Diagnostics didn't detect any issue, yet the plugin still not working, then refer to the <a href="faq.html"><b>FAQ</b></a> and look at <a href="https://wordpress.org/support/plugin/wordpress-social-login" target="_blank"><b>wordpress forums</b></a> to see if the issue you have is resolved, if not you may ask for support.
+<p>
+	<b>Debug mode</b> is an internal developement tool built to track every action made by WSL during the authentication process. The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented. When <b>Debug mode</b> is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> .
 </p>
 
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/tools_diagnostics.png" ></div>
-<br />
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/tools_diagnostics_test.png" ></div>
+<div class="bs-callout bs-callout-danger">
+	<h4>Important</h4>
+	
+	<p> 
+		It's recommended to keep the Debug Mode <b>Disabled</b> as will store unnecessary data on your web server. Please, don't use <b>Debug mode</b> unless:
+	</p>
+
+	<ul>
+		<li>You are studing how WSL works</li>
+		<li>You are implementing new things into WSL</li>
+		<li>You have an issue and you really really want WSL to work</li>
+	</ul>
+</div>  	
+ 
+<br /> 
+<div style="text-align: center;"><img style="width:1050px;" src="assets/img/debugmode_file.png" ></div>
+<br /> 
+<div style="text-align: center;"><img style="width:1050px;" src="assets/img/debugmode_db.png" ></div>
+ 
 				<br />
 				<br />
 			</div>

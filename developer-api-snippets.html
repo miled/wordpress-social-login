@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Developer api snippets - WordPress Social Login</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
+	<link href="assets/css/style.css" rel="stylesheet">   
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="assets/js/prettify.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</head>
+<body id="documentation">
+	<header>
+		<nav class="navbar navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./index.html">WordPress Social Login</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./addons.html">Add-ons</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+ 
+	<div id="content" class="container container-documentation">
+		<div class="block row">
+			<div class="col col-md-12">
+
+<style>
+	.container-documentation h4 {
+		border: 0px none;
+		margin: 0px;
+		padding: 0px;
+	}
+</style>
+
+<h1>Code Snippets <small>Developer API</small></h1>
+
+<p>
+</p>
+
+<hr />
+
+<!-- collapse_fbscope -->
+<div class="panel-group" id="accordion">
+
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_fbscope">Request a fewer permissions in facebook</a>
+			</h4>
+		</div>
+		<div id="collapse_fbscope" class="panel-collapse collapse in">
+			<div class="panel-body">
+<p>...</p>
+<pre class="prettyprint linenums">
+function wsl_lower_facebook_permissons( $provider_scope, $provider )
+{
+    if( 'facebook' == strtolower( $provider ) ) // < strtolower
+    {
+        # https://developers.facebook.com/docs/facebook-login/permissions
+        $provider_scope = 'email'; // should not be empty or it will be overwritten
+    }
+    
+    return $provider_scope;
+}
+ 
+add_filter( 'wsl_hook_alter_provider_scope', 'wsl_lower_facebook_permissons', 10, 2 );
+</pre>
+			</div>
+		</div>
+	</div>
+	
+
+<!-- collapse_fontawesome_icons -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_fontawesome_icons">generate wsl widget with Font Awesome icons</a>
+			</h4>
+		</div>
+		<div id="collapse_fontawesome_icons" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>In order for the buttons to display correctly in this example, Font Awesome should be integrated into your website theme.</p>
+<pre class="prettyprint linenums">
+function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_url )
+{
+   ?&gt;
+   &lt;a 
+      rel           = &quot;nofollow&quot;
+      href          = &quot;&lt;?php echo $authenticate_url; ?&gt;&quot;
+      data-provider = &quot;&lt;?php echo $provider_id ?&gt;&quot;
+      class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt; btn btn-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
+    &gt;
+      &lt;span&gt;
+         &lt;i class=&quot;fa fa-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;&gt;&lt;/i&gt;
+         Sign in with &lt;?php echo $provider_name; ?&gt;
+      &lt;/span&gt;
+   &lt;/a&gt;
+&lt;?php
+}
+ 
+add_filter( 'wsl_render_login_form_alter_provider_icon_markup', 'wsl_use_fontawesome_icons', 10, 3 );
+</pre>
+			</div>
+		</div>
+	</div>
+
+	
+	
+<!-- collapse_mycred -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_mycred">Hook In on CREATE USER to myCred to award point for a signup</a>
+			</h4>
+		</div>
+		<div id="collapse_mycred" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>...</p>
+<pre class="prettyprint linenums">
+function mycred_reward_wsl_users( $user_id, $provider, $hybridauth_user_profile)
+{
+	if( ! function_exists( 'mycred_add' ) )
+	{
+		return; // oh well
+	}
+
+	mycred_add(
+		'registration',
+		$user_id,
+		100,
+		'FragPoints for registering via Steam'
+	);
+}
+
+add_action( 'wsl_hook_process_login_after_create_wp_user', 'mycred_reward_wsl_users', 10, 3 );
+</pre>
+			</div>
+		</div>
+	</div>
+
+	
+<!-- collapse_github -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_github">Fork a github repo</a>
+			</h4>
+		</div>
+		<div id="collapse_github" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>...</p>
+<pre class="prettyprint linenums">
+function request_extra_scope( $scope, $provider )
+{
+    return 'GitHub' == $provider ? 'public_repo' : $scope;
+}
+
+add_filter( 'wsl_hook_alter_provider_scope', 'request_extra_scope', 10, 2 );
+
+function fork_repo( $is_new_user, $user_id, $provider, $adapter, $profile )
+{
+    if( ! $is_new_user || $provider != 'GitHub' ) // will kick in for new github users only
+		return;
+ 
+	$repo_owner = '';
+	$repo_name  = '';
+
+	$ch = curl_init( "https://api.github.com/repos/$repo_owner/$repo_name/forks" );
+
+	curl_setopt_array($ch, array(
+		CURLOPT_POST => TRUE,
+		CURLOPT_RETURNTRANSFER => true,
+		CURLOPT_SSL_VERIFYHOST => false, // up to you
+		CURLOPT_SSL_VERIFYPEER => false, // up to you
+		CURLOPT_USERAGENT => "PHP CURL",
+		CURLOPT_POSTFIELDS => null,
+		CURLOPT_HTTPHEADER => array(
+			'Authorization: Bearer ' . $adapter->api()->access_token,
+			'Content-Type: application/json'
+		)
+	));
+
+	curl_exec($ch);
+}
+
+add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 );
+</pre>
+			</div>
+		</div>
+	</div>
+
+</div>
+				<br />
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row"> 
+				<ul>
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./addons.html">Add-ons</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
+				</ul> 
+				<span class="pull-right footer-extra-info">Generated on October 24, 2014</span>
+			</div>
+		</div>
+	</footer>
+
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-11037160-1");
+	pageTracker._trackPageview();
+	} catch(err) {}
+	</script>
+</body>
+</html>

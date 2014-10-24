@@ -161,7 +161,7 @@ footer li a, footer li a:hover {
 }
 
 .container {
-    width: 1350px;
+    width: 1250px;
 }
 .table-striped > tbody > tr:nth-child(2n+1) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
     -border-top: 1px solid #ccc;

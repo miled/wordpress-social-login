@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Developer api authentication - WordPress Social Login</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
+	<link href="assets/css/style.css" rel="stylesheet">   
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="assets/js/prettify.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</head>
+<body id="documentation">
+	<header>
+		<nav class="navbar navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./index.html">WordPress Social Login</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./addons.html">Add-ons</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+ 
+	<div id="content" class="container container-documentation">
+		<div class="block row">
+			<div class="col col-md-12">
+
+<style>
+.timeline {
+  list-style: none;
+  padding: 20px 0 20px;
+  position: relative;
+}
+.timeline:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 3px;
+  background-color: #eeeeee;
+  left: 50%;
+  margin-left: -1.5px;
+}
+.timeline > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+.timeline > li:after {
+  clear: both;
+}
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+.timeline > li:after {
+  clear: both;
+}
+.timeline > li > .timeline-panel {
+  width: 50%;
+  float: left;
+  border: 1px solid #d4d4d4;
+  border-radius: 2px;
+  padding: 20px;
+  position: relative;
+  -webkit-box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.175);
+}
+.timeline > li.timeline-inverted + li:not(.timeline-inverted),
+.timeline > li:not(.timeline-inverted) + li.timeline-inverted {
+margin-top: -60px;
+}
+
+.timeline > li:not(.timeline-inverted) {
+padding-right:90px;
+}
+
+.timeline > li.timeline-inverted {
+padding-left:90px;
+}
+.timeline > li > .timeline-panel:before {
+  position: absolute;
+  top: 26px;
+  right: -15px;
+  display: inline-block;
+  border-top: 15px solid transparent;
+  border-left: 15px solid #ccc;
+  border-right: 0 solid #ccc;
+  border-bottom: 15px solid transparent;
+  content: " ";
+}
+.timeline > li > .timeline-panel:after {
+  position: absolute;
+  top: 27px;
+  right: -14px;
+  display: inline-block;
+  border-top: 14px solid transparent;
+  border-left: 14px solid #fff;
+  border-right: 0 solid #fff;
+  border-bottom: 14px solid transparent;
+  content: " ";
+}
+.timeline > li > .timeline-badge {
+  color: #fff;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 1.4em;
+  text-align: center;
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  margin-left: -25px;
+  background-color: #999999;
+  z-index: 100;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 50%;
+  border-bottom-left-radius: 50%;
+}
+.timeline > li.timeline-inverted > .timeline-panel {
+  float: right;
+}
+.timeline > li.timeline-inverted > .timeline-panel:before {
+  border-left-width: 0;
+  border-right-width: 15px;
+  left: -15px;
+  right: auto;
+}
+.timeline > li.timeline-inverted > .timeline-panel:after {
+  border-left-width: 0;
+  border-right-width: 14px;
+  left: -14px;
+  right: auto;
+}
+.timeline-badge.primary {
+  background-color: #2e6da4 !important;
+}
+.timeline-badge.success {
+  background-color: #3f903f !important;
+}
+.timeline-badge.warning {
+  background-color: #f0ad4e !important;
+}
+.timeline-badge.danger {
+  background-color: #d9534f !important;
+}
+.timeline-badge.info {
+  background-color: #5bc0de !important;
+}
+.timeline-title {
+  margin-top: 0;
+  color: inherit;
+}
+.timeline-body > p,
+.timeline-body > ul {
+  margin-bottom: 0;
+}
+.timeline-body > p + p {
+  margin-top: 5px;
+}
+</style>
+
+<h1>The Authentication Process <small>Developer API</small></h1>
+
+<p> 
+	As shown in the picture below, when a visitor click on one of providers icons, WSL will take the user in a short journey to the selected social network to ask for his permission to access his profile. 
+	If he does, and if everything goes as expected, WSL will create a new account for the user if he doesn't have one already, authenticate him within WordPress, then redirect him back to where he come from (<span style="color:blue">/wordpress/2014/10/hello-world/</span> in the example below).
+</p>
+
+<p> 
+	Note: Initiating the right authentication or authorisation protocol (whether OpenID, OAuth or whatever) is delegated to Hybridauth library, so all that boring stuff is dealt with.
+</p>
+
+<div style="text-align: center;"><img style="width:1050px;" src="assets/img/wsl_redirections.png" ></div>
+
+<p align="center" style="font-size: 14px;">Yep, that's 9 redirections in a row :P</p>
+
+<p> 
+	To simplify the complexity of the authentication process, we broke it down to a simple timeline of events. If you are in hurry and you don't want to read a novel, just scroll deep down and you will find the hooks you need.
+</p>
+
+
+<hr />
+
+<p align="right" style="font-size: 14px;margin-top:-10px;">
+Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i> filter &mdash; <i class="fa fa-github"></i> See on Github &mdash; everything else is either a function or event.
+</p>
+
+<ul class="timeline">
+	<li>
+	  <div class="timeline-badge danger"><i class="fa fa-lock"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Entry point to the authentication process.</p>
+	      <p>
+			This function runs after WordPress has finished loading but before any headers are sent.
+			This function will analyse the current URL parameters and start the login process whenever an
+			WSL action is found: <code>$_REQUEST['action']</code> eq <code>wordpress_social_*</code>.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of the authentication process.</p>
+		</div>
+	  </div>
+	</li>
+	
+</ul>
+<hr />
+<ul class="timeline">
+	
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_begin()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Start the <b>first</b> part of authentication.</p>
+		  <p>
+				  1. Display a loading screen while hybridauth is redirecting the user to the selected provider.
+			<br />2. Build the hybridauth config for the selected provider (keys, scope, etc).
+			<br />3. Instantiate the class <code>Hybrid_Auth</code> and redirect the user to provider to ask for authorisation for this website.
+			<br />4. Display a loading screen after user come back from provider as we redirect the user back to Widget <code>Redirect URL</code>.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_begin_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_begin_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of the first part of the authentication process.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-spinner"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_render_redirect_to_provider_loading_screen()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Display a loading screen while hybridauth is redirecting the user to the selected provider. This function is pluggable, see <a href="developer-api-functions.html">Pluggable Functions</a>.</p>
+		</div>
+	  </div>
+	</li> 
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_alter_provider" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_alter_provider</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Reset the selected provider ID.</p>
+		</div>
+	  </div>
+	</li> 
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_alter_provider_scope" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_alter_provider_scope</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Reset (overwrite) the requested scopes (permissions). For usage, refer to <a href="developer-api-snippets.html">Code Snippets</a>.</p>
+		</div>
+	  </div>
+	</li>  
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_hybridauth_authenticate" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_hybridauth_authenticate</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This action run just before delegating the authentication via social networks to the Hybridauth library.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge primary"><i class="fa fa-repeat"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">Hybrid_Auth::authenticate()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			Start the authentication process via hybridauth libray.
+			<br />
+			If not already connected <code>hybridauth::authenticate()</code> will redirect the user to the selected <code>$provider</code> API, 
+			where he will be asked for his consent (most providers ask for consent only once). 
+			If the user gives his authorisation to your application, the provider will redirect the user back to this same point,
+			and this time <code>hybridauth::authenticate()</code> will just return the provider <code>$adapter</code>.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_after_hybridauth_authenticate" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_after_hybridauth_authenticate</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This action run just after delegating the authentication via social networks to the Hybridauth library.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-spinner"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_render_return_from_provider_loading_screen()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Display a loading screen after a user come back from provider and while WSL is procession his profile, contacts, etc. This function is pluggable, see <a href="developer-api-functions.html">Pluggable Functions</a>.</p>
+		</div>
+	  </div>
+	</li> 
+
+	
+</ul>
+<hr />
+<ul class="timeline">
+	
+
+	
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_end()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Start the <b>second</b> part of the authentication process.</p>
+		  <p>
+				  1. Get the user social profile from provider.
+			<br />2. Create new WordPress user if he didn't exist in database.
+			<br />3. Store the current user social profile, contacts and BuddyPress mapping.
+			<br />4. Authenticate the user within WordPress.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_end_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_end_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of the second part of the authentication process.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_alter_redirect_to" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_alter_redirect_to</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Reset the <code>Redirect URL</code>.</p>
+		  <p>By default and after a user authenticate, he  will be automatically redirected to the page where he come from. If WSL wasn't able to identify where the user come from (or if they used wp-login.php), then WSL will redirect the user to the <code>Redirect URL</code> set in WSL Widget tab instead. When Force redirection is set to Yes, users will be always redirected to <code>Redirect URL</code>.</p>
+		</div>
+	  </div>
+	</li>
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_end_get_user_data()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Attempt to identify the connected user by provider id, provider uid. If found, this function will return the user data.</p>
+
+		  <p>
+					  1. Grab the user profile from hybridauth.
+				<br />2. Run Bouncer::Filters if enabled (domains, emails, profiles urls).
+				<br />3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email.
+				<br />4. Deletegate detection of user id to custom functions / hooks.
+				<br />5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email).
+		  </p>
+		</div>
+	  </div>
+	</li> 
+
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_end_get_user_data_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_end_get_user_data_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of <code>wsl_process_login_end_get_user_data()</code>.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge danger"><i class="fa fa-gavel"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">Bouncer::Filters</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			Run Bouncer Filters (domains, emails, profiles urls), if enabled.
+			<br />When enabled, WSL will check the current user in allowed lists. If was not found, then Bouncer will halt the authentication process and display the appropriate error message.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_alter_user_id" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_alter_user_id</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>...</p>
+		</div>
+	  </div>
+	</li>  
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-refresh"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_complete_registration()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Profile Completion</p>
+		</div>
+	  </div>
+	</li>
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_create_wp_user()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This function will attempt to create a new wordpress user.</p>
+		</div>
+	  </div>
+	</li>  
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_create_wp_user_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_create_wp_user_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of <code>wsl_process_login_create_wp_user()</code>.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_alter_wp_insert_user_data" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_alter_wp_insert_user_data</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Reset the array of user data. See: <a href="http://codex.wordpress.org/Function_Reference/wp_insert_user#Parameters" target="_blank">http://codex.wordpress.org/Function_Reference/wp_insert_user#Parameters</a>.</p>
+		</div>
+	  </div>
+	</li>  
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_wp_insert_user" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_wp_insert_user</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This action runs just before creating a new wordpress user.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_delegate_wp_insert_user" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_delegate_wp_insert_user</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This action runs just before creating a new wordpress user, it delegate user insert to a custom function. If this filter returns a valid <code>$user_id</code>, WSL will not use <code>wp_insert_user()</code>.</p>
+		</div>
+	  </div>
+	</li>  
+	<li class="timeline-inverted">
+	  <div class="timeline-badge primary"><i class="fa fa-database"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wp_insert_user()</h4>
+		  <small class="text-muted"><i class="fa fa-wordpress"></i> WordPress builtin function.</small>
+		</div>
+		<div class="timeline-body">
+		  <p>Create a new WordPress user: Insert a user into the database.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_after_wp_insert_user" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_after_wp_insert_user</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This action runs just after a wordpress user has been created</p>
+		  <p><b>Note:</b> At this point, the user has been added to wordpress database, but NOT CONNECTED.</p>
+		</div>
+	  </div>
+	</li>
+	
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_update_wsl_user_data()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			Store WSL user data:
+
+			<br />	1. Store Hybridauth user profile
+			<br />	2. Import user contacts
+			<br />	3. Launch BuddyPress Profile mapping
+		  </p>
+		</div>
+	  </div>
+	</li> 
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_update_wsl_user_data_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_update_wsl_user_data_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of <code>wsl_process_login_update_wsl_user_data()</code>.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-code-fork"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_store_hybridauth_user_profile()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Store the user social profile in table <code>wslusersprofiles</code>. WSL only sotre the user profile if it has changed since last login.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-code-fork"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_buddypress_xprofile_mapping()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>When enabled, this function will map the user social profile to buddypress xprofile table. Profile mapping will only work with new users.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge"><i class="fa fa-code-fork"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_store_hybridauth_user_contacts()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>When enabled, this function will import user contacts into <code>wsluserscontacts</code>. WSL only import the contacts list once per user per provider.</p>
+		</div>
+	  </div>
+	</li>
+	
+	<li style="margin-top: 50px;">
+	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wsl_process_login_authenticate_wp_user()</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>This function will attempt to log the user withing WordPress.</p>
+		</div>
+	  </div>
+	</li> 
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_authenticate_wp_user_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_authenticate_wp_user_start</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>Runs just at the beginning of <code>wsl_process_login_authenticate_wp_user()</code>.</p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge primary"><i class="fa fa-database"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">update_user_meta()</h4>
+		  <small class="text-muted"><i class="fa fa-wordpress"></i> WordPress builtin function.</small>
+		</div>
+		<div class="timeline-body">
+		  <p>update some fields in usermeta for the current user <code>wsl_current_provider</code> and <code>wsl_current_user_image</code></p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge danger"><i class="fa fa-gavel"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">Bouncer::User Moderation</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>When enabled, WSL will check for the current user role. If equal to <code>pending</code> then Bouncer will do the following :
+		  <br /> 1) Halt the authentication process, 
+		  <br /> 2) Skip setting the authentication cookies for the user, 
+		  <br /> 3) Reset the <code>Redirect URL</code> to the appropriate Theme My Login page.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_wp_set_auth_cookie" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_wp_set_auth_cookie</h4>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			This action runs just before logging the user within WordPress (before setting the auth cookie).
+			<br /><b>Note</b>: If <code>User Moderation</code> is enabled and the current user is NOT validated yet, then this action WILL NOT kick in. (see the previous step)
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge primary"><i class="fa fa-unlock"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wp_set_auth_cookie()</h4>
+		  <small class="text-muted"><i class="fa fa-wordpress"></i> WordPress builtin function.</small>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			Sets the authentication cookies based User ID.
+			<br /><b>Note</b>: If <code>User Moderation</code> is enabled and the current user is NOT validated yet, then this function WILL NOT kick in.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge primary"><i class="fa fa-check-square-o"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">do_action( 'wp_login', $user_login )</h4>
+		  <small class="text-muted"><i class="fa fa-wordpress"></i> WordPress builtin action hook.</small>
+		</div>
+		<div class="timeline-body">
+		  <p>
+			To keep things standard with the WordPress way of doing things, WSL will trigger the  builtin action hook <code>wp_login</code>: 
+			The <code>wp_login</code> action hook is triggered when a user logs in by the <code>wp_signon()</code> function. It is the very last action taken in the function, immediately following the <code>wp_set_auth_cookie()</code> call.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_wp_safe_redirect" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_wp_safe_redirect</h4> 
+		</div>
+		<div class="timeline-body">
+		  <p>
+			This action runs just before redirecting the user back to <code>Redirect URL</code>.
+			<br /><b>Note</b>: If <code>User Moderation</code> is enabled and the current user is NOT validated yet, then this action WILL NOT kick in.
+		  </p>
+		</div>
+	  </div>
+	</li>
+	<li class="timeline-inverted">
+	  <div class="timeline-badge danger"><i class="fa fa-reply"></i></div>
+	  <div class="timeline-panel">
+		<div class="timeline-heading">
+		  <h4 class="timeline-title">wp_safe_redirect()</h4>
+		  <small class="text-muted"><i class="fa fa-wordpress"></i> WordPress builtin function.</small>
+		</div>
+		<div class="timeline-body">
+		  <p>Redirect the user to <code>Redirect URL</code> or to the appropriate Theme My Login pending page.</p>
+		</div>
+	  </div>
+	</li>
+</ul>
+
+				<br />
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row"> 
+				<ul>
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./addons.html">Add-ons</a></li>
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
+				</ul> 
+				<span class="pull-right footer-extra-info">Generated on October 24, 2014</span>
+			</div>
+		</div>
+	</footer>
+
+	<script type="text/javascript">
+	var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+	document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+	</script>
+	<script type="text/javascript">
+	try {
+	var pageTracker = _gat._getTracker("UA-11037160-1");
+	pageTracker._trackPageview();
+	} catch(err) {}
+	</script>
+</body>
+</html>
