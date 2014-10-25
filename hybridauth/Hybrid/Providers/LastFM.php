@@ -20,7 +20,7 @@ class Hybrid_Providers_LastFM extends Hybrid_Provider_Model
 			throw new Exception( "Your application key and secret are required in order to connect to {$this->providerId}.", 4 );
 		}
 
-		require_once Hybrid_Auth::$config["path_libraries"] . "LastFM/LastFM.php"; 
+		require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/LastFM/LastFM.php"; 
 
 		$this->api = new LastFM( array( 'api_key' => $this->config["keys"]["key"], 'api_secret' => $this->config["keys"]["secret"] ) );
 

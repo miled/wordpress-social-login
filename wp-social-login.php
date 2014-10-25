@@ -41,7 +41,7 @@ Domain Path: /languages
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
 *  and the WordPress community by submitting a Pull Request at https://github.com/miled/wordpress-social-login
 *
-*  If you here just looking for the hooks, then refer to the online Developer API
+*  If you are here just looking for the hooks, then refer to the online Developer API
 *  http://miled.github.io/wordpress-social-login/documentation.html
 *
 *  If you want to translate this plugin into your language (or to improve the current translation), see
@@ -180,6 +180,34 @@ if( ! function_exists( 'wsl_load_plugin_textdomain' ) )
 }
 
 add_action( 'plugins_loaded', 'wsl_load_plugin_textdomain' );
+
+// --------------------------------------------------------------------
+
+/**
+* _e() wrapper
+* 
+* This function was used for the localization widget to generate translations per page. 
+*
+* kept for compatibility.
+*/
+function _wsl_e( $text, $domain )
+{
+	echo __( $text, $domain );
+}
+
+// --------------------------------------------------------------------
+
+/**
+* __() wrapper
+* 
+* This function was used for the localization widget to generate translations per page. 
+*
+* kept for compatibility.
+*/
+function _wsl__( $text, $domain )
+{
+	return __( $text, $domain );
+}
 
 // -------------------------------------------------------------------- 
 

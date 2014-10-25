@@ -87,9 +87,7 @@ abstract class Hybrid_Provider_Model
 		$this->user->providerId = $providerId;
 
 		// initialize the current provider adapter
-		$this->initialize(); 
-
-		Hybrid_Logger::debug( "Hybrid_Provider_Model::__construct( $providerId ) initialized. dump current adapter instance: ", serialize( $this ) );
+		$this->initialize();
 	}
 
 	// --------------------------------------------------------------------
@@ -126,8 +124,6 @@ abstract class Hybrid_Provider_Model
 	*/
 	function logout()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::logout()" );
-
 		$this->clearTokens();
 
 		return TRUE;
@@ -140,8 +136,6 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserProfile()
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide users contacts list for {$this->providerId} yet." );
-		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
 
@@ -152,8 +146,6 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserContacts() 
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide users contacts list for {$this->providerId} yet." );
-		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
 
@@ -164,8 +156,6 @@ abstract class Hybrid_Provider_Model
 	*/
 	function getUserActivity( $stream ) 
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." ); 
-		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
 
@@ -176,8 +166,6 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	function setUserStatus( $status )
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide user's activity stream for {$this->providerId} yet." ); 
-		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
 
@@ -187,8 +175,6 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	function getUserStatus( $statusid )
 	{
-		Hybrid_Logger::error( "HybridAuth do not provide user's status for {$this->providerId} yet." ); 
-		
 		throw new Exception( "Provider does not support this feature.", 8 ); 
 	}
 
@@ -209,8 +195,6 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function setUserConnected()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserConnected()" );
-		
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 1 );
 	}
 
@@ -221,8 +205,6 @@ abstract class Hybrid_Provider_Model
 	*/ 
 	public function setUserUnconnected()
 	{
-		Hybrid_Logger::info( "Enter [{$this->providerId}]::setUserUnconnected()" );
-		
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.is_logged_in", 0 ); 
 	}
 

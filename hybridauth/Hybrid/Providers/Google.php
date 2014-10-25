@@ -26,6 +26,7 @@ class Hybrid_Providers_Google extends Hybrid_Provider_Model_OAuth2
 		parent::initialize();
 
 		// Provider api end-points
+		$this->api->api_base_url   = "https://www.googleapis.com/plus/v1/";
 		$this->api->authorize_url  = "https://accounts.google.com/o/oauth2/auth";
 		$this->api->token_url      = "https://accounts.google.com/o/oauth2/token";
 		$this->api->token_info_url = "https://www.googleapis.com/oauth2/v2/tokeninfo";

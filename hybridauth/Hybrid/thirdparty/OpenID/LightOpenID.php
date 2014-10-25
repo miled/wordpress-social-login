@@ -204,9 +204,6 @@ class LightOpenID
             curl_setopt($curl, CURLOPT_HTTPGET, true);
         }
         $response = curl_exec($curl);
-        if( $response === FALSE ) {
-            Hybrid_Logger::error( "LightOpenID::request_curl(). curl_exec error: ", curl_error($curl) );
-        }
 
         if($method == 'HEAD' && curl_getinfo($curl, CURLINFO_HTTP_CODE) == 405) {
             curl_setopt($curl, CURLOPT_HTTPGET, true);
@@ -215,6 +212,15 @@ class LightOpenID
         }
 
         //-
+		$http_code = curl_getinfo($curl, CURLINFO_HTTP_CODE);
+
+		Hybrid_Error::deleteApiError();
+		
+		if( $http_code != 200 )
+		{
+			Hybrid_Error::setApiError( $http_code . '. ' . preg_replace('/\s+/', ' ', $response ) );
+		}
+
 		if( defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' ) )
 		{
 			do_action( 'wsl_log_provider_api_call', 'OpenID', $url . ($method == 'GET' && $params ? '?' . $params : ''), $method, $params, curl_getinfo($curl), curl_getinfo($curl), $response );

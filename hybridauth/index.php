@@ -10,19 +10,18 @@
 //	WSL End Point
 // ------------------------------------------------------------------------
 
-//-
-
-/*
-	In case you want to debug apis call made by hybridauth you can uncomment the LOCs below. 
-
-	include_once( '/path/to/file/wp-load.php' );
-	defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' );
-	add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
-	do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
+/**
+* If for some reason you want to debug apis call made by hybridauth you can add the block of code below.
+*
+* <code>
+*    include_once( '/path/to/file/wp-load.php' );
+*    defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' );
+*    add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
+*    do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
+* </code>
 */
 
-//-
-
+//- Re-parse the QUERY_STRING for custom endpoints.
 if( defined( 'WORDPRESS_SOCIAL_LOGIN_CUSTOM_ENDPOINT' ) && ! isset( $_REQUEST['hauth_start'] ) ) 
 {
 	$_SERVER["QUERY_STRING"] = 'hauth_done=' . WORDPRESS_SOCIAL_LOGIN_CUSTOM_ENDPOINT . '&' . str_ireplace( '?', '&', $_SERVER["QUERY_STRING"] );
@@ -30,17 +29,17 @@ if( defined( 'WORDPRESS_SOCIAL_LOGIN_CUSTOM_ENDPOINT' ) && ! isset( $_REQUEST['h
 	parse_str( $_SERVER["QUERY_STRING"], $_REQUEST );
 }
 
-//-
-
-require_once( "Hybrid/Logger.php"    );
+//- Hybridauth required includes
 require_once( "Hybrid/Storage.php"   );
 require_once( "Hybrid/Error.php"     );
 require_once( "Hybrid/Auth.php"      );
 require_once( "Hybrid/Exception.php" );
 require_once( "Hybrid/Endpoint.php"  );
 
-//-
 
+//- Custom WSL endpoint class
 require_once( "endpoints/WSL_Endpoint.php" );
 
+
+//- Entry point to the End point 
 WSL_Hybrid_Endpoint::process();

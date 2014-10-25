@@ -27,8 +27,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		}
 
 		if ( ! class_exists('FacebookApiException', false) ) {
-			require_once Hybrid_Auth::$config["path_libraries"] . "Facebook/base_facebook.php";
-			require_once Hybrid_Auth::$config["path_libraries"] . "Facebook/facebook.php";
+			require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/base_facebook.php";
+			require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/facebook.php";
 		}
 		
 		if ( isset ( Hybrid_Auth::$config["proxy"] ) ) {

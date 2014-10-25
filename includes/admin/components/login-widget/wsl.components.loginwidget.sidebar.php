@@ -78,13 +78,10 @@ function wsl_component_loginwidget_sidebar_auth_widget_preview()
 		<div style="padding:0 20px;">
 			<p>
 				<?php _wsl_e("This is a preview of what should be on the comments area", 'wordpress-social-login') ?>. 
-				<br />
-
-				<strong><?php _wsl_e("Do not try to connect with the Widget here, it won't work", 'wordpress-social-login') ?></strong>.
 			</p>
 
 			<div style="width: 380px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">
-				<?php echo wsl_render_login_form(); ?>
+				<?php do_action( 'wordpress_social_login', array( 'mode' => 'test' ) ); ?> 
 			</div> 
 		</div>
 	</div> 

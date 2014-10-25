@@ -23,9 +23,9 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			throw new Exception( "Your application key and secret are required in order to connect to {$this->providerId}.", 4 );
 		}
 		if ( ! class_exists('OAuthConsumer') ) {
-			require_once Hybrid_Auth::$config["path_libraries"] . "OAuth/OAuth.php";
+			require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/OAuth/OAuth.php";
 		}
-		require_once Hybrid_Auth::$config["path_libraries"] . "LinkedIn/LinkedIn.php";
+		require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/LinkedIn/LinkedIn.php";
 
 		$this->api = new LinkedIn( array( 'appKey' => $this->config["keys"]["key"], 'appSecret' => $this->config["keys"]["secret"], 'callbackUrl' => $this->endpoint ) );
 

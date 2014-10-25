@@ -173,9 +173,6 @@ class OAuth1Client{
 	*/ 
 	function request( $url, $method, $postfields = NULL, $auth_header = NULL, $content_type = NULL, $multipart = false )
 	{
-		Hybrid_Logger::info( "Enter OAuth1Client::request( $method, $url )" );
-		Hybrid_Logger::debug( "OAuth1Client::request(). dump post fields: ", serialize( $postfields ) ); 
-
 		$this->http_info = array();
 		$ci = curl_init();
 
@@ -220,13 +217,6 @@ class OAuth1Client{
 
 		curl_setopt($ci, CURLOPT_URL, $url);
 		$response = curl_exec($ci);
-		if( $response === FALSE ) {
-				Hybrid_Logger::error( "OAuth1Client::request(). curl_exec error: ", curl_error($ci) );
-		}
-
-
-		Hybrid_Logger::debug( "OAuth1Client::request(). dump request info: ", serialize( curl_getinfo($ci) ) );
-		Hybrid_Logger::debug( "OAuth1Client::request(). dump request result: ", serialize( $response ) );
 
 		$this->http_code = curl_getinfo($ci, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ci));
@@ -234,6 +224,8 @@ class OAuth1Client{
 		curl_close ($ci);
 
 		//-
+		Hybrid_Error::deleteApiError();
+		
 		if( $this->http_code != 200 )
 		{
 			Hybrid_Error::setApiError( $this->http_code . '. ' . preg_replace('/\s+/', ' ', $response ) );

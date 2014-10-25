@@ -67,8 +67,6 @@ class OAuth2Client
 
 	public function authenticate( $code )
 	{
-		Hybrid_Logger::info( "Enter OAuth2Client::authenticate( $code )" );
-		
 		$params = array(
 			"client_id"     => $this->client_id,
 			"client_secret" => $this->client_secret,
@@ -76,20 +74,16 @@ class OAuth2Client
 			"redirect_uri"  => $this->redirect_uri,
 			"code"          => $code
 		);
-		
-		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request params: ", $params );
-	
+
 		$response = $this->request( $this->token_url, $params, $this->curl_authenticate_method );
 		
 		$response = $this->parseRequestResult( $response );
-
-		Hybrid_Logger::debug( "OAuth2Client::authenticate(). dump request response: ", $response );
 
 		if( ! $response || ! isset( $response->access_token ) ){
 			throw new Exception( "The Authorization Service has return: " . $response->error );
 		}
 
-		if( isset( $response->access_token  ) )  $this->access_token           = $response->access_token;
+		if( isset( $response->access_token  ) ) $this->access_token            = $response->access_token;
 		if( isset( $response->refresh_token ) ) $this->refresh_token           = $response->refresh_token; 
 		if( isset( $response->expires_in    ) ) $this->access_token_expires_in = $response->expires_in; 
 		
@@ -99,33 +93,6 @@ class OAuth2Client
 		}
 
 		return $response;  
-	}
-
-	public function authenticated()
-	{
-		if ( $this->access_token ){
-			if ( $this->token_info_url && $this->refresh_token ){
-				// check if this access token has expired, 
-				$tokeninfo = $this->tokenInfo( $this->access_token ); 
-
-				// if yes, access_token has expired, then ask for a new one
-				if( $tokeninfo && isset( $tokeninfo->error ) ){
-					$response = $this->refreshToken( $this->refresh_token ); 
-
-					// if wrong response
-					if( ! isset( $response->access_token ) || ! $response->access_token ){
-						throw new Exception( "The Authorization Service has return an invalid response while requesting a new access token. given up!" ); 
-					}
-
-					// set new access_token
-					$this->access_token = $response->access_token; 
-				}
-			}
-
-			return true;
-		}
-
-		return false;
 	}
 
 	/** 
@@ -197,9 +164,6 @@ class OAuth2Client
 
 	function request( $url, $params=false, $type="GET" )
 	{
-		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", $params );
-
 		if( $type == "GET" ){
 			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
 		}
@@ -226,11 +190,6 @@ class OAuth2Client
 		}
 
 		$response = curl_exec($ch);
-		if( $response === FALSE ) {
-				Hybrid_Logger::error( "OAuth2Client::request(). curl_exec error: ", curl_error($ch) );
-		}
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", curl_getinfo($ch) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", $response );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));
@@ -238,6 +197,8 @@ class OAuth2Client
 		curl_close ($ch);
 
 		//-
+		Hybrid_Error::deleteApiError();
+
 		if( $this->http_code != 200 )
 		{
 			Hybrid_Error::setApiError( $this->http_code . '. ' . preg_replace('/\s+/', ' ', $response ) );

@@ -25,11 +25,8 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 		$this->api->sign_token_name = "access_token";
 	}
   
-  private function request( $url, $params=false, $type="GET" )
+	private function request( $url, $params=false, $type="GET" )
 	{
-		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", serialize( $params ) );
-
 		if( $type == "GET" ){
 			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
 		}
@@ -52,8 +49,6 @@ class Hybrid_Providers_Odnoklassniki extends Hybrid_Provider_Model_OAuth2
 			if($params) curl_setopt( $ch, CURLOPT_POSTFIELDS, $params );
 		}
 		$response = curl_exec($ch);
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));

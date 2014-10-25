@@ -34,7 +34,7 @@ function wsl_component_contacts_list( $user_id )
 	add_thickbox();
 
 	$pagenum = isset( $_GET['pagenum'] ) ? absint( $_GET['pagenum'] ) : 1;
-	$limit = 25; // number of rows in page
+	$limit = 50; // number of rows in page
 	$offset = ( $pagenum - 1 ) * $limit;
 	$num_of_pages = 0;
 	$total = wsl_get_stored_hybridauth_user_contacts_count_by_user_id( $user_id );

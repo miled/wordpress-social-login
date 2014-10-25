@@ -117,8 +117,6 @@ class Hybrid_Endpoint {
 
 		# check if page accessed directly
 		if( ! Hybrid_Auth::storage()->get( "hauth_session.$provider_id.hauth_endpoint" ) ) {
-			Hybrid_Logger::error( "Endpoint: hauth_endpoint parameter is not defined on hauth_start, halt login process!" );
-
 			throw new Hybrid_Exception( "You cannot access this page directly." );
 		}
 
@@ -127,18 +125,13 @@ class Hybrid_Endpoint {
 
 		# if REQUESTed hauth_idprovider is wrong, session not created, etc. 
 		if( ! $hauth ) {
-			Hybrid_Logger::error( "Endpoint: Invalid parameter on hauth_start!" );
-
 			throw new Hybrid_Exception( "Invalid parameter! Please return to the login page and try again." );
 		}
 
 		try {
-			Hybrid_Logger::info( "Endpoint: call adapter [{$provider_id}] loginBegin()" );
-
 			$hauth->adapter->loginBegin();
 		}
 		catch ( Exception $e ) {
-			Hybrid_Logger::error( "Exception:" . $e->getMessage(), $e );
 			Hybrid_Error::setError( $e->getMessage(), $e->getCode() );
 
 			$hauth->returnToCallbackUrl();
@@ -159,26 +152,19 @@ class Hybrid_Endpoint {
 		$hauth = Hybrid_Auth::setup( $provider_id );
 
 		if( ! $hauth ) {
-			Hybrid_Logger::error( "Endpoint: Invalid parameter on hauth_done!" ); 
-
 			$hauth->adapter->setUserUnconnected();
 
 			throw new Hybrid_Exception( "Invalid parameter! Please return to the login page and try again." );
 		}
 
 		try {
-			Hybrid_Logger::info( "Endpoint: call adapter [{$provider_id}] loginFinish() " );
-
 			$hauth->adapter->loginFinish(); 
 		}
 		catch( Exception $e ){
-			Hybrid_Logger::error( "Exception:" . $e->getMessage(), $e );
 			Hybrid_Error::setError( $e->getMessage(), $e->getCode() );
 
 			$hauth->adapter->setUserUnconnected(); 
 		}
-
-		Hybrid_Logger::info( "Endpoint: job done. retrun to callback url." );
 
 		$hauth->returnToCallbackUrl();
 		die();
@@ -199,16 +185,12 @@ class Hybrid_Endpoint {
 
 				// Check if Hybrid_Auth session already exist
 				if ( ! $storage->config( "CONFIG" ) ){
-                    Hybrid_Logger::error( "Endpoint: Config storage not found when trying to init Hyrid_Auth. " );
-
 					throw new Hybrid_Exception( "You cannot access this page directly." );
 				}
 
 				Hybrid_Auth::initialize( $storage->config( "CONFIG" ) ); 
 			}
 			catch ( Exception $e ){
-				Hybrid_Logger::error( "Endpoint: Error while trying to init Hybrid_Auth: " . $e->getMessage()); 
-
 				throw new Hybrid_Exception( "Oophs. Error!" );
 			}
 		}

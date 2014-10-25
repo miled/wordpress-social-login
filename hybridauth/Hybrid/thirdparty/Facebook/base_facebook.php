@@ -675,6 +675,7 @@ abstract class BaseFacebook
    */
   public function api(/* polymorphic */) {
     $args = func_get_args();
+	 // print_r( func_get_args() ); die();
     if (is_array($args[0])) {
       return $this->_restserver($args[0]);
     } else {
@@ -682,6 +683,12 @@ abstract class BaseFacebook
     }
   }
 
+	//-
+		public $api_base_url = 'https://graph.facebook.com/';
+		public function get( $url ){ return $this->api( str_ireplace( 'https://graph.facebook.com/', '', $url ) ); }
+		public function post( $url, $parameters = array() ){ return $this->api( str_ireplace( 'https://graph.facebook.com/', '', $url ), "post", $parameters ); }
+	//-
+  
   /**
    * Constructs and returns the name of the cookie that
    * potentially houses the signed request for the app user.
@@ -1019,6 +1026,8 @@ abstract class BaseFacebook
 
 	//-
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	
+	Hybrid_Error::deleteApiError();
 	
 	if( $http_code != 200 )
 	{

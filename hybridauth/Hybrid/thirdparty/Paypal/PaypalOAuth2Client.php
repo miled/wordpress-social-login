@@ -69,8 +69,6 @@ class PaypalOAuth2Client extends OAuth2Client
 	private function request( $url, $params=false, $type="GET" )
 	{
         $params = http_build_query($params, '', '&');
-		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", $params );
 
 		if( $type == "GET" ){
 			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . $params;
@@ -112,11 +110,6 @@ class PaypalOAuth2Client extends OAuth2Client
 		$response = curl_exec($ch);
         if ($this->curl_log !== null)
             fclose($fp);
-		if( $response === FALSE ) {
-				Hybrid_Logger::error( "OAuth2Client::request(). curl_exec error: ", curl_error($ch) );
-		}
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", serialize( curl_getinfo($ch) ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", serialize( $response ) );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));

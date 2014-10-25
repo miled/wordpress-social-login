@@ -111,10 +111,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 		?>
 	</body>
 </html> 
-<?php 
-	# keep these 2 LOC
-		do_action( 'wsl_clear_user_php_session' );
-
+<?php
 		die();
 	}
 }

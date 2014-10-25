@@ -10,11 +10,11 @@
  * 
  * Hybrid_Auth class provide a simple way to authenticate users via OpenID and OAuth.
  * 
- * Generally, Hybrid_Auth is the only class you should instanciate and use throughout your application.
+ * Generally, Hybrid_Auth is the only class you should instantiate and use throughout your application.
  */
 class Hybrid_Auth 
 {
-	public static $version = "2.4.0-wsl-edit";
+	public static $version = "2.4.0-wsl-fork";
 
 	public static $config  = array();
 
@@ -55,43 +55,28 @@ class Hybrid_Auth
 		}
 
 		// build some need'd paths
-		$config["path_base"]        = realpath( dirname( __FILE__ ) )  . "/"; 
-		$config["path_libraries"]   = $config["path_base"] . "thirdparty/";
-		$config["path_resources"]   = $config["path_base"] . "resources/";
-		$config["path_providers"]   = $config["path_base"] . "Providers/";
+		$path_base = realpath( dirname( __FILE__ ) )  . "/"; 
 
-		// reset debug mode
-		if( ! isset( $config["debug_mode"] ) ){
-			$config["debug_mode"] = false;
-			$config["debug_file"] = null;
-		}
+		# load hybridauth required files
+		require_once $path_base . "Error.php";
+		require_once $path_base . "Exception.php";
 
-		# load hybridauth required files, a autoload is on the way...
-		require_once $config["path_base"] . "Error.php";
-		require_once $config["path_base"] . "Exception.php";
-		require_once $config["path_base"] . "Logger.php";
+		require_once $path_base . "Provider_Adapter.php";
 
-		require_once $config["path_base"] . "Provider_Adapter.php";
+		require_once $path_base . "Provider_Model.php";
+		require_once $path_base . "Provider_Model_OpenID.php";
+		require_once $path_base . "Provider_Model_OAuth1.php";
+		require_once $path_base . "Provider_Model_OAuth2.php";
 
-		require_once $config["path_base"] . "Provider_Model.php";
-		require_once $config["path_base"] . "Provider_Model_OpenID.php";
-		require_once $config["path_base"] . "Provider_Model_OAuth1.php";
-		require_once $config["path_base"] . "Provider_Model_OAuth2.php";
+		require_once $path_base . "User.php";
+		require_once $path_base . "User_Profile.php";
+		require_once $path_base . "User_Contact.php";
+		require_once $path_base . "User_Activity.php";
 
-		require_once $config["path_base"] . "User.php";
-		require_once $config["path_base"] . "User_Profile.php";
-		require_once $config["path_base"] . "User_Contact.php";
-		require_once $config["path_base"] . "User_Activity.php";
-
-		if ( ! class_exists("Hybrid_Storage", false) ){
-			require_once $config["path_base"] . "Storage.php";
-		}
+		require_once $path_base . "Storage.php";
 
 		// hash given config
 		Hybrid_Auth::$config = $config;
-
-		// instance of log mng
-		Hybrid_Auth::$logger = new Hybrid_Logger();
 
 		// instance of errors mng
 		Hybrid_Auth::$error = new Hybrid_Error();
@@ -99,54 +84,14 @@ class Hybrid_Auth
 		// start session storage mng
 		Hybrid_Auth::$store = new Hybrid_Storage();
 
-		Hybrid_Logger::info( "Enter Hybrid_Auth::initialize()"); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). PHP version: " . PHP_VERSION ); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth version: " . Hybrid_Auth::$version ); 
-		Hybrid_Logger::info( "Hybrid_Auth::initialize(). Hybrid_Auth called from: " . Hybrid_Auth::getCurrentUrl() ); 
-
-		// PHP Curl extension [http://www.php.net/manual/en/intro.curl.php]
-		if ( ! function_exists('curl_init') ) {
-			Hybrid_Logger::error('Hybridauth Library needs the CURL PHP extension.');
-			throw new Exception('Hybridauth Library needs the CURL PHP extension.');
-		}
-
-		// PHP JSON extension [http://php.net/manual/en/book.json.php]
-		if ( ! function_exists('json_decode') ) {
-			Hybrid_Logger::error('Hybridauth Library needs the JSON PHP extension.');
-			throw new Exception('Hybridauth Library needs the JSON PHP extension.');
-		} 
-
-		// session.name
-		if( session_name() != "PHPSESSID" ){
-			Hybrid_Logger::info('PHP session.name diff from default PHPSESSID. http://php.net/manual/en/session.configuration.php#ini.session.name.');
-		}
-
-		// safe_mode is on
-		if( ini_get('safe_mode') ){
-			Hybrid_Logger::info('PHP safe_mode is on. http://php.net/safe-mode.');
-		}
-
-		// open basedir is on
-		if( ini_get('open_basedir') ){
-			Hybrid_Logger::info('PHP open_basedir is on. http://php.net/open-basedir.');
-		}
-
-		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump used config: ", serialize( $config ) );
-		Hybrid_Logger::debug( "Hybrid_Auth initialize. dump current session: ", Hybrid_Auth::storage()->getSessionData() ); 
-		Hybrid_Logger::info( "Hybrid_Auth initialize: check if any error is stored on the endpoint..." );
-
 		if( Hybrid_Error::hasError() ){ 
 			$m = Hybrid_Error::getErrorMessage();
 			$c = Hybrid_Error::getErrorCode();
-
-			Hybrid_Logger::error( "Hybrid_Auth initialize: A stored Error found, Throw an new Exception and delete it from the store: Error#$c, '$m'" );
 
 			Hybrid_Error::clearError();
 
 			throw new Exception( $m, $c );
 		}
-
-		Hybrid_Logger::info( "Hybrid_Auth initialize: no error found. initialization succeed." );
 
 		// Endof initialize 
 	}
@@ -154,7 +99,7 @@ class Hybrid_Auth
 	// --------------------------------------------------------------------
 
 	/**
-	* Hybrid storage system accessor
+	* Hybrid storage system accessors
 	*
 	* Users sessions are stored using HybridAuth storage system ( HybridAuth 2.0 handle PHP Session only) and can be accessed directly by
 	* Hybrid_Auth::storage()->get($key) to retrieves the data for the given key, or calling
@@ -201,12 +146,8 @@ class Hybrid_Auth
 	*/
 	public static function authenticate( $providerId, $params = NULL )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::authenticate( $providerId )" );
-
 		// if user not connected to $providerId then try setup a new adapter and start the login process for this provider
 		if( ! Hybrid_Auth::storage()->get( "hauth_session.$providerId.is_logged_in" ) ){ 
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), User not connected to the provider. Try to authenticate.." );
-
 			$provider_adapter = Hybrid_Auth::setup( $providerId, $params );
 
 			$provider_adapter->login();
@@ -214,8 +155,6 @@ class Hybrid_Auth
 
 		// else, then return the adapter instance for the given provider
 		else{
-			Hybrid_Logger::info( "Hybrid_Auth::authenticate( $providerId ), User is already connected to this provider. Return the adapter instance." );
-
 			return Hybrid_Auth::getAdapter( $providerId );
 		}
 	}
@@ -227,11 +166,15 @@ class Hybrid_Auth
 	*/ 
 	public static function getAdapter( $providerId = NULL )
 	{
-		if( ! Hybrid_Auth::$config ) {
-			Hybrid_Auth::initialize( unserialize( $_SESSION["HA::CONFIG"]['config'] ) ); 
+		if( ! Hybrid_Auth::$store ) {
+			require_once realpath( dirname( __FILE__ ) )  . "/Storage.php";
+
+			Hybrid_Auth::$store = new Hybrid_Storage();
 		}
 
-		Hybrid_Logger::info( "Enter Hybrid_Auth::getAdapter( $providerId )" );
+		if( ! Hybrid_Auth::$config ) {
+			Hybrid_Auth::initialize( Hybrid_Auth::storage()->config( "CONFIG" ) );
+		}
 
 		return Hybrid_Auth::setup( $providerId );
 	}
@@ -253,28 +196,20 @@ class Hybrid_Auth
 	*/ 
 	public static function setup( $providerId, $params = NULL )
 	{
-		Hybrid_Logger::debug( "Enter Hybrid_Auth::setup( $providerId )", $params );
-
 		if( ! $params ){ 
 			$params = Hybrid_Auth::storage()->get( "hauth_session.$providerId.id_provider_params" );
-			
-			Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ), no params given. Trying to get the stored for this provider.", $params );
 		}
 
 		if( ! $params ){ 
 			$params = ARRAY();
-			
-			Hybrid_Logger::info( "Hybrid_Auth::setup( $providerId ), no stored params found for this provider. Initialize a new one for new session" );
 		}
 
 		if( is_array($params) && ! isset( $params["hauth_return_to"] ) ){
-			$params["hauth_return_to"] = Hybrid_Auth::getCurrentUrl(); 
-
-			Hybrid_Logger::debug( "Hybrid_Auth::setup( $providerId ). HybridAuth Callback URL set to: ", $params["hauth_return_to"] );
+			$params["hauth_return_to"] = Hybrid_Auth::getCurrentUrl();
 		}
 
 		# instantiate a new IDProvider Adapter
-		$provider   = new Hybrid_Provider_Adapter();
+		$provider = new Hybrid_Provider_Adapter();
 
 		$provider->factory( $providerId, $params );
 
@@ -354,8 +289,6 @@ class Hybrid_Auth
 	*/
 	public static function redirect( $url, $mode = "PHP" )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Auth::redirect( $url, $mode )" );
-
 		if( $mode == "PHP" ){
 			header( "Location: $url" ) ;
 		}
@@ -432,7 +365,16 @@ class Hybrid_Auth
 		$request_port = (!in_array($request_port, array (80, 443)) ? $request_port : '');
 
 		//Build url
-		$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
+		$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '');
+
+		if( $request_uri )
+		{
+			$current_url .= $request_uri;
+		}
+		else
+		{
+			$current_url .= $_SERVER ['PHP_SELF'];
+		}
 
 		//Done
 		return $current_url;

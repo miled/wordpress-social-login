@@ -181,6 +181,8 @@ function wsl_admin_ui_header( $wslp = null )
 	<h2 class="nav-tab-wrapper">
 		&nbsp;
 		<?php
+			$css_pull_right = "";
+
 			foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $name => $settings )
 			{
 				if( $settings["enabled"] && ( $settings["visible"] || $wslp == $name ) )

@@ -222,15 +222,33 @@ function wsl_component_bouncer_setup_membership_level()
 		</p>  
 		<p class="description">
 			<?php _wsl_e('<b>Notes:</b>', 'wordpress-social-login') ?>
-			<br /><?php _wsl_e('1. If <b>User Moderation</b> is set to <code>Admin Approval</code> then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>. 
-			<br /><?php _wsl_e('2. To assign the same default role as in your website <b>General Settings</b>, set this field to <code>default</code>', 'wordpress-social-login') ?>.
-			<br /><?php _wsl_e('3. If you are not sure, leave this field to either <code>wslnorole</code> or blank (omitting the role will create a users with "No Role For This Site")', 'wordpress-social-login') ?>.
+			<br /><?php _wsl_e('1. If <b>User Moderation</b> is set to <code>Admin Approval</code>, then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>. 
+			<br /><?php _wsl_e('2. To assign the same default role as in your website <b>General Settings</b>, set this field to <code>Wordpress User Default Role</code>', 'wordpress-social-login') ?>.
+			<br /><?php _wsl_e('3. If you are not sure, leave this field to <code>No role for this site</code>', 'wordpress-social-login') ?>.
 		</p> 
 		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 		  <tr>
 			<td width="200" align="right" nowrap><strong><?php _wsl_e("New WSL users default role", 'wordpress-social-login') ?> :</strong></td>
 			<td>
-				<input type="text" name="wsl_settings_bouncer_new_users_membership_default_role" class="inputgnrc" style="width:535px" value="<?php echo get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ); ?>"> 
+				<select name="wsl_settings_bouncer_new_users_membership_default_role">
+					<optgroup label="<?php _wsl_e("Safe", 'wordpress-social-login') ?>:">
+						<option value="default"     <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "default" ) echo "selected"; ?> ><?php _wsl_e("&mdash; Wordpress User Default Role &mdash;", 'wordpress-social-login') ?></option> 
+						<option value="wslnorole"   <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == "wslnorole" ) echo "selected"; ?> ><?php _wsl_e("&mdash; No role for this site  &mdash;", 'wordpress-social-login') ?></option> 
+					</optgroup>
+
+					<optgroup label="<?php _wsl_e("Be careful with these", 'wordpress-social-login') ?>:">
+						<?php
+							global $wp_roles;
+
+							foreach ( $wp_roles->role_names as $role => $name )
+							{
+						?>
+							<option value="<?php echo $role ?>"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == $role ) echo "selected"; ?> ><?php _wsl_e( $name, 'wordpress-social-login' ) ?></option>
+						<?php	
+							}
+						?>
+					</optgroup>
+				</select>
 			</td>
 		  </tr>  
 		  <tr>

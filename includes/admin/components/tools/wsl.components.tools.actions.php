@@ -16,6 +16,7 @@ function wsl_component_tools_sections()
 	$sections = array(
 		'diagnostics'        => 'wsl_component_tools_diagnostics'        ,
 		'system_information' => 'wsl_component_tools_system_information' ,
+		'auth_playground'    => 'wsl_component_tools_auth_playground'    ,
 		'repair_wsl_tables'  => 'wsl_component_tools_repair_wsl_tables'  ,
 		'debug_mode'         => 'wsl_component_tools_debug_mode'         ,
 		'development_mode'   => 'wsl_component_tools_development_mode'   ,
@@ -68,6 +69,26 @@ function wsl_component_tools_system_information()
 		</p>
 
 		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=sysinfo'); ?>"><?php _wsl_e("Display your system information", 'wordpress-social-login') ?></a>  
+	</div>
+</div>
+<?php
+}
+
+// --------------------------------------------------------------------	
+
+function wsl_component_tools_auth_playground()
+{
+?>
+<div class="stuffbox">
+	<h3>
+		<label><?php _wsl_e("Authentication Playground", 'wordpress-social-login') ?></label>
+	</h3>
+	<div class="inside"> 
+		<p>
+			<?php _wsl_e('This tool will let you authenticate with the enabled social networks without creating any new user account. This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>. 
+		</p>
+
+		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=auth-test'); ?>"><?php _wsl_e("Go to the authentication playground", 'wordpress-social-login') ?></a>  
 	</div>
 </div>
 <?php

@@ -24,6 +24,11 @@ class Hybrid_Providers_WordPress extends Hybrid_Provider_Model_OAuth2
 		$this->api->api_base_url  = "https://public-api.wordpress.com/rest/v1/";
 		$this->api->authorize_url = "https://public-api.wordpress.com/oauth2/authenticate";
 		$this->api->token_url     = "https://public-api.wordpress.com/oauth2/token";
+		
+		if( $this->token( "access_token" ) )
+		{
+			$this->api->curl_header = array( 'Authorization: Bearer ' . $this->token( "access_token" ) );
+		}
 	}
 
 	// --------------------------------------------------------------------
@@ -44,8 +49,6 @@ class Hybrid_Providers_WordPress extends Hybrid_Provider_Model_OAuth2
 	*/
 	function getUserProfile()
 	{
-		$this->api->curl_header = array( 'Authorization: Bearer ' . $this->token( "access_token" ) );
-
 		$response = $this->api->api( "me/" ); 
 
 		if ( ! isset( $response->ID ) ){ 

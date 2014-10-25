@@ -9,7 +9,9 @@
 /** 
 * User data functions (database related)
 *
-* This code is loosely commented: functions names should be self-explanatory.
+* Notes:
+*   1. This entire file will be rewroked in future versions and based on a lightweight ORM.
+*   2. The current code is loosely commented: functions names should be self-explanatory.
 */
 
 // Exit if accessed directly
@@ -179,7 +181,7 @@ function wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id )
 {
 	global $wpdb;
 
-	$sql = "SELECT * FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d";
+	$sql = "SELECT * FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d order by provider";
 
 	return $wpdb->get_results( $wpdb->prepare( $sql, $user_id ) );
 }
@@ -192,9 +194,9 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	
 	$wpdb->show_errors(); 
 
-	$sql = "SELECT id, object_sha FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d and provider = %s";
+	$sql = "SELECT id, object_sha FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d and provider = %s and identifier = %s";
 	
-	$rs  = $wpdb->get_results( $wpdb->prepare( $sql, $user_id, $provider ) );
+	$rs  = $wpdb->get_results( $wpdb->prepare( $sql, $user_id, $provider, $profile->identifier ) );
 
 	// we only sotre the user profile if it has changed since last login.
 	$object_sha = sha1( serialize( $profile ) );

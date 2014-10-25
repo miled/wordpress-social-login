@@ -35,7 +35,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 		}
 
 		// include LightOpenID lib
-		require_once Hybrid_Auth::$config["path_libraries"] . "OpenID/LightOpenID.php";
+		require_once realpath( dirname( __FILE__ ) )  . "/thirdparty/OpenID/LightOpenID.php";
 
 		// An error was occurring when proxy wasn't set. Not sure where proxy was meant to be set/initialized.
 		Hybrid_Auth::$config['proxy'] = isset(Hybrid_Auth::$config['proxy'])?Hybrid_Auth::$config['proxy']:'';
@@ -167,7 +167,7 @@ class Hybrid_Provider_Model_OpenID extends Hybrid_Provider_Model
 	function getUserProfile()
 	{
 		// try to get the user profile from stored data
-		$this->user = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user" ) ;
+		$this->user = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user" );
 
 		// if not found
 		if ( ! is_object( $this->user ) ){

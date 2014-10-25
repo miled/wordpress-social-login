@@ -28,34 +28,6 @@ function wsl_get_version()
 // --------------------------------------------------------------------
 
 /**
-* _e() wrapper
-* 
-* This function was used for the localization widget to generate translations per page. 
-*
-* kept for compatibility.
-*/
-function _wsl_e( $text, $domain )
-{
-	echo __( $text, $domain );
-}
-
-// --------------------------------------------------------------------
-
-/**
-* __() wrapper
-* 
-* This function was used for the localization widget to generate translations per page. 
-*
-* kept for compatibility.
-*/
-function _wsl__( $text, $domain )
-{
-	return __( $text, $domain );
-}
-
-// --------------------------------------------------------------------
-
-/**
 * Check if the current connection is being made over https
 *
 * Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 

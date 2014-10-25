@@ -111,9 +111,6 @@ class Hybrid_Providers_Reddit extends Hybrid_Provider_Model_OAuth2
 
 	private function request( $url, $params = array(), $type="GET", $http_headers = null )
 	{
-		Hybrid_Logger::info( "Enter OAuth2Client::request( $url )" );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request params: ", print_r( $params, true ) );
-
 		if( $type == "GET" ){
 			$url = $url . ( strpos( $url, '?' ) ? '&' : '?' ) . http_build_query($params, '', '&');
 		}
@@ -151,9 +148,6 @@ class Hybrid_Providers_Reddit extends Hybrid_Provider_Model_OAuth2
 		}
 
 		$response = curl_exec($ch);
-
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request info: ", print_r( curl_getinfo($ch), true ) );
-		Hybrid_Logger::debug( "OAuth2Client::request(). dump request result: ", print_r( $response, true ) );
 
 		$this->http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 		$this->http_info = array_merge($this->http_info, curl_getinfo($ch));

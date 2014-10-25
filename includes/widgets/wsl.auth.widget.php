@@ -21,10 +21,12 @@ if( !defined( 'ABSPATH' ) ) exit;
 /**
 * Generate the HTML content of WSL Widget
 */
-function wsl_render_login_form()
+function wsl_render_auth_widget( $args = array() )
 {
-	// WSL Widget won't show up for connected users
-	if( is_user_logged_in() && ! is_admin() )
+	$auth_mode = isset( $args['mode'] ) && $args['mode'] ? $args['mode'] : 'login';
+
+	// By default, WSL Widget won't show up for connected users
+	if( $auth_mode == 'login' && is_user_logged_in() )
 	{
 		return;
 	}
@@ -38,7 +40,7 @@ function wsl_render_login_form()
 	ob_start();
 
 	// HOOKABLE: This action runs just before generating the WSL Widget.
-	do_action( 'wsl_render_login_form_start' );
+	do_action( 'wsl_render_auth_widget_start' );
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
@@ -58,17 +60,30 @@ function wsl_render_login_form()
 	$current_page_url = wsl_get_current_url();
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
-	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticate&";
+	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticate&mode=login&";
+
+	// if not in mode login, we overwrite the auth base url
+	// > admin sandbox
+	if( $auth_mode == 'test' )
+	{
+		$authenticate_base_url = admin_url( 'options-general.php?page=wordpress-social-login&wslp=auth-test&action=wordpress_social_authenticate&mode=test&' );
+	}
+
+	// > account linking
+	elseif( $auth_mode == 'link' )
+	{
+		$authenticate_base_url = site_url() . "/?action=wordpress_social_authenticate&mode=link&";
+	}
 
 	// Connect with caption
-	$connect_with_label = _wsl__( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' );
+	$connect_with_label = isset( $args['caption'] ) ? $args['caption']  : _wsl__( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' );
 
 	// HOOKABLE:
-	$connect_with_label = apply_filters( 'wsl_render_login_form_alter_connect_with_label', $connect_with_label, $current_page_url );
+	$connect_with_label = apply_filters( 'wsl_render_login_form_alter_connect_with_label', $connect_with_label );
 ?>
 
 <!--
-	wsl_render_login_form
+	wsl_render_auth_widget
 	WordPress Social Login Plugin <?php echo wsl_get_version(); ?>.
 	http://wordpress.org/extend/plugins/wordpress-social-login/
 -->
@@ -128,7 +143,7 @@ function wsl_render_login_form()
 
 			// in case, Widget::Authentication display is set to 'popup', then we overwrite 'authenticate_url'
 			// > /assets/js/connect.js will take care of the rest
-			if( $wsl_settings_use_popup == 1 )
+			if( $wsl_settings_use_popup == 1 &&  $auth_mode != 'test' )
 			{ 
 				$authenticate_url= "javascript:void(0);";
 			}
@@ -188,8 +203,51 @@ function wsl_render_login_form()
 <!-- wsl_render_login_form -->
 
 <?php
+	// account linking
+	if( $auth_mode == 'link' )
+	{
+		$user_id = get_current_user_id();
+
+		$linked_accounts = wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id );
+
+		if( $linked_accounts )
+		{
+?>
+	<table class="wp-social-login-linked-accounts-list">
+		<tr>
+			<th width="80"><?php _wsl_e("Provider", 'wordpress-social-login') ?></th>
+			<th><?php _wsl_e("Identity", 'wordpress-social-login') ?></th> 
+		</tr>
+		<?php
+			foreach( $linked_accounts AS $item ){  
+				$identity = $item->profileurl;
+				$photourl = $item->photourl;
+				
+				if( ! $identity ){
+					$identity = $item->identifier;
+				}
+		?>
+			<tr>
+				<td>
+					<?php if( $photourl ) { ?>
+						<img src="<?php echo $photourl ?>" style="vertical-align: top;width:16px;height:16px;" > 
+					<?php } else { ?>
+						<img src="<?php echo $assets_base_url . strtolower(  $item->provider ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" />
+					<?php } ?> 
+					<?php echo ucfirst( $item->provider ); ?>
+				</td>
+				<td><?php echo $identity; ?></td> 
+			</tr>
+		<?php 
+			}
+		?>
+	</table>
+<?php
+		}
+	}
+
 	// HOOKABLE: This action runs just after generating the WSL Widget.
-	do_action( 'wsl_render_login_form_end' );
+	do_action( 'wsl_render_auth_widget_end' );
 
 	// Display WSL debugging are bellow the widget.  
 	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :) 
@@ -204,9 +262,9 @@ function wsl_render_login_form()
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
 */
-function wsl_shortcode_handler()
+function wsl_shortcode_handler( $args = array() )
 {
-	return wsl_render_login_form();
+	return wsl_render_auth_widget( $args );
 }
 
 add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
@@ -216,9 +274,9 @@ add_shortcode( 'wordpress_social_login', 'wsl_shortcode_handler' );
 /**
 * WSL Widget action 
 */
-function wsl_render_login_form_login()
+function wsl_render_login_form_login( $args = array() )
 {
-	echo wsl_render_login_form();
+	echo wsl_render_auth_widget( $args );
 }
 
 add_action( 'wordpress_social_login', 'wsl_render_login_form_login' );
@@ -242,7 +300,7 @@ function wsl_render_wsl_widget_in_comment_form()
 			$wsl_settings_widget_display == 2 
 		)
 		{
-			echo wsl_render_login_form();
+			echo wsl_render_auth_widget();
 		}
 	}
 }
@@ -260,7 +318,7 @@ function wsl_render_wsl_widget_in_wp_login_form()
 	
 	if( $wsl_settings_widget_display == 1 || $wsl_settings_widget_display == 3 )
 	{
-		echo wsl_render_login_form();
+		echo wsl_render_auth_widget();
 	}
 }
 
@@ -281,7 +339,7 @@ function wsl_render_wsl_widget_in_wp_register_form()
 
 	if( $wsl_settings_widget_display == 1 || $wsl_settings_widget_display == 3 )
 	{
-		echo wsl_render_login_form();
+		echo wsl_render_auth_widget();
 	}
 }
 

@@ -57,8 +57,6 @@ class Hybrid_Provider_Adapter
 	*/
 	function factory( $id, $params = array() )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::factory( $id )" );
-
 		# init the adapter config and params
 		$this->id     = $id;
 		$this->params = $params;
@@ -92,8 +90,10 @@ class Hybrid_Provider_Adapter
 
 			$this->wrapper = $this->config["wrapper"]["class"];
 		}
-		else{ 
-			require_once Hybrid_Auth::$config["path_providers"] . $this->id . ".php" ;
+		else{
+			$path_providers = realpath( dirname( __FILE__ ) )  . "/Providers/";
+			
+			require_once $path_providers . $this->id . ".php" ;
 
 			$this->wrapper = "Hybrid_Providers_" . $this->id; 
 		}
@@ -112,8 +112,6 @@ class Hybrid_Provider_Adapter
 	*/
 	function login()
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::login( {$this->id} ) " );
-
 		if( ! $this->adapter ){
 			throw new Exception( "Hybrid_Provider_Adapter::login() should not directly used." );
 		}
@@ -130,12 +128,7 @@ class Hybrid_Provider_Adapter
 
 		# get hybridauth base url
 		if (empty(Hybrid_Auth::$config["base_url"])) {
-	        // the base url wasn't provide, so we must use the current
-	        // url (which makes sense actually)
-			$url  = empty($_SERVER['HTTPS']) || $_SERVER['HTTPS'] == 'off' ? 'http' : 'https';
-			$url .= '://' . $_SERVER['HTTP_HOST'];
-			$url .= $_SERVER['REQUEST_URI'];
-			$HYBRID_AUTH_URL_BASE = $url;
+	        $HYBRID_AUTH_URL_BASE = Hybrid_Auth::getCurrentUrl( true ) ;
 		} else {
 			$HYBRID_AUTH_URL_BASE = Hybrid_Auth::$config["base_url"];
 		}
@@ -179,9 +172,6 @@ class Hybrid_Provider_Adapter
 		// store config to be used by the end point 
 		Hybrid_Auth::storage()->config( "CONFIG", Hybrid_Auth::$config );
 
-		// move on
-		Hybrid_Logger::debug( "Hybrid_Provider_Adapter::login( {$this->id} ), redirect the user to login_start URL." );
-
 		Hybrid_Auth::redirect( $this->params["login_start"] );
 	}
 
@@ -216,8 +206,6 @@ class Hybrid_Provider_Adapter
 	*/ 
 	public function __call( $name, $arguments ) 
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Provider_Adapter::$name(), Provider: {$this->id}" );
-
 		if ( ! $this->isUserConnected() ){
 			throw new Exception( "User not connected to the provider {$this->id}.", 7 );
 		} 
@@ -247,8 +235,6 @@ class Hybrid_Provider_Adapter
 	public function getAccessToken()
 	{
 		if( ! $this->adapter->isUserConnected() ){
-			Hybrid_Logger::error( "User not connected to the provider." );
-
 			throw new Exception( "User not connected to the provider.", 7 );
 		}
 
@@ -270,8 +256,6 @@ class Hybrid_Provider_Adapter
 	function api()
 	{
 		if( ! $this->adapter->isUserConnected() ){
-			Hybrid_Logger::error( "User not connected to the provider." );
-
 			throw new Exception( "User not connected to the provider.", 7 );
 		}
 

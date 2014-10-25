@@ -36,6 +36,17 @@ function wsl_component_users_list()
 		?>
 	</p>
 
+	<!--
+	Postponed to future versions
+
+		<form method="post">
+			<select name="provider" style="vertical-align: unset;">
+				<option value=""><?php _wsl_e("Provider", 'wordpress-social-login') ?></option>
+			</select>
+			<input type="text" value="" name="username" placeholder="<?php _wsl_e("Username", 'wordpress-social-login') ?>" style="height: 28px;">
+			<input type="submit" value="Filter" class="button">
+		</form>
+	-->
 	<?php _wsl_e( "This screen only list the users who have connected through WordPress Social Login", 'wordpress-social-login' ) ?>.
 </div>
 <?php

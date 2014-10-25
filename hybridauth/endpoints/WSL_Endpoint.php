@@ -66,12 +66,7 @@ class WSL_Hybrid_Endpoint extends Hybrid_Endpoint
 
 			// Check if Hybrid_Auth session already exist
 			if ( ! $storage->config( "CONFIG" ) ) {
-				if ( ! $storage->config( "php_session_id" ) ) {
-					header( 'HTTP/1.0 401 Unauthorized' );
-				}
-				else{
-					header( 'HTTP/1.0 406 Not Acceptable' );
-				}
+				header( 'HTTP/1.0 406 Not Acceptable' );
 
 				WSL_Hybrid_Endpoint::dieError( 'The session identifier is missing.<br />Please check WordPress Social Login <a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">Minimum system requirements</a> and <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank">FAQ</a>.' );
 			}

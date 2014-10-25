@@ -1,4 +1,3 @@
-# HybridAuth Library
+#### INORMATION
 
-HybridAuth is an Open-source social sign on PHP Library. HybridAuth goal is to act as an abstract api between your application and various social apis and identities providers such as Facebook, Twitter, MySpace and Google.
-http://hybridauth.sourceforge.net
+This is heavily edited fork of the HybridAuth library and no longer compatible with the master branch.

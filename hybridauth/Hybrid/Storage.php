@@ -5,8 +5,6 @@
 * (c) 2009-2014, HybridAuth authors | http://hybridauth.sourceforge.net/licenses.html 
 */
 
-require_once realpath( dirname( __FILE__ ) )  . "/StorageInterface.php";
-
 /**
  * HybridAuth storage manager
  */
@@ -23,7 +21,6 @@ class Hybrid_Storage
 			}
 		}
 
-		$this->config( "php_session_id", session_id() );
 		$this->config( "version", Hybrid_Auth::$version );
 	}
 

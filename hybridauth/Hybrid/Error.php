@@ -20,8 +20,6 @@ class Hybrid_Error
 	*/
 	public static function setError( $message, $code = NULL )
 	{
-		Hybrid_Logger::info( "Enter Hybrid_Error::setError( $message )" );
-
 		Hybrid_Auth::storage()->set( "hauth_session.error.status"  , 1         );
 		Hybrid_Auth::storage()->set( "hauth_session.error.message" , $message  );
 		Hybrid_Auth::storage()->set( "hauth_session.error.code"    , $code     );
@@ -31,9 +29,7 @@ class Hybrid_Error
 	* Clear the last error
 	*/
 	public static function clearError()
-	{ 
-		Hybrid_Logger::info( "Enter Hybrid_Error::clearError()" );
-
+	{
 		Hybrid_Auth::storage()->delete( "hauth_session.error.status"   );
 		Hybrid_Auth::storage()->delete( "hauth_session.error.message"  );
 		Hybrid_Auth::storage()->delete( "hauth_session.error.code"     );
@@ -71,6 +67,14 @@ class Hybrid_Error
 	public static function setApiError( $error )
 	{ 
 		return Hybrid_Auth::storage()->set( "hauth_session.error.apierror", $error );
+	}
+
+	/**
+	* set api error
+	*/
+	public static function deleteApiError()
+	{ 
+		return Hybrid_Auth::storage()->delete( "hauth_session.error.apierror" );
 	}
 
 	/**
