@@ -81,6 +81,8 @@ class OAuth1Client{
 
 		$request     = $this->signedRequest( $this->request_token_url, $this->request_token_method, $parameters ); 
 		$token       = OAuthUtil::parse_parameters( $request );
+		
+		if( isset(  $token['oauth_token'] ) )
 		$this->token = new OAuthConsumer( $token['oauth_token'], $token['oauth_token_secret'] ); 
 
 		return $token; 

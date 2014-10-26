@@ -10,7 +10,7 @@
 * User data functions (database related)
 *
 * Notes:
-*   1. This entire file will be rewroked in future versions and based on a lightweight ORM.
+*   1. This entire file will be rewroked in future versions based on a lightweight ORM.
 *   2. The current code is loosely commented: functions names should be self-explanatory.
 */
 

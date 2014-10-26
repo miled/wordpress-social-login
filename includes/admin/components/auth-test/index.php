@@ -199,7 +199,7 @@ function wsl_component_authtest()
 									<table class="wp-list-table widefat">
 										<tr>
 											<th width="200"><label><?php _wsl_e("Path", 'wordpress-social-login') ?></label></th>
-											<td><input type="text" style="width:97%" name="console-path" value="<?php echo htmlentities( $path ); ?>"><a href="https://apigee.com/providers" target="_blank"><img src="<?php echo $assets_base_url . 'question.png' ?>" style="vertical-align: text-top;" /></a></td>
+											<td><input type="text" style="width:96%" name="console-path" value="<?php echo htmlentities( $path ); ?>"><a href="https://apigee.com/providers" target="_blank"><img src="<?php echo $assets_base_url . 'question.png' ?>" style="vertical-align: text-top;" /></a></td>
 										</tr>
 										<tr>
 											<th width="200"><label><?php _wsl_e("Method", 'wordpress-social-login') ?></label></th>
@@ -321,7 +321,10 @@ catch( Exception $e )
 
 						<div style="padding:0 20px;">
 							<p>
-								<?php _wsl_e('This tool will let you authenticate with the enabled social networks without creating any new user account. This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>.
+								<?php _wsl_e('Authentication Playground will let you authenticate with the enabled social networks without creating any new user account', 'wordpress-social-login') ?>.
+							</p>
+							<p>
+								<?php _wsl_e('This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>.
 							</p>
 						</div> 
 					</div> 

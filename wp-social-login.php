@@ -185,10 +185,6 @@ add_action( 'plugins_loaded', 'wsl_load_plugin_textdomain' );
 
 /**
 * _e() wrapper
-* 
-* This function was used for the localization widget to generate translations per page. 
-*
-* kept for compatibility.
 */
 function _wsl_e( $text, $domain )
 {
@@ -199,10 +195,6 @@ function _wsl_e( $text, $domain )
 
 /**
 * __() wrapper
-* 
-* This function was used for the localization widget to generate translations per page. 
-*
-* kept for compatibility.
 */
 function _wsl__( $text, $domain )
 {
@@ -228,7 +220,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.utilitie
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.watchdog.php'             ); // Logging agent
 
 # WSL Widget and GUIs generators
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widget.php'           ); // Authentication widget generators (where WSL widget/icons are displayed)
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widgets.php'          ); // Authentication widget generators (where WSL widget/icons are displayed)
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.account.linking.php'       ); // Planned for WSL 2.3.
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages.

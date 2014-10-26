@@ -73,7 +73,7 @@ function wsl_database_migration_process()
 			KEY provider (provider)
 		)"; 
 	dbDelta( $sql );
-	
+
 	$sql = "CREATE TABLE $wsluserscontacts (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			user_id int(11) NOT NULL,

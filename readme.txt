@@ -87,11 +87,15 @@ The user guide and frequently asked questions can be found at http://miled.githu
 * Profile completion form has received a visual update.
 * Bouncer Membership level can be now set to any user role.
 * WSL now provide an easier access to social networks apis.
+* WSL now trigger WordPress do_login action hooks whenever a user connect.
 * Authentication display now fall back to In Page when WSL is used on a mobile device.
 * WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
 * Added new tool "Repair WSL tables".
 * Added Debug mode.
+* Added Authentication Playground.
 * Added new hooks in the authentication widget and auth process.
+* Function wsl_render_login_form() renamed to wsl_render_auth_widget()
+* Css file style.css renamed to widget.css
 * Depreciated hooks from versions prior 2.2.2 has been removed.
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
 * wsl_render_notice_page and wsl_render_error_page has slightly changed.

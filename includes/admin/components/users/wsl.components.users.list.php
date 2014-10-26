@@ -47,6 +47,7 @@ function wsl_component_users_list()
 			<input type="submit" value="Filter" class="button">
 		</form>
 	-->
+
 	<?php _wsl_e( "This screen only list the users who have connected through WordPress Social Login", 'wordpress-social-login' ) ?>.
 </div>
 <?php

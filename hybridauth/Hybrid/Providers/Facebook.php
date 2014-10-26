@@ -36,24 +36,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		}
 
 		$trustForwarded = isset( $this->config['trustForwarded'] ) ? (bool) $this->config['trustForwarded'] : false;
+
 		$this->api = new Facebook( ARRAY( 'appId' => $this->config["keys"]["id"], 'secret' => $this->config["keys"]["secret"], 'trustForwarded' => $trustForwarded ) );
-
-		if ( $this->token("access_token") ) {
-			$this->api->setAccessToken( $this->token("access_token") );
-			$this->api->setExtendedAccessToken();
-			$access_token = $this->api->getAccessToken();
-
-			if( $access_token ){
-				$this->token("access_token", $access_token );
-				$this->api->setAccessToken( $access_token );
-			}
-
-			$this->api->setAccessToken( $this->token("access_token") ); 
-		}
-		else{
-			// fixme! this cal fb api twice 
-			$this->api->getUser();
-		}
 	}
 
 	/**
@@ -80,12 +64,12 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 			}
 		}
 
-        if( isset( $this->config[ 'force' ] ) && $this->config[ 'force' ] === true ){
-            $parameters[ 'auth_type' ]  = 'reauthenticate';
-            $parameters[ 'auth_nonce' ] = md5( uniqid( mt_rand(), true ) );
+		if( isset( $this->config[ 'force' ] ) && $this->config[ 'force' ] === true ){
+			$parameters[ 'auth_type' ]  = 'reauthenticate';
+			$parameters[ 'auth_nonce' ] = md5( uniqid( mt_rand(), true ) );
 
-            Hybrid_Auth::storage()->set( 'fb_auth_nonce', $parameters[ 'auth_nonce' ] );
-        }
+			Hybrid_Auth::storage()->set( 'fb_auth_nonce', $parameters[ 'auth_nonce' ] );
+		}
 
 		// get the login url 
 		$url = $this->api->getLoginUrl( $parameters );
@@ -156,12 +140,34 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 	}
 
 	/**
+	* setAccessToken
+	*/
+	function setAccessToken()
+	{ 
+
+		if ( $this->token("access_token") ) {
+			$this->api->setAccessToken( $this->token("access_token") );
+			$this->api->setExtendedAccessToken();
+			$access_token = $this->api->getAccessToken();
+
+			if( $access_token ){
+				$this->token("access_token", $access_token );
+				$this->api->setAccessToken( $access_token );
+			}
+
+			$this->api->setAccessToken( $this->token("access_token") ); 
+		}
+	}
+
+	/**
 	* load the user profile from the IDp api client
 	*/
 	function getUserProfile()
 	{
 		// request user profile from fb api
 		try{ 
+			$this->setAccessToken();
+
 			$data = $this->api->api('/me'); 
 		}
 		catch( FacebookApiException $e ){
@@ -180,7 +186,6 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 		$this->user->profile->firstName     = (array_key_exists('first_name',$data))?$data['first_name']:"";
 		$this->user->profile->lastName      = (array_key_exists('last_name',$data))?$data['last_name']:"";
 		$this->user->profile->photoURL      = "https://graph.facebook.com/" . $this->user->profile->identifier . "/picture?width=150&height=150";
-		$this->user->profile->coverInfoURL  = "https://graph.facebook.com/" . $this->user->profile->identifier . "?fields=cover";
 		$this->user->profile->profileURL    = (array_key_exists('link',$data))?$data['link']:""; 
 		$this->user->profile->webSiteURL    = (array_key_exists('website',$data))?$data['website']:""; 
 		$this->user->profile->gender        = (array_key_exists('gender',$data))?$data['gender']:"";
@@ -213,27 +218,6 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
  	}
 
 	/**
-	* Attempt to retrieve the url to the cover image given the coverInfoURL
-	*
-	* @param  string $coverInfoURL   coverInfoURL variable
-	* @retval string                 url to the cover image OR blank string
-	*/
-	function getCoverURL($coverInfoURL)
-	{
-		try {
-			$headers = get_headers($coverInfoURL);
-			if(substr($headers[0], 9, 3) != "404") {
-				$coverOBJ = json_decode(file_get_contents($coverInfoURL));
-				if(array_key_exists('cover', $coverOBJ)) {
-					return $coverOBJ->cover->source;
-				}
-			}
-		} catch (Exception $e) { }
-
-		return "";
-	}
-	
-	/**
 	* load the user contacts
 	*/
 	function getUserContacts()
@@ -244,6 +228,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 
 		do {
 			try{ 
+				$this->setAccessToken();
+
 				$response = $this->api->api('/me/friends' . $apiCall); 
 			}
 			catch( FacebookApiException $e ){
@@ -313,6 +299,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
         }
 
         try{ 
+            $this->setAccessToken();
+
             $response = $this->api->api( '/' . $pageid . '/feed', 'post', $status );
         }
         catch( FacebookApiException $e ){
@@ -320,56 +308,6 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
         }
 
         return $response;
-    }
-
-
-	/**
-	* get user status
-	*/
-    function getUserStatus( $postid )
-    {
-		try{
-            $postinfo = $this->api->api( "/" . $postid );
-        }
-		catch( FacebookApiException $e ){
-			throw new Exception( "Cannot retrieve user status! {$this->providerId} returned an error: $e" );
-		}
-
-        return $postinfo;
-    }
-
-
-	/**
-	* get user pages
-	*/
-    function getUserPages( $writableonly = false )
-    {
-        if( ( isset( $this->config[ 'scope' ] ) && strpos( $this->config[ 'scope' ], 'manage_pages' ) === false ) || ( !isset( $this->config[ 'scope' ] ) && strpos( $this->scope, 'manage_pages' ) === false ) )
-            throw new Exception( "User status requires manage_page permission!" );            
-
-        try{
-            $pages = $this->api->api( "/me/accounts", 'get' );
-        }
-        catch( FacebookApiException $e ){
-            throw new Exception( "Cannot retrieve user pages! {$this->providerId} returned an error: $e" );
-        }
-
-        if( !isset( $pages[ 'data' ] ) ){
-            return array();
-        }
-
-        if( !$writableonly ){
-            return $pages[ 'data' ];
-        }
-
-        $wrpages = array();
-        foreach( $pages[ 'data' ] as $p ){
-            if( isset( $p[ 'perms' ] ) && in_array( 'CREATE_CONTENT', $p[ 'perms' ] ) ){
-                $wrpages[] = $p;
-            }
-        }
-
-        return $wrpages;
     }
 
 	/**
@@ -380,6 +318,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 	function getUserActivity( $stream )
 	{
 		try{
+			$this->setAccessToken();
+
 			if( $stream == "me" ){
 				$response = $this->api->api( '/me/feed' ); 
 			}

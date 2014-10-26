@@ -39,11 +39,15 @@ For more information about WordPress Social Login, refer to our [online user gui
 * Profile completion form has received a visual update.
 * Bouncer Membership level can be now set to any user role.
 * WSL now provide an easier access to social networks apis.
+* WSL now trigger WordPress do_login action hooks whenever a user connect.
 * Authentication display now fall back to In Page when WSL is used on a mobile device.
 * WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
 * Added new tool "Repair WSL tables".
 * Added Debug mode.
+* Added Authentication Playground.
 * Added new hooks in the authentication widget and auth process.
+* Function wsl_render_login_form() renamed to wsl_render_auth_widget()
+* Css file style.css renamed to widget.css
 * Depreciated hooks from versions prior 2.2.2 has been removed.
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
 * wsl_render_notice_page and wsl_render_error_page has slightly changed.
@@ -55,6 +59,8 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 - [ ] Accounts linking/mapping
 - [ ] User moderation will be fully implemented and no longer needs TML.
+- [ ] Widget shortcode will support arguments
+- [ ] Add usermeat shortcode
 - [ ] ..
 
 #### License 
@@ -66,18 +72,20 @@ MIT — That's short for do whatever you want.
 Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum. 
 
 #### Screenshots
-![Number6](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-2.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-2.png)
 ===
-![Flat](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-3.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-3.png)
 ===
-![Fontawesome](http://miled.github.io/wordpress-social-login/assets/img/theme_fontawesome.png)
+![screenshot](http://miled.github.io/wordpress-social-login/assets/img/theme_fontawesome.png)
 ===
-![Networks](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-4.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-4.png)
 =
-![Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-5.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-5.png)
 ===
-![Bouncer](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-6.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-6.png)
 ===
-![BuddyPress](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-7.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-7.png)
 ===
-![Components](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-8.png)
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-8.png)
+===
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-9.png)

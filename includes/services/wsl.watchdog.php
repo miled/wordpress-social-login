@@ -26,6 +26,8 @@ function wsl_watchdog_init()
 		return;
 	}
 
+	define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
+
 	add_action( 'wsl_process_login_start', 'wsl_watchdog_wsl_process_login' );
 	add_action( 'wsl_process_login_begin_start', 'wsl_watchdog_wsl_process_login_begin_start' );
 	add_action( 'wsl_process_login_end_start', 'wsl_watchdog_wsl_process_login_end_start' );

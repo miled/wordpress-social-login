@@ -11,11 +11,11 @@
 // ------------------------------------------------------------------------
 
 /**
-* If for some reason you want to debug apis call made by hybridauth you can add the block of code below.
+* If for some reason you want to debug apis call made by hybridauth during the auth process, you can add the block of code below.
 *
 * <code>
 *    include_once( '/path/to/file/wp-load.php' );
-*    defined( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS' );
+*    define( 'WORDPRESS_SOCIAL_LOGIN_DEBUG_API_CALLS', true );
 *    add_action( 'wsl_log_provider_api_call', 'wsl_watchdog_wsl_log_provider_api_call', 10, 8 );
 *    do_action( 'wsl_log_provider_api_call', 'ENDPOINT', 'Hybridauth://endpoint', null, null, null, null, $_SERVER["QUERY_STRING"] );
 * </code>

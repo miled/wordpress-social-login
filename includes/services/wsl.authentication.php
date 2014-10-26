@@ -42,8 +42,9 @@
 *     .
 *     .    wsl_process_login_end()
 *     .    .    wsl_process_login_end_get_user_data()
-*     .    .    .    Hybrid_Auth::isConnectedWith()
-*     .    .    .    .    wsl_process_login_render_error_page()
+*     .    .    .    wsl_process_login_request_user_social_profile()
+*     .    .    .    .    Hybrid_Auth::getUserProfile()
+*     .    .    .    .    .    wsl_process_login_render_error_page()
 *     .    .    .
 *     .    .    .    wsl_process_login_complete_registration()
 *     .    .
@@ -190,67 +191,7 @@ function wsl_process_login_begin()
 		return wsl_process_login_render_notice_page( _wsl__( "Unknown or disabled provider.", 'wordpress-social-login' ) );
 	}
 
-	// build required configuration for this provider
-	$config = array();
-	$config["base_url"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; 
-	$config["providers"] = array();
-	$config["providers"][$provider] = array();
-	$config["providers"][$provider]["enabled"] = true;
-	$config["providers"][$provider]["keys"] = array( 'id' => null, 'key' => null, 'secret' => null );
-
-	// provider application id ?
-	if( get_option( 'wsl_settings_' . $provider . '_app_id' ) )
-	{
-		$config["providers"][$provider]["keys"]["id"] = get_option( 'wsl_settings_' . $provider . '_app_id' );
-	}
-
-	// provider application key ?
-	if( get_option( 'wsl_settings_' . $provider . '_app_key' ) )
-	{
-		$config["providers"][$provider]["keys"]["key"] = get_option( 'wsl_settings_' . $provider . '_app_key' );
-	}
-
-	// provider application secret ?
-	if( get_option( 'wsl_settings_' . $provider . '_app_secret' ) )
-	{
-		$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
-	}
-
-	// set custom endpoint?
-	if( in_array( strtolower( $provider ), array( 'live', 'dribbble' ) ) )
-	{
-		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
-	}
-
-	// set default scope and display mode for facebook
-	if( strtolower( $provider ) == "facebook" )
-	{
-		$config["providers"][$provider]["scope"] = "email, user_about_me, user_birthday, user_hometown, user_website"; 
-		$config["providers"][$provider]["display"] = "popup";
-		$config["providers"][$provider]["trustForwarded"] = true;
-
-		// switch to fb::display 'page' if wsl auth in page
-		if( get_option( 'wsl_settings_use_popup') == 2 )
-		{
-			$config["providers"][$provider]["display"] = "page";
-		}
-	}
-
-	// set default scope for google
-	if( strtolower( $provider ) == "google" )
-	{
-		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
-
-		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
-		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && wsl_is_component_enabled( 'contacts' ) )
-		{
-			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
-		}
-	}
-
-	// HOOKABLE: allow to overwrite scopes (some people have asked for a way to lower the number of permissions requested)
-	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ; 
-	$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
+	$config = wsl_process_login_build_provider_config( $provider );
 
 	/* 3. Instantiate the class Hybrid_Auth and redirect the user to provider to ask for authorisation for this website */
 
@@ -406,7 +347,7 @@ function wsl_process_login_end()
 	{
 		wsl_delete_stored_hybridauth_user_data( $user_id );
 
-		return wsl_process_login_render_notice_page( sprintf( _wsl__( "Sorry, we couldn't connect you to <b>%s</b>. <a href=\"%s\">Please try again</a>.", 'wordpress-social-login' ), bloginfo('name'), site_url( 'wp-login.php', 'login_post' ) ) );
+		return wsl_process_login_render_notice_page( sprintf( _wsl__( "Sorry, we couldn't connect you. <a href=\"%s\">Please try again</a>.", 'wordpress-social-login' ), site_url( 'wp-login.php', 'login_post' ) ) );
 	}
 
 	// store user hybridauth profile (wslusersprofiles), contacts (wsluserscontacts) and buddypress mapping 
@@ -554,7 +495,7 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 		}
 	}
 
-	/* 4 Deletegate detection of user id to custom functions / hooks */
+	/* 4 Deletegate detection of user id to custom filters hooks */
 
 	// HOOKABLE:
 	$user_id = apply_filters( 'wsl_hook_process_login_alter_user_id', $user_id, $provider, $hybridauth_user_profile );
@@ -773,15 +714,8 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		$user_id = wp_insert_user( $userdata );
 	}
 
-	// update user metadata
-	if( $user_id && is_integer( $user_id ) )
-	{
-		update_user_meta( $user_id, 'wsl_current_provider'   , $provider );
-		update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
-	}
-
 	// do not continue without user_id
-	else
+	if( ! $user_id || ! is_integer( $user_id ) )
 	{
 		if( is_wp_error( $user_id ) )
 		{
@@ -851,7 +785,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 
 	// update some fields in usermeta for the current user
 	update_user_meta( $user_id, 'wsl_current_provider'   , $provider );
-	update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
+
+	if(  $hybridauth_user_profile->photoURL )
+	{
+		update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
+	}
 
 	# {{{ module Bouncer
 	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
@@ -920,6 +858,83 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 // --------------------------------------------------------------------
 
 /**
+*  Build required hybridauth configuration for the given provider
+*/
+function wsl_process_login_build_provider_config( $provider )
+{
+	$config = array();
+	$config["base_url"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; 
+	$config["providers"] = array();
+	$config["providers"][$provider] = array();
+	$config["providers"][$provider]["enabled"] = true;
+	$config["providers"][$provider]["keys"] = array( 'id' => null, 'key' => null, 'secret' => null );
+
+	// provider application id ?
+	if( get_option( 'wsl_settings_' . $provider . '_app_id' ) )
+	{
+		$config["providers"][$provider]["keys"]["id"] = get_option( 'wsl_settings_' . $provider . '_app_id' );
+	}
+
+	// provider application key ?
+	if( get_option( 'wsl_settings_' . $provider . '_app_key' ) )
+	{
+		$config["providers"][$provider]["keys"]["key"] = get_option( 'wsl_settings_' . $provider . '_app_key' );
+	}
+
+	// provider application secret ?
+	if( get_option( 'wsl_settings_' . $provider . '_app_secret' ) )
+	{
+		$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
+	}
+
+	// set custom endpoint?
+	if( in_array( strtolower( $provider ), array( 'live', 'dribbble' ) ) )
+	{
+		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
+	}
+
+	// set default scope and display mode for facebook
+	if( strtolower( $provider ) == "facebook" )
+	{
+		// > do not reset this scope manually, use wsl filter 'hook wsl_hook_alter_provider_scope'
+		$config["providers"][$provider]["scope"] = "email, user_about_me, user_birthday, user_hometown, user_website";
+		$config["providers"][$provider]["display"] = "popup";
+		$config["providers"][$provider]["trustForwarded"] = true;
+
+		// switch to fb::display 'page' if wsl auth in page
+		if( get_option( 'wsl_settings_use_popup') == 2 )
+		{
+			$config["providers"][$provider]["display"] = "page";
+		}
+	}
+
+	// set default scope for google
+	if( strtolower( $provider ) == "google" )
+	{
+		// > do not reset this scope manually, use wsl filter 'hook wsl_hook_alter_provider_scope'
+		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
+
+		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
+		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && wsl_is_component_enabled( 'contacts' ) )
+		{
+			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
+		}
+	}
+
+	// HOOKABLE: allow to overwrite scopes
+	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ; 
+
+	$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
+
+	// HOOKABLE: allow to overwrite hybridauth config for the selected provider
+	$config["providers"][$provider] = apply_filters( 'wsl_hook_alter_provider_config', $config["providers"][$provider], $provider );
+
+	return $config;
+}
+
+// --------------------------------------------------------------------
+
+/**
 *  Grab the user profile from social network 
 */
 function wsl_process_login_request_user_social_profile( $provider )
@@ -972,8 +987,6 @@ function wsl_process_login_get_provider_adapter( $provider )
 
 	return Hybrid_Auth::getAdapter( $provider );
 }
-
-add_filter( 'wsl_process_login_get_provider_adapter', 'wsl_process_login_get_provider_adapter', 10, 1 );
 
 // --------------------------------------------------------------------
 
@@ -1126,9 +1139,9 @@ function wsl_process_login_get_auth_mode()
 */
 function wsl_process_login_clear_user_php_session()
 {
-	$_SESSION["HA::STORE"]        = array(); // used by hybridauth library. to clear as soon as the auth process end.
-	$_SESSION["HA::CONFIG"]       = array(); // used by hybridauth library. to clear as soon as the auth process end.
-	$_SESSION["wsl::userprofile"] = array(); // used by wsl to temporarily store the user profile so de don't make unnecessary calls to social apis.
+	$_SESSION["HA::STORE"]        = array(); // used by hybridauth library. to clear as soon as the auth process ends.
+	$_SESSION["HA::CONFIG"]       = array(); // used by hybridauth library. to clear as soon as the auth process ends.
+	$_SESSION["wsl::userprofile"] = array(); // used by wsl to temporarily store the user profile so we don't make unnecessary calls to social apis.
 }
 
 // --------------------------------------------------------------------
