@@ -87,5 +87,3 @@ Big thanks to everyone who have contributed to WordPress Social Login by submitt
 ![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-7.png)
 ===
 ![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-8.png)
-===
-![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-9.png)

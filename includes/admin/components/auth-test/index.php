@@ -209,10 +209,29 @@ function wsl_component_authtest()
 											<th width="200"><label><?php _wsl_e("Query", 'wordpress-social-login') ?></label></th>
 											<td><textarea style="width:100%;height:60px;margin-top:6px;" name="console-query"><?php echo htmlentities( $query ); ?></textarea></td>
 										</tr>
-										<?php if( $console ): ?>
-											<tr>
-												<th width="200"><label><?php _wsl_e("Code PHP", 'wordpress-social-login') ?></label></th>
-												<td>
+									</table>
+									
+									<br />
+
+									<input type="submit" value="<?php _wsl_e("Submit", 'wordpress-social-login') ?>" class="button">
+								</form>
+							</div>
+						</div>
+						
+						<?php if( $console ): ?>
+							<div class="stuffbox">
+								<h3>
+									<label><?php _wsl_e("API Response", 'wordpress-social-login') ?></label>
+								</h3>
+								<div class="inside"> 
+									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $response, true ) ); ?></textarea>
+								</div>
+							</div>
+							<div class="stuffbox">
+								<h3>
+									<label><?php _wsl_e("Code PHP", 'wordpress-social-login') ?></label>
+								</h3>
+								<div class="inside"> 
 <textarea rows="25" cols="70" wrap="off" style="width:100%;height:210px;margin-bottom:15px;font-family: monospace;font-size: 12px;"
 >include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
 
@@ -230,31 +249,22 @@ catch( Exception $e )
 {
     echo "Ooophs, we got an error: " . $e->getMessage();
 }</textarea>
-
-												</td>
-											</tr>
-											<tr>
-												<th width="200"><label><?php _wsl_e("Response", 'wordpress-social-login') ?></label></th>
-												<td><textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $response, true ) ); ?></textarea></td>
-											</tr>
-										<?php endif; ?>
-									</table>
-									
-									<br />
-
-									<input type="submit" value="<?php _wsl_e("Submit", 'wordpress-social-login') ?>" class="button">
-								</form>
+								</div>
 							</div>
-						</div>
-						
-						<?php if( $console ): ?>
 							<div class="stuffbox">
 								<h3>
 									<label><?php _wsl_e("Connected adapter debug", 'wordpress-social-login') ?></label>
 								</h3>
-								<div class="inside"> 
+								<div class="inside">
 									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $adapter, true ) ); ?></textarea>
-									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $_SESSION, true ) ); ?></textarea>
+								</div>
+							</div>
+							<div class="stuffbox">
+								<h3>
+									<label><?php _wsl_e("PHP Session", 'wordpress-social-login') ?></label>
+								</h3>
+								<div class="inside">
+									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:350px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $_SESSION, true ) ); ?></textarea>
 								</div>
 							</div>
 						<?php endif; ?>

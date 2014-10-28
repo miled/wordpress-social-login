@@ -18,39 +18,39 @@
 *
 * Let assume a user come to page at our website and he click on of the providers icons in order connect.
 *
-*   1. By clicking on an icon, the user will be redirected to wp-login.php (with specific args in the url: &action=wordpress_social_authenticate&provider=..)
-*   2. If &action=wordpress_social_authenticate is found in the current url [of wp-login.php], then WSL will display a loading screen,
-*   3. That loading screen will refresh it self adding &redirect_to_provider=ture to the current url which will trigger the next step,
-*   4. Instanciate Hybridauth main class, build the required config (keys, scopes, callback url, etc.) and initiate the auth process /hybridauth/?hauth.start=PROVIDER_ID,
-*   5. Hybridauth will redirect the user to the selected provider site to ask for his consent (authorisation to access his profile),
-*   6. If the user gives his authorisation for your application, the provider will redirect the user back to Hybridauth entry point /hybridauth/?hauth.done=PROVIDER_ID,
-*   7. Hybridauth will redirect the user to the given callback url. In callback url, WSL will display a second loading screen,
-*   8. This loading screen will generate and sumbmit a form with a hidden input action=wordpress_social_authenticated to the current url which will trigger the next step,
-*   9. WSL will grab the user profile from the provider, attempt to identify him and create a new WordPress user if he doesn't exist. In this step, and when enabled, WSL will import the user contacts and map his profile to buddypress,
-*  10. Finally, WSL will authenticate the user within WordPress (give him a sweet cookie) then redirect him back to where he come from
+*  - If &action=wordpress_social_authenticate is found in the current url, then WSL will display a loading screen,
+*  - That loading screen will refresh it self adding &redirect_to_provider=ture to the url, which will trigger the next step,
+*  - Next, WSL will instantiate Hybridauth main class, build the required provider config then initiate the auth protocol /hybridauth/?hauth.start=PROVIDER_ID,
+*  - Hybridauth will redirect the user to the selected provider site to ask for his consent (authorisation to access his profile),
+*  - If the user gives his authorisation for your application, the provider will redirect the user back to Hybridauth entry point /hybridauth/?hauth.done=PROVIDER_ID,
+*  - Hybridauth will redirect the user to the given callback url.
+*  - In that callback url, WSL will display a second loading screen This loading screen will generate and submit a form with a hidden input &action= wordpress_social_authenticated to the current url which will trigger the second part of the auth process,
+*  - WSL will grab the user profile from the provider, attempt to identify him and create a new WordPress user if he doesn't exist. In this step, and when enabled, WSL will also import the user contacts and map his profile data to Buddypress xporfiles tables,
+*  - Finally, WSL will authenticate the user within WordPress (give him a sweet cookie) and redirect him back to Redirect URL
 **
 * Functions execution order is the following:
 *
-*     wsl_process_login()
-*     .    wsl_process_login_begin()
-*     .    .    wsl_render_redirect_to_provider_loading_screen()
-*     .    . 
-*     .    .    Hybrid_Auth::authenticate()
-*     .    .    .    wsl_process_login_render_error_page()
-*     .    .
-*     .    .    wsl_render_return_from_provider_loading_screen()
-*     .
-*     .    wsl_process_login_end()
-*     .    .    wsl_process_login_end_get_user_data()
-*     .    .    .    wsl_process_login_request_user_social_profile()
-*     .    .    .    .    Hybrid_Auth::getUserProfile()
-*     .    .    .    .    .    wsl_process_login_render_error_page()
-*     .    .    .
-*     .    .    .    wsl_process_login_complete_registration()
-*     .    .
-*     .    .    wsl_process_login_create_wp_user()
-*     .    .    wsl_process_login_update_wsl_user_data()
-*     .    .    wsl_process_login_authenticate_wp_user() 
+*     do_action('init')
+*     .       wsl_process_login()
+*     .       .       wsl_process_login_begin()
+*     .       .       .       wsl_render_redirect_to_provider_loading_screen()
+*     .       .       .       Hybrid_Auth::authenticate()
+*     .       .       .       wsl_render_return_from_provider_loading_screen()
+*     .       .
+*     .       .       wsl_process_login_end()
+*     .       .       .      wsl_process_login_end_get_user_data()
+*     .       .       .      .       wsl_process_login_request_user_social_profile()
+*     .       .       .      .       .       Hybrid_Auth::getUserProfile()
+*     .       .       .      .       wsl_process_login_complete_registration()
+*     .       .       .
+*     .       .       .      wsl_process_login_create_wp_user()
+*     .       .       .
+*     .       .       .      wsl_process_login_update_wsl_user_data()
+*     .       .       .      .       wsl_store_hybridauth_user_profile()
+*     .       .       .      .       wsl_buddypress_xprofile_mapping()
+*     .       .       .      .       wsl_store_hybridauth_user_contacts()
+*     .       .       .
+*     .       .       .      wsl_process_login_authenticate_wp_user()
 */
 
 // Exit if accessed directly

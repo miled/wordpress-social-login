@@ -150,7 +150,7 @@ function wsl_add_plugin_row_meta( $links, $file )
 	if( $file == $this_plugin )
 	{
 		$wsl_links = array(
-			'<a href="http://miled.github.io/wordpress-social-login/">'             . __( "Manual" )            . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/">'             . __( "Docs" )              . '</a>',
 			'<a href="http://miled.github.io/wordpress-social-login/faq.html">'     . __( "FAQ" )               . '</a>',
 			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . __( "Suppot" )            . '</a>',
 			'<a href="https://github.com/miled/wordpress-social-login">'            . __( "Fork me on Github" ) . '</a>',
