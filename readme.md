@@ -47,6 +47,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 * Added Authentication Playground.
 * Added new hooks in the authentication widget and auth process.
 * Function wsl_render_login_form() renamed to wsl_render_auth_widget()
+* PHP file wsl.auth.widget.php renamed to wsl.auth.widgets.php
 * Css file style.css renamed to widget.css
 * Depreciated hooks from versions prior 2.2.2 has been removed.
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
@@ -61,6 +62,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 - [ ] User moderation will be fully implemented and no longer needs TML.
 - [ ] Widget shortcode will support arguments
 - [ ] Add usermeat shortcode
+- [ ] Add soundcloud developers.soundcloud.com/docs
 - [ ] ..
 
 #### License 

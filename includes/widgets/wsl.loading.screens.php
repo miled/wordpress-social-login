@@ -74,7 +74,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 	<body id="loading-screen" onload="init();"> 
 		<table width="100%" border="0">
 			<tr>
-				<td align="center"><img src="<?php echo $assets_base_url ?>/loading.gif" /></td>
+				<td align="center"><img src="<?php echo $assets_base_url ?>loading.gif" /></td>
 			</tr>
 			<tr>
 				<td align="center">
@@ -176,7 +176,7 @@ if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 	<body id="loading-screen" onload="init();"> 
 		<table width="100%" border="0">
 			<tr>
-				<td align="center"><img src="<?php echo $assets_base_url ?>/loading.gif" /></td>
+				<td align="center"><img src="<?php echo $assets_base_url ?>loading.gif" /></td>
 			</tr>
 			<tr>
 				<td align="center">

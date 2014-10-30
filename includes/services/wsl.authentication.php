@@ -68,6 +68,7 @@ if( !defined( 'ABSPATH' ) ) exit;
 * Example of valid origin url:
 *    wp-login.php
 *       ?action=wordpress_social_authenticate                        // current step
+*       &mode=login                                                  // auth mode
 *       &provider=Twitter                                            // selected provider
 *       &redirect_to=http%3A%2F%2Fexample.com%2Fwordpress%2F%3Fp%3D1 // where the user come from
 *
@@ -163,6 +164,14 @@ function wsl_process_login_begin()
 		return wsl_process_login_render_notice_page( sprintf( _wsl__( 'The session identifier is missing.<br />Please check WSL <a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">minimum system requirements</a> and <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank">FAQ</a>.', 'wordpress-social-login' ), site_url() ) );
 	}
 
+	// HOOKABLE: selected provider name
+	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() ) ;
+
+	if( ! $provider )
+	{
+		return wsl_process_login_render_notice_page( _wsl__( 'Bouncer says this makes no sense.', 'wordpress-social-login' ) ); 
+	}
+
 	/* 1. Display a loading screen while hybridauth is redirecting the user to the selected provider */
 
 	// the loading screen should reflesh it self with a new arg in url: &redirect_to_provider=ture
@@ -170,20 +179,10 @@ function wsl_process_login_begin()
 	{
 		do_action( 'wsl_clear_user_php_session' );
 
-		return wsl_render_redirect_to_provider_loading_screen( wsl_process_login_get_selected_provider() );
-	}
-
-	// if user come from loading screen (&redirect_to_provider=)
-	// > check for required args and display an error if any is missing
-	if( ! isset( $_REQUEST['provider'] ) || ! isset( $_REQUEST['redirect_to_provider'] ) )
-	{
-		return wsl_process_login_render_notice_page( _wsl__( 'Bouncer says this makes no sense.', 'wordpress-social-login' ) ); 
+		return wsl_render_redirect_to_provider_loading_screen( $provider );
 	}
 
 	/*  2. Build the hybridauth config for the selected provider (keys, scope, etc) */
-
-	// HOOKABLE: selected provider name
-	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() ) ;
 
 	// provider enabled?
 	if( ! get_option( 'wsl_settings_' . $provider . '_enabled' ) )
@@ -376,9 +375,9 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 
 	$user_id                  = null;
 	$config                   = null;
-	$hybridauth               = null; 
+	$hybridauth               = null;
 	$adapter                  = null;
-	$hybridauth_user_profile  = null; 
+	$hybridauth_user_profile  = null;
 	$request_user_login       = '';
 	$request_user_email       = '';
 
@@ -393,13 +392,10 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 
 	$adapter = wsl_process_login_get_provider_adapter( $provider );
 
+	$hybridauth_user_email = sanitize_email( $hybridauth_user_profile->email ); 
+
 	/* 2. Run Bouncer::Filters if enabled (domains, emails, profiles urls) */
 
-	// check hybridauth profile 
-	$hybridauth_user_email = sanitize_email( $hybridauth_user_profile->email ); 
-	$hybridauth_user_login = sanitize_user( $hybridauth_user_profile->displayName, true );
-
-	# {{{ module Bouncer
 	// Bouncer::Filters by emails domains name
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 )
 	{
@@ -483,12 +479,13 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 	// check if user already exist in wslusersprofiles
 	$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 
-	// check if this user verified email is in use. if true, we link this social network profile to the found WP user
+	// if not found in wslusersprofiles, then check his verified email 
 	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
 	{
+		// check if the verified email exist in wp_users
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 
-		// check if this user verified email exist in wslusersprofiles
+		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
 			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
@@ -502,10 +499,9 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 
 	/* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
 
-	// if associated WP user not found in wslusersprofiles nor he have verified email in use
 	if( ! $user_id )
 	{
-		// Bouncer :: Accept new registrations
+		// Bouncer :: Accept new registrations?
 		if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 )
 		{
 			return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
@@ -523,7 +519,8 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 					$user_id,
 					$request_user_login,
 					$request_user_email
-				) = wsl_process_login_account_linking( $provider, $redirect_to, $hybridauth_user_profile );
+				) 
+				= wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
 			}
 			while( ! $shall_pass );
 		}
@@ -543,14 +540,15 @@ function wsl_process_login_end_get_user_data( $provider, $redirect_to )
 					$shall_pass, 
 					$request_user_login, 
 					$request_user_email 
-				) = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
+				)
+				= wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
 			}
 			while( ! $shall_pass );
 		}
 	}
-	# }}} module Bouncer
 
-	// returns user data
+	/* 6. returns user data */
+
 	return array( 
 		$user_id,
 		$adapter,
@@ -668,42 +666,40 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		'user_pass'     => wp_generate_password()
 	);
 
-	# {{{ module Bouncer 
-	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
-	// Bouncer::Membership level 
-	// when enabled and != 'default', Bouncer::Membership level will defines the new user role
+	// Bouncer::Membership level  
 	$wsl_settings_bouncer_new_users_membership_default_role = get_option( 'wsl_settings_bouncer_new_users_membership_default_role' );
 
+	// if level eq "default", we set role to wp default user role
 	if( $wsl_settings_bouncer_new_users_membership_default_role == "default" )
 	{
 		$userdata['role'] = get_option('default_role');
 	}
 
-	// if role not set "default" nor 'wslnorole' nor empty
-	// > (omitting the role parameter in the $userdata will create a user with "no role for this site")
+	// if level not eq "default" or 'wslnorole' nor empty, we set role to the selected role in bouncer settings
 	elseif( $wsl_settings_bouncer_new_users_membership_default_role && $wsl_settings_bouncer_new_users_membership_default_role != 'wslnorole' )
 	{
 		$userdata['role'] = $wsl_settings_bouncer_new_users_membership_default_role;
 	}
 
 	// Bouncer::User Moderation 
-	// > if enabled (Yield to Theme My Login), then we overwrite the user role to 'pending'
-	// > (if User Moderation is set to Admin Approval then Membership level will be ignored)
+	// > if Bouncer::User Moderation is enabled (Yield to Theme My Login), then we overwrite the user role to 'pending'
+	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
 	if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) > 100 )
-	{ 
-		// Theme My Login : User Moderation
-		// > Upon activation of this module, a new user role will be created, titled "Pending". This role has no privileges by default.
-		// > When a user confirms their e-mail address or when you approve a user, they are automatically assigned to the default user role for the blog/site.
-		// http://www.jfarthing.com/development/theme-my-login/user-moderation/
+	{
 		$userdata['role'] = "pending";
 	}
-	# }}} module Bouncer
 
 	// HOOKABLE: change the user data
 	$userdata = apply_filters( 'wsl_hook_process_login_alter_wp_insert_user_data', $userdata, $provider, $hybridauth_user_profile );
 
+	// DEPRECIATED: as of 2.2.3
+	// $userdata = apply_filters( 'wsl_hook_process_login_alter_userdata', $userdata, $provider, $hybridauth_user_profile );
+
 	// HOOKABLE: This action runs just before creating a new wordpress user.
 	do_action( 'wsl_hook_process_login_before_wp_insert_user', $userdata, $provider, $hybridauth_user_profile );
+
+	// DEPRECIATED: as of 2.2.3
+	// do_action( 'wsl_hook_process_login_before_insert_user', $userdata, $provider, $hybridauth_user_profile );
 
 	// HOOKABLE: This action runs just before creating a new wordpress user, it delegate user insert to a custom function.
 	$user_id = apply_filters( 'wsl_hook_process_login_delegate_wp_insert_user', $userdata, $provider, $hybridauth_user_profile );
@@ -735,6 +731,9 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	// > Note: At this point, the user has been added to wordpress database, but NOT CONNECTED.
 	do_action( 'wsl_hook_process_login_after_wp_insert_user', $user_id, $provider, $hybridauth_user_profile );
 
+	// DEPRECIATED: as of 2.2.3
+	// do_action( 'wsl_hook_process_login_after_create_wp_user', $user_id, $provider, $hybridauth_user_profile );
+
 	// returns the user created user id
 	return $user_id;
 }
@@ -749,10 +748,10 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 *     2. Import user contacts
 *     3. Launch BuddyPress Profile mapping
 */
-function wsl_process_login_update_wsl_user_data( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile )
+function wsl_process_login_update_wsl_user_data( $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile, $wp_user )
 {
 	// HOOKABLE:
-	do_action( "wsl_process_login_update_wsl_user_data_start", $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile );
+	do_action( "wsl_process_login_update_wsl_user_data_start", $is_new_user, $user_id, $provider, $adapter, $hybridauth_user_profile, $wp_user );
 
 	// store user hybridauth user profile in table wslusersprofiles
 	// > wsl will only sotre the user profile if it has changed since last login.
@@ -791,22 +790,20 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 		update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
 	}
 
-	# {{{ module Bouncer
-	# http://www.jfarthing.com/development/theme-my-login/user-moderation/
-	# https://wordpress.org/support/topic/bouncer-user-moderation-blocks-logins-when-enabled#post-4331601
-	$role = ''; 
+	// Bouncer::User Moderation
+	// > When Bouncer::User Moderation is enabled, WSL will check for the current user role. If equal to 'pending', then Bouncer will do the following : 
+	// 	1. Halt the authentication process, 
+	// 	2. Skip setting the authentication cookies for the user, 
+	// 	3. Reset the Redirect URL to the appropriate Theme My Login page.
 	$wsl_settings_bouncer_new_users_moderation_level = get_option( 'wsl_settings_bouncer_new_users_moderation_level' );
 
-	// get user role 
-	if( $wsl_settings_bouncer_new_users_moderation_level > 100 )
-	{
-		$role = current( $wp_user->roles );
-	}
+	// current user role
+	$role = current( $wp_user->roles );
 
 	// if role eq 'pending', we halt the authentication and we redirect the user to the appropriate url (pending=activation or pending=approval)
 	if( $role == 'pending' )
 	{
-		// Bouncer::User Moderation : E-mail Confirmation
+		// E-mail Confirmation
 		if( $wsl_settings_bouncer_new_users_moderation_level == 101 )
 		{
 			$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=activation";
@@ -815,19 +812,21 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 			@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
 		}
 
-		// Bouncer::User Moderation : Admin Approval
+		// Admin Approval
 		elseif( $wsl_settings_bouncer_new_users_moderation_level == 102 )
 		{
 			$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=approval";
 		}
 	}
-	# }}} module Bouncer
 
 	// otherwise, we connect the user with in wordpress (we give him a cookie)
 	else
 	{
 		// HOOKABLE: This action runs just before logging the user in (before creating a WP cookie)
 		do_action( "wsl_hook_process_login_before_wp_set_auth_cookie", $user_id, $provider, $hybridauth_user_profile );
+
+		// DEPRECIATED: as of 2.2.3
+		// do_action( 'wsl_hook_process_login_before_set_auth_cookie', $user_id, $provider, $hybridauth_user_profile );
 
 		// Set WP auth cookie
 		wp_set_auth_cookie( $user_id, true );
@@ -842,17 +841,20 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	// > To be sure the user is connected, use wsl_hook_process_login_before_wp_set_auth_cookie instead.
 	do_action( "wsl_hook_process_login_before_wp_safe_redirect", $user_id, $provider, $hybridauth_user_profile, $redirect_to );
 
+	// DEPRECIATED: as of 2.2.3
+	// do_action( 'wsl_hook_process_login_before_set_auth_cookie', $user_id, $provider, $hybridauth_user_profile );
+
 	do_action( 'wsl_clear_user_php_session' );
 
 	// Display WSL debugging instead of redirecting the user
-	// > this will give a complete report on what wsl did : database queries and hooks fired
+	// > this will give a complete report on what wsl did : database queries and fired hooks 
 	// wsl_display_dev_mode_debugging_area(); die(); // ! keep this line commented unless you know what you are doing :)
 
 	// That's it. We done. 
 	wp_safe_redirect( $redirect_to );
 
 	// for good measures
-	die(); 
+	die();
 }
 
 // --------------------------------------------------------------------

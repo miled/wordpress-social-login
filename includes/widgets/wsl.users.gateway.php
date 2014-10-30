@@ -7,7 +7,7 @@
 */
 
 /**
-* Accounts linking
+* Accounts linking + Profile Completion
 *
 * When enabled, Bouncer will popup this screen for unrecognised user where they will be given the choice to either associate
 * any existing account in your website with the provider ID they have connected with or to create a new user account. 
@@ -22,10 +22,10 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-function wsl_process_login_account_linking( $provider, $redirect_to, $hybridauth_user_profile )
+function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile )
 {
 	// HOOKABLE:
-	do_action( "wsl_process_login_complete_registration_start", $provider, $redirect_to, $hybridauth_user_profile );
+	do_action( "wsl_process_login_new_users_gateway_start", $provider, $redirect_to, $hybridauth_user_profile );
 
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 

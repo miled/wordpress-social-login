@@ -119,24 +119,25 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 			return $html;
 		}
 
-		//Only Overwrite gravatars
-		if( ! stristr( strtolower( $html ), 'gravatar.com' ) )
-		{
-			return $html;
-		}
-
 		$user_id = null;
 
 		//Check arguments
-		if(is_array($args))
+		if (is_array($args) )
 		{
 			//User Object
-			if( ! empty( $args['object'] ) AND strtolower( $args ['object'] ) == 'user' )
+			if( ! empty( $args['object'] ) AND strtolower( $args['object'] ) == 'user' )
 			{
 				//User Identifier
-				if( ! empty( $args ['item_id'] ) AND is_numeric( $args ['item_id'] ) )
+				if( ! empty( $args['item_id'] ) AND is_numeric( $args['item_id'] ) )
 				{
 					$user_id = $args['item_id'];
+
+					//Only Overwrite gravatars
+					# https://wordpress.org/support/topic/buddypress-avatar-overwriting-problem?replies=1
+					if( bp_get_user_has_avatar( $user_id ) )
+					{
+						return $html;
+					}
 
 					$wsl_avatar = wsl_get_user_custom_avatar( $user_id );
 

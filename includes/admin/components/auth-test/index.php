@@ -166,9 +166,9 @@ function wsl_component_authtest()
 							<div class="inside"> 
 								<?php
 									$path   = isset( $adapter->api->api_base_url ) ? $adapter->api->api_base_url : ''; 
-									$path   = isset( $_REQUEST['console-path'] ) ? $_REQUEST['console-path'] : $path; 
+									$path   = isset( $_REQUEST['console-path']   ) ? $_REQUEST['console-path']   : $path; 
 									$method = isset( $_REQUEST['console-method'] ) ? $_REQUEST['console-method'] : ''; 
-									$query  = isset( $_REQUEST['console-query'] ) ? $_REQUEST['console-query'] : ''; 
+									$query  = isset( $_REQUEST['console-query']  ) ? $_REQUEST['console-query']  : ''; 
 
 									$response = '';
 

@@ -64,7 +64,7 @@ function wsl_is_https_on()
 // --------------------------------------------------------------------
 
 /**
- * Return the current url
+* Return the current url
 *
 * Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
 */
@@ -117,57 +117,55 @@ function wsl_get_current_url()
 * This function is highly inspired by the Query Monitor.
 * https://wordpress.org/plugins/query-monitor/
 *
-* IMPORTANT: Use this only if Dev mode is enabled
-*
 * Note: in order for this function to display the sql queries, 'SAVEQUERIES' should be defined as true in 'wp-config.php'
 */
-function wsl_display_dev_mode_debugging_area()
+function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 {
 	global $wpdb, $wp_actions , $wp_filter;
 ?>
 <style>
-.wsl-dev-nonselectsql {
-	color: #a0a !important;
-}
-.wsl-dev-expensivesql {
-	color: #f44 !important;
-}
-.wsl-dev-optionfunc {
-	color: #4a4 !important;
-}
-.wsl-dev-wslfunc {
-	color: #1468fa !important;
-}
-.wsl-dev-nonwslfunc {
-	color: #a0a !important;
-}
-.wsl-dev-usedhook, .wsl-dev-usedhook a {
-	color: #1468fa;
-} 
-.wsl-dev-usedwslhook {
-	color: #a0a !important;
-} 
-.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
-	color: #a3a3a3 !important;
-}
-.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
-	color: #4a4 !important;
-}
-.wsl-dev-table { 
-	width:100%
-	border: 1px solid #e5e5e5;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
-	border-spacing: 0;
-	clear: both;
-	margin: 0;
-	width: 100%;
-}
-.wsl-dev-table td, .wsl-dev-table th {
-	border: 1px solid #dddddd;
-	padding: 8px 10px; 
-	background-color: #fff;
-	text-align: left;
-}
+	.wsl-dev-nonselectsql {
+		color: #a0a !important;
+	}
+	.wsl-dev-expensivesql {
+		color: #f44 !important;
+	}
+	.wsl-dev-optionfunc {
+		color: #4a4 !important;
+	}
+	.wsl-dev-wslfunc {
+		color: #1468fa !important;
+	}
+	.wsl-dev-nonwslfunc {
+		color: #a0a !important;
+	}
+	.wsl-dev-usedhook, .wsl-dev-usedhook a {
+		color: #1468fa;
+	} 
+	.wsl-dev-usedwslhook {
+		color: #a0a !important;
+	} 
+	.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
+		color: #a3a3a3 !important;
+	}
+	.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
+		color: #4a4 !important;
+	}
+	.wsl-dev-table { 
+		width:100%
+		border: 1px solid #e5e5e5;
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
+		border-spacing: 0;
+		clear: both;
+		margin: 0;
+		width: 100%;
+	}
+	.wsl-dev-table td, .wsl-dev-table th {
+		border: 1px solid #dddddd;
+		padding: 8px 10px; 
+		background-color: #fff;
+		text-align: left;
+	}
 </style>
 
 <?php
@@ -220,12 +218,12 @@ function wsl_display_dev_mode_debugging_area()
 					else
 						$caller_name = $caller;
 
-					if( stristr( $caller_name, 'wsl_' ) || stristr( $sql, 'wsl_' ) || stristr( $stack, 'wsl_' ) )
+					if( stristr( $caller_name, $keyword ) || stristr( $sql, $keyword ) || stristr( $stack,$keyword ) )
 					{
 						?>
 							<tr>
 								<td valign="top" width="450">
-									<?php if( stristr( $caller_name, 'wsl_' ) ): ?>
+									<?php if( stristr( $caller_name, $keyword ) ): ?>
 										<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-wslfunc"><?php echo $caller_name; ?></a>
 									<?php else: ?>
 										<a href="https://developer.wordpress.org/?s=<?php echo $caller_name ; ?>" target="_blank" class="wsl-dev-nonwslfunc<?php if( stristr( $caller_name, '_option' ) ) echo "- wsl-dev-optionfunc"; ?>"><?php echo $caller_name; ?></a>
@@ -283,13 +281,13 @@ function wsl_display_dev_mode_debugging_area()
 								{ 
 									if( isset( $callback['function'] ) && is_string( $callback['function'] ) )
 									{
-										if( stristr( $callback['function'], 'wsl_' ) || stristr( $name, 'wsl_' ) )
+										if( stristr( $callback['function'], $keyword ) || stristr( $name, $keyword ) )
 										{
 											?>
 												<tr>
 													<td valign="top" width="270" nowrap class="wsl-dev-usedhook">
 														<?php
-															if( stristr( $name, 'wsl_' ) )
+															if( stristr( $name, $keyword ) )
 															{
 																?>
 																	<a class="wsl-dev-usedwslhook" href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $name ; ?>" target="_blank"><?php echo $name ; ?></a>
@@ -303,7 +301,7 @@ function wsl_display_dev_mode_debugging_area()
 													</td>
 													<td valign="top" class="wsl-dev-hookcallback">
 														<?php
-															if( stristr( $callback['function'], 'wsl_' ) )
+															if( stristr( $callback['function'], $keyword ) )
 															{
 																?>
 																	<a href="https://github.com/hybridauth/WordPress-Social-Login/search?q=<?php echo $callback['function'] ; ?>" target="_blank"><?php echo $callback['function'] ; ?></a>
@@ -329,7 +327,7 @@ function wsl_display_dev_mode_debugging_area()
 							}
 						}
 					}
-					elseif( stristr( $name, 'wsl_' )  )
+					elseif( stristr( $name, $keyword )  )
 					{
 						?>
 							<tr>

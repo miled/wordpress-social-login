@@ -47,13 +47,13 @@ function wsl_component_networks_sidebar_what_is_this()
 				<?php _wsl_e('<b>WordPress Social Login</b> allows your website visitors and customers to register on using their existing social account ID, eliminating the need to fill out registration forms and remember usernames and passwords', 'wordpress-social-login') ?>.
 			</p>
 			<p style="padding:0;margin:0 0 12px;">
-				<?php _wsl_e('<b>WordPress Social Login</b> come with useful <b><a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a></b> or add-ons that can be essential for your needs', 'wordpress-social-login') ?>.
+				<?php _wsl_e('<b>WordPress Social Login</b> come with a number of useful <b><a href="options-general.php?page=wordpress-social-login&wslp=components">Components</a></b> or add-ons that can be essential for your needs', 'wordpress-social-login') ?>.
 			</p> 
 			<p style="padding:0;margin:0 0 12px;">
 				<?php _wsl_e('If you are still new to things, we recommend that you read the <b><a href="http://miled.github.io/wordpress-social-login" target="_blank">WSL user guide</a></b> and to make sure your server meet the minimum system requirements by running <b><a href="http://hybridauth.com/hawp4/wp-admin/options-general.php?page=wordpress-social-login&wslp=tools">WSL Diagnostics</a></b>', 'wordpress-social-login') ?>.
 			</p>
 			<p style="padding:0;margin:0 0 12px;">
-				<?php _wsl_e('If you run into any issue, then refer to <b><a href="options-general.php?page=wordpress-social-login&wslp=help">Help &amp; Support</a></b> to konw how to reach me', 'wordpress-social-login') ?>.
+				<?php _wsl_e('If you run into any issue, then refer to <b><a href="http://miled.github.io/wordpress-social-login/support.html" target="_blank">Help &amp; Support</a></b> to konw how to reach me', 'wordpress-social-login') ?>.
 			</p> 
 		</div> 
 	</div> 

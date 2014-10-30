@@ -282,7 +282,7 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 		return;
 	}
 
-	global $wpdb; 
+	global $wpdb;
 
 	$user_contacts = null;
 

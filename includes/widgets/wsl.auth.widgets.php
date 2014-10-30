@@ -79,6 +79,10 @@ function wsl_render_auth_widget( $args = array() )
 	// HOOKABLE: This action runs just before generating the WSL Widget.
 	do_action( 'wsl_render_auth_widget_start' );
 
+// Depreciated and will be removed
+do_action( 'wsl_render_login_form_start' );
+// Depreciated and will be removed
+
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
 	ob_start();
@@ -175,8 +179,8 @@ function wsl_render_auth_widget( $args = array() )
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
 	{
-		$provider_id   = isset( $item["provider_id"]   ) ? $item["provider_id"]   : '' ;
-		$provider_name = isset( $item["provider_name"] ) ? $item["provider_name"] : '' ;
+		$provider_id    = isset( $item["provider_id"]    ) ? $item["provider_id"]   : '' ;
+		$provider_name  = isset( $item["provider_name"]  ) ? $item["provider_name"] : '' ;
 
 		// provider enabled?
 		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
@@ -191,7 +195,7 @@ function wsl_render_auth_widget( $args = array() )
 					continue;
 				}
 			}
-		
+
 			// build authentication url
 			$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $current_page_url );
 
@@ -266,6 +270,10 @@ $provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_ico
 <?php
 	// HOOKABLE: This action runs just after generating the WSL Widget.
 	do_action( 'wsl_render_auth_widget_end' );
+
+// Depreciated and will be removed
+do_action( 'wsl_render_login_form_end' );
+// Depreciated and will be removed
 
 	// Display WSL debugging are bellow the widget.  
 	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :) 
@@ -450,7 +458,8 @@ function wsl_render_auth_widget_in_comment_form()
 	}
 }
 
-add_action( 'comment_form_top', 'wsl_render_auth_widget_in_comment_form' );
+add_action( 'comment_form_top'              , 'wsl_render_auth_widget_in_comment_form' );
+add_action( 'comment_form_must_log_in_after', 'wsl_render_auth_widget_in_comment_form' );
 
 // --------------------------------------------------------------------
 

@@ -633,9 +633,9 @@ class LightOpenID
                 return $server;
             }
 
-            throw new ErrorException("No OpenID Server found at $url", 404);
+            throw new ErrorException("No OpenID Server found at $url", 5);
         }
-        throw new ErrorException('Endless redirection!', 500);
+        throw new ErrorException('Endless redirection!', 5);
     }
 
     protected function sregParams()
