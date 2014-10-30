@@ -15,6 +15,10 @@
  * under the License.
  */
 
+//-
+define( 'GRAPH_API_VERSION', 'v2.0' );
+//-
+
 /**
  * Thrown when an API call returns an exception.
  *
@@ -115,6 +119,12 @@ class FacebookApiException extends Exception
  */
 abstract class BaseFacebook
 {
+  //-
+    public $api_base_url = '';
+    public function get( $url ){ return $this->api( str_ireplace( 'https://graph.facebook.com/' . GRAPH_API_VERSION . '/', '', $url ) ); }
+    public function post( $url, $parameters = array() ){ return $this->api( str_ireplace( 'https://graph.facebook.com/' . GRAPH_API_VERSION . '/', '', $url ), "post", $parameters ); }
+  //-
+
   /**
    * Version.
    */
@@ -242,6 +252,10 @@ abstract class BaseFacebook
    * @param array $config The application configuration
    */
   public function __construct($config) {
+  //-
+   $this->api_base_url = 'https://graph.facebook.com/' . GRAPH_API_VERSION . '/';
+  //-
+
     $this->setAppId($config['appId']);
     $this->setAppSecret($config['secret']);
     if (isset($config['fileUpload'])) {
@@ -682,12 +696,6 @@ abstract class BaseFacebook
       return call_user_func_array(array($this, '_graph'), $args);
     }
   }
-
-	//-
-		public $api_base_url = 'https://graph.facebook.com/';
-		public function get( $url ){ return $this->api( str_ireplace( 'https://graph.facebook.com/', '', $url ) ); }
-		public function post( $url, $parameters = array() ){ return $this->api( str_ireplace( 'https://graph.facebook.com/', '', $url ), "post", $parameters ); }
-	//-
   
   /**
    * Constructs and returns the name of the cookie that
@@ -1026,7 +1034,7 @@ abstract class BaseFacebook
 
 	//-
 	$http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE);
-	
+
 	Hybrid_Error::deleteApiError();
 	
 	if( $http_code != 200 )
@@ -1216,7 +1224,9 @@ abstract class BaseFacebook
    * @return string The URL for the given parameters
    */
   protected function getUrl($name, $path='', $params=array()) {
-    $url = self::$DOMAIN_MAP[$name];
+  //-
+      $url = self::$DOMAIN_MAP[$name] . GRAPH_API_VERSION . '/';
+  //-
     if ($path) {
       if ($path[0] === '/') {
         $path = substr($path, 1);

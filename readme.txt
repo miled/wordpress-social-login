@@ -95,9 +95,11 @@ The user guide and frequently asked questions can be found at http://miled.githu
 * Added Authentication Playground.
 * Added new hooks in the authentication widget and auth process.
 * Function wsl_render_login_form() renamed to wsl_render_auth_widget()
+* PHP file wsl.auth.widget.php renamed to wsl.auth.widgets.php
 * Css file style.css renamed to widget.css
 * Depreciated hooks from versions prior 2.2.2 has been removed.
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
+* Changed facebook api endpoints to v2.0
 * wsl_render_notice_page and wsl_render_error_page has slightly changed.
 * Fix an issue where redirect_to get overwritten in some cases.
 * Fix an issue with redirect_to where the call back url is encoded twice.

@@ -39,13 +39,13 @@ Domain Path: /languages
 *  procedural PHP and will be kept that way.
 *
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
-*  and the WordPress community by submitting a Pull Request at https://github.com/miled/wordpress-social-login
+*  by submitting a Pull Request at https://github.com/miled/wordpress-social-login
 *
 *  If you are here just looking for the hooks, then refer to the online Developer API
 *  http://miled.github.io/wordpress-social-login/documentation.html
 *
 *  If you want to translate this plugin into your language (or to improve the current translation), see
-*  languages/readme.txt
+*  languages/readme.md
 *
 *  Peace.
 *

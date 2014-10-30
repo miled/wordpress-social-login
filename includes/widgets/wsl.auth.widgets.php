@@ -114,7 +114,7 @@ do_action( 'wsl_render_login_form_start' );
 	// > admin auth playground
 	if( $auth_mode == 'test' )
 	{
-		$authenticate_base_url = admin_url( 'options-general.php?page=wordpress-social-login&wslp=auth-test&action=wordpress_social_authenticate&mode=test&' );
+		$authenticate_base_url = site_url() . "/?action=wordpress_social_authenticate&mode=test&";
 	}
 
 	// > account linking

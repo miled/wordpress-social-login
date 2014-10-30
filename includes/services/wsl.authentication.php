@@ -38,19 +38,19 @@
 *     .       .       .       wsl_render_return_from_provider_loading_screen()
 *     .       .
 *     .       .       wsl_process_login_end()
-*     .       .       .      wsl_process_login_end_get_user_data()
-*     .       .       .      .       wsl_process_login_request_user_social_profile()
-*     .       .       .      .       .       Hybrid_Auth::getUserProfile()
-*     .       .       .      .       wsl_process_login_complete_registration()
+*     .       .       .       wsl_process_login_end_get_user_data()
+*     .       .       .       .       wsl_process_login_request_user_social_profile()
+*     .       .       .       .       .       Hybrid_Auth::getUserProfile()
+*     .       .       .       .       wsl_process_login_complete_registration()
 *     .       .       .
-*     .       .       .      wsl_process_login_create_wp_user()
+*     .       .       .       wsl_process_login_create_wp_user()
 *     .       .       .
-*     .       .       .      wsl_process_login_update_wsl_user_data()
-*     .       .       .      .       wsl_store_hybridauth_user_profile()
-*     .       .       .      .       wsl_buddypress_xprofile_mapping()
-*     .       .       .      .       wsl_store_hybridauth_user_contacts()
+*     .       .       .       wsl_process_login_update_wsl_user_data()
+*     .       .       .       .       wsl_store_hybridauth_user_profile()
+*     .       .       .       .       wsl_buddypress_xprofile_mapping()
+*     .       .       .       .       wsl_store_hybridauth_user_contacts()
 *     .       .       .
-*     .       .       .      wsl_process_login_authenticate_wp_user()
+*     .       .       .       wsl_process_login_authenticate_wp_user()
 */
 
 // Exit if accessed directly
