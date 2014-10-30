@@ -162,6 +162,86 @@ add_action( 'wsl_hook_process_login_after_create_wp_user', 'mycred_award_wsl_use
 		</div>
 	</div>
 	
+	
+	
+<!-- get_user_twitter_timeline -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#get_user_twitter_timeline">Get a user time line through Twitter API</a>
+			</h4>
+		</div>
+		<div id="get_user_twitter_timeline" class="panel-collapse collapse">
+			<div class="panel-body">
+<pre class="prettyprint linenums">
+function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profile )
+{
+    if( 'Twitter' != $provider )
+    {
+        return;
+    }
+
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( 'Twitter' ); 
+
+        # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+        $response = $provider->api()->get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
+    }
+    catch( Exception $e )
+    {
+        echo "Ooophs, we got an error: " . $e->getMessage();
+    }
+}
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitter_timeline', 10, 3 );
+</pre>
+			</div>
+		</div>
+	</div>
+	
+	
+	
+<!-- get_post_to_user_facebook_wall -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#get_post_to_user_facebook_wall">Post to a user wall on Facebook</a>
+			</h4>
+		</div>
+		<div id="get_post_to_user_facebook_wall" class="panel-collapse collapse">
+			<div class="panel-body">
+<pre class="prettyprint linenums">
+function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
+{
+    if( 'Facebook' != $provider )
+    {
+        return;
+    }
+
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
+
+        # https://developers.facebook.com/docs/graph-api/reference/v2.1/user/feed
+        $response = $provider->api()->post( 'https://graph.facebook.com/v2.0/me/feed', array(
+                'message' => 'This is a test message',
+        ));
+    }
+    catch( Exception $e )
+    {
+        echo "Ooophs, we got an error: " . $e->getMessage();
+    }
+}
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_user_facebook_wall', 10, 3 );
+</pre>
+			</div>
+		</div>
+	</div>
+	
 <!-- collapse_github -->
 	<div class="panel panel-default">
 		<div class="panel-heading">

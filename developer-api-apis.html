@@ -58,11 +58,11 @@
 </p>
 
 <p>
-	Note that after the user is redirected to <code>Redirect URL</code>, WSL will clear the PHP session, which will interpret the connexion to the provider api and it will be no longer possible to make any api call.
+	Note that after the user is redirected to <code>Redirect URL</code>, WSL will clear the PHP session, which will interpret the connexion to the provider api and it will be no longer possible make signed api calls.
 </p>
 
 <p>
-	Here a couple of simple examples on how to access Twitter and Facebook apis:
+	The snippets below shows how to access Twitter and Facebook apis:
 </p>
 
 <pre class="prettyprint linenums">
@@ -73,7 +73,7 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
         return;
     }
 
-    include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
 
     try
     {
@@ -100,14 +100,14 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
         return;
     }
 
-    include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
 
     try
     {
         $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
 
         # https://developers.facebook.com/docs/graph-api/reference/v2.1/user/feed
-        $response = $provider->api()->post( 'https://graph.facebook.com/me/feed', array(
+        $response = $provider->api()->post( 'https://graph.facebook.com/v2.0/me/feed', array(
                 'message' => 'This is a test message',
         ));
     }
@@ -118,6 +118,7 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
 }
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_user_facebook_wall', 10, 3 );
 </pre>
+<div style="text-align: center;"><img style="width:650px;" src="assets/img/fbpostwall.png" ></div>
 
 <h3>2. Authentication Playground</h3>
 
@@ -127,7 +128,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 
 <div style="text-align: center;"><img style="width:950px;" src="assets/img/auth-play-1.png" ></div>
 <br />
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/auth-play-2.png" ></div>
+<div style="text-align: center;"><img src="assets/img/auth-play-2.png" ></div>
 				<br />
 				<br />
 			</div>
