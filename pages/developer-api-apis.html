@@ -1,0 +1,79 @@
+<h1>Access Social APIs <small>Developer API</small></h1>
+
+<h3>1. Access through PHP code</h3>
+
+<p>
+	Expect for the OpenID ones, to access any of the social networks apis, you may invoke the Hybridauth library at any point during the second phase of the authentication process (see, <a href="developer-api-authentication.html">Authentication Process</a>). 
+</p>
+
+<p>
+	Note that after the user is redirected to <code>Redirect URL</code>, WSL will clear the PHP session, which will interpret the connexion to the provider api and it will be no longer possible to make any api call.
+</p>
+
+<p>
+	Here a couple of simple examples on how to access Twitter and Facebook apis:
+</p>
+
+<pre class="prettyprint linenums">
+function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profile )
+{
+    if( 'Twitter' != $provider )
+    {
+        return;
+    }
+
+    include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( 'Twitter' ); 
+
+        # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
+        $response = $provider->api()->get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
+    }
+    catch( Exception $e )
+    {
+        echo "Ooophs, we got an error: " . $e->getMessage();
+    }
+}
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitter_timeline', 10, 3 );
+</pre>
+
+<br />
+
+<pre class="prettyprint linenums">
+function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
+{
+    if( 'Facebook' != $provider )
+    {
+        return;
+    }
+
+    include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
+
+        # https://developers.facebook.com/docs/graph-api/reference/v2.1/user/feed
+        $response = $provider->api()->post( 'https://graph.facebook.com/me/feed', array(
+                'message' => 'This is a test message',
+        ));
+    }
+    catch( Exception $e )
+    {
+        echo "Ooophs, we got an error: " . $e->getMessage();
+    }
+}
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_user_facebook_wall', 10, 3 );
+</pre>
+
+<h3>2. Authentication Playground</h3>
+
+<p> 
+	This tool will also give you a direct access to social networks apis via a lightweight console.
+</p>
+
+<div style="text-align: center;"><img style="width:950px;" src="assets/img/auth-play-1.png" ></div>
+<br />
+<div style="text-align: center;"><img style="width:950px;" src="assets/img/auth-play-2.png" ></div>

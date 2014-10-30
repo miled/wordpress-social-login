@@ -1,0 +1,54 @@
+<h1>Pluggable Functions <small>Developer API</small></h1>
+
+<p>
+	WSL <span class="label label-success">2.2+</span> now allow few of its functions to be replaced. If these functions are not defined, then the default ones will be used instead.
+</p> 
+
+<div class="bs-callout bs-callout-danger">
+	<h4>Important</h4>
+
+	<p> 
+		These functions are newly introduced into WSL and we are still experimenting, so they may change in futures release.
+	</p>
+</div>
+
+<h4>Functions list</h4>
+
+<br />
+
+<table class="table table-striped table-bordered">
+	<tbody>
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_load_plugin_textdomain" target="_blank">wsl_load_plugin_textdomain</a></td>
+			<td>Loads the plugin's translated strings.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_render_notice_page" target="_blank">wsl_render_notice_page</a></td>
+			<td>Display a simple notice to the user and kill WordPress execution. This function is mainly used by bouncer.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_render_error_page" target="_blank">wsl_render_error_page</a></td>
+			<td>Display an error message to the user and kill WordPress execution. This function is used when WSL fails to authenticate a user with a given social network.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_render_redirect_to_provider_loading_screen" target="_blank">wsl_render_redirect_to_provider_loading_screen</a></td>
+			<td>Display a loading screen while the WSL is redirecting the user to a given provider for authentication.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_render_return_from_provider_loading_screen" target="_blank">wsl_render_return_from_provider_loading_screen</a></td>
+			<td>Display a loading screen after a user come back from provider and while WSL is procession his profile, contacts, etc.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_get_wp_user_custom_avatar" target="_blank">wsl_get_wp_user_custom_avatar</a></td>
+			<td>Display users avatars from social networks when available</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_get_bp_user_custom_avatar" target="_blank">wsl_get_bp_user_custom_avatar</a></td>
+			<td>Display users avatars from social networks on buddypress.</td>
+		</tr> 
+		<tr>
+			<td><a href="https://github.com/miled/wordpress-social-login/search?q=wsl_admin_notification" target="_blank">wsl_admin_notification</a></td>
+			<td>Send a notification to blog administrator when a new user register using WSL.</td>
+		</tr> 
+	</tbody>
+</table>
