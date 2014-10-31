@@ -94,20 +94,23 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 /**
 * Display a loading screen after a user come back from provider and while WSL is procession his profile, contacts, etc.
 *
-* If Authentication display is undefined or eq Popup 
-* > create a from with javascript in parent window and submit it to wp-login.php
-* > (with action=wordpress_social_authenticated), then close popup
-*
-* If Authentication display eq In Page
-* > create a from in page then submit it to wp-login.php (with action=wordpress_social_authenticated) 
-*
 * Note: 
 *   In case you want to customize the content generated, you may redefine this function
+*   Just make sure the script DIES at the end.
 */
 if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 {
 	function wsl_render_return_from_provider_loading_screen( $provider, $authenticated_url, $redirect_to, $wsl_settings_use_popup )
 	{
+		/*
+		* If Authentication displayis undefined or eq Popup ($wsl_settings_use_popup==1) 
+		* > create a from with javascript in parent window and submit it to wp-login.php ($authenticated_url)
+		* > with action=wordpress_social_authenticated, then close popup
+		*
+		* If Authentication display eq In Page ($wsl_settings_use_popup==2) 
+		* > create a from in page then submit it to wp-login.php with action=wordpress_social_authenticated 
+		*/
+
 		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';  
 ?>
 <!DOCTYPE html>

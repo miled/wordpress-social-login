@@ -8,6 +8,10 @@
 
 /**
 * Page for users completing their registration (currently used only by Bouncer::Email Validation)
+*
+* Note:
+* 	1. This file (function) is seduled for deletion in 2.3.
+* 	2. Profile Completion will be merged with Accounts linking and replaced with a new feature "New Users Gateway"
 */
 
 // Exit if accessed directly

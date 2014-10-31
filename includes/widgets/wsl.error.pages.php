@@ -129,7 +129,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 *   In case you want to customize the content generated, you may redefine this function
 *   Just make sure the script DIES at the end. 
 *
-*   The $message to display for users is passed as a parameter and is required.
+*   The $message to display for users is passed as a parameter and it's required.
 */
 if( ! function_exists( 'wsl_render_error_page' ) )
 {

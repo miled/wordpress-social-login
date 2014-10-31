@@ -103,7 +103,7 @@ function wsl_component_loginwidget_sidebar_custom_integration()
 				<?php _wsl_e("If you want to add the widget to another location in your website, you can insert the following code in that location", 'wordpress-social-login') ?>: 
 				<pre style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
 				<?php _wsl_e("For posts and pages, you may use this shortcode", 'wordpress-social-login') ?>:
-				<pre style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</pre> 
+				<div style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</div> 
 			</p>
 
 			<p>

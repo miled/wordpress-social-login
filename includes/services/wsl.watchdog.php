@@ -7,11 +7,12 @@
 */
 
 /** 
-* WSL Watchdog.
+* WSL logging agent
 *
 * This is an utility to Logs WSL authentication process to a file or database.
 *
-* Things ain't optimized here but will do for now.
+* Note:
+*   Things ain't optimized here but will do for now.
 */
 
 // Exit if accessed directly

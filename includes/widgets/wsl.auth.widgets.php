@@ -22,9 +22,10 @@ if( !defined( 'ABSPATH' ) ) exit;
 /**
 * Generate the HTML content of WSL Widget
 *
-* Information:
-*   WSL Widget supported arguments are still experimental and might change in future versions.
+* Note:
+*   WSL shortcode arguments are still experimental and might change in future versions.
 *   Please, avoid using them until it's officially announced and documented.
+*   This feature is planned for WSL 2.3. Contributions to this are very welcome.
 *
 *   [wordpress_social_login
 *        auth_mode="login"
@@ -300,6 +301,11 @@ add_action( 'wordpress_social_login', 'wsl_wordpress_social_login_action' );
 /**
 * WSL wordpress_social_login shortcode
 *
+* Note:
+*   WSL shortcode arguments are still experimental and might change in future versions.
+*   Please, avoid using 'restrict_content' until it's officially announced and documented.
+*   This feature is planned for WSL 2.3. Contributions to this are more than welcome.
+*
 * Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
 */
 function wsl_wordpress_social_login_shortcode( $args = array(), $content = null )
@@ -326,9 +332,10 @@ add_shortcode( 'wordpress_social_login', 'wsl_wordpress_social_login_shortcode' 
 /**
 * WSL wordpress_social_login_meta shortcode
 *
-* Information:
+* Note:
 *   This shortcode is experimental and might change in future versions.
 *   Please, avoid using it until it's officially announced and documented.
+*   This feature is planned for WSL 2.4. Contributions to this are quite welcome.
 *
 *   [wordpress_social_login_meta
 *        user_id="215"

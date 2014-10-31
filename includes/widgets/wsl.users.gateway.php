@@ -7,14 +7,14 @@
 */
 
 /**
-* Accounts linking + Profile Completion
+* New Users Gateway: Accounts linking + Profile Completion
 *
-* When enabled, Bouncer will popup this screen for unrecognised user where they will be given the choice to either associate
+* When enabled, Bouncer will popup this screen for unrecognised user, where they will be given the choice to either associate
 * any existing account in your website with the provider ID they have connected with or to create a new user account. 
 *
-* NOTES:
-* 	1. This is not implemented yet. Planned for WSL 2.3.
-* 	2. Profile Completion will be merged with Accounts linking.
+* Note:
+* 	1. This is not implemented yet. It still a proof of concept and planned for WSL 2.3.
+*       2. Contributions or Remarks are of course welcome.
 */
 
 // Exit if accessed directly

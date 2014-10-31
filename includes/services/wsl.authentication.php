@@ -161,7 +161,7 @@ function wsl_process_login_begin()
 	// check if php session are working as expected by wsl
 	if( ! wsl_process_login_check_php_session() )
 	{
-		return wsl_process_login_render_notice_page( sprintf( _wsl__( 'The session identifier is missing.<br />Please check WSL <a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">minimum system requirements</a> and <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank">FAQ</a>.', 'wordpress-social-login' ), site_url() ) );
+		return wsl_process_login_render_notice_page( sprintf( _wsl__( 'The session identifier is missing.<br />For more information refer to WSL <a href="http://miled.github.io/wordpress-social-login/troubleshooting.html#session-error" target="_blank">Troubleshooting</a>.', 'wordpress-social-login' ), site_url() ) );
 	}
 
 	// HOOKABLE: selected provider name

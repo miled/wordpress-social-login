@@ -14,15 +14,13 @@
  */
 class Hybrid_Auth 
 {
-	public static $version = "2.4.0-wsl-fork";
+	public static $version = "2.4.1-wsl-fork";
 
 	public static $config  = array();
 
 	public static $store   = NULL;
 
 	public static $error   = NULL;
-
-	public static $logger  = NULL;
 
 	// --------------------------------------------------------------------
 
@@ -84,7 +82,7 @@ class Hybrid_Auth
 		// start session storage mng
 		Hybrid_Auth::$store = new Hybrid_Storage();
 
-		if( Hybrid_Error::hasError() ){ 
+		if( Hybrid_Error::hasError() ){
 			$m = Hybrid_Error::getErrorMessage();
 			$c = Hybrid_Error::getErrorCode();
 
@@ -147,7 +145,7 @@ class Hybrid_Auth
 	public static function authenticate( $providerId, $params = NULL )
 	{
 		// if user not connected to $providerId then try setup a new adapter and start the login process for this provider
-		if( ! Hybrid_Auth::storage()->get( "hauth_session.$providerId.is_logged_in" ) ){ 
+		if( ! Hybrid_Auth::storage()->get( "hauth_session.$providerId.is_logged_in" ) ){
 			$provider_adapter = Hybrid_Auth::setup( $providerId, $params );
 
 			$provider_adapter->login();

@@ -191,11 +191,28 @@ function wsl_component_bouncer_setup_user_moderation()
 		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
 		  <tr>
 			<td width="200" align="right"><strong><?php _wsl_e("User Moderation", 'wordpress-social-login') ?> :</strong></td>
-			<td> 
+			<td>
+				<?php
+					$users_moderation_level = array(
+						100 => "E-mail Confirmation &mdash; Yield to Theme My Login plugin",
+						102 => "Admin Approval &mdash; Yield to Theme My Login plugin",
+					);
+
+					$users_moderation_level = apply_filters( 'wsl_component_bouncer_setup_alter_users_moderation_level', $users_moderation_level );
+
+					$wsl_settings_bouncer_new_users_moderation_level = get_option( 'wsl_settings_bouncer_new_users_moderation_level' );
+				?>
+
 				<select name="wsl_settings_bouncer_new_users_moderation_level">
-					<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 1 )   echo "selected"; ?> value="1"><?php _wsl_e("None", 'wordpress-social-login') ?></option> 
-					<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 101 ) echo "selected"; ?> value="101"><?php _wsl_e("E-mail Confirmation &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
-					<option <?php if( get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) == 102 ) echo "selected"; ?> value="102"><?php _wsl_e("Admin Approval &mdash; Yield to Theme My Login plugin", 'wordpress-social-login') ?></option> 
+					<option <?php if( $wsl_settings_bouncer_new_users_moderation_level == 1 )   echo "selected"; ?> value="1"><?php _wsl_e("None", 'wordpress-social-login') ?></option> 
+					<?php
+						foreach( $users_moderation_level as $level => $label )
+						{
+							?>
+								<option <?php if( $wsl_settings_bouncer_new_users_moderation_level == $level ) echo "selected"; ?>   value="<?php echo $level; ?>"><?php _wsl_e( $label, 'wordpress-social-login' ) ?></option>
+							<?php
+						}
+					?>
 				</select>
 			</td>
 		  </tr>
@@ -239,8 +256,10 @@ function wsl_component_bouncer_setup_membership_level()
 					<optgroup label="<?php _wsl_e("Be careful with these", 'wordpress-social-login') ?>:">
 						<?php
 							global $wp_roles;
+				
+							$users_membership_roles = apply_filters( 'wsl_component_bouncer_setup_alter_users_membership_roles', $wp_roles->role_names );
 
-							foreach ( $wp_roles->role_names as $role => $name )
+							foreach ( $users_membership_roles as $role => $name )
 							{
 						?>
 							<option value="<?php echo $role ?>"  <?php if( get_option( 'wsl_settings_bouncer_new_users_membership_default_role' ) == $role ) echo "selected"; ?> ><?php _wsl_e( $name, 'wordpress-social-login' ) ?></option>

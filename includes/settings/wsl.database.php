@@ -7,7 +7,7 @@
 */
 
 /**
-* Functions & utilities related to WSL database installation and migrations
+* Create WSL database tables upon installation
 *
 * When WSl is activated, wsl_database_migration_process() will attempt to create or upgrade the required database
 * tables.
