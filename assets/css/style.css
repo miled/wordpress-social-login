@@ -47,11 +47,8 @@ body .navbar li a {
   height: 65px !important;
   line-height: 65px !important;
   padding: 0 20px;
-}
-body .navbar a:hover, body .navbar a:focus {
   background-color: #222 !important;
 }
-
 body .navbar a.navbar-brand {
   font-family: 'Roboto Condensed', sans-serif;
   font-size: 2.7rem;
@@ -242,8 +239,24 @@ font-family: georgia, times, serif;
 	padding:0 ;
 	margin-top:-5px ;
 }
-
-
+.search-input {
+    background-color: #3d3838;
+    border: 1px solid #111;
+    border-radius: 4px;
+    color: rgba(255, 255, 255, 0.75);
+    font-family: "Roboto Condensed",sans-serif;
+    line-height: 1;
+    padding:9px;
+    transition: none 0s ease 0s ;
+	width:250px
+}
+.search-input:hover{
+	background-color: #bfbfbf;
+}
+.search-input:focus{
+	background-color: #ffffff;
+	color: #000;
+}
 
 
 
