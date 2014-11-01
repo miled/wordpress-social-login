@@ -169,24 +169,7 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 			</div>
 		</div>
 	</div>
-	
-<!-- collapse_edd -->
-	<div class="panel panel-default">
-		<div class="panel-heading">
-			<h4 class="panel-title">
-				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_edd">Integrate WSL to Easy Digital Downloads</a>
-			</h4>
-		</div>
-		<div id="collapse_edd" class="panel-collapse collapse">
-			<div class="panel-body"> 
-<pre class="prettyprint linenums">
-// display WSL widget in easydigitaldownloads forms
-add_action( 'woocommerce_before_customer_login_form', 'wsl_render_auth_widget' );
-</pre>
-			</div>
-		</div>
-	</div>
-	
+
 <!-- collapse_mycred_signup -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -350,11 +333,12 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 </div>
 				<hr />
 				<br />
+				<a name="comments"></a>
 				<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div>
+				</div> 
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -386,7 +370,7 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>

@@ -53,37 +53,53 @@
 <h1>Advanced Troubleshooting</h1>
 
 <p>
-	If you get here, then most likely it means that <a href="./troubleshooting.html">Basic Troubleshooting</a> did help you solve the issue you're having, which is, generally, not a good sign. WordPress Social Login has been built with reliability and portability in mind, but every now and then a user with an esoteric WordPress environment will come up with an unforeseeable issue, which is also to be expected.
+	If you get here, it probably mean
 </p>
 
-<p>
-	To help with these cases, WordPress Social Login provides two internal tools to troubleshoot complex issues.
-</p>
+<ul>
+	<li>
+		<p>
+			That you're either curious about WSL internal tools, which is cool, please read on. 
+		</p>
+	</li>
+	<li>
+		<p>
+			Or, that <a href="./troubleshooting.html">Basic Troubleshooting</a> did not help you solve the issue you're having, which is, generally, not a good sign. WordPress Social Login has been built with reliability and portability in mind, but every now and then a user with an esoteric WordPress environment will come up with an unforeseeable issue, which is also to be expected.
+		</p>
+		<p>
+			To help with these cases, WordPress Social Login provides two internal tools to troubleshoot complex issues.
+		</p>
+	</li>
+</ul>
+
 
 <h3>Debug Mode</h3>
 
 <p>
-	The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented.
+	The <b>Debug mode</b> is an internal development tool built to track every action made by WSL during the authentication proces, which can be useful when debugging this plugin but note that it is highly technical and not documented.
 </p>
 
 <p>
-	When <b>Debug mode</b> is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> .
+	To enable this feature, go to the <b>Tools</b> tab, then the <b>Debug mode</b> section.
 </p>
 
 <p>
-	When <b>Debug mode</b> is enabled and set to <code>Log actions to databse</code>, will create a new log table <code>wslwatchdog</code> and insert these actions names and arguments.
+	When Debug mode< is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> .
+</p>
+
+<p>
+	When Debug mode is enabled and set to <code>Log actions to databse</code>, will create a new log table <code>wslwatchdog</code> and insert these actions names and arguments.
 </p>
 
 <p>
 	It's recommended to keep the Debug Mode <b>Disabled</b> as will store unnecessary data on your web server and might add to loading time.
 </p>
 
-		
 <div class="bs-callout bs-callout-info">
-	<p>Please, don't use <b>Debug mode</b> unless:</p>
+	<p>Please, don't use <b>Debug mode</b>, unless:</p>
 
 	<ul>
-		<li>You are studing how WSL works</li>
+		<li>You are studying how WSL works</li>
 		<li>You are implementing new things into WSL</li>
 		<li>You have an issue and you really really want WSL to work</li>
 	</ul>
@@ -109,13 +125,13 @@
 </p>
 
 <p>
-	When <b>Development Mode</b> is enabled, WSL will display a debugging area on the footer of admin interfaces. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into.
+	When <b>Development Mode</b> is enabled, WSL will display a debugging area on the footer of admin interfaces. Development Mode will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into.
 	<br />
-	Please, do not enable <b>Development Mode</b>, unless you are a developer or you have basic PHP knowledge. 
+	Please, do not enable Development Mode, unless you are a developer or you have basic PHP knowledge. 
 	<br />
-	For security reasons, <b>Development Mode</b> will auto switch to <b>Disabled</b> each time the plugin is <b>reactivated</b>. 
+	For security reasons, Development Mode will auto switch to <b>Disabled</b> each time the plugin is <b>reactivated</b>. 
 	<br />
-	It's highly recommended to keep the <b>Development Mode</b> <b style="color:#da4f49">Disabled</b> on production as it would be a security risk otherwise.
+	It's highly recommended to keep the Development Mode <b style="color:#da4f49">Disabled</b> on production as it would be a security risk otherwise.
 </p>
 
 <div style="text-align: center;"><img style="width:750px;" src="assets/img/devmode_1.png" ></div>
@@ -160,7 +176,7 @@
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>

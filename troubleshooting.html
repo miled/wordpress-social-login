@@ -67,6 +67,57 @@
 	<span class="label label-warning">Head-up</span> This guide may get technical at some points. Unless you feel comfortable editing scripts, please avoid that. When in doubt, ask your web host for assistance.
 </p>
 
+<a name="authentication-error"></a>
+<br />
+<h4>Authentication Error</h4>
+
+<p>
+	There are two type of errors :
+</p>
+
+<ul>
+	<li>Authentication errors due to issues with social networks apis (example to the left).</li>
+	<li>Logic and application errors. Those are simple notices and usually used by <a href="bouncer.html"><b>Bouncer</b></a> (example to the right).</li>
+</ul>
+
+<center>
+<table width="50%">
+	<tr>
+		<td>
+			<img style="height:200px;" src="assets/img/auth-api-error.png" >
+		</td>
+		<td>&nbsp;</td>
+		<td>
+			<img style="height:200px;" src="assets/img/auth-notice.png" >
+		</td>
+	</td>
+</table>
+</center>
+
+<br />
+
+<p>
+	While the notices messages are straightforward and self explanatory, the other ones (authentication errors due issue with social networks apis) can be a bit tricky to understand since they are a technical.
+</p>
+
+<p>
+	If you did encounter an Authentication Error, first click on <em>Details</em> to know what a social network is complaining about. Next, use Common sense and Google, or ask the <a href="support.html">Community for Support</a>.
+</p>
+
+<p>
+	Here's a few of those errors, and what they mean:
+</p>
+
+<ul>
+	<li><code>The session identifier is missing</code>: This is a session error. See section below.</li>
+	<li><code>Your application key and secret are required</code>: You did not setup your application credentials. See  <a href="./networks.html">Networks Setup</a>.</li>
+	<li><code>0. Unable to connect to the provider api</code>: Request rejected or Network failure. Usually happen when the social network api is over capacity due to hight traffic.</li>
+	<li><code>401. Failed to validate oauth signature and token</code>: Usually happen when your app credentials are wrong or when your web server clock is out of sync.</li>
+	<li><code>400. oauth_problem=timestamp_refused...</code>: Your web server clock is out of sync.</li>
+	<li><code>401. oauth_consumer_key not recognized...</code>: Your application credentials are wrong. Check for extra spaces, and the like.</li>
+</ul>
+
+
 <a name="session-error"></a>
 <br />
 <h4>Session Error</h4>
@@ -78,9 +129,9 @@
 	<li>
 		<p><b>File permissions.<b></p>
 
-		<p>If you see an error <code>"Warning: session_start..."</code> on the top of this page or in the Error log file, then most likely because of a file permissions problem. The solution is to make a trouble ticket with your web host.
+		<p>If you see an error <code>Warning: session_start() [function.session-start]: open(/tmp/sess_...</code> on the top of this page or in the Error log file, then most likely because of a file permissions problem. The solution is to make a trouble ticket with your web host.
 
-		<p>For advanced users: alternatively, you can create the sessions folder in your root directory, then add <code>session_save_path('/path/to/writable/folder')</code> at the top of the following files:</p>
+		<p>For advanced users: alternatively, you can  <a href="http://www.shdon.com/blog/2014/05/09/php-why-might-session_start-fail-claiming-no-such-file-or-directory" target="_blank">create the sessions folder</a> in your root directory, then add <code>session_save_path('/path/to/writable/folder')</code> at the top of the following files:</p>
 <pre>
 wp-config.php
 wp-content/plugins/wordpress-social-login/wp-social-login.php
@@ -96,7 +147,7 @@ wp-content/plugins/wordpress-social-login/hybridauth/index.php
 	<li>
 		<p><b>A reverse proxy like Varnish or caching engine is stripping sessions cookies.<b></p>
 		<p>
-			Some web hosts might be using sophisticated caching systems which may prevent WSL from working as expected. The solution is to make a trouble ticket with your web host and ask them to white-list WSL urls
+			Some web hosts, like <a href="https://wordpress.org/support/topic/500-internal-server-error-when-redirecting" target="_blank">WP Engine</a>, might be using sophisticated caching systems which may prevent WSL from working as expected. The solution is to make a trouble ticket with your web host and ask them to white-list these urls:
 		</p>
 <pre>
 wp-login.php
@@ -155,7 +206,7 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 </p>
 
 <p>
-	First thing to do when you are redirected to a white page, is to check for the HTTP Error you are getting. (In case you are using Google Chrome on Windows, you may hit F15, select Network tab, then hit F5). Once you get the HTTP Error Code, continue reading this guide to know what the error mean and how you may solve it.
+	First thing to do when you are redirected to a white page, is to check for the HTTP Error you are getting. (In case you are using Google Chrome on Windows, you may hit F12, select Network tab, then hit F5). Once you get the HTTP Error Code, continue reading this guide to know what the error mean and how you may solve it.
 </p>
 
 <div style="text-align: center;"><img src="assets/img/500.png" ></div>
@@ -168,8 +219,8 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 <p>This issue usually happen when :</p>
 
 <ol> 
-<li><p>Your web host uses <b>mod_security</b> to block requests containing URLs (eg. hosts like HostGator, GoDaddy and The Planet).</p></li>
 <li><p>There is a <b>.htaccess</b> file who prevent direct access to the WordPress plugins directory.</p>
+<li><p>Your web host uses <b>mod_security</b> to block requests containing URLs (eg. hosts like HostGator, GoDaddy and The Planet).</p></li>
 </li>
 </ol>
 <p>In any of these two cases, WSL requires this url to be white-listed:</p>
@@ -213,7 +264,19 @@ wp-content/plugins/wordpress-social-login/hybridauth/
 <p>
 	WSL endpoint urls, are not supposed to be accessed directly by users nor by web crawlers.
 </p>
- 
+
+<script>
+	$(function () { 
+		window.addEventListener("scroll", function() {
+			if ( window.scrollY > 500 ) {
+				$('.navbar').css( 'opacity', 0.5 )
+			}
+			else {
+				$('.navbar').css( 'opacity', 1 )
+			}
+		},false)
+	})
+</script>
 
 				<br />
 				<br />
@@ -232,7 +295,7 @@ wp-content/plugins/wordpress-social-login/hybridauth/
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>

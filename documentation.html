@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
 	<title>Documentation - WordPress Social Login</title>
 
 	<meta charset="utf-8">
@@ -14,8 +13,8 @@
 
 	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
 	<link href="assets/css/style.css" rel="stylesheet">   
-	<link href="assets/css/prettify.css" rel="stylesheet">   
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
 	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
@@ -30,11 +29,12 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav navbar-nav navbar-right"> 
 					<li><a href="./overview.html">Overview</a></li>
 					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li>
+					<li><a href="./getinvolved.html">Get involved</a></li> 
 					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
 					<li style="margin-right:10px">
 						<form action="./search.html" method="get">
 							<input type="text" name="q" class="search-input" placeholder="Search">
@@ -44,127 +44,129 @@
 			</div>
 		</nav>
 	</header>
-  
+
+ 
 	<div id="content" class="container">
 		<div class="block row">
 			<div class="col col-md-12">
-				<h1>WordPress Social Login Documentation</h1>
-				
-				<p>Welcome to WSL documentation. As a good start we recommend to read <a href="networks.html">Networks Setup</a>, then <a href="widget.html">Widget Settings</a>.</p>
 
-				
-				<h3>Setup</h3>
+<h1>WordPress Social Login Documentation</h1>
 
-				<table class="table table-striped table-bordered">
-					<tbody>
-						<tr>
-							<td><a href="install.html">Installation</a></td>
-							<td>Tow to install WSL.</td>
-						</tr>
-						<tr>
-							<td><a href="networks.html">Networks Setup</a></td>
-							<td style="background-color: #f8fff5;border-color: #d6e9c6;color: #3c763d;">Outlines the required steps to allow WSL to connect users through social networks. <span class="glyphicon glyphicon-flag pull-right"></span></td>
-						</tr>
-					</tbody>
-				</table>
+<p>Welcome to WSL documentation. As a good start we recommend to read <a href="networks.html">Networks Setup</a>, then <a href="widget.html">Widget Settings</a>.</p>
 
 
-				<h3>Customize</h3>
+<h3>Setup</h3>
 
-				<table class="table table-striped table-bordered">
-					<tbody>
-						<tr>
-							<td><a href="widget.html">Widget Settings</a></td>
-							<td style="background-color: #f8fff5;border-color: #d6e9c6;color: #3c763d;">Customize the way you want WSL Widget to look and behave. <span class="glyphicon glyphicon-flag pull-right"></span></td>
-						</tr>
-						<tr>
-							<td><a href="themes.html">Widget Themes</a></td>
-							<td>A number of customizations you may find useful to better fit the WSL Widget to your website theme.</td>
-						</tr>
-						<tr>
-							<td><a href="bouncer.html">Bouncer</a></td>
-							<td>Advanced WSL Configuration.</td>
-						</tr>
-						<tr>
-							<td><a href="userdata.html">User Data</a></td>
-							<td>Outlines how WSL can give you access to a rich and standardized users profiles and contacts across all the social networks.</td>
-						</tr>
-						<tr>
-							<td><a href="buddypress.html">BuddyPress</a></td>
-							<td>Outlines how to integrate WSL with BuddyPress.</td>
-						</tr>
-					</tbody>
-				</table>
-
-				
-				<h3>Developer API</h3>
-
-				<table class="table table-striped table-bordered">
-					<tbody>
-						<tr>
-							<td><a href="developer-api-authentication.html">Authentication Process</a></td>
-							<td>Outlines how the WSL authentication process works. Plus a quick reference for the used hooks (actions and filters).</td>
-						</tr>
-						<tr>
-							<td><a href="developer-api-widget.html">Widget Generation</a></td>
-							<td>Outlines how the WSL authentication widget is generated. Plus a quick reference for the used hooks (actions and filters).</td>
-						</tr>
-						<tr>
-							<td><a href="developer-api-functions.html">Pluggable PHP Functions</a></td>
-							<td>A quick reference for the WSL functions that you may "over-write".</td>
-						</tr>
-						<tr>
-							<td><a href="developer-api-apis.html">Access Social APIs</a></td>
-							<td>Outlines how access social networks apis through simple php code.</td>
-						</tr>
-						<!--
-						<tr>
-							<td><a href="developer-api-components.html">Create a Components</a></td>
-							<td>Outlines how to create a new WSL component.</td>
-						</tr>
-						-->
-						<tr>
-							<td><a href="developer-api-snippets.html">Code Snippets</a></td>
-							<td>A number of useful snippets collected over time.</td>
-						</tr>
-					</tbody>
-				</table>
+<table class="table table-striped table-bordered">
+	<tbody>
+		<tr>
+			<td><a href="install.html">Installation</a></td>
+			<td>Tow to install WSL.</td>
+		</tr>
+		<tr>
+			<td><a href="networks.html">Networks Setup</a></td>
+			<td style="background-color: #f8fff5;border-color: #d6e9c6;color: #3c763d;">Outlines the required steps to allow WSL to connect users through social networks. <span class="glyphicon glyphicon-flag pull-right"></span></td>
+		</tr>
+	</tbody>
+</table>
 
 
-				<h3>Troubleshooting</h3>
+<h3>Customize</h3>
 
-				<table class="table table-striped table-bordered">
-					<tbody>
-						<tr>
-							<td><a href="troubleshooting.html">Common issues</a></td>
-							<td>A list of the common issues some users have experienced and how to solve them.</td>
-						</tr>
-						<tr>
-							<td><a href="troubleshooting-advanced.html">Advanced techniques</a></td>
-							<td>Outlines how to use WSL internal tools to troubleshoot more complex issues.</td>
-						</tr>
-					</tbody>
-				</table>
-				
-				
+<table class="table table-striped table-bordered">
+	<tbody>
+		<tr>
+			<td><a href="widget.html">Widget Settings</a></td>
+			<td style="background-color: #f8fff5;border-color: #d6e9c6;color: #3c763d;">Customize the way you want WSL Widget to look and behave. <span class="glyphicon glyphicon-flag pull-right"></span></td>
+		</tr>
+		<tr>
+			<td><a href="themes.html">Widget Themes</a></td>
+			<td>A number of customizations you may find useful to better fit the WSL Widget to your website theme.</td>
+		</tr>
+		<tr>
+			<td><a href="bouncer.html">Bouncer</a></td>
+			<td>Advanced WSL Configuration.</td>
+		</tr>
+		<tr>
+			<td><a href="userdata.html">User Data</a></td>
+			<td>Outlines how WSL can give you access to a rich and standardized users profiles and contacts across all the social networks.</td>
+		</tr>
+		<tr>
+			<td><a href="buddypress.html">BuddyPress</a></td>
+			<td>Outlines how to integrate WSL with BuddyPress.</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<h3>Developer API</h3>
+
+<table class="table table-striped table-bordered">
+	<tbody>
+		<tr>
+			<td><a href="developer-api-authentication.html">Authentication Process</a></td>
+			<td>Outlines how the WSL authentication process works. Plus a quick reference for the used hooks (actions and filters).</td>
+		</tr>
+		<tr>
+			<td><a href="developer-api-widget.html">Widget Generation</a></td>
+			<td>Outlines how the WSL authentication widget is generated. Plus a quick reference for the used hooks (actions and filters).</td>
+		</tr>
+		<tr>
+			<td><a href="developer-api-functions.html">Pluggable PHP Functions</a></td>
+			<td>A quick reference for the WSL functions that you may "over-write".</td>
+		</tr>
+		<tr>
+			<td><a href="developer-api-apis.html">Access Social APIs</a></td>
+			<td>Outlines how access social networks apis through simple php code.</td>
+		</tr>
+		<!--
+		<tr>
+			<td><a href="developer-api-components.html">Create a Components</a></td>
+			<td>Outlines how to create a new WSL component.</td>
+		</tr>
+		-->
+		<tr>
+			<td><a href="developer-api-snippets.html">Code Snippets</a></td>
+			<td>A number of useful snippets collected over time.</td>
+		</tr>
+	</tbody>
+</table>
+
+
+<h3>Troubleshooting</h3>
+
+<table class="table table-striped table-bordered">
+	<tbody>
+		<tr>
+			<td><a href="troubleshooting.html">Common issues</a></td>
+			<td>A list of the common issues some users have experienced and how to solve them.</td>
+		</tr>
+		<tr>
+			<td><a href="troubleshooting-advanced.html">Advanced Troubleshooting</a></td>
+			<td>Outlines how to use WSL internal tools to troubleshoot complex issues.</td>
+		</tr>
+	</tbody>
+</table>
+
+
+				<br />
+				<br />
 			</div>
 		</div>
 	</div>
 
-	<br />
-	
 	<footer>
 		<div class="container">
 			<div class="row"> 
 				<ul>
 					<li><a href="./index.html">Home</a></li>
 					<li><a href="./overview.html">Overview</a></li>
-					<li><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./documentation.html">Documentation</a></li> 
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on October 30, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>

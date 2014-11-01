@@ -283,8 +283,10 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Entry point to the authentication process.</p>
 	      <p>
 			This function runs after WordPress has finished loading but before any headers are sent.
+		  </p>
+	      <p>
 			This function will analyse the current URL parameters and start the login process whenever an
-			WSL action is found: <code>$_REQUEST['action']</code> eq <code>wordpress_social_*</code>.
+			WSL action is found: <code>$_REQUEST['action']</code> eq <code>wordpress_social_*</code> and depending on the value of action it will either call <code>wsl_process_login_begin()</code> or <code>wsl_process_login_end()</code>.
 		  </p>
 		</div>
 	  </div>
@@ -452,6 +454,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		</div>
 		<div class="timeline-body">
 		  <p>Start the <b>second</b> part of the authentication process.</p>
+		  <p>This function will call <b>all the functions below</b> either directly or indirectly, in order to perform the following tasks:</p>
 		  <p>
 				  1. Get the user social profile from provider.
 			<br />2. Create new WordPress user if he didn't exist in database.
@@ -552,7 +555,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <h4 class="timeline-title">wsl_process_login_complete_registration()</h4>
 		</div>
 		<div class="timeline-body">
-		  <p>Profile Completion</p>
+		  <p>This function will display Profile Completion form and it will keep calling it self until the user enter a valid username and email.</p>
 		</div>
 	  </div>
 	</li>
@@ -568,7 +571,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <h4 class="timeline-title">wsl_process_login_create_wp_user()</h4>
 		</div>
 		<div class="timeline-body">
-		  <p>This function will attempt to create a new wordpress user.</p>
+		  <p>This function will attempt to create a new WordPress user. This function will only kick in for new users.</p>
 		</div>
 	  </div>
 	</li>  
@@ -834,11 +837,12 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 
 				<hr />
 				<br />
+				<a name="comments"></a>
 				<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div>
+				</div> 
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -870,7 +874,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>

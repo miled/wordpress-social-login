@@ -52,7 +52,7 @@
 
 <div class="alert alert-info"> 
 	<p style="font-size: 20px;">
-		If you are a designer or a creative person, please consider contributing back to this project and the WordPress community by improving this section and by sharing new customizations for WSL Widget. We are also hoping if someone would create a logo for WSL, and maybe a banner to replace the old ones.
+		If you are a designer or a creative person, please consider <a href="#comments">contributing</a> back to this project by improving this section and by sharing new customizations for WSL Widget.
 	</p>
 </div>
 
@@ -90,7 +90,7 @@ The default WSL widget theme is plain and simple, and it comes with two set of i
 
 <br />
 <p>
-The default widget style can be found on WSL css file <b>assets/css/widget.css</b>. This default style is the following :
+The default widget style can be found on WSL css file <b>assets/css/style.css</b>. This default style is the following :
 </p>
 
 <pre class="prettyprint linenums">
@@ -251,7 +251,7 @@ If you want to give the button more depth, you may add this bit of style as well
 	Next, we will have to host these buttons online. For this example we choose to host them in the wordpress media library. See the pictures bellow if you're not familiar with how it works:
 </p>
 <ol>
-	<li>Go to your wordpess dashboard, then <b>Media &gt; New</b> and upload your buttons,</li>
+	<li>Go to your wordpess dashboard, then <b>Media &gt; Add New</b> and upload your buttons,</li>
 	<li>Once uploaded, click on the shown buttons thumbnails to open the <b>Attachment Details</b> popup and copy their urls, as we will need them later.</li>
 </ol>
 
@@ -323,24 +323,241 @@ If you want to give the button more depth, you may add this bit of style as well
 
 <br /> 
 <h4>5. Font-Awesome Icons</h4>
-<div style="text-align: center;margin-top:20px;margin-bottom:20px;"><img style="width:750px;" src="assets/img/theme_fontawesome.png" ></div> 
 <p>
-	<em>This section is incomplete..</em>
+	<span class="label label-info">Head-up</span> This example will requires a little bit more of work by comparison to previous ones, but the process can be fun and the result is definitely worth it.
 </p>
 
+<div style="text-align: center;margin-top:20px;margin-bottom:20px;"><img style="width:750px;" src="assets/img/theme_fontawesome.png" ></div> 
+
+<p>
+	<b>1.</b> First thing to know, those awesome providers icons are part of a well known, open and free to use icon pack called <a href="http://fortawesome.github.io/Font-Awesome/" target="_blank"><b>Font Awesome</b></a>. And we will be using them to replace the default WSL icons.
+</p>
+
+<p>
+	While few WordPress themes come with this pack already included, other do not. On the latter case we will have to integrate it into the web site manually. The easiest way to do that, is to install then activate this plugin: <a href="https://wordpress.org/plugins/better-font-awesome/" target="_blank"><b>https://wordpress.org/plugins/better-font-awesome/</b></a>.
+</p>
+
+<p>
+	 Advanced users may simply import the style. eg: <code>@import("http://fortawesome.github.io/Font-Awesome/assets/font-awesome/css/font-awesome.css")</code>.
+</p>
+
+<p>
+	Note: Not all the supported providers by WSL have icons in Font Awesome, see : <a href="http://fortawesome.github.io/Font-Awesome/icons/#brand" target="_blank">http://fortawesome.github.io/Font-Awesome/icons/#brand</a>.
+</p>
+
+<br />
+
+<p>
+	<b>2.</b> For this theme, we will need to create a <em>Hook</em> to customize the Widget HTML. This hook will go into you theme <em>functions.php</em> file. If you're not familiar with the process, see : <a href="https://www.youtube.com/watch?v=N9VNXh506ys" target="_blank">https://www.youtube.com/watch?v=N9VNXh506ys</a>.
+</p>
+
+<pre class="prettyprint linenums">
+function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_url )
+{
+    ?&gt;
+        &lt;a 
+           rel           = &quot;nofollow&quot;
+           href          = &quot;&lt;?php echo $authenticate_url; ?&gt;&quot;
+           data-provider = &quot;&lt;?php echo $provider_id ?&gt;&quot;
+           class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
+         &gt;
+            &lt;span&gt;
+                &lt;i class=&quot;fa fa-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;&gt;&lt;/i&gt; Sign in with &lt;?php echo $provider_name; ?&gt;
+            &lt;/span&gt;
+        &lt;/a&gt;
+    &lt;?php
+}
+  
+add_filter( 'wsl_render_auth_widget_alter_provider_icon_markup', 'wsl_use_fontawesome_icons', 10, 3 );
+</pre>
+
+<br />
+
+<p>
+	<b>3.</b> Insert the CSS bellow into <b>Widget &gt; Custom CSS</b> text area (or add it to your website theme files):
+</p>
+<pre class="prettyprint linenums">
+/*
+* Create a button effect
+* 
+* Based on bootstrap 3.w/e
+*/
+.wp-social-login-provider {
+	display:inline-block;
+	padding:6px 12px;
+	margin:5px;
+	font-size: 17px;
+	font-weight: 700;
+	line-height:1.428571429;
+	text-align:center;
+	white-space:nowrap;
+	vertical-align:middle;
+	cursor:pointer;
+	border:1px solid transparent;
+	border-radius:4px;
+	-webkit-user-select:none;
+	-moz-user-select:none;
+	-ms-user-select:none;
+	-o-user-select:none;
+	user-select:none
+	background-color: #fff;
+	border-color: #ccc;
+	color: #333;
+	width: 300px;
+}
+
+/*
+* Change the button background color on mouse hover
+*/
+.wp-social-login-provider:hover, .wp-social-login-provider:focus{
+	background-color: #ebebeb;
+	border-color: #ababab;
+	text-decoration:none
+}
+</pre>
+
 <br /> 
-<h4>6. Disproportionate layout <small>, metro like look n feel</small></h4>
+<h4>6. iOS 7 squircles <small>, font awesome are awesome</small></h4>
+
+<div class="bs-callout bs-callout-info">
+	<p> 
+		iOS 7 squircles is highly inspired by the <a href="http://thecodeplayer.com/walkthrough/css3-squircles" target="_blank"><b>@thecodeplayer</b></a> work &mdash; TheCodePlayer.com is great way to learn front end technologies like HTML5, CSS3, Javascript, Jquery easily, quickly and interactively.
+	</p>
+</div>
+
+<center>
+<table width="50%">
+	<tr>
+		<td>
+			<img style="height:350px;" src="assets/img/theme_squircles_1.png" >
+		</td>
+		<td>&nbsp;</td>
+		<td>
+			<img style="height:350px;" src="assets/img/theme_squircles_2.png" >
+		</td>
+	</td>
+</table>
+</center>
+
+<br />
+
+<p>
+	<b>1.</b> For this theme we also need <a href="http://fortawesome.github.io/Font-Awesome/" target="_blank"><b>Font Awesome</b></a>. Refer to <b>5. Font-Awesome Icons</b>.
+</p>
+
+<br />
+
+<p>
+	<b>2.</b> Like we did in that theme, we will also have to create a hook to customize the Widget HTML:
+</p>
+
+<pre class="prettyprint linenums">
+function wsl_use_squircles_icons( $provider_id, $provider_name, $authenticate_url )
+{
+    ?&gt;
+        &lt;a 
+           rel           = &quot;nofollow&quot;
+           href          = &quot;&lt;?php echo $authenticate_url; ?&gt;&quot;
+           data-provider = &quot;&lt;?php echo $provider_id ?&gt;&quot;
+           class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
+         &gt;
+            &lt;i class=&quot;fa fa-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;&gt;&lt;/i&gt;
+        &lt;/a&gt;
+    &lt;?php
+}
+  
+add_filter( 'wsl_render_auth_widget_alter_provider_icon_markup', 'wsl_use_squircles_icons', 10, 3 );
+</pre>
+
+<br />
+
+<p>
+	<b>3.</b> Insert the CSS bellow into <b>Widget &gt; Custom CSS</b> text area (or add it to your website theme files):
+</p>
+<pre class="prettyprint linenums">
+/*
+* Customize 'Connect with:' label
+*/
+.wp-social-login-connect-with {
+	font-size: 16px;
+	margin-bottom: 5px; 
+}
+
+/*
+* Customize icons based on @thecodeplayer's tutorial
+* 
+* http://thecodeplayer.com/walkthrough/css3-squircles
+*/
+.wp-social-login-provider-list i {
+	display: block;
+	font-size: 24px;
+	line-height: 50px; width: 50px;
+	text-align: center;
+	border-radius: 12px;
+}
+
+.wp-social-login-provider-list a {
+	text-decoration: none;
+	color: white;
+	display: inline-block;
+	margin: 10px;
+	border-radius: 12px;
+	position: relative;
+}
+
+.wp-social-login-provider-list a:hover{
+	text-decoration: none;
+	color: white;
+}
+
+/*
+* Create fish-eye shapes 
+*/
+.wp-social-login-provider-list a:before, .wp-social-login-provider-list a:after {
+	content: '';
+	position: absolute; left: 0; top: 0;
+	width: 100%; height: 100%;
+	background: inherit;
+	border-radius: 100%;
+	transform: scaleX(2) scaleY(1.05);
+	clip: rect(0, 33px, 50px, 17px);
+	z-index: -1;
+}
+
+/*
+* Duplicating the :before element and rotating it 90deg and swapping the X/Y transforms
+*/
+.wp-social-login-provider-list a:after {
+	transform: scaleY(2) scaleX(1.05) rotate(90deg);
+}
+
+/*
+* Set the background color for each provider buttons
+*/
+.wp-social-login-provider-<code>twitter</code>   i {background: #00ACF0;}
+.wp-social-login-provider-<code>facebook</code>  i {background: #3B5997;}
+.wp-social-login-provider-<code>google</code>    i {background: #DB4F48;}
+.wp-social-login-provider-<code>instagram</code> i {background: #447397;}
+.wp-social-login-provider-<code>linkedin</code>  i {background: #007DB8;}
+.wp-social-login-provider-<code>dribbble</code>  i {background: #ea4c89;}
+</pre>
+<br /> 
+<h4>7. Disproportionate layout <small>, metro like look n feel</small></h4>
+
+<br />
+
 <p>
 	<em>This section is incomplete..</em>
 </p>
 
 				<hr />
 				<br />
+				<a name="comments"></a>
 				<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div>
+				</div> 
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -372,7 +589,7 @@ If you want to give the button more depth, you may add this bit of style as well
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
 			</div>
 		</div>
 	</footer>
