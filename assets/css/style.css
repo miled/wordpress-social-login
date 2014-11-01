@@ -248,7 +248,7 @@ font-family: georgia, times, serif;
     line-height: 1;
     padding:9px;
     transition: none 0s ease 0s ;
-	width:250px
+	width:200px
 }
 .search-input:hover{
 	background-color: #bfbfbf;

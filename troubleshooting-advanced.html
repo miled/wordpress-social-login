@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<title>Devmode - WordPress Social Login</title>
+	<title>Troubleshooting advanced - WordPress Social Login</title>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -29,21 +29,17 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
+				<ul class="nav navbar-nav navbar-right"> 
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li style="margin-right:10px">
 						<form action="./search.html" method="get">
 							<input type="text" name="q" class="search-input" placeholder="Search">
 						</form>
 					</li>
-					<li><a href="./index.html">Home</a></li>
-					<li><a href="./overview.html">Overview</a></li>
-					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li>
-					<!--
-					<li><a href="./addons.html">Add-ons</a></li>
-					-->
-					<li><a href="./support.html">Support</a></li>
-					<li><a href="./faq.html">FAQ</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -54,7 +50,49 @@
 		<div class="block row">
 			<div class="col col-md-12">
 
-<h1>Development mode</h1>
+<h1>Advanced Troubleshooting</h1>
+
+<p>
+	If you get here, then most likely it means that <a href="./troubleshooting.html">Basic Troubleshooting</a> did help you solve the issue you're having, which is, generally, not a good sign. WordPress Social Login has been built with reliability and portability in mind, but every now and then a user with an esoteric WordPress environment will come up with an unforeseeable issue, which is also to be expected.
+</p>
+
+<p>
+	To help with these cases, WordPress Social Login provides two internal tools to troubleshoot complex issues.
+</p>
+
+<h3>Debug Mode</h3>
+
+<p>
+	The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented.
+</p>
+
+<p>
+	When <b>Debug mode</b> is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> .
+</p>
+
+<p>
+	When <b>Debug mode</b> is enabled and set to <code>Log actions to databse</code>, will create a new log table <code>wslwatchdog</code> and insert these actions names and arguments.
+</p>
+
+<p>
+	It's recommended to keep the Debug Mode <b>Disabled</b> as will store unnecessary data on your web server and might add to loading time.
+</p>
+
+		
+<div class="bs-callout bs-callout-info">
+	<p>Please, don't use <b>Debug mode</b> unless:</p>
+
+	<ul>
+		<li>You are studing how WSL works</li>
+		<li>You are implementing new things into WSL</li>
+		<li>You have an issue and you really really want WSL to work</li>
+	</ul>
+</div>  	
+
+<br /> 
+<div style="text-align: center;"><img style="width:750px;" src="assets/img/debugmode_file.png" ></div>
+
+<h3>Development mode</h3> 
 
 <div class="bs-callout bs-callout-info">
 	<p> 
@@ -80,7 +118,7 @@
 	It's highly recommended to keep the <b>Development Mode</b> <b style="color:#da4f49">Disabled</b> on production as it would be a security risk otherwise.
 </p>
 
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/devmode_1.png" ></div>
+<div style="text-align: center;"><img style="width:750px;" src="assets/img/devmode_1.png" ></div>
 <br />
 
 <p>
@@ -94,7 +132,7 @@
 	<li><b style="color:#8e8e8e">Gray</b>: Registered but unused WSL hooks.</li>
 </ul>
 
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/devmode_2.png" ></div>
+<div style="text-align: center;"><img style="width:750px;" src="assets/img/devmode_2.png" ></div>
 <br />
 
 <p>
@@ -103,6 +141,7 @@
 </p>
 
 <div style="text-align: center;"><img style="width:600px;" src="assets/img/devmode_3.png" ></div>
+
 
 				<br />
 				<br />
@@ -121,7 +160,7 @@
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on October 31, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
 			</div>
 		</div>
 	</footer>

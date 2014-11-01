@@ -29,21 +29,17 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right">
-					<li>
+				<ul class="nav navbar-nav navbar-right"> 
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li style="margin-right:10px">
 						<form action="./search.html" method="get">
 							<input type="text" name="q" class="search-input" placeholder="Search">
 						</form>
 					</li>
-					<li><a href="./index.html">Home</a></li>
-					<li><a href="./overview.html">Overview</a></li>
-					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li>
-					<!--
-					<li><a href="./addons.html">Add-ons</a></li>
-					-->
-					<li><a href="./support.html">Support</a></li>
-					<li><a href="./faq.html">FAQ</a></li>
 				</ul>
 			</div>
 		</nav>
@@ -118,7 +114,7 @@ function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_
       rel           = &quot;nofollow&quot;
       href          = &quot;&lt;?php echo $authenticate_url; ?&gt;&quot;
       data-provider = &quot;&lt;?php echo $provider_id ?&gt;&quot;
-      class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt; btn btn-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
+      class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
     &gt;
       &lt;span&gt;
          &lt;i class=&quot;fa fa-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;&gt;&lt;/i&gt;
@@ -128,13 +124,68 @@ function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_
 &lt;?php
 }
  
-add_filter( 'wsl_render_login_form_alter_provider_icon_markup', 'wsl_use_fontawesome_icons', 10, 3 );
+add_filter( 'wsl_render_auth_widget_alter_provider_icon_markup', 'wsl_use_fontawesome_icons', 10, 3 );
 </pre>
 			</div>
 		</div>
 	</div>
 
 	
+	
+<!-- collapse_woocommerce -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_woocommerce">Integrate WSL to Woocommerce</a>
+			</h4>
+		</div>
+		<div id="collapse_woocommerce" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>
+Solution contributed by <b>Yitzi</b> on WordPress support forum <a href="https://wordpress.org/support/topic/woocommerce-does-it-work?replies=3#post-5474168" target="_blank">https://wordpress.org/support/topic/woocommerce-does-it-work?replies=3#post-5474168</a>.
+<p>
+* Updated to WSL <span class="label label-success">2.2</span>.
+</p>			
+<pre class="prettyprint linenums">
+// display WSL widget in woocommerce forms
+add_action( 'woocommerce_before_customer_login_form', 'wsl_render_auth_widget' );
+add_action( 'woocommerce_before_checkout_form'      , 'wsl_render_auth_widget' );
+
+/**
+* Our hooked in function - $fields is passed via the filter
+*/
+function custom_override_checkout_fields( $fields )
+{
+	$current_user = wp_get_current_user();
+	
+	$fields['billing']['billing_first_name']['default'] = $current_user->user_firstname;
+	$fields['billing']['billing_last_name']['default']  = $current_user->user_lastname;
+	
+ 	return $fields;
+}
+
+add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
+</pre>
+			</div>
+		</div>
+	</div>
+	
+<!-- collapse_edd -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_edd">Integrate WSL to Easy Digital Downloads</a>
+			</h4>
+		</div>
+		<div id="collapse_edd" class="panel-collapse collapse">
+			<div class="panel-body"> 
+<pre class="prettyprint linenums">
+// display WSL widget in easydigitaldownloads forms
+add_action( 'woocommerce_before_customer_login_form', 'wsl_render_auth_widget' );
+</pre>
+			</div>
+		</div>
+	</div>
 	
 <!-- collapse_mycred_signup -->
 	<div class="panel panel-default">
@@ -297,6 +348,27 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 	</div>
 
 </div>
+				<hr />
+				<br />
+				<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
+					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
+
+					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
+				</div>
+				<br />
+				<div id="disqus_thread"></div>
+				<script type="text/javascript">
+					/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+					var disqus_shortname = 'miledgithubio'; // required: replace example with your forum shortname
+
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+					(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
+				</script>
+
 				<br />
 				<br />
 			</div>
@@ -314,7 +386,7 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on October 31, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
 			</div>
 		</div>
 	</footer>

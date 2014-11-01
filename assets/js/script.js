@@ -9,5 +9,16 @@ $(function () {
 		$(this).wrap("<a target='_blank' href='" + $(this).attr("src") + "'</a>")
 	})
 	
-	$('#content').prepend( '<div class="alert alert-warning"><h4 style="border: 0px none;">Information:</h4><p style="line-height: 24px;">This documentation has been updated to reflect the latest changes on the coming release <b>2.2.3</b> and things are siltly different from the current version <b>2.2.2</b>.<br />For more information, refer to <a href="https://github.com/miled/wordpress-social-login#whats-new-on-wsl-223" target="_blank">https://github.com/miled/wordpress-social-login#whats-new-on-wsl-223</a>.</p></div>' )
+	$('#content').prepend( '<div class="alert alert-warning"><h4 style="border: 0px none;">Information:</h4><p style="line-height: 24px;">This documentation has been updated to reflect the latest changes on the coming release <b>2.2.3</b> and things are siltly different from the current version <b>2.2.2</b>.<br />For more information, refer to <a href="https://github.com/miled/wordpress-social-login#whats-new-on-wsl-223" target="_blank">https://github.com/miled/wordpress-social-login#whats-new-on-wsl-223</a>.</p></div>' ) 
+	
+	return
+	
+	window.addEventListener("scroll", function() {
+		if ( window.scrollY > 500 ) {
+			$('.navbar').css( 'opacity', 0.8 )
+		}
+		else {
+			$('.navbar').css( 'opacity', 1 )
+		}
+	},false)
 })

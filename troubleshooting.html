@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Troubleshooting - WordPress Social Login</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
+	<link href="assets/css/style.css" rel="stylesheet">   
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="assets/js/prettify.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</head>
+<body id="documentation">
+	<header>
+		<nav class="navbar navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./index.html">WordPress Social Login</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right"> 
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li style="margin-right:10px">
+						<form action="./search.html" method="get">
+							<input type="text" name="q" class="search-input" placeholder="Search">
+						</form>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+ 
+	<div id="content" class="container container-documentation">
+		<div class="block row">
+			<div class="col col-md-12">
+
+<h1>Common issues <small>Troubleshooting</small></h1>
+
+<p>
+	<b>First thing to do</b> when you have an issue with the plugin is to always run <b>WordPress Social Login Diagnostics</b>. WSL Diagnostics is small tool that check for the common issues and for the minimum system requirements.
+</p>
+
+<div style="text-align: center;"><img style="width:650px;" src="assets/img/tools_diagnostics.png" ></div>
+<br />
+
+<p>
+	If WordPress Social Login Diagnostics didn't detect any issue, yet the plugin still not working, then here you may find a list of the common issues some users have experienced and how to solve them.
+</p>
+
+<p>
+	<span class="label label-warning">Head-up</span> This guide may get technical at some points. Unless you feel comfortable editing scripts, please avoid that. When in doubt, ask your web host for assistance.
+</p>
+
+<a name="session-error"></a>
+<br />
+<h4>Session Error</h4>
+
+<p>
+	If you did encounter <b>The session identifier is missing</b> or <b>You cannot access this page directly</b>, it means that PHP sessions are not working as expected by WSL on your web server. This issue may have many reasons:
+</p>
+<ol>
+	<li>
+		<p><b>File permissions.<b></p>
+
+		<p>If you see an error <code>"Warning: session_start..."</code> on the top of this page or in the Error log file, then most likely because of a file permissions problem. The solution is to make a trouble ticket with your web host.
+
+		<p>For advanced users: alternatively, you can create the sessions folder in your root directory, then add <code>session_save_path('/path/to/writable/folder')</code> at the top of the following files:</p>
+<pre>
+wp-config.php
+wp-content/plugins/wordpress-social-login/wp-social-login.php
+wp-content/plugins/wordpress-social-login/hybridauth/index.php
+</pre>
+	</li>
+	<li>
+		<p><b>WP Engine hosted site.</b></p>
+		<p>
+			In this case refer this topic: <a href="https://wordpress.org/support/topic/500-internal-server-error-when-redirecting" target="_blank">https://wordpress.org/support/topic/500-internal-server-error-when-redirecting</a>.
+		</p>
+	</li>
+	<li>
+		<p><b>A reverse proxy like Varnish or caching engine is stripping sessions cookies.<b></p>
+		<p>
+			Some web hosts might be using sophisticated caching systems which may prevent WSL from working as expected. The solution is to make a trouble ticket with your web host and ask them to white-list WSL urls
+		</p>
+<pre>
+wp-login.php
+wp-content/plugins/wordpress-social-login/hybridauth/
+</pre>		
+
+		<p>For advanced users who are using Varnish, they may edit their VLC script. (This solution is by <a href="https://wordpress.org/support/topic/varnish-and-wsl-anyone?replies=4#post-4834572" target="_blank">Boris Kuzmanovic</a>).</p>
+<pre>
+# Do not cache WSL endpoints urls
+if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>){
+	return (pass);
+}
+</pre>
+	</li>
+	<li>
+		<p><b>Your web host have purposely disabled PHP's SESSION.</b></p>
+		<p>
+			Some web hosts may disabled PHP's SESSION on purpose. First you need to check if PHP sessions are included into your web hosting plan or basic features, if not, make a trouble ticket with your web host customer support.
+		</p>
+	</li>
+	<li>
+		<p><b>PHP's SESSION have been renamed.<b></p>
+		<p>This one is the least probable one and the hardest to tell unless for someone who know his ways with a web server. It's just listed here, so you know.</p>
+	</li>
+	
+</ol>
+
+<a name="authentication-display"></a>
+<br />
+<h4>When I click on the icons nothing happen.</h4>
+
+<p>
+	Most likely an issue with Javascript. 
+</p>
+<p>
+	Goto <b>Widget &gt; Advanced Settings</b> and change <b>"Authentication display"</b> to <b>"In Page"</b>. 
+</p>
+
+<a name="infinite-loop"></a>
+<br />
+<h4>I'm having an infinite loop of redirection when using the popup for authentication</h4>
+
+<p>
+	This can be caused when <strong>"PHP Register Globals"</strong> are <b>On</b>.
+</p>
+<p>
+	The solution is to make a trouble ticket with your web host to disable it, or, if you have a dedicated server and you know what are you doing then edit php.ini file and turn it Off.
+</p>
+
+<a name="white-error-page"></a>
+<br />
+<h4>After I authenticate with a social network I'm redirected to White Page, or an Error Page.</h4>
+
+<p>
+	While Error Pages may advertise what the error might be, White Pages are no fun, simply because they tell absolutely nothing.
+</p>
+
+<p>
+	First thing to do when you are redirected to a white page, is to check for the HTTP Error you are getting. (In case you are using Google Chrome on Windows, you may hit F15, select Network tab, then hit F5). Once you get the HTTP Error Code, continue reading this guide to know what the error mean and how you may solve it.
+</p>
+
+<div style="text-align: center;"><img src="assets/img/500.png" ></div>
+<br /> 
+
+<a name="http-40x"></a>
+<br />
+<h4>404, or 403 HTTP Error.</h4>
+
+<p>This issue usually happen when :</p>
+
+<ol> 
+<li><p>Your web host uses <b>mod_security</b> to block requests containing URLs (eg. hosts like HostGator, GoDaddy and The Planet).</p></li>
+<li><p>There is a <b>.htaccess</b> file who prevent direct access to the WordPress plugins directory.</p>
+</li>
+</ol>
+<p>In any of these two cases, WSL requires this url to be white-listed:</p>
+<pre>
+wp-content/plugins/wordpress-social-login/hybridauth/
+</pre>
+
+<a name="http-500"></a>			
+<br />
+<h4>500 HTTP Error.</h4>
+
+<p>
+	500 Internal Server Error is a GENERIC error message, given when an unexpected condition was encountered. This error is mostly caused by a PHP error in the code and to be able to fix the issue causing the internal server error, we MUST know the REAL error message, which is usually stored on an error log file on your web server, otherwise we will be left in the dark about the problem you having. 
+</p>
+
+<p>
+	If you don't know how to get to your web server error log, or if you are not familiar with the process, then refer to this blog post by Wpmudev.org.
+</p>
+
+<ol>
+	<li><a target="_blank" href="http://premium.wpmudev.org/blog/your-complete-guide-to-troubleshooting-wordpress/#ftp">Finding Your Error Logs via FTP</a></li>
+	<li><a target="_blank" href="http://premium.wpmudev.org/blog/your-complete-guide-to-troubleshooting-wordpress/#plesk">Finding Your Error Logs in Plesk</a></li>
+	<li><a target="_blank" href="http://premium.wpmudev.org/blog/your-complete-guide-to-troubleshooting-wordpress/#cpanel">Finding Your Error Logs in CPanel</a>, or watch this <a target="_blank" href="https://www.youtube.com/watch?v=pzO1UNHZjZo">Video</a>.</li>
+</ol>
+				
+<br />
+<h4>406, 412, or 410 HTTP Error.</h4>
+
+<p>
+	These are errors generated by WSL. To each one it's technical meaning, but basically they are all related to PHP sessions (see Session Error, above).
+</p>
+
+<a name="http-200"></a>
+<br />
+<h4>200. Thanks for stopping by!</h4>
+
+<p>
+	"200. Thanks for stopping by!" is not an issue. This message shows up when a user attempt to directly access WSL endopint-url without going through the authentication Widget.
+</p>
+
+<p>
+	WSL endpoint urls, are not supposed to be accessed directly by users nor by web crawlers.
+</p>
+ 
+
+				<br />
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row"> 
+				<ul>
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
+				</ul> 
+				<span class="pull-right footer-extra-info">Generated on November 1, 2014</span>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-56230142-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+</body>
+</html>
