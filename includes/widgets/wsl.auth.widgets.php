@@ -289,12 +289,12 @@ do_action( 'wsl_render_login_form_end' );
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_action
 */
-function wsl_wordpress_social_login_action( $args = array() )
+function wsl_action_wordpress_social_login( $args = array() )
 {
 	echo wsl_render_auth_widget( $args );
 }
 
-add_action( 'wordpress_social_login', 'wsl_wordpress_social_login_action' );
+add_action( 'wordpress_social_login', 'wsl_action_wordpress_social_login' );
 
 // --------------------------------------------------------------------
 
@@ -308,7 +308,7 @@ add_action( 'wordpress_social_login', 'wsl_wordpress_social_login_action' );
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
 */
-function wsl_wordpress_social_login_shortcode( $args = array(), $content = null )
+function wsl_shortcode_wordpress_social_login( $args = array(), $content = null )
 {
 	$restrict_content = isset( $args['restrict_content'] ) && $args['restrict_content'] ? true : false;
 
@@ -325,7 +325,7 @@ function wsl_wordpress_social_login_shortcode( $args = array(), $content = null 
 	return wsl_render_auth_widget( $args );
 }
 
-add_shortcode( 'wordpress_social_login', 'wsl_wordpress_social_login_shortcode' );
+add_shortcode( 'wordpress_social_login', 'wsl_shortcode_wordpress_social_login' );
 
 // --------------------------------------------------------------------
 
@@ -344,7 +344,7 @@ add_shortcode( 'wordpress_social_login', 'wsl_wordpress_social_login_shortcode' 
 *        css_class="my_style_is_better"
 *   ]
 */
-function wordpress_social_login_meta_shortcode( $args = array() )
+function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 {
 	// wordpress user id default to current user connected
 	$user_id = isset( $args['user_id'] ) && $args['user_id'] ? $args['user_id'] : get_current_user_id();
@@ -439,7 +439,7 @@ function wordpress_social_login_meta_shortcode( $args = array() )
 	return $return;
 }
 
-add_shortcode( 'wordpress_social_login_meta', 'wordpress_social_login_meta_shortcode' );
+add_shortcode( 'wordpress_social_login_meta', 'wsl_shortcode_wordpress_social_login_meta' );
 
 // --------------------------------------------------------------------
 
@@ -514,7 +514,7 @@ function wsl_add_stylesheets()
 {
 	if( ! wp_style_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/widget.css" ); 
+		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
 	}
 
 	wp_enqueue_style( "wsl-widget" ); 

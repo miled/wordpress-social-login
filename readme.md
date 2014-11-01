@@ -30,6 +30,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 * WSL is now compatible with PHP 5.2 again.
 * WSL is now compatible with WordPress 3.0+ again.
+* WSL now display social apis errors when authentication fails.
 * WSL now support authentications through Dribbble.com.
 * Steam provider has been entirely reworked and now fully support the new Web API.
 * Steam users IDs is now converted to SteamID64 rather than http://steamcommunity.com/openid/id/{USER_STEAMID64}.

@@ -149,7 +149,7 @@ function wsl_admin_ui_header( $wslp = null )
 					</p>
 					<p>
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#dev-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
-						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/devmode.html" target="_blank"><?php _wsl_e('Read about the development mode', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank"><?php _wsl_e('Read about the development mode', 'wordpress-social-login') ?></a>
 					</p>
 				</div>
 			<?php
@@ -165,7 +165,7 @@ function wsl_admin_ui_header( $wslp = null )
 					<p>
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#debug-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=watchdog"><?php _wsl_e('View WSL logs', 'wordpress-social-login') ?></a>
-						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/debugmode.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
 					</p>
 				</div>
 			<?php

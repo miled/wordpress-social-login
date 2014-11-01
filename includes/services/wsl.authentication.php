@@ -38,9 +38,10 @@
 *     .       .       .       wsl_render_return_from_provider_loading_screen()
 *     .       .
 *     .       .       wsl_process_login_end()
-*     .       .       .       wsl_process_login_end_get_user_data()
+*     .       .       .       wsl_process_login_get_user_data()
 *     .       .       .       .       wsl_process_login_request_user_social_profile()
 *     .       .       .       .       .       Hybrid_Auth::getUserProfile()
+*     .       .       .       .
 *     .       .       .       .       wsl_process_login_complete_registration()
 *     .       .       .
 *     .       .       .       wsl_process_login_create_wp_user()
@@ -327,7 +328,7 @@ function wsl_process_login_end()
 			$request_user_login     ,
 			$request_user_email     ,
 		)
-		= wsl_process_login_end_get_user_data( $provider, $redirect_to );
+		= wsl_process_login_get_user_data( $provider, $redirect_to );
 
 		// if no associated user were found in wslusersprofiles, create new WordPress user
 		if( ! $user_id )
@@ -368,10 +369,10 @@ function wsl_process_login_end()
 *    4. Deletegate detection of user id to custom functions / hooks
 *    5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) 
 */
-function wsl_process_login_end_get_user_data( $provider, $redirect_to )
+function wsl_process_login_get_user_data( $provider, $redirect_to )
 {
 	// HOOKABLE:
-	do_action( "wsl_process_login_end_get_user_data_start", $provider, $redirect_to );
+	do_action( "wsl_process_login_get_user_data_start", $provider, $redirect_to );
 
 	$user_id                  = null;
 	$config                   = null;

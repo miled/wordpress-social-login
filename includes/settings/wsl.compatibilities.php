@@ -179,9 +179,46 @@ function wsl_check_compatibilities()
 
 	# migrate steam users id to id64. Prior to 2.2
 	$sql = "UPDATE {$wpdb->prefix}wslusersprofiles
-			SET identifier = REPLACE( identifier, 'http://steamcommunity.com/openid/id/', '' )
-			WHERE provider = 'Steam' AND identifier like 'http://steamcommunity.com/openid/id/%' ";
+		SET identifier = REPLACE( identifier, 'http://steamcommunity.com/openid/id/', '' )
+		WHERE provider = 'Steam' AND identifier like 'http://steamcommunity.com/openid/id/%' ";
 	$wpdb->query( $sql );
+}
+
+// --------------------------------------------------------------------
+
+/**
+* Old junk
+*
+* Seems like some people are using WSL _internal_ functions for some reason...
+*
+* Here we keep few of those old/depreciated/undocumented/internal functions, so their websites doesn't break when updating to newer versions
+*
+* TO BE REMOVED AS OF WSL 3.0
+*/
+
+// 2.1.6
+function wsl_render_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); return wsl_render_auth_widget(); }
+function wsl_render_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_render_login_form_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_render_login_form_login_on_register_and_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_render_login_form_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_shortcode_handler(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); return wsl_render_auth_widget(); }
+
+// 2.2.2
+function wsl_render_wsl_widget_in_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_render_wsl_widget_in_wp_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_render_wsl_widget_in_wp_register_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
+function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_get_wp_user_custom_avatar' ); return wsl_get_wp_user_custom_avatar($html, $mixed, $size, $default, $alt); }
+function wsl_bp_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_get_bp_user_custom_avatar' ); return wsl_get_bp_user_custom_avatar($html, $args); }
+
+// nag about it
+function wsl_deprecated_function( $function, $version, $replacement )
+{
+	// user should be admin and logged in
+	if( current_user_can('manage_options') )
+	{
+		trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since WordPress Social Login %2$s! Use %3$s instead. For more information, check WSL Developer API.'), $function, $version, $replacement ), E_USER_NOTICE );
+	}
 }
 
 // --------------------------------------------------------------------

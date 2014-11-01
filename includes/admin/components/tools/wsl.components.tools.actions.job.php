@@ -89,13 +89,13 @@ function wsl_component_tools_do_diagnostics()
 									<p>
 										2. When using a reverse proxy like Varnish or a caching engine that might strip cookies. On this case, WSL will requires these two urls to be white-listed:
 									</p>
-									<p>
+									<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php
 											echo '<a href="' . site_url( 'wp-login.php', 'login_post' ) . '" target="_blank">' . site_url( 'wp-login.php', 'login_post' ) . '</a>';
 											echo '<br />';
 											echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
 										?>
-									</p>
+									</div>
 								</div>
 								<?php
 							}
@@ -105,16 +105,16 @@ function wsl_component_tools_do_diagnostics()
 							<hr />
 							<h4>Notes:</h4>
 							<p>
-								1. If you're hosting your website on <b>WP Engine</b>, please refer this topic: <a href="https://wordpress.org/support/topic/500-internal-server-error-when-redirecting" target="_blank">https://wordpress.org/support/topic/500-internal-server-error-when-redirecting</a>
+								1. If you're hosting your website on <b>WP Engine</b>, refer this topic: <a href="https://wordpress.org/support/topic/500-internal-server-error-when-redirecting" target="_blank">https://wordpress.org/support/topic/500-internal-server-error-when-redirecting</a>
 							</p> 
 							<p>2. In case you're using a reverse proxy like Varnish or a caching engine that might strip cookies, WSL will requires these two urls to be white-listed:</p>
-							<p>
-							<?php
-								echo '<a href="' . site_url( 'wp-login.php', 'login_post' ) . '" target="_blank">' . site_url( 'wp-login.php', 'login_post' ) . '</a>';
-								echo '<br />';
-								echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
-							?>
-							</p>
+							<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+								<?php
+									echo '<a href="' . site_url( 'wp-login.php', 'login_post' ) . '" target="_blank">' . site_url( 'wp-login.php', 'login_post' ) . '</a>';
+									echo '<br />';
+									echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
+								?>
+							</div>
 						<?php
 							}
 						?>
@@ -224,49 +224,52 @@ function wsl_component_tools_do_diagnostics()
 					<td>
 						<p>Check if WSL end-points urls are reachable.</p>
 
-						<div id="mod_security_warn" class="fade error" style="margin: 20px  0;display:none;">
-							<p><b>Error</b>: WSL end-points urls are not reachable.</p>
+						<div id="end_points_warn" class="fade error" style="margin: 20px  0;display:none;">
+							<p><b>Error</b>: Your web server returned <span id="end_points_error"></span> when checking WSL end-points.</p>
+
 							<p>This issue usually happen when :</p>
 							<p>1. Your web host uses <code>mod_security</code> to block requests containing URLs (eg. hosts like HostGator, GoDaddy and The Planet). On this case, you should contact your provider to have WSL end-points urls white-listed.</p>
 							<p>2. There is a <code>.htaccess</code> file that prevent direct access to the WordPress plugins directory.</p>
 
-							<p>In any of these cases, WSL will requires these two urls to be white-listed:</p>
+							<p>In any case, WSL requires this url to be white-listed:</p>
 
-							<p>
-								<?php
-									echo '<a href="' . site_url( 'wp-login.php', 'login_post' ) . '" target="_blank">' . site_url( 'wp-login.php', 'login_post' ) . '</a>';
-									echo '<br />';
+							<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+								<?php 
 									echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
 								?>
-							</p>
+							</div> 
 						</div>
 
-						<div id="mod_security_note">
+						<div id="end_points_note" style="margin: 20px  0;">
 							<hr />
 
-							<p><b>Note</b>: In case you're using <code>mod_security</code> to block requests containing URLs or a <code>.htaccess</code> file to protect the WordPress plugins directory, WSL will requires these two urls to be white-listed:</p>
+							<p><b>Note</b>: In case you're using <code>mod_security</code> to block requests containing URLs or a <code>.htaccess</code> file to protect the WordPress plugins directory, WSL will requires this url to be white-listed:</p>
 
-							<?php
-								echo '<a href="' . site_url( 'wp-login.php', 'login_post' ) . '" target="_blank">' . site_url( 'wp-login.php', 'login_post' ) . '</a>';
-								echo '<br />';
-								echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
-							?>
+							<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
+								<?php
+									echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
+								?>
+							</div> 
 						</div>
+
+						<p>You may double-check this test manually by clicking this <a href="<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>?test=http://example.com" target="_blank">direct link</a>.</p>
 					</td>
 					<td width="60">
-						<span id="mod_security">testing..</span>
+						<span id="end_points">testing..</span>
 						<script>
 							jQuery(document).ready(function($) {
 								jQuery.ajax({
 									url: '<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>',
 									data: 'url=http://example.com',
 									success: function () {
-										jQuery('#mod_security').html( '<b style="color:green;">OK!</b>' );
+										jQuery('#end_points').html( '<b style="color:green;">OK!</b>' );
 									},
 									error: function (xhr, ajaxOptions, thrownError) {
-										jQuery('#mod_security').html( '<b style="color:red;">FAIL!</b>' );
-										jQuery('#mod_security_warn').show();
-										jQuery('#mod_security_note').hide();
+										// console.log( xhr );
+										jQuery('#end_points_error').html( '"<b style="color:red;">' + xhr.status + ' ' + xhr.statusText + '</b>"' );
+										jQuery('#end_points').html( '<b style="color:red;">FAIL!</b>' );
+										jQuery('#end_points_warn').show();
+										jQuery('#end_points_note').hide();
 									}
 								});
 							});
@@ -328,8 +331,8 @@ function wsl_component_tools_do_diagnostics()
 							{
 								?>
 									<div class="fade error" style="margin: 20px  0;"> 
-										<p><b>Error:</b> Hybridauth Library is in use.</p>
-										<p>This MAY prevent WSL from working.</p>
+										<p>Hybridauth Library is auto-included by another plugin.</p>
+										<p>This is not critical but it may prevent WSL from working.</p>
 										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Hybridauth Library only when required.</p> 
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'Hybrid_Auth' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
@@ -347,7 +350,7 @@ function wsl_component_tools_do_diagnostics()
 							}
 							else
 							{
-								echo "<b style='color:red;'>FAIL!</b>";
+								echo "<b style='color:orange;'>PASS</b>";
 							}
 						?>
 					</td>
@@ -367,8 +370,8 @@ function wsl_component_tools_do_diagnostics()
 							{
 								?>
 									<div class="fade error" style="margin: 20px  0;"> 
-										<p><b>Error:</b> OAUTH Library is in use.</p>
-										<p>This will prevent Twitter, LinkedIn and few other providers from working.</p>
+										<p>OAUTH Library is auto-included by another plugin.</p>
+										<p>This is not critical but it may prevent Twitter, LinkedIn and few other providers from working.</p>
 										<p>Please, inform the developer of that plugin not to auto-include the file below and to use OAUTH Library only when required.</p> 
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'OAuthConsumer' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
@@ -386,7 +389,7 @@ function wsl_component_tools_do_diagnostics()
 							}
 							else
 							{
-								echo "<b style='color:red;'>FAIL!</b>";
+								echo "<b style='color:orange;'>PASS</b>";
 							}
 						?>
 					</td>
@@ -406,7 +409,7 @@ function wsl_component_tools_do_diagnostics()
 							{
 								?>
 									<div class="fade error" style="margin: 20px  0;"> 
-										<p><b>Error:</b> Facebook SDK is in use.</p>
+										<p><b>Error:</b> Facebook SDK is auto-included by another plugin.</p>
 										<p>This will prevent Facebook from working.</p>
 										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Facebook SDK only when required.</p> 
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
@@ -445,8 +448,8 @@ function wsl_component_tools_do_diagnostics()
 							{
 								?>
 									<div class="fade error" style="margin: 20px  0;"> 
-										<p><b>Error:</b> Class LightOpenID is in use.</p>
-										<p>This will prevent Yahoo, Steam, and few other providers from working.</p>
+										<p>Class LightOpenID is auto-included by another plugin.</p>
+										<p>This is not critical but it may prevent Yahoo, Steam, and few other providers from working.</p>
 										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Class LightOpenID only when required.</p> 
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'LightOpenID' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
@@ -464,7 +467,7 @@ function wsl_component_tools_do_diagnostics()
 							}
 							else
 							{
-								echo "<b style='color:red;'>FAIL!</b>";
+								echo "<b style='color:orange;'>PASS</b>";
 							}
 						?>
 					</td>
@@ -560,7 +563,21 @@ function wsl_component_tools_do_diagnostics()
 					$test = true;
 					$used = array();
 
-					$depreciated = array( 'wsl_hook_process_login_alter_userdata', 'wsl_hook_process_login_before_insert_user', 'wsl_hook_process_login_after_create_wp_user', 'wsl_hook_process_login_before_set_auth_cookie', 'wsl_hook_process_login_before_redirect' );
+					$depreciated = array( 
+					// auth
+						'wsl_hook_process_login_alter_userdata', 
+						'wsl_hook_process_login_before_insert_user', 
+						'wsl_hook_process_login_after_create_wp_user', 
+						'wsl_hook_process_login_before_set_auth_cookie', 
+						'wsl_hook_process_login_before_redirect',
+
+					// widget
+						'wsl_render_login_form_start',
+						'wsl_alter_hook_provider_icon_markup',
+						'wsl_render_login_form_alter_provider_icon_markup',
+						'wsl_render_login_form_end',
+					);
+
 					foreach( $depreciated as $v )
 					{
 						if( has_filter( $v ) || has_action( $v ) )
@@ -605,7 +622,7 @@ function wsl_component_tools_do_diagnostics()
 
 				<?php
 					$itsec_tweaks = get_option( 'itsec_tweaks' );
-					
+
 					$test = $itsec_tweaks && $itsec_tweaks['long_url_strings'] ? false : true;
 				?> 				
 				<tr>

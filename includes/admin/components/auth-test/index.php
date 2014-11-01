@@ -233,7 +233,7 @@ function wsl_component_authtest()
 								</h3>
 								<div class="inside"> 
 <textarea rows="25" cols="70" wrap="off" style="width:100%;height:210px;margin-bottom:15px;font-family: monospace;font-size: 12px;"
->include( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+>include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php';
 
 try
 {

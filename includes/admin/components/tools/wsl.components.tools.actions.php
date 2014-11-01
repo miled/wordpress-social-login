@@ -136,7 +136,7 @@ function wsl_component_tools_debug_mode()
 		</p>
 
 		<p>
-			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/debugmode.html" target="_blank">Debug Mode</a>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Debug Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
 		<form method="post" id="wsl_setup_form" action="options.php">  
@@ -188,7 +188,7 @@ function wsl_component_tools_development_mode()
 		</p>
 
 		<p>
-			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/devmode.html" target="_blank">Development Mode</a>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Development Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
 		<form method="post" id="wsl_setup_form" action="options.php" <?php if( ! $wsl_settings_development_mode_enabled ) { ?>onsubmit="return confirm('Do you really want to enable Development Mode?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"<?php } ?>>  

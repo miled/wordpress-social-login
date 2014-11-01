@@ -33,7 +33,7 @@ Domain Path: /languages
 *  Coding Style :
 *
 *   - Readable code.
-*   - Clear indentations (4 chars).
+*   - Clear indentations (tabs: 8-char indents).
 *   - Same name convention of WordPress: those long long and self-explanatory functions and variables.
 *
 *  To keep the code accessible to everyone and easy to maintain, WordPress Social Login is programmed in

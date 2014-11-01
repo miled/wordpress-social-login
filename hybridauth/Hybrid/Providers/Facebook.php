@@ -26,11 +26,14 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 			throw new Exception( "Your application id and secret are required in order to connect to {$this->providerId}.", 4 );
 		}
 
-		if ( ! class_exists('FacebookApiException', false) ) {
-			require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/base_facebook.php";
-			require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/facebook.php";
+		// Need to override package version
+		if( class_exists('BaseFacebook', false ) && ! defined( 'GRAPH_API_VERSION' ) ){
+			throw new Exception( "Confilict detected. Facebook SDK is already loaded by another package. Initializatino failed, exit." );
 		}
-		
+
+		require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/base_facebook.php";
+		require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/facebook.php";
+
 		if ( isset ( Hybrid_Auth::$config["proxy"] ) ) {
 			BaseFacebook::$CURL_OPTS[CURLOPT_PROXY] = Hybrid_Auth::$config["proxy"];
 		}

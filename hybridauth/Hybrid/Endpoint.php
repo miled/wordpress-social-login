@@ -149,6 +149,11 @@ class Hybrid_Endpoint {
 
 		$provider_id = trim( strip_tags( Hybrid_Endpoint::$request["hauth_done"] ) );
 
+		# check if page accessed directly
+		if( ! Hybrid_Auth::storage()->get( "hauth_session.$provider_id.hauth_endpoint" ) ) {
+			throw new Hybrid_Exception( "You cannot access this page directly." );
+		}
+
 		$hauth = Hybrid_Auth::setup( $provider_id );
 
 		if( ! $hauth ) {
