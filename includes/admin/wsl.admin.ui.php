@@ -385,6 +385,7 @@ function wsl_admin_welcome_panel()
 					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/networks.html" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/widget.html" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/userdata.html" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
+					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank">WSL Developer API</a>', 'wordpress-social-login') ?></li> 
 				</ul>
 			</td>
 			<td width="" valign="top">
@@ -400,6 +401,7 @@ function wsl_admin_welcome_panel()
 					<li><?php _wsl_e('Profile completion form has received a visual update', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('Bouncer Membership level can be now set to any user role', 'wordpress-social-login') ?>.</li>
 					<li><?php _wsl_e('WSL now provide an <a href="http://miled.github.io/wordpress-social-login/developer-api-apis.html" target="_blank">easier access</a> to social networks apis', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('Fix several stability issues', 'wordpress-social-login') ?>.</li>
 				</ul>
 			</td>
 		</tr>

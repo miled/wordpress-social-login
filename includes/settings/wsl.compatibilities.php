@@ -78,19 +78,9 @@ function wsl_check_compatibilities()
 		update_option( 'wsl_settings_bouncer_authentication_enabled', 1 );
 	}
 
-	if( get_option( 'wsl_settings_bouncer_email_validation_enabled' ) == 1 )
-	{ 
-		update_option( 'wsl_settings_bouncer_profile_completion_require_email', 1 );
-	}
-
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) )
 	{ 
 		update_option( 'wsl_settings_bouncer_profile_completion_require_email', 2 );
-	}
-
-	if( ! get_option( 'wsl_settings_bouncer_profile_completion_change_email' ) )
-	{ 
-		update_option( 'wsl_settings_bouncer_profile_completion_change_email', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) )
@@ -155,23 +145,23 @@ function wsl_check_compatibilities()
 	}
 
 	if( ! get_option( 'wsl_settings_contacts_import_live' ) )
-	{ 
+	{
 		update_option( 'wsl_settings_contacts_import_live', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_contacts_import_linkedin' ) )
-	{ 
+	{
 		update_option( 'wsl_settings_contacts_import_linkedin', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_buddypress_enable_mapping' ) )
-	{ 
+	{
 		update_option( 'wsl_settings_buddypress_enable_mapping', 2 );
 	}
 
 	# buddypress profile mapping
 	if( ! get_option( 'wsl_settings_buddypress_xprofile_map' ) )
-	{ 
+	{
 		update_option( 'wsl_settings_buddypress_xprofile_map', '' );
 	}
 
@@ -191,7 +181,8 @@ function wsl_check_compatibilities()
 *
 * Seems like some people are using WSL _internal_ functions for some reason...
 *
-* Here we keep few of those old/depreciated/undocumented/internal functions, so their websites doesn't break when updating to newer versions
+* Here we keep few of those old/depreciated/undocumented/internal functions, so their websites
+* doesn't break when updating to newer versions.
 *
 * TO BE REMOVED AS OF WSL 3.0
 */

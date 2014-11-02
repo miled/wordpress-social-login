@@ -1,6 +1,6 @@
 === WordPress Social Login ===
 Contributors: miled
-Tags: login, comment, social networks, social login, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, twitch.tv
+Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
 Stable tag: 2.2.3
@@ -76,35 +76,82 @@ The user guide and frequently asked questions can be found at http://miled.githu
 
 = 2.2.3 = 
 
+WSL 2.2.3 fixes a critical issue found on WSL 2.2.2 that could potentially allow multiple accounts and prevent contacts import. We recommend that users upgrade to this latest version.
+
+WSL 2.2.3 also include a number of new features, and fixes several stability issues. See below for details.
+
+<strong>Developers Release Notes</strong>
+
+> These release notes are aimed at developers.
+
+This release did focus on code health and flexibility and it was necessary to move some code around, and to remove few functions and hooks. We know, it sucks to break WSL API at such short notice, but it was indispensable and unavoidable as we're trying to move the project forward.
+
+As announced on WSL Support Forum, this is by no means a drastic change to the API. In fact, we tried our best to keep the said changes to a strict minimum, and the wide majority of WSL users will not be affected.
+
+Those breaking changes are:
+
+* Deprecated hooks, prior to 2.2.2, have been removed.
+* Deprecated css selectors, prior to 2.2.2, have been removed.
+* Deprecated internal functions have been removed.
+* Few internal functions have been either removed, renamed or slightly changed.
+* Few pluggable functions has slightly changed.
+* Steam's users identifiers are converted to a new format.
+
+We also reworked WSL documentation. Please update the WSL hooks you were using accordingly to the new developer API:
+
+http://miled.github.io/wordpress-social-login/developer-api-authentication.html
+http://miled.github.io/wordpress-social-login/developer-api-widget.html
+http://miled.github.io/wordpress-social-login/developer-api-functions.html
+
+On this release we have reworked Steam provider to fully support their new Web API, and we decided to change Steam's users identifiers to SteamID64. When updated, WSL 2.2.3 will automatically convert all the existing steam users identifiers in wslusersprofiles to the new format.
+
+It's worth mentioning that in upcoming releases and before we hit WSL 3.0, we're planning to rework other parts of the codebase; for instance user database functions will be re-factored using an ORM, and profile completion will be replaced by new module.
+
+We explicitly discourage you from using, or hacking, any internal function (i.e., Not publicly documented on WSL dev API), as they are now subject to change in subsequent releases. If it wasn't possible to achieve some required functionality in a proper way through the already available and documented WSL hooks, please ask for support before resorting to hacks.
+
+Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintenance and stability (i.e, repair code health, enhance code coverage) rather than developing new features. This massive rewrite aims to make WSL more modular easily extended through plugins and add-ons (e.g., http://miled.github.io/wsl-users-converter/).
+
+<strong>List of changes</strong>
+
 * WSL is now compatible with PHP 5.2 again.
 * WSL is now compatible with WordPress 3.0+ again.
 * WSL now display social apis errors when authentication fails.
 * WSL now support authentications through Dribbble.com.
 * Steam provider has been entirely reworked and now fully support the new Web API.
 * Steam users IDs is now converted to SteamID64 rather than http://steamcommunity.com/openid/id/{USER_STEAMID64}.
-* LinkedIn provider has been enhanced. WSL can now get the full LinkedIn's members avatars and headline.
-* WSL can now import users contacts from Vkontakte.
-* WSL admin interfaces have been reworked and can be now extended with hooks.
+* LinkedIn provider has been enhanced. WSL can now get the full LinkedIn's members avatars and headline (fix).
+* Changed facebook api endpoints to graph api v2.0
+* WSL can now import users contacts from vkontakte.
 * Profile completion form has received a visual update.
-* Bouncer Membership level can be now set to any user role.
 * WSL now provide an easier access to social networks apis.
 * WSL now trigger WordPress do_login action hooks whenever a user connect.
 * Authentication display now fall back to In Page when WSL is used on a mobile device.
+* WSL admin interfaces have been reworked and can be now extended with hooks.
+* Bouncer Membership level can be now set to any user role.
 * WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
-* Added new tool "Repair WSL tables".
-* Added Debug mode.
-* Added Authentication Playground.
+* Added "Repair WSL tables" under Tools tab.
+* Added "Debug mode" under Tools tab (namely whatchdog).
+* Added "Authentication Playground" under Tools tab (namely auth-test).
+* Added "Uninstall" under Tools tab.
 * Added new hooks in the authentication widget and auth process.
-* Function wsl_render_login_form() renamed to wsl_render_auth_widget()
+* Deprecated hooks, prior to 2.2.2, have been removed.
+* Deprecated internal functions have been removed.
+* Deprecated css selectors, in wsl widget, have been removed.
 * PHP file wsl.auth.widget.php renamed to wsl.auth.widgets.php
-* Css file style.css renamed to widget.css
-* Depreciated hooks from versions prior 2.2.2 has been removed.
+* Function wsl_render_login_form() renamed to wsl_render_auth_widget()
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
-* Changed facebook api endpoints to v2.0
 * wsl_render_notice_page and wsl_render_error_page has slightly changed.
+* Updated the API documentation for WSL authentication process
+* Updated the API documentation for WSL widget generator
+* Updated the API documentation for pluggable WSL functions 
+* Added a list of code snippets to WSL documentation
+* Added documentation for social apis access (through php code)
+* Added documentation for basic troubleshooting (common issues)
+* Added documentation for advanced troubleshooting (internal tools)
+* Fix a critical issue found on WSL 2.2.2 with wslusersprofiles.
 * Fix an issue where redirect_to get overwritten in some cases.
-* Fix an issue with redirect_to where the call back url is encoded twice.
-* Minor bugfixes
+* Fix an issue with redirect_to where the callback url was encoded twice.
+* Fix several stability issues.
 
 = 2.2.2 = 
 

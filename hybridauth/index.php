@@ -11,7 +11,7 @@
 // ------------------------------------------------------------------------
 
 /**
-* If for some reason you want to debug apis call made by hybridauth during the auth process, you can add the block of code below.
+* If for whatever reason you want to debug apis call made by hybridauth during the auth process, you can add the block of code below.
 *
 * <code>
 *    include_once( '/path/to/file/wp-load.php' );

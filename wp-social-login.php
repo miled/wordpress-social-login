@@ -42,7 +42,10 @@ Domain Path: /languages
 *  If you have fixed, improved or translated something in WSL, Please consider contributing back to the project
 *  by submitting a Pull Request at https://github.com/miled/wordpress-social-login
 *
-*  If you are here just looking for the hooks, then refer to the online Developer API
+*  Grep's user, read below. Keywords stuffing:<has_action|add_action|do_action|has_filter|add_filter|apply_filters>
+*  If you are here just looking for the hooks, then refer to the online Developer API. If it wasn't possible to
+*  achieve some required functionality in a proper way through the already available and documented WSL hooks,
+*  please ask for support before resorting to hacks. WSL internals are not to be used.
 *  http://miled.github.io/wordpress-social-login/documentation.html
 *
 *  If you want to translate this plugin into your language (or to improve the current translations), see

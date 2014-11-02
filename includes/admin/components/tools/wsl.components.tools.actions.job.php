@@ -689,7 +689,6 @@ function wsl_component_tools_do_sysinfo()
 			<ul style="padding-left:15px;">
 				<li>Please include this information when posting support requests. It will help me immensely to better understand any issues.</li>
 				<li>These information should be communicated to the plugin developer <b>PRIVATELY VIA EMAIL</b> : Miled &lt;<a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a>&gt;</li>
-				<li>Make sure to check out <b>WSL</b> <a href="http://miled.github.io/wordpress-social-login/faq.html" target="_blank"><b>frequently asked questions</b></a>.</li> 
 			</ul>
 <textarea onclick="this.focus(); this.select()" style="height: 500px;overflow: auto;white-space: pre;width: 100%;font-family: Menlo,Monaco,monospace;">
 # GENERAL

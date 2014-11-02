@@ -43,7 +43,7 @@ function wsl_component_contacts_settings_sidebar_what_is_this()
 
 		<div style="padding:0 20px;">
 			<p>
-				<?php _wsl_e( 'WordPress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn', 'wordpress-social-login') ?>.
+				<?php _wsl_e( 'WordPress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live, LinkedIn  and Vkontakte', 'wordpress-social-login') ?>.
 			</p> 
 
 			<p>
@@ -54,7 +54,7 @@ function wsl_component_contacts_settings_sidebar_what_is_this()
 				<b><?php _wsl_e("Notes", 'wordpress-social-login') ?>:</b> 
 			</p> 
 			
-			<ul style="margin-left:40px;margin-top:0px;">
+			<ul style="margin-left:15px;margin-top:0px;">
 				<li><?php _wsl_e('To enable contacts import from these social network, you need first to enabled them on the <a href="options-general.php?page=wordpress-social-login&wslp=networks"><b>Networks</b></a> tab and register the required application', 'wordpress-social-login') ?>.</li> 
 				<li><?php _wsl_e("<b>WSL</b> will try to import as much information about a user contacts as he was able to pull from the social networks APIs.", 'wordpress-social-login') ?></li> 
 				<li><?php _wsl_e('All contacts data are sotred into your database on the table: <code>`wsluserscontacts`</code>', 'wordpress-social-login') ?>.</li> 

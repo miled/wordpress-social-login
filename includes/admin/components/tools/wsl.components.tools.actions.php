@@ -128,15 +128,19 @@ function wsl_component_tools_debug_mode()
 	</h3>
 	<div class="inside">
 		<p>
-			<?php _wsl_e('The debug mode can be useful when debugging this plugin but note that it is highly technical and not documented. When <b>Debug mode</b> is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em> ', 'wordpress-social-login') ?>.
+			<?php _wsl_e('The <b>Debug mode</b> is an internal development tool built to track every action made by WSL during the authentication proces, which can be useful when debugging this plugin but note that it is highly technical and not documented', 'wordpress-social-login') ?>.
 		</p>
 
 		<p>
-			<?php _wsl_e('It\'s recommended to keep the Debug Mode <b>Disabled</b> as will store unnecessary data on your web server', 'wordpress-social-login') ?>.
+			<?php _wsl_e('When Debug mode is enabled and set to <code>Log actions in a file</code>, WSL will attempt to generate its log files under <em>/wp-content/uploads/wordpress-social-login</em>', 'wordpress-social-login') ?>.
 		</p>
 
 		<p>
-			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Debug Mode</a>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('When Debug mode is enabled and set to <code>Log actions to database</code>, will create a new database table <code>wslwatchdog</code> and insert all actions names and arguments', 'wordpress-social-login') ?>.
+		</p>
+
+		<p>
+			<?php _wsl_e('For more information, refer to WSL documentation under Advanced Troubleshooting &gt; <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Debug Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
 		<form method="post" id="wsl_setup_form" action="options.php">  
@@ -188,7 +192,7 @@ function wsl_component_tools_development_mode()
 		</p>
 
 		<p>
-			<?php _wsl_e('For know more, refer to our online userguide under the section <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Development Mode</a>', 'wordpress-social-login') ?>.
+			<?php _wsl_e('For more information, refer to WSL documentation under Advanced Troubleshooting &gt; <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Development Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
 		<form method="post" id="wsl_setup_form" action="options.php" <?php if( ! $wsl_settings_development_mode_enabled ) { ?>onsubmit="return confirm('Do you really want to enable Development Mode?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"<?php } ?>>  
@@ -217,7 +221,8 @@ function wsl_component_tools_uninstall()
 	</h3>
 	<div class="inside"> 
 		<p>
-			<?php _wsl_e('Thi will permanently delete all Wordpress Social Login tables and stored options from your WordPress database', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('This will permanently delete all Wordpress Social Login tables and stored options from your WordPress database', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('Once you delete WSL database tables and stored options, there is NO going back. Please be certain', 'wordpress-social-login') ?>. 
 		</p>
 
 		<a class="button-danger" href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=uninstall'); ?>" onClick="return confirm('Do you really want to Delete all Wordpress Social Login tables and options?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"><?php _wsl_e("Delete all Wordpress Social Login tables and options", 'wordpress-social-login') ?></a>

@@ -166,7 +166,7 @@ function wsl_process_login_begin()
 	}
 
 	// HOOKABLE: selected provider name
-	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() ) ;
+	$provider = wsl_process_login_get_selected_provider();
 
 	if( ! $provider )
 	{
@@ -261,10 +261,10 @@ function wsl_process_login_end()
 	do_action( "wsl_process_login_end_start" );
 
 	// HOOKABLE: set a custom Redirect URL
-	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', wsl_process_login_get_redirect_to() );
+	$redirect_to = wsl_process_login_get_redirect_to();
 
 	// HOOKABLE: selected provider name
-	$provider = apply_filters( 'wsl_hook_process_login_alter_provider', wsl_process_login_get_selected_provider() );
+	$provider = wsl_process_login_get_selected_provider();
 
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
@@ -274,8 +274,8 @@ function wsl_process_login_end()
 	$adapter                 = ''   ; // hybriauth adapter for the selected provider
 	$hybridauth_user_profile = ''   ; // hybriauth user profile 
 	$hybridauth_user_email   = ''   ; // user email as provided by the provider
-	$request_user_login      = ''   ; // username typed by users in Profile Completion
-	$request_user_email      = ''   ; // email typed by users in Profile Completion
+	$requested_user_login    = ''   ; // username typed by users in Profile Completion
+	$requested_user_email    = ''   ; // email typed by users in Profile Completion
 
 	// provider is enabled?
 	if( ! get_option( 'wsl_settings_' . $provider . '_enabled' ) )
@@ -325,15 +325,15 @@ function wsl_process_login_end()
 			$adapter                ,
 			$hybridauth_user_profile,
 			$hybridauth_user_email  ,
-			$request_user_login     ,
-			$request_user_email     ,
+			$requested_user_login   ,
+			$requested_user_email   ,
 		)
 		= wsl_process_login_get_user_data( $provider, $redirect_to );
 
 		// if no associated user were found in wslusersprofiles, create new WordPress user
 		if( ! $user_id )
 		{
-			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email );
+			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 			$is_new_user = true;
 		}
@@ -379,8 +379,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	$hybridauth               = null;
 	$adapter                  = null;
 	$hybridauth_user_profile  = null;
-	$request_user_login       = '';
-	$request_user_email       = '';
+	$requested_user_login     = '';
+	$requested_user_email     = '';
 
 	/* 1. Grab the user profile from social network */ 
 
@@ -518,8 +518,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 				( 
 					$shall_pass,
 					$user_id,
-					$request_user_login,
-					$request_user_email
+					$requested_user_login,
+					$requested_user_email
 				) 
 				= wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
 			}
@@ -539,8 +539,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 				list
 				( 
 					$shall_pass, 
-					$request_user_login, 
-					$request_user_email 
+					$requested_user_login, 
+					$requested_user_email 
 				)
 				= wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
 			}
@@ -555,8 +555,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		$adapter,
 		$hybridauth_user_profile, 
 		$hybridauth_user_email, 
-		$request_user_login, 
-		$request_user_email, 
+		$requested_user_login, 
+		$requested_user_email, 
 	);
 }
 
@@ -567,23 +567,23 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 *
 * Ref: http://codex.wordpress.org/Function_Reference/wp_insert_user
 */
-function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $request_user_login, $request_user_email )
+function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email )
 {
 	// HOOKABLE:
-	do_action( "wsl_process_login_create_wp_user_start", $provider, $hybridauth_user_profile, $request_user_login, $request_user_email );
+	do_action( "wsl_process_login_create_wp_user_start", $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 	$user_login = '';
 	$user_email = '';
 
 	// if coming from "complete registration form" 
-	if( $request_user_login )
+	if( $requested_user_login )
 	{
-		$user_login = $request_user_login;
+		$user_login = $requested_user_login;
 	}
 
-	if( $request_user_email )
+	if( $requested_user_email )
 	{
-		$user_email = $request_user_email;
+		$user_email = $requested_user_email;
 	}
 
 	if( ! $user_login )
@@ -891,7 +891,7 @@ function wsl_process_login_build_provider_config( $provider )
 	}
 
 	// set custom endpoint?
-	if( in_array( strtolower( $provider ), array( 'live', 'dribbble' ) ) )
+	if( in_array( strtolower( $provider ), array( 'dribbble' ) ) )
 	{
 		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
 	}
@@ -1011,7 +1011,9 @@ function wsl_process_login_get_redirect_to()
 
 	if( get_option( 'wsl_settings_force_redirect_url' ) == 1 )
 	{
-		return $wsl_settings_redirect_url;
+		$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', $wsl_settings_redirect_url );
+
+		return $redirect_to;
 	}
 
 	// get a valid $redirect_to
@@ -1047,6 +1049,8 @@ function wsl_process_login_get_redirect_to()
 	{
 		$redirect_to = site_url();
 	}
+
+	$redirect_to = apply_filters( 'wsl_hook_process_login_alter_redirect_to', $redirect_to );
 
 	return $redirect_to;
 }
@@ -1122,7 +1126,9 @@ function wsl_process_login_render_notice_page( $message )
 */
 function wsl_process_login_get_selected_provider()
 {
-	return ( isset( $_REQUEST["provider"] ) ? sanitize_text_field( $_REQUEST["provider"] ) : null );
+	$provider = isset( $_REQUEST["provider"] ) ? sanitize_text_field( $_REQUEST["provider"] ) : null;
+
+	return apply_filters( 'wsl_hook_process_login_alter_provider', $provider ) ;
 }
 
 // --------------------------------------------------------------------
@@ -1132,7 +1138,9 @@ function wsl_process_login_get_selected_provider()
 */
 function wsl_process_login_get_auth_mode()
 {
-	return ( isset( $_REQUEST["mode"] ) ? sanitize_text_field( $_REQUEST["mode"] ) : 'login' );
+	$auth_mode = isset( $_REQUEST["mode"] ) ? sanitize_text_field( $_REQUEST["mode"] ) : 'login';
+
+	return apply_filters( 'wsl_hook_process_login_alter_auth_mode', $auth_mode ) ;
 }
 
 // --------------------------------------------------------------------
