@@ -51,9 +51,9 @@ Those breaking changes are:
 
 We also reworked WSL documentation. Please update the WSL hooks you were using accordingly to the new developer API:
 
-http://miled.github.io/wordpress-social-login/developer-api-authentication.html
-http://miled.github.io/wordpress-social-login/developer-api-widget.html
-http://miled.github.io/wordpress-social-login/developer-api-functions.html
+* http://miled.github.io/wordpress-social-login/developer-api-authentication.html 
+* http://miled.github.io/wordpress-social-login/developer-api-widget.html 
+* http://miled.github.io/wordpress-social-login/developer-api-functions.html 
 
 On this release we have reworked Steam provider to fully support their new Web API, and we decided to change Steam's users identifiers to SteamID64. When updated, WSL 2.2.3 will automatically convert all the existing steam users identifiers in wslusersprofiles to the new format.
 
