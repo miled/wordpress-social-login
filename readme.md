@@ -38,7 +38,7 @@ WSL 2.2.3 also include a number of new features, and fixes several stability iss
 
 This release did focus on code health and flexibility and it was necessary to move some code around, and to remove few functions and hooks. We know, it sucks to break WSL API at such short notice, but it was indispensable and unavoidable as we're trying to move the project forward.
 
-As announced on WSL Support Forum, this is by no means a drastic change to the API. In fact, we tried our best to keep the said changes to a strict minimum, and the wide majority of WSL users will not be affected.
+As announced on WSL Support Forum, this is by no means a drastic change to the API. In fact, we tried our best to keep the said changes to a strict minimum, and the vast majority of WSL users will not be affected.
 
 Those breaking changes are:
 

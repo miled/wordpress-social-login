@@ -166,7 +166,7 @@ function wsl_component_networks_sidebar_basic_insights()
 								?>
 									<tr>
 										<td width="60%">
-											<img src="<?php echo $assets_base_url . strtolower( $item->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $item->provider; ?> 
+											<img src="<?php echo $assets_base_url . strtolower( $item->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e($item->provider, 'wordpress-social-login') ?>
 										</td>
 										<td>
 											<?php echo $item->items; ?>

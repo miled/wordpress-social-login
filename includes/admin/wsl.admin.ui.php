@@ -173,9 +173,9 @@ function wsl_admin_ui_header( $wslp = null )
 	?>
 
 	<div class="alignright">
-		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="http://miled.github.io/wordpress-social-login/documentation.html">Docs</a> - 
-		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="http://miled.github.io/wordpress-social-login/support.html">Support</a> - 
-		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="https://github.com/miled/wordpress-social-login">Github</a>
+		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="http://miled.github.io/wordpress-social-login/documentation.html"><?php _wsl_e('Docs', 'wordpress-social-login') ?></a> - 
+		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="http://miled.github.io/wordpress-social-login/support.html"><?php _wsl_e('Support', 'wordpress-social-login') ?></a> - 
+		<a style="font-size: 0.9em; text-decoration: none;" target="_blank" href="https://github.com/miled/wordpress-social-login"><?php _wsl_e('Github', 'wordpress-social-login') ?></a>
 	</div>
 
 	<h1 <?php if( is_rtl() ) echo 'style="margin: 20px 0;"'; ?>>
@@ -363,7 +363,7 @@ function wsl_admin_welcome_panel()
 	//> wsl-w-panel is shamelessly borrowed and modified from wordpress welcome-panel
 -->
 <div id="wsl-w-panel">
-	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss" <?php if( is_rtl() ) echo 'style="left: 10px;right: auto;"'; ?>><?php _e("Dismiss", 'wordpress-social-login') ?></a>
+	<a href="options-general.php?page=wordpress-social-login&wslp=<?php echo $wslp ?>&wsldwp=1" id="wsl-w-panel-dismiss" <?php if( is_rtl() ) echo 'style="left: 10px;right: auto;"'; ?>><?php _wsl_e("Dismiss", 'wordpress-social-login') ?></a>
 	
 	<table width="100%" border="0" style="margin:0;padding:0;">
 		<tr>
@@ -381,11 +381,11 @@ function wsl_admin_welcome_panel()
 					<b><?php _wsl_e("Get Started", 'wordpress-social-login') ?></b>
 				</p>
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank">Plugin Overview</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/networks.html" target="_blank">Setup and Configuration</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/widget.html" target="_blank">Customize WSL Widgets</a>', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/userdata.html" target="_blank">Manage users and contacts</a>', 'wordpress-social-login') ?></li> 
-					<li><?php _wsl_e('<a href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank">WSL Developer API</a>', 'wordpress-social-login') ?></li> 
+					<li><a href="http://miled.github.io/wordpress-social-login/overview.html" target="_blank"><?php _wsl_e('Plugin Overview', 'wordpress-social-login') ?></a></li>
+					<li><a href="http://miled.github.io/wordpress-social-login/networks.html" target="_blank"><?php _wsl_e('Setup and Configuration', 'wordpress-social-login') ?></a></li>
+					<li><a href="http://miled.github.io/wordpress-social-login/widget.html" target="_blank"><?php _wsl_e('Customize WSL Widgets', 'wordpress-social-login') ?></a></li>
+					<li><a href="http://miled.github.io/wordpress-social-login/userdata.html" target="_blank"><?php _wsl_e('Manage users and contacts', 'wordpress-social-login') ?></a></li> 
+					<li><a href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank"><?php _wsl_e('WSL Developer API', 'wordpress-social-login') ?></a></li> 
 				</ul>
 			</td>
 			<td width="" valign="top">

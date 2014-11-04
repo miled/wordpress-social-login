@@ -1069,7 +1069,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	$message  = _wsl__("Unspecified error!", 'wordpress-social-login'); 
 	$notes    = ""; 
-	$apierror = substr( $e->getMessage(), 0, 125 );
+	$apierror = substr( $e->getMessage(), 0, 145 );
 
 	switch( $e->getCode() )
 	{
@@ -1094,10 +1094,12 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 	// provider api response
 	if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
 	{
-		$apierror = Hybrid_Error::getApiError();
+		$tmp = Hybrid_Error::getApiError();
+
+		$apierror = $apierror . "\n" . '<br />' . $tmp;
 
 		// network issue
-		if( trim( $apierror ) == '0.' )
+		if( trim( $tmp ) == '0.' )
 		{
 			$apierror = '0. Unable to connect to the provider api';
 		}

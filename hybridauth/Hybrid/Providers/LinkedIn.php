@@ -52,6 +52,14 @@ class Hybrid_Providers_LinkedIn extends Hybrid_Provider_Model
 			Hybrid_Auth::redirect( LINKEDIN::_URL_AUTH . $response['linkedin']['oauth_token'] );
 		}
 		else{
+	 		if( isset( $response['linkedin']['oauth_problem'] ) ){
+		 		if( $response['linkedin']['oauth_problem'] == 'timestamp_refused' ){
+					throw new Exception( "Authentication failed! Your server time is not in sync with the {$this->providerId} servers. Acceptable timestamps: " . date("D, d M Y G:i:s", (int) $response['linkedin']['oauth_acceptable_timestamps'] ), 5 );
+				}
+
+				throw new Exception( "Authentication failed! {$this->providerId} returned an oauth_problem.", 5 );
+			}
+
 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid oauth_token", 5 );
 		}
 	}

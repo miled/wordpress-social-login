@@ -55,9 +55,14 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
  	
  		// request tokens as received from provider
  		$this->request_tokens_raw = $tokens;
- 	
- 		// check the last HTTP status code returned
+
+		// check the last HTTP status code returned
  		if ( $this->api->http_code != 200 ){
+	 		if( ( time() < strtotime( $this->api->http_header['date'] )-300 || time() > strtotime( $this->api->http_header['date'] )+300 ) ){
+
+				throw new Exception( "Authentication failed! Your server time is not in sync with the {$this->providerId} servers. Acceptable timestamps: " . $this->api->http_header['date'], 5 );
+			}
+
  			throw new Exception( "Authentication failed! {$this->providerId} returned an error. " . $this->errorMessageByStatus( $this->api->http_code ), 5 );
  		}
  	

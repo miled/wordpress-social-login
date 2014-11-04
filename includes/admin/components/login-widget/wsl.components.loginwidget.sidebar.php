@@ -41,7 +41,7 @@ function wsl_component_loginwidget_sidebar_what_is_this()
 ?>
 <div class="postbox">
 	<div class="inside">
-		<h3><?php _wsl_e("What is this", 'wordpress-social-login') ?>?</h3>
+		<h3><?php _wsl_e("What's This", 'wordpress-social-login') ?>?</h3>
 
 		<div style="padding:0 20px;">
 			<p>
@@ -101,9 +101,9 @@ function wsl_component_loginwidget_sidebar_custom_integration()
 		<div style="padding:0 20px;">
 			<p>
 				<?php _wsl_e("If you want to add the widget to another location in your website, you can insert the following code in that location", 'wordpress-social-login') ?>: 
-				<pre style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
+				<pre dir="ltr" style="width: 380px;background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;"> &lt;?php do_action( 'wordpress_social_login' ); ?&gt; </pre> 
 				<?php _wsl_e("For posts and pages, you may use this shortcode", 'wordpress-social-login') ?>:
-				<div style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</div> 
+				<div dir="ltr" style="width: 380px;background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">[wordpress_social_login]</div> 
 			</p>
 
 			<p>

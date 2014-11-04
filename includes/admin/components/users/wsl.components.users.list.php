@@ -30,7 +30,7 @@ function wsl_component_users_list()
 	$actions = apply_filters( 'wsl_component_users_list_alter_actions_list', $actions );
 ?>
 <div style="padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
-	<p style="float: right; margin: -5px;">
+	<p style="float: <?php if( is_rtl() ) echo 'left'; else echo 'right'; ?>; margin: -5px;">
 		<?php
 			echo implode( ' ', $actions );
 		?>
@@ -115,7 +115,7 @@ function wsl_component_users_list()
 							foreach( $linked_accounts AS $link )
 							{
 								?> 
-									<img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php echo $link->provider ?><br />
+									<img src="<?php echo $assets_base_url . strtolower( $link->provider ) . '.png' ?>" style="vertical-align:top;width:16px;height:16px;" /> <?php _wsl_e($link->provider, 'wordpress-social-login') ?><br />
 								<?php
 
 								if( $link->photourl )

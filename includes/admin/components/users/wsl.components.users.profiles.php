@@ -85,7 +85,7 @@ function wsl_component_users_profiles( $user_id )
 <div style="margin-top: 15px;padding: 15px; margin-bottom: 8px; border: 1px solid #ddd; background-color: #fff;box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);">
  	<h3 style="margin:0;"><?php echo sprintf( _wsl__("%s's social profiles", 'wordpress-social-login'), $user_data->display_name ) ?> <small>(<?php echo count( $linked_accounts ); ?>)</small></h3>
 
-	<p style="float: right;margin-top:-23px">
+	<p style="float: <?php if( is_rtl() ) echo 'left'; else echo 'right'; ?>;margin-top:-23px">
 		<?php
 			echo implode( ' ', $actions );
 		?>
