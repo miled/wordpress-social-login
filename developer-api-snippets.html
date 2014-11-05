@@ -144,12 +144,12 @@ add_filter( 'wsl_render_auth_widget_alter_provider_icon_markup', 'wsl_use_fontaw
 <p>
 Solution contributed by <b>Yitzi</b> on WordPress support forum <a href="https://wordpress.org/support/topic/woocommerce-does-it-work?replies=3#post-5474168" target="_blank">https://wordpress.org/support/topic/woocommerce-does-it-work?replies=3#post-5474168</a>.
 <p>
-* Updated to WSL <span class="label label-success">2.2</span>.
-</p>			
+	Note: I didn't personally test this code. It's listed here in the only hope that it will help.
+</p>
 <pre class="prettyprint linenums">
 // display WSL widget in woocommerce forms
-add_action( 'woocommerce_before_customer_login_form', 'wsl_render_auth_widget' );
-add_action( 'woocommerce_before_checkout_form'      , 'wsl_render_auth_widget' );
+add_action( 'woocommerce_before_customer_login_form', 'wsl_action_wordpress_social_login' );
+add_action( 'woocommerce_before_checkout_form'      , 'wsl_action_wordpress_social_login' );
 
 /**
 * Our hooked in function - $fields is passed via the filter
@@ -158,8 +158,8 @@ function custom_override_checkout_fields( $fields )
 {
 	$current_user = wp_get_current_user();
 	
-	$fields['billing']['billing_first_name']['default'] = $current_user->user_firstname;
-	$fields['billing']['billing_last_name']['default']  = $current_user->user_lastname;
+	$fields['billing']['billing_first_name']['default'] = $current_user-&gt;user_firstname;
+	$fields['billing']['billing_last_name']['default']  = $current_user-&gt;user_lastname;
 	
  	return $fields;
 }
@@ -169,7 +169,27 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 			</div>
 		</div>
 	</div>
-
+	
+<!-- collapse_edd -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#collapse_edd">Integrate WSL to Easy Digital Downloads</a>
+			</h4>
+		</div>
+		<div id="collapse_edd" class="panel-collapse collapse">
+			<div class="panel-body"> 
+<p>
+	This is a very basic integration. The code below will add WSL widget into EDD login and register forms.
+</p>
+<pre class="prettyprint linenums"> 
+add_action( 'edd_checkout_login_fields_after'  , 'wsl_action_wordpress_social_login' );
+add_action( 'edd_register_account_fields_after', 'wsl_action_wordpress_social_login' );
+</pre>
+			</div>
+		</div>
+	</div>
+	
 <!-- collapse_mycred_signup -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -179,6 +199,9 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 		</div>
 		<div id="collapse_mycred_signup" class="panel-collapse collapse">
 			<div class="panel-body">
+<p>
+	This is a very basic integration. The code below will add 100 points to each new WSL user.
+</p>
 <pre class="prettyprint linenums">
 function mycred_award_wsl_users_signup( $user_id, $provider, $hybridauth_user_profile )
 {
@@ -203,6 +226,43 @@ add_action( 'wsl_hook_process_login_after_create_wp_user', 'mycred_award_wsl_use
 	
 	
 	
+<!-- get_user_oauth_tokens -->
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#get_user_oauth_tokens">Get OAuth access tokens</a>
+			</h4>
+		</div>
+		<div id="get_user_oauth_tokens" class="panel-collapse collapse">
+			<div class="panel-body">
+<pre class="prettyprint linenums">
+function get_access_tokens( $user_id, $provider, $hybridauth_user_profile )
+{
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( $provider ); 
+
+        # oauth 1 and 2
+        $access_token = $provider-&gt;adapter-&gt;token( 'access_token' );
+
+        # oauth 1
+        $access_token_secret = $provider-&gt;adapter-&gt;token( 'access_token_secret' );
+    }
+    catch( Exception $e )
+    {
+        echo &quot;Ooophs, we got an error: &quot; . $e-&gt;getMessage();
+    }
+}
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_access_tokens', 10, 3 );
+</pre>
+			</div>
+		</div>
+	</div>
+	
+	
+	
 <!-- get_user_twitter_timeline -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -211,7 +271,10 @@ add_action( 'wsl_hook_process_login_after_create_wp_user', 'mycred_award_wsl_use
 			</h4>
 		</div>
 		<div id="get_user_twitter_timeline" class="panel-collapse collapse">
-			<div class="panel-body">
+			<div class="panel-body"> 
+<p>
+	This function use <code>wsl_hook_process_login_before_wp_set_auth_cookie</code> which runs every time a user successfully login with Twitter.
+</p>
 <pre class="prettyprint linenums">
 function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profile )
 {
@@ -227,11 +290,11 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
         $provider = Hybrid_Auth::getAdapter( 'Twitter' ); 
 
         # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
-        $response = $provider->api()->get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
+        $response = $provider-&gt;api()-&gt;get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
     }
     catch( Exception $e )
     {
-        echo "Ooophs, we got an error: " . $e->getMessage();
+        echo &quot;Ooophs, we got an error: &quot; . $e-&gt;getMessage();
     }
 }
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitter_timeline', 10, 3 );
@@ -251,7 +314,23 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitte
 		</div>
 		<div id="get_post_to_user_facebook_wall" class="panel-collapse collapse">
 			<div class="panel-body">
+<p>
+	This function use <code>wsl_hook_process_login_before_wp_set_auth_cookie</code> which runs EVERY TIME a user successfully login with Facebook. This snippet will also ask users for an extra permission to post to theirs walls. 
+</p>
 <pre class="prettyprint linenums">
+function wsl_request_extra_permisson( $provider_scope, $provider )
+{
+    # https://developers.facebook.com/docs/facebook-login/permissions/v2.2#reference-publish_actions
+    if( 'facebook' == strtolower( $provider ) )
+    {
+        $provider_scope .= ', publish_actions';
+    }
+
+    return $provider_scope;
+}
+ 
+add_filter( 'wsl_hook_alter_provider_scope', 'wsl_request_extra_permisson', 10, 2 );
+
 function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
 {
     if( 'Facebook' != $provider )
@@ -265,14 +344,14 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
     {
         $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
 
-        # https://developers.facebook.com/docs/graph-api/reference/v2.1/user/feed
-        $response = $provider->api()->post( 'https://graph.facebook.com/v2.0/me/feed', array(
-                'message' => 'This is a test message',
+        # https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed
+        $response = $provider-&gt;api()-&gt;post( 'https://graph.facebook.com/v2.0/me/feed', array(
+                'message' =&gt; 'This is a test message',
         ));
     }
     catch( Exception $e )
     {
-        echo "Ooophs, we got an error: " . $e->getMessage();
+        echo &quot;Ooophs, we got an error: &quot; . $e-&gt;getMessage();
     }
 }
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_user_facebook_wall', 10, 3 );
@@ -281,6 +360,98 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 		</div>
 	</div>
 	
+<!-- get_publish_to_facebook 
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			<h4 class="panel-title">
+				<a data-toggle="collapse" data-parent="#accordion" href="#get_publish_to_facebook">Publish posts automatically to Facebook</a>
+			</h4>
+		</div>
+		<div id="get_publish_to_facebook" class="panel-collapse collapse">
+			<div class="panel-body">
+<p>
+	IMPORTANT: DO NOT USE THIS CODE AS IT IS. THIS CODE IS UNTESTED, AND PROVIDED FOR ILLUSTRATIVE PURPOSES ONLY! <code>SET_YOUR_WORDPRESS_ADMIN_USER_ID_HERE</code> should be a WP admin. This user MUST already have associated his account to Facebook though WSL. Do not forget the <code>publish_actions</code> scope.
+</p>
+<pre class="prettyprint linenums">
+function wsl_store_facebook_access_token( $user_id, $provider, $hybridauth_user_profile )
+{
+    if( {SET_YOUR_WORDPRESS_ADMIN_USER_ID_HERE} != $user_id )
+    {
+        return;
+    }
+
+    if( 'Facebook' != $provider )
+    {
+        return;
+    }
+
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( $provider ); 
+ 
+        $access_token = $provider-&gt;adapter-&gt;token( 'access_token' );
+
+        update_user_meta( $user_id, 'facebook_access_token', $access_token );
+    }
+    catch( Exception $e )
+    {
+       // otherwise we can do much. can we?
+    }
+}
+
+add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'wsl_store_facebook_access_token', 10, 3 );
+
+function wsl_post_to_facebook( $post_id )
+{
+    // revision?
+    if ( wp_is_post_revision( $post_id ) )
+    {
+        return;
+    }
+    
+    $access_token = get_user_meta( {SET_YOUR_WORDPRESS_ADMIN_USER_ID_HERE}, 'facebook_access_token' );
+    
+    if ( ! $access_token )
+    {
+        return;
+    }
+    
+    $post_title = get_the_title( $post_id );
+    $post_url   = get_permalink( $post_id ); 
+    
+    $message  = &quot;A post has been updated on your website:\n\n&quot;;
+    $message .= $post_title . &quot;: &quot; . $post_url;
+    
+    include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
+
+    try
+    {
+        $provider = Hybrid_Auth::getAdapter( $provider ); 
+
+        $adapter-&gt;adapter-&gt;token( 'access_token', $access_token );
+
+        $adapter-&gt;adapter-&gt;setUserConnected();
+
+        # https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed
+        $response = $provider-&gt;api()-&gt;post( 'https://graph.facebook.com/v2.0/me/feed', array(
+                'message' =&gt; $message,
+        ));
+    }
+    catch( Exception $e )
+    {
+       // otherwise patches are welcome p
+    }
+}
+
+add_action( 'save_post', 'wsl_post_to_facebook' );
+</pre>
+			</div>
+		</div>
+	</div>
+-->
+
 <!-- collapse_github -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -370,7 +541,7 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 5, 2014</span>
 			</div>
 		</div>
 	</footer>

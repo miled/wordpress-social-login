@@ -50,35 +50,134 @@
 		<div class="block row">
 			<div class="col col-md-12">
 
+<style>
+	.bs-callout-info { margin: 18px 0; padding: 10px; }
+	.bs-callout-info  p { margin: 0; }
+</style>
+
 <h1>Social Networks Setup</h1>
-
-<div class="bs-callout bs-callout-danger">
-	<h4>Important:</h4>
-	<p>
-		Social Networks Setup is the most important step in order for WordPress Social Login to properly work.
-	</p>
-	<p>
-		Except few, most of the social networks supported by WSL will require that you create <b>an external application</b> linking your website to theirs apis.
-		
-		These external applications ensures that users are logging into the proper [your] website, and it also allows identities providers to send the users back to the correct [your] website after they successfully authenticate with their accounts. 
-	</p>
-</div> 
-
-<p>
-	Goto <strong>WordPress Social Login</strong> &gt; <strong>Networks</strong> tab to setup the social networks you want to use and follow carefully the described steps.
-</p>
-
-<ul style="">
-	<li>To allow your users to use a given provider, you should set <b style="color:blue">Enabled</b> to <b style="color:green">YES</b>.</li>
-	<li>If a provider requires an <b>Application ID, key and secret</b> then click on <b style="color:blue">Where do I get this info?</b> [to know how to].</li> 
-	<li>To enable russian, cyrillic or arabic usernames, you might need <a href="http://wordpress.org/extend/plugins/wordpress-special-characters-in-usernames/" target="_blank">WordPress Special Characters in Usernames</a> plugin.</li>
-	<li>Some social networks like Twitter and LinkedIn do NOT provide their user's email address and by default a random email will then be generated for them instead. To change this behaviour and to force new registered users to provide their emails before they get in, goto <b><a href="bouncer.html">Bouncer</a></b> and enable <b>Profile Completion</b>.</li>
-	<li>WSL will try to link existing wordpress accounts to the social network users profiles by matching their verified emails.</li>
-</ul>
 
 <br />
 
-<div style="text-align: center;"><img style="width:950px;" src="assets/img/networksetup.png" ></div> 
+<div class="alert alert-info">
+	<p>
+		<b>Social Networks Setup is the most important step in order for WordPress Social Login to work properly. Things may sound complicated at first, but fear not. This guide will walk you through the required steps and explain all the logic behind.</b>
+	</p>
+</div>
+ 
+<p>
+	Basically, Social Login allows your website visitors and customers to register on using their existing social account ID, eliminating the need to fill out registration forms and to remember usernames and passwords.  
+	Social Login links logins to one or more social networking services to a website, typically using either a plug-in or a widget. By selecting the desired social networking service, the user simply uses his or her login for that services to sign on to the web site.
+</p>
+
+<p>
+	At a technical level, Social Login uses a number of open protocols to allow secure authorization in a simple and standard method from web, mobile and desktop applications (i.g, <a href="http://oauth.net" target="_blank">OAuth</a>). Nowadays, most social networks implements those protocols to make their users accounts available through an Application Programming Interface (API). Given you have the right user authorizations, your website may access the said APIs to perform a wide range or operations in behalf of the user (i.g., social sharing, user profile, user friends list, user activity stream, status updates and more).
+</p>
+
+<div class="bs-callout bs-callout-info">
+	<p>
+		<b>Social Login is the process by which users can sign-in into a website through their social IDs. WordPress Social Login is a plugin that do all the heavy lifting for you and adds Social Login to your website. Social networks are also called &ldquo;identity providers&rdquo; or IDP for short.</b>
+	</p>
+</div>
+
+<h3>Choosing social networks</h3>
+
+<p>
+	WordPress Social Login provides a myriad of social networks to login with and you can use as many of them as you wish but you certainly don't want to replace the burden of remembering usernames and passwords on your website users with a long list of providers. A returning user may forgot the social network he used to sign-up in the first place. Social Login best practices recommends to only offer a limited number of social networks to sign-in with. 
+</p>
+
+<div class="bs-callout bs-callout-info">
+	<p>
+		<b>Keep the list of providers relevant to your website audience. Also keep in mind, that given the choice, your website visitors may feel comfortable with some social networks than with others.</b>
+	</p>
+</div>
+
+<h3>Registering social networks</h3>
+
+<p>
+	Unlike Social Sharing. Social Login requires a little bit of effort on your part to have it up and running in your website.  
+</p>
+
+<p>
+	Most social networks do not allow any website or application to connect to and communicate with their API. As a matter of control and security, Google, Facebook, Twitter, etc., will require you to register your application first. Generally speaking, registering a new application is free and only takes a few minutes. 
+</p> 
+
+<div style="text-align: center;"><img style="width:650px;" src="assets/img/networksetup.png" ></div> 
+
+<div class="bs-callout bs-callout-info">
+	<p>
+		<b>When registering with a provider, there's few common terms used. Application, consumer and client are all synonyms. Application credentials (i.e, ID and Secret or Key and Secret) may differ in format, name and content depending on the social network. Application Secrets are called Secret for a good reason, so keep them secret.</b>
+	</p>
+</div>
+
+<p>
+	WordPress Social Login has all the basic instructions for registering with the various social networks it supports, but  we will explain how to setup and register your application with <a href="https://wordpress.com/" target="_blank"><b>WordPress.com</b></a> as an example:
+</p> 
+
+<ol>
+	<li>
+		<p>
+			Connect as an administrator to your website, then navigate to <strong>WordPress Social Login</strong> and select <strong>Networks</strong> tab. WordPress Social Login can be found under the WordPress <strong>Settings</strong> menu on the left side bar.
+		</p>
+	</li>
+	<li>
+		<p>
+			By default, WSL will enable Facebook, Google and Twitter for you. To add &ldquo;WordPress.com&rdquo;, go to &ldquo;Add more providers&rdquo; then click on the (<i class="fa fa-wordpress"></i>) WordPress icon.
+		</p>
+	</li>
+	<li>
+		<p>
+			Set <span style="color:blue">Enabled</span> to <span style="color:green">YES</span>, to allow your website users to authenticate with their WordPress.com IDs.
+		</p>
+	</li>
+	<li>
+		<p>
+			WSL should automatically display the basic instructions for registering an application. Alternatively, you may click on <span style="color:blue">Where do I get this info?</span>
+		</p>
+	</li>
+	<li>
+		<p>
+			To enable your website to communicate with the WordPress.com API, you need to create an application. Simply follow these steps :
+		</p>
+
+		<ol>
+			<li>First go to <a target="_blank" href="https://developer.wordpress.com/apps/">https://developer.wordpress.com/apps/</a>.</li>
+			<li>Log in using your WordPress.com account. If you don't already have an account, go ahead and create a new one.</li>
+			<li>Click &ldquo;Create a New Application&rdquo;.</li>
+			<li>Fill out any required fields such as the application name and description.</li>
+			<li>
+				<p>
+					&ldquo;WordPress.com&rdquo; will ask you to provide a &ldquo;Redirect URL&rdquo; (other providers may call it &ldquo;Callback URL&ldquo;). This Redirect or Callback URL is usually provided by WSL, just copy it form the basic instructions and past it on the required field.
+				</p>
+				<p>
+					WSL Callback URLs looks like this :
+					<code>http://<b>mywebsite.com</b>/wp-content/plugins/wordpress-social-login/hybridauth/?hauth.done=<b>WordPress</b></code>
+				</p>
+			</li>
+			
+			<li>Type your domain name into &ldquo;Javascript Origins&rdquo;.</li>
+			<li>Set &ldquo;Type&rdquo; to &ldquo;Web client&rdquo;.</li>
+			<li>Click &ldquo;Create&rdquo; to submit the form.</li>
+			<li>Once you have registered, you will be redirected to a new page where you can found your application credentials. Simply copy and past those created application credentials into the matching boxes in WSL forms.</li>
+		</ol>
+	</li>
+</ol>
+
+<div class="bs-callout bs-callout-info">
+	<p>
+		<b>Here's also few screen shots to help. But keep in mind that things may change, perspectives can become different, ideas move on. Each social network have hundreds of employees to keep things moving forward. If this guide or any of WSL basic instructions become out dated, then use Common sense and Google. Youtube is also a great resource. And, as always, you can ask the Community for help.</b>
+	</p>
+</div>
+
+<center>
+	<table>
+		<tr>
+			<td><a target="_blank" href="http://hybridauth.sf.net/userguide/img/setup/wordpress/1.png" class="thumbnail" style="margin-right:5px;"><img style="height:220px;" src="http://hybridauth.sf.net/userguide/img/setup/wordpress/1.png"></a></td>
+			<td><a target="_blank" href="http://hybridauth.sf.net/userguide/img/setup/wordpress/2.png" class="thumbnail" style="margin-right:5px;"><img style="height:220px;" src="http://hybridauth.sf.net/userguide/img/setup/wordpress/2.png"></a></td>
+			<td><a target="_blank" href="http://hybridauth.sf.net/userguide/img/setup/wordpress/3.png" class="thumbnail" style="margin-right:5px;"><img style="height:220px;" src="http://hybridauth.sf.net/userguide/img/setup/wordpress/3.png"></a></td>
+		</tr>
+	</table>
+</center>
 
 
 				<br />
@@ -98,7 +197,7 @@
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 5, 2014</span>
 			</div>
 		</div>
 	</footer>

@@ -91,8 +91,7 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitter_timeline', 10, 3 );
 </pre>
 
-<br />
-
+<br /> 
 <pre class="prettyprint linenums">
 function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
 {
@@ -107,7 +106,7 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
     {
         $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
 
-        # https://developers.facebook.com/docs/graph-api/reference/v2.1/user/feed
+        # https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed
         $response = $provider->api()->post( 'https://graph.facebook.com/v2.0/me/feed', array(
                 'message' => 'This is a test message',
         ));
@@ -119,7 +118,14 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
 }
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_user_facebook_wall', 10, 3 );
 </pre>
+</br />
 <div style="text-align: center;"><img style="width:650px;" src="assets/img/fbpostwall.png" ></div>
+<div class="bs-callout bs-callout-info">
+	<h4>Note:</h4>
+	<p>
+		Don't forget to ask users for a permission, otherwise Facebook will give you this error <code>(#200) The user hasn't authorized the application to perform this action</code>. See, <a href="developer-api-snippets.html">Code Snippets</a>.</p>
+	</p>
+</div>
 
 <h3>2. Authentication Playground</h3>
 
@@ -169,7 +175,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 5, 2014</span>
 			</div>
 		</div>
 	</footer>

@@ -201,7 +201,7 @@ body pre * {
 
 <div class="alert alert-success">
 	<p style="font-size: 20px;">
-		To simplify the complexity of the authentication process, we broke it down to a simple timeline of events, even tho things are hardly linear. If you are really in hurry and you don't want to read a novel, just scroll deep down and you will find the hooks you need.
+		To simplify the complexity of the authentication process, we broke it down to a simple timeline of events, even tho things are hardly linear. If you are in hurry and you don't want to read a novel, just scroll deep down and you will find the hooks you need.
 	</p>
 </div>
 
@@ -269,7 +269,7 @@ do_action('init')
 <hr />
 
 <p align="right" style="font-size: 14px;margin-top:-10px;">
-Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i> filter &mdash; <i class="fa fa-github"></i> See on Github &mdash; everything else is either a function or event.
+Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i> filter &mdash; <i class="fa fa-github"></i> See on <abbr title="I gave this option so you may see WSL hooks args there. I didn't document it here not out of laziness but due to lack of time.">GitHub</abbr> &mdash; Logic is simple: Left are the main functions. Right for triggered <abbr title="Well.. these are not events but actions. I used the word event to not confuse them with WordPress action hooks.">events</abbr>.
 </p>
 
 <ul class="timeline">
@@ -298,7 +298,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_start</h4>
 		</div>
 		<div class="timeline-body">
-		  <p>Runs just at the beginning of the authentication process.</p>
+		  <p>Runs just at the the start of <code>wsl_process_login()</code>.</p>
 		</div>
 	  </div>
 	</li>
@@ -331,7 +331,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_begin_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_begin_start</h4>
 		</div>
 		<div class="timeline-body">
-		  <p>Runs just at the beginning of the first part of the authentication process.</p>
+		  <p>Runs just at the the start of <code>wsl_process_login_begin()</code>.</p>
 		</div>
 	  </div>
 	</li>
@@ -471,7 +471,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_process_login_end_start" target="_blank"><i class="fa fa-github"></i></a> wsl_process_login_end_start</h4>
 		</div>
 		<div class="timeline-body">
-		  <p>Runs just at the beginning of the second part of the authentication process.</p>
+		 <p>Runs just at the the start of <code>wsl_process_login_end()</code>.</p>
 		</div>
 	  </div>
 	</li>
@@ -874,7 +874,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 					<li><a href="./faq.html">FAQ</a></li>
 					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
 				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 2, 2014</span>
+				<span class="pull-right footer-extra-info">Generated on November 5, 2014</span>
 			</div>
 		</div>
 	</footer>
