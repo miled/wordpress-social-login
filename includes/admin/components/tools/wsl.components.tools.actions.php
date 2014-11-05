@@ -48,7 +48,7 @@ function wsl_component_tools_auth_playground()
 			<?php _wsl_e('Authentication Playground will let you authenticate with the enabled social networks without creating any new user account. This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>. 
 		</p>
 
-		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=auth-test'); ?>"><?php _wsl_e("Go to the authentication playground", 'wordpress-social-login') ?></a>  
+		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=auth-paly'); ?>"><?php _wsl_e("Go to the authentication playground", 'wordpress-social-login') ?></a>  
 	</div>
 </div>
 <?php

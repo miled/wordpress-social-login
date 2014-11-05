@@ -79,7 +79,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 			<tr>
 				<td align="center">
 					<div>
-						<?php echo sprintf( _wsl__( "Contacting <b>%s</b>, please wait...", 'wordpress-social-login'), ucfirst( $provider ) )  ?>
+						<?php echo sprintf( _wsl__( "Contacting <b>%s</b>, please wait...", 'wordpress-social-login'), _wsl__( ucfirst( $provider ), 'wordpress-social-login') )  ?>
 					</div>
 				</td> 
 			</tr> 

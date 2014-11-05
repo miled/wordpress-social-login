@@ -12,7 +12,7 @@
 * Ref: http://miled.github.io/wordpress-social-login/developer-api-authentication.html
 ** 
 * Side note: I don't usually over-comment codes, but this is the main WSL script and I had to since
-* many users with diffrent "skill levels" may want to understand how this piece of code works.
+*            many users with diffrent "skill levels" may want to understand how this piece of code works.
 ** 
 * To sum things up, here is how WSL works (bit hard to explain, so bare with me):
 *
@@ -285,7 +285,7 @@ function wsl_process_login_end()
 
 	if( 'test' == $auth_mode )
 	{
-		$redirect_to = admin_url( 'options-general.php?page=wordpress-social-login&wslp=auth-test&provider=' . $provider );
+		$redirect_to = admin_url( 'options-general.php?page=wordpress-social-login&wslp=auth-paly&provider=' . $provider );
 
 		return wp_safe_redirect( $redirect_to );
 	}
@@ -784,11 +784,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	do_action( "wsl_process_login_authenticate_wp_user_start", $user_id, $provider, $redirect_to, $adapter, $hybridauth_user_profile, $wp_user );
 
 	// update some fields in usermeta for the current user
-	update_user_meta( $user_id, 'wsl_current_provider'   , $provider );
+	update_user_meta( $user_id, 'wsl_current_provider', $provider );
 
 	if(  $hybridauth_user_profile->photoURL )
 	{
-		update_user_meta( $user_id, 'wsl_current_user_image' , $hybridauth_user_profile->photoURL );
+		update_user_meta( $user_id, 'wsl_current_user_image', $hybridauth_user_profile->photoURL );
 	}
 
 	// Bouncer::User Moderation
@@ -900,7 +900,7 @@ function wsl_process_login_build_provider_config( $provider )
 	if( strtolower( $provider ) == "facebook" )
 	{
 		// > do not reset this scope manually, use wsl filter 'hook wsl_hook_alter_provider_scope'
-		$config["providers"][$provider]["scope"] = "email, user_about_me, user_birthday, user_hometown, user_website";
+		$config["providers"][$provider]["scope"] = "email, public_profile, user_friends";
 		$config["providers"][$provider]["display"] = "popup";
 		$config["providers"][$provider]["trustForwarded"] = true;
 
@@ -1101,7 +1101,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 		// network issue
 		if( trim( $tmp ) == '0.' )
 		{
-			$apierror = '0. Unable to connect to the provider api';
+			$apierror = "Could not establish connection to provider API";
 		}
 	}
 

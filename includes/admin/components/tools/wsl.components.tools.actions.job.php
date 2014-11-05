@@ -656,6 +656,66 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 				</tr> 
+
+				<?php
+					/**
+					* Check twitter timestamp
+					*
+					* Thanks much Joe for the cool idea
+					* https://wordpress.org/plugins/wp-to-twitter/
+					*/
+					$test         = true;
+					$error        = '';
+					$hint         = '';
+					$server_time  = date( DATE_COOKIE );
+					$response     = wp_remote_get( "https://api.twitter.com/1.1/help/test.json", array( 'timeout' => 2, 'redirection' => 1 ) );
+
+					if ( is_wp_error( $response ) )
+					{
+						$test = false;
+						$error = __("There was an error querying Twitter's servers", 'wordpress-social-login');
+					}
+					else
+					{
+						if( time() < strtotime( $response['headers']['date'] )- 300 || time() > strtotime( $response['headers']['date'] ) + 300 )
+						{
+							$test  = false;
+							$error = _wsl__("Your web server date is set incorrectly. This may prevent Twitter and LinkedIn and few other providers from working", 'wordpress-social-login');
+							$hint = sprintf( _wsl__("Please check if your web server time is correct: <code>%s</code>", 'wordpress-social-login'), $server_time );
+						}
+					}
+				?>
+				<tr>
+					<th width="200">
+						<label>Server Timestamp</label>
+					</th>
+					<td>
+						<p>Check if your web server clock is in sync.</p>
+						<?php 
+							if( ! $test )
+							{
+								?>
+									<div class="fade error" style="margin: 20px  0;"> 
+										<p><b>Error:</b> <?php echo $error; ?>.</p>
+										<?php if( $hint ) echo '<p>' . $hint . '.</p>'; ?>
+									</div>
+								<?php
+							}
+						?>
+					</td>
+					<td>
+						<?php 
+							if( $test )
+							{
+								echo "<b style='color:green;'>OK!</b>";
+							}
+							else
+							{
+								echo "<b style='color:orange;'>PASS</b>";
+							}
+						?>
+					</td>
+				</tr> 
 			</table> 
 
 			<br />

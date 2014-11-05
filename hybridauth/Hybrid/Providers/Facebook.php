@@ -28,7 +28,7 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 
 		// Need to override package version
 		if( class_exists('BaseFacebook', false ) && ! defined( 'GRAPH_API_VERSION' ) ){
-			throw new Exception( "Confilict detected. Facebook SDK is already loaded by another package. Initializatino failed, exit." );
+			throw new Exception( "Confilict detected. Facebook SDK is already loaded by another package. Initialization failed, exit." );
 		}
 
 		require_once realpath( dirname( __FILE__ ) )  . "/../thirdparty/Facebook/base_facebook.php";

@@ -12,7 +12,7 @@ class Hybrid_Providers_GitHub extends Hybrid_Provider_Model_OAuth2
 { 
 	// default permissions  
 	// (no scope) => public read-only access (includes public user profile info, public repo info, and gists).
-	public $scope = "";
+	public $scope = "user:email";
 
 	/**
 	* IDp wrappers initializer 

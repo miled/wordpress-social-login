@@ -65,7 +65,7 @@ class OAuth1Client{
 				$parameters[$k] = $v;
 
 		return $this->authorize_url . "?" . http_build_query( $parameters );
-    }
+    	}
 
 	/**
 	* Get a request_token from provider

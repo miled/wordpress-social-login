@@ -64,7 +64,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	{
 		if( $linking_enabled == 2 )
 		{
-			return wsl_process_login_render_notice_page( _wsl__( "Note tonight.", 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "Not tonight.", 'wordpress-social-login' ) );
 		}
 
 		$bouncer_account_linking = true; 

@@ -131,16 +131,22 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
 * Added "Repair WSL tables" under Tools tab.
 * Added "Debug mode" under Tools tab (namely whatchdog).
-* Added "Authentication Playground" under Tools tab (namely auth-test).
+* Added "Authentication Playground" under Tools tab (namely auth-paly).
 * Added "Uninstall" under Tools tab.
 * Added new hooks in the authentication widget and auth process.
-* Deprecated hooks, prior to 2.2.2, have been removed.
-* Deprecated internal functions have been removed.
-* Deprecated css selectors, in wsl widget, have been removed.
+* Made WSL more RTL friendly.
+* Added 403 pages under wsl folders (silence is.. highly overrated).
 * PHP file wsl.auth.widget.php renamed to wsl.auth.widgets.php
 * Function wsl_render_login_form() renamed to wsl_render_auth_widget()
 * wsl_user_custom_avatar and wsl_bp_user_custom_avatar are now pluggable and can be redefined.
 * wsl_render_notice_page and wsl_render_error_page has slightly changed.
+* Fix a critical issue found on WSL 2.2.2 with wslusersprofiles.
+* Fix an issue where redirect_to get overwritten in some cases.
+* Fix an issue with redirect_to where the callback url was encoded twice.
+* Fix several stability issues.
+* Deprecated hooks, prior to 2.2.2, have been removed.
+* Deprecated internal functions have been removed.
+* Deprecated css selectors, in wsl widget, have been removed.
 * Updated the API documentation for WSL authentication process
 * Updated the API documentation for WSL widget generator
 * Updated the API documentation for pluggable WSL functions 
@@ -148,10 +154,6 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * Added documentation for social apis access (through php code)
 * Added documentation for basic troubleshooting (common issues)
 * Added documentation for advanced troubleshooting (internal tools)
-* Fix a critical issue found on WSL 2.2.2 with wslusersprofiles.
-* Fix an issue where redirect_to get overwritten in some cases.
-* Fix an issue with redirect_to where the callback url was encoded twice.
-* Fix several stability issues.
 
 = 2.2.2 = 
 
