@@ -6,21 +6,6 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-/**
-*
-*  $ mkdir /tmp/wordpress-tests 
-*  $ cd /tmp/wordpress-tests 
-*  $ svn co http://svn.automattic.com/wordpress-tests/trunk/ 
-*
-*  > rename wp-tests-config-sample.php to wp-tests-config.php
-*  > edit wp-tests-config.php and set a test database
-*
-*  $ export WP_TESTS_DIR=/tmp/wordpress-tests 
-*  $ cd wp-content/plugins/wordpress-social-login 
-*  $phpunit
-*
-**/
-
 session_start();
 
 global $wpdb;
@@ -51,11 +36,11 @@ activate_plugin( 'wordpress-social-login/wp-social-login.php' );
 
 echo "Uninstall WSL...\n";
 
-wsl_database_install();
+wsl_database_uninstall;
 
 echo "Install WSL...\n";
 
-wsl_database_uninstall();
+wsl_database_install()();
 
 echo "ReInstall WSL...\n";
 

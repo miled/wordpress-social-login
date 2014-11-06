@@ -29,5 +29,5 @@ $ php phpunit.phar
 ```
 $ export WP_TESTS_DIR=/tmp/wordpress-tests 
 $ cd wp-content/plugins/wordpress-social-login 
-$phpunit
+$ phpunit
 ```
