@@ -1,23 +1,22 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Login\n"
-"POT-Creation-Date: 2014-11-04 19:23+0100\n"
-"PO-Revision-Date: 2014-11-04 19:23+0100\n"
+"POT-Creation-Date: 2014-11-06 01:46+0100\n"
+"PO-Revision-Date: 2014-11-06 01:46+0100\n"
 "Last-Translator: Mrassi Med <hybridauth@gmail.com>\n"
 "Language-Team: WordPress Social Login <hybridauth@gmail.com>\n"
 "Language: en\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.6.9\n"
-"X-Poedit-KeywordsList: _wsl_e;_wsl__\n"
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:53
+
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:53
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:36
 msgid "Provider user ID"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:54
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:54
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:89
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.list.php:70
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.list.php:81
@@ -25,26 +24,26 @@ msgstr ""
 msgid "Profile URL"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:55
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:55
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:90
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:38
 msgid "Website URL"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:56
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:56
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:91
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:39
 msgid "Photo URL"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:57
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:57
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:92
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:40
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:99
 msgid "Display name"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:58
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:58
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:93
 #: wordpress-social-login/includes/admin/components/components/wsl.components.help.setup.php:34
 #: wordpress-social-login/includes/admin/components/components/wsl.components.help.setup.php:42
@@ -52,201 +51,201 @@ msgstr ""
 msgid "Description"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:59
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:59
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:94
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:42
 msgid "First name"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:60
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:60
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:95
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:43
 msgid "Last name"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:61
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:61
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:96
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:44
 msgid "Gender"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:62
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:62
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:97
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:45
 msgid "Language"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:63
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:63
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:98
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:46
 msgid "Age"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:64
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:64
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:99
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:47
 msgid "Birth day"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:65
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:65
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:100
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:48
 msgid "Birth month"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:66
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:66
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:101
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:49
 msgid "Birth year"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:67
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:67
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:103
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:50
 msgid "Email"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:68
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:68
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:104
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:51
 msgid "Phone"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:69
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:69
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:105
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:52
 msgid "Address"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:70
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:70
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:106
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:53
 msgid "Country"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:71
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:71
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:107
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:54
 msgid "Region"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:72
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:72
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:108
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:55
 msgid "City"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:73
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:73
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:109
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:56
 msgid "Zip"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:91
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:91
 msgid "Connect with a provider to get started"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:96
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:96
 msgid "Connected adapter specs"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:101
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:101
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.list.php:72
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.list.php:80
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.list.php:44
 msgid "Provider"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:107
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:107
 msgid "OpenID Identifier"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:114
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:114
 msgid "Scope"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:121
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:121
 msgid "Application keys"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:128
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:128
 msgid "Access token"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:135
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:135
 msgid "Access token secret"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:142
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:142
 msgid "Access token expires in"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:143
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:143
 msgid "second(s)"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:149
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:149
 msgid "Access token expires at"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:164
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:164
 msgid "Connected adapter console"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:201
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:201
 msgid "Path"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:205
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:205
 msgid "Method"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:209
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:209
 msgid "Query"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:216
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:216
 msgid "Submit"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:224
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:224
 msgid "API Response"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:232
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:232
 msgid "Code PHP"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:256
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:256
 msgid "Connected adapter debug"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:264
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:264
 msgid "PHP Session"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:276
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:276
 msgid "Connected user social profile"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:330
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:330
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:44
 msgid "Authentication Playground"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:334
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:334
 msgid ""
 "Authentication Playground will let you authenticate with the enabled social "
 "networks without creating any new user account"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:337
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:337
 msgid ""
 "This tool will also give you a direct access to social networks apis via a "
 "lightweight console"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/auth-test/index.php:348
+#: wordpress-social-login/includes/admin/components/auth-paly/index.php:348
 msgid "Connect with"
 msgstr ""
 
@@ -254,7 +253,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:41
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:41
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:45
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:340
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:357
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:155
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:206
 msgid "Save Settings"
@@ -289,7 +288,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:441
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:138
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:165
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:151
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:152
 msgid "Yes"
 msgstr ""
 
@@ -304,7 +303,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:442
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:139
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:166
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:152
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:153
 msgid "No"
 msgstr ""
 
@@ -393,8 +392,12 @@ msgid ""
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:196
+#: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:257
 #: wordpress-social-login/includes/admin/components/buddypress/wsl.components.buddypress.setup.php:122
-msgid "<b>Notes</b>"
+#: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:54
+#: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:110
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:205
+msgid "Notes"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:199
@@ -445,10 +448,6 @@ msgid ""
 "<a href=\"http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs."
 "_Role_Table\" target=\"_blank\">http://codex.wordpress.org/"
 "Roles_and_Capabilities</a>"
-msgstr ""
-
-#: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:257
-msgid "<b>Notes:</b>"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.setup.php:258
@@ -533,7 +532,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:131
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:150
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:169
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:144
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:145
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:203
 msgid "Enabled"
 msgstr ""
@@ -601,7 +600,7 @@ msgstr ""
 
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:42
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:44
-msgid "What's This"
+msgid "What's This?"
 msgstr ""
 
 #: wordpress-social-login/includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:45
@@ -1114,12 +1113,6 @@ msgid ""
 "contacts emails, photos and or profile urls"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:54
-#: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:110
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:188
-msgid "Notes"
-msgstr ""
-
 #: wordpress-social-login/includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:58
 msgid ""
 "To enable contacts import from these social network, you need first to "
@@ -1464,25 +1457,33 @@ msgid ""
 "shortcode [wordpress_social_login]"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:161
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:162
 msgid "Application ID"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:163
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:169
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:177
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:164
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:170
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:178
 msgid "Where do I get this info?"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:167
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:168
 msgid "Application Key"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:175
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:176
 msgid "Application Secret"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:191
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:185
+msgid "Application Scope"
+msgstr ""
+
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:192
+msgid "Callback URL"
+msgstr ""
+
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:208
 #, php-format
 msgid ""
 "<b>%s</b> do not require an external application, however if the Web API Key "
@@ -1490,16 +1491,16 @@ msgid ""
 "connected %s users"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:192
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:208
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:209
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:225
 #, php-format
 msgid ""
 "<b>%s</b> do not provide their user's email address and by default a random "
 "email will then be generated for them instead"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:194
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:210
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:211
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:227
 msgid ""
 "To change this behaviour and to force new registered users to provide their "
 "emails before they get in, goto <b><a href=\"options-general.php?"
@@ -1507,7 +1508,7 @@ msgid ""
 "<b>Profile Completion</b>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:200
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:217
 #, php-format
 msgid ""
 "<b>%s</b> requires that you create an external application linking your "
@@ -1515,11 +1516,11 @@ msgid ""
 "&ldquo;Where do I get this info?&rdquo; and follow the steps"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:206
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:223
 msgid "Note"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:224
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:241
 msgid ""
 "<span style=\"color:#CB4B16;\">Application</span> id and secret (also "
 "sometimes referred as <span style=\"color:#CB4B16;\">Consumer</span> key and "
@@ -1527,7 +1528,7 @@ msgid ""
 "what we call an application credentials"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:226
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:243
 #, php-format
 msgid ""
 "This application will link your website <code>%s</code> to <code>%s API</"
@@ -1535,42 +1536,42 @@ msgid ""
 "access your website"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:229
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:246
 msgid ""
 "These credentials may also differ in format, name and content depending on "
 "the social network."
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:233
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:250
 #, php-format
 msgid ""
 "To enable authentication with this provider and to register a new <b>%s API "
 "Application</b>, follow the steps"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:236
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:253
 #, php-format
 msgid "<b>Done.</b> Nothing more required for <b>%s</b>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:240
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:257
 #, php-format
 msgid "First go to: <a href=\"%s\" target =\"_blank\">%s</a>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:243
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:260
 msgid ""
 "On the <b>Dashboard sidebar</b> click on <b>Project</b> then click <em style="
 "\"color:#0147bb;\">&ldquo;Create Project&rdquo;</em>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:244
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:261
 msgid ""
 "Once the project is created. Select that project, then <b>APIs & auth</b> "
 "&gt; <b>Consent screen</b> and fill the required information"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:245
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:262
 msgid ""
 "Then <b>APIs & auth</b> &gt; <b>APIs</b> and enable <em style=\"color:"
 "#0147bb;\">&ldquo;Google+ API&rdquo;</em>. If you want to import the user "
@@ -1578,114 +1579,114 @@ msgid ""
 "as well"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:246
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:263
 msgid ""
 "After that you will need to create an new application: <b>APIs & auth</b> "
 "&gt; <b>Credentials</b> and then click <em style=\"color:#0147bb;\">&ldquo;"
 "Create new Client ID&rdquo;</em>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:248
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:265
 msgid "On the <b>&ldquo;Create Client ID&rdquo;</b> popup"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:250
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:267
 msgid ""
 "Select <em style=\"color:#0147bb;\">&ldquo;Web application&rdquo;</em> as "
 "your application type"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:251
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:268
 msgid ""
 "Put your website domain in the <b>Authorized JavaScript origins</b> field. "
 "This should match with the current hostname"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:252
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:269
 msgid ""
 "Provide this URL as the <b>Authorized redirect URI</b> for your application"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:255
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:272
 msgid "Select <b>Add a New App</b> from the <b>Apps</b> menu at the top"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:256
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:273
 msgid ""
 "Fill out Display Name, Namespace, choose a category and click <b>Create App</"
 "b>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:257
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:274
 msgid ""
 "Go to Settings page and click on <b>Add Platform</b>. Choose website and "
 "enter in the new screen your website url in <b>App Domains</b> and <b>Site "
 "URL</b> fields"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:258
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:275
 msgid "They should match with the current hostname"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:259
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:276
 msgid ""
 "Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says "
 "<b>Do you want to make this app and all its live features available to the "
 "general public?</b>"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:261
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:278
 msgid "Create a new application"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:262
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:279
 msgid ""
 "Fill out any required fields such as the application name and description"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:267
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:284
 msgid "Provide this URL as the <b>Callback URL</b> for your application"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:274
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:291
 msgid ""
 "Put your website domain in the <b>Redirect Domain</b> field. This should "
 "match with the current hostname"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:278
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:295
 msgid "Choose <b>Live</b> on <b>Live Status</b>."
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:282
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:299
 msgid ""
 "Once you have registered past the created application credentials (Client ID "
 "and Secret) into the boxes above"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:284
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:301
 msgid ""
 "Once you have registered, past the created application credentials (Consumer "
 "Key and Secret) into the boxes above"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:286
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:303
 msgid ""
 "Go back to the <b>Dashboard</b> page and past the created application "
 "credentials (APP ID and Secret) into the boxes above"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:288
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:305
 msgid ""
 "Once you have registered, past the created application credentials into the "
 "boxes above"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:329
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:346
 msgid "And that's it!"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:331
+#: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.setup.php:348
 #, php-format
 msgid ""
 "If for some reason you still can't manage to create an application for %s, "
@@ -1793,53 +1794,64 @@ msgstr ""
 msgid "WordPress Social Login Diagnostics"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:664
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:781
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:813
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:930
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:683
+msgid ""
+"Your web server date is set incorrectly. This may prevent Twitter and "
+"LinkedIn and few other providers from working"
+msgstr ""
+
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:684
+#, php-format
+msgid "Please check if your web server time is correct: <code>%s</code>"
+msgstr ""
+
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:724
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:841
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:873
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:991
 msgid "Back to Tools"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:686
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:746
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:84
 msgid "System information"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:803
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:863
 msgid "Repair Wordpress Social Login tables"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:807
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:867
 msgid ""
 "All Wordpress Social Login tables and fields <em>should</em> be now restored"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:810
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:870
 msgid "If this still didn't work, please report this as a issue"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:914
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:975
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:220
 msgid "Uninstall"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:918
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:979
 msgid ""
 "All Wordpress Social Login tables and stored options are permanently deleted "
 "from your WordPress database"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:921
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:982
 msgid ""
 "To delete Wordpress Social Login files from your WordPress website, you may "
 "deactivate and uninstall it through the 'Plugins' menu in WordPress"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:924
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:985
 msgid "Thank you for using Wordpress Social Login"
 msgstr ""
 
-#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:927
+#: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:988
 msgid "Good bye"
 msgstr ""
 
@@ -2358,7 +2370,7 @@ msgstr ""
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:191
 #: wordpress-social-login/includes/services/wsl.authentication.php:283
-#: wordpress-social-login/includes/services/wsl.authentication.php:1079
+#: wordpress-social-login/includes/services/wsl.authentication.php:1080
 msgid "Unknown or disabled provider."
 msgstr ""
 
@@ -2392,33 +2404,33 @@ msgstr ""
 msgid "An error occurred while creating a new user!"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:966
+#: wordpress-social-login/includes/services/wsl.authentication.php:967
 #, php-format
 msgid ""
 "Sorry, we couldn't connect you with <b>%s</b>. <a href=\"%s\">Please try "
 "again</a>."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1070
+#: wordpress-social-login/includes/services/wsl.authentication.php:1071
 msgid "Unspecified error!"
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1076
+#: wordpress-social-login/includes/services/wsl.authentication.php:1077
 msgid "Unspecified error."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1077
+#: wordpress-social-login/includes/services/wsl.authentication.php:1078
 msgid "WordPress Social Login is not properly configured."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1080
+#: wordpress-social-login/includes/services/wsl.authentication.php:1081
 #, php-format
 msgid ""
 "WordPress Social Login is not properly configured.<br /> <b>%s</b> requires "
 "your application credentials."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1081
+#: wordpress-social-login/includes/services/wsl.authentication.php:1082
 #, php-format
 msgid ""
 "<b>What does this error mean ?</b><br />Most likely, you didn't setup the "
@@ -2427,31 +2439,31 @@ msgid ""
 "WordPress Social Login to work."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1081
+#: wordpress-social-login/includes/services/wsl.authentication.php:1082
 msgid ""
 "<br />Instructions for use can be found in the <a href=\"http://miled.github."
 "io/wordpress-social-login/networks.html\" target=\"_blank\">User Manual</a>."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1083
+#: wordpress-social-login/includes/services/wsl.authentication.php:1084
 #, php-format
 msgid ""
 "Authentication failed. Either you have cancelled the authentication or <b>"
 "%s</b> refused the connection."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1084
+#: wordpress-social-login/includes/services/wsl.authentication.php:1085
 #, php-format
 msgid ""
 "Request failed. Either you have cancelled the authentication or <b>%s</b> "
 "refused the connection."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1085
+#: wordpress-social-login/includes/services/wsl.authentication.php:1086
 msgid "You're not connected to the provider."
 msgstr ""
 
-#: wordpress-social-login/includes/services/wsl.authentication.php:1086
+#: wordpress-social-login/includes/services/wsl.authentication.php:1087
 msgid "Provider does not support this feature."
 msgstr ""
 
@@ -2606,15 +2618,15 @@ msgstr ""
 msgid "Oops! We ran into an issue"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:248
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:249
 msgid "Details"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:249
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:250
 msgid "Back to home"
 msgstr ""
 
-#: wordpress-social-login/includes/widgets/wsl.error.pages.php:298
+#: wordpress-social-login/includes/widgets/wsl.error.pages.php:299
 msgid ""
 "<strong>Note:</strong> This debugging area can be disabled from the plugin "
 "settings by setting <b>Development mode</b> to <b>Disabled</b>"
@@ -2635,7 +2647,7 @@ msgid "Processing, please wait..."
 msgstr ""
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:67
-msgid "Note tonight."
+msgid "Not tonight."
 msgstr ""
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:82
@@ -2722,7 +2734,7 @@ msgstr ""
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:527
 msgid ""
 "Please enter your username and password of your existing account on our "
-"website. Once verified, it will linked to your Facebook ID"
+"website. Once verified, it will linked to your % ID"
 msgstr ""
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:539
@@ -2735,7 +2747,8 @@ msgid "Back"
 msgstr ""
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:565
+#, php-format
 msgid ""
 "Please fill in your information in the form below. Once completed, you will "
-"be able to automatically sign into our website through your Facebook ID"
+"be able to automatically sign into our website through your %s ID"
 msgstr ""
