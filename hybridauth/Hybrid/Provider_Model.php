@@ -53,7 +53,7 @@ abstract class Hybrid_Provider_Model
 
 	/**
 	 * the provider api client (optional)
-	 * @var String
+	 * @var object
 	 */
 	public $api        = NULL; 
 
@@ -85,9 +85,6 @@ abstract class Hybrid_Provider_Model
 		// new user instance
 		$this->user = new Hybrid_User();
 		$this->user->providerId = $providerId;
-
-		// init api
-		$this->api = new stdClass();
 
 		// initialize the current provider adapter
 		$this->initialize();
