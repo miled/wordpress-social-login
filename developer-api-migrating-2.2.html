@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+	<title>Developer api migrating 2.2 - WordPress Social Login</title>
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	<meta name="description" content="">
+	<meta name="keywords" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
+
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+	<link href="assets/css/prettify.css" rel="stylesheet"> 
+	<link href="assets/css/style.css" rel="stylesheet">   
+
+	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="assets/js/prettify.js"></script>
+	<script type="text/javascript" src="assets/js/script.js"></script>
+</head>
+<body id="documentation">
+	<header>
+		<nav class="navbar navbar-fixed-top">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="./index.html">WordPress Social Login</a>
+			</div>
+
+			<div class="collapse navbar-collapse">
+				<ul class="nav navbar-nav navbar-right"> 
+					<li><a href="./overview.html">Overview</a></li>
+					<li class="active"><a href="./documentation.html">Documentation</a></li>
+					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li style="margin-right:10px">
+						<form action="./search.html" method="get">
+							<input type="text" name="q" class="search-input" placeholder="Search">
+						</form>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+ 
+	<div id="content" class="container container-documentation">
+		<div class="block row">
+			<div class="col col-md-12">
+
+<div class="alert alert-success">
+	<p style="font-size: 20px;">
+		This document outlines how to migrate to WSL <span class="label label-success">2.2+</span> and it's ONLY aimed at WSL users who are either using the depreciated hooks, depreciated CSS selectors, internal functions or Steam users identifiers form previous versions. Otherwise, you may update the plugin to new version without any issue.
+	</p>
+
+	<p style="font-size: 20px;">
+		<a href="#comments">Let us know</a> if there is something unclear or left uncovered.
+	</p>
+</div>
+
+<h1>Migrating to WSL 2.2.3 <small>Developer API</small></h1>
+
+<h3>Developers Release Notes</h3>
+
+<p>
+	This release (i.e, 2.2.3) did focus on code health and flexibility and it was necessary to move some code around, and to remove few functions and hooks. We know, it sucks to break WSL API at such short notice, but it was indispensable and unavoidable as we're trying to move the project forward.
+</p>
+
+<p>
+	As announced on WSL Support Forum, this is by no means a drastic change to the API. In fact, we tried our best to keep the said changes to a strict minimum, and the vast majority of WSL users will not be affected.
+</p>
+
+<p>
+	Those breaking changes are:
+</p>
+
+<ul>
+	<li>Deprecated hooks, prior to 2.2.2, have been removed.</li>
+	<li>Deprecated CSS selectors, prior to 2.2.2, have been removed.</li>
+	<li>Deprecated internal functions have been removed.</li>
+	<li>Few internal functions have been either removed, renamed or slightly changed.</li>
+	<li>Few pluggable functions has slightly changed.</li>
+	<li>Steam's users identifiers are converted to a new format.</li>
+</ul>
+
+<p>
+	On this release we have reworked Steam provider to fully support their new Web API, and we decided to change Steam's users identifiers to SteamID64. When updated, WSL 2.2.3 will automatically convert all the existing steam users identifiers in <code>wslusersprofiles</code> to the new format.
+</p>
+
+<p>
+	It's worth mentioning that in upcoming releases and before we hit WSL 3.0, we're planning to rework other parts of the codebase; for instance user database functions will be re-factored using an ORM, and profile completion will be replaced by new module.
+</p>
+
+<p>
+	<b>We explicitly discourage you from using, or hacking, any internal function (i.e., Not publicly documented on WSL dev API), as they are now subject to change in subsequent releases. If it wasn't possible to achieve some required functionality in a proper way through the already available and documented WSL hooks, please ask for support before resorting to hacks.</b>
+</p>
+
+<p>
+	Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintenance and stability (i.e, repair code health, enhance code coverage) rather than developing new features. This massive rewrite aims to make WSL more modular easily extended through plugins and add-ons (e.g., <a href="http://miled.github.io/wsl-users-converter/" target="_blank">http://miled.github.io/wsl-users-converter/</a>).
+</p>
+
+<h3>Steam identifiers</h3>
+
+<p>
+	Previous WSL version used to store the entire Steam's users OpenID identifiers and we decided to change it to SteamID64. When updated, WSL 2.2.3 will automatically convert all the existing steam users identifiers in <code>wslusersprofiles</code> to the new format.
+</p>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="width:5%">Type</th>
+			<th style="width:35%">Deprecated (old format)</th>
+			<th>Replacement (new format)</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>Users Identifiers</td>
+		<td><code>http://steamcommunity.com/openid/id/{SteamID64}</code></td>
+		<td><code>{SteamID64}</code></td>
+	</tr>
+</table>
+
+
+<h3>Depreciated hooks</h3>
+
+<h4 style="border:0; margin-top:20px">Authentication Process</h4>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="width:5%">Type</th>
+			<th style="width:35%">Deprecated</th>
+			<th>Replacement</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>Filter</td>
+		<td><code>wsl_hook_process_login_alter_userdata</code></td>
+		<td><code>wsl_hook_process_login_alter_wp_insert_user_data</code></td>
+	</tr>
+	<tr>
+		<td>Action</td>
+		<td><code>wsl_hook_process_login_before_insert_user</code></td>
+		<td><code>wsl_hook_process_login_before_wp_insert_user</code></td>
+	</tr>
+	<tr>
+		<td>Action</td>
+		<td><code>wsl_hook_process_login_after_create_wp_user</code></td>
+		<td><code>wsl_hook_process_login_after_wp_insert_user</code></td>
+	</tr>
+	<tr>
+		<td>Action</td>
+		<td><code>wsl_hook_process_login_before_set_auth_cookie</code></td>
+		<td><code>wsl_hook_process_login_before_wp_safe_redirect</code></td>
+	</tr>
+</table>
+
+<h4 style="border:0">WSL Widget Generator</h4>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th style="width:5%">Type</th>
+			<th style="width:35%">Deprecated</th>
+			<th>Replacement</th>
+		</tr>
+	</thead>
+	<tr>
+		<td>Action</td>
+		<td><code>wsl_render_login_form_start</code></td>
+		<td><code>wsl_render_auth_widget_start</code></td>
+	</tr>
+	<tr>
+		<td>Filter</td>
+		<td><code>wsl_alter_hook_provider_icon_markup</code></td>
+		<td><code>wsl_render_auth_widget_alter_provider_icon_markup</code></td>
+	</tr>
+	<tr>
+		<td>Filter</td>
+		<td><code>wsl_render_login_form_alter_provider_icon_markup</code></td>
+		<td><code>wsl_render_auth_widget_alter_provider_icon_markup</code></td>
+	</tr>
+	<tr>
+		<td>Action</td>
+		<td><code>wsl_render_login_form_end</code></td>
+		<td><code>wsl_render_auth_widget_end</code></td>
+	</tr>
+</table>
+
+<h3>Deprecated CSS selectors</h3>
+
+<p>
+	All elements IDs generated by WSL Widget are replaced by CSS classes.
+</p>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th width="35%">Deprecated</th>
+			<th>Replacement</th>
+		</tr>
+	</thead>
+	<tr>
+		<td><code>#wp-social-login-connect-with</code></td>
+		<td><code>.wp-social-login-connect-with</code></td>
+	</tr>
+	<tr>
+		<td><code>#wp-social-login-connect-options</code></td>
+		<td><code>.wp-social-login-provider-list</code></td>
+	</tr>
+	<tr>
+		<td><code>.wsl_connect_with_provider</code></td>
+		<td><code>.wp-social-login-provider</code></td>
+	</tr>
+</table>
+
+<h3>Internal functions</h3>
+
+<p>
+	As stated on release notes. In the WSL 2.2.3  we have moved some code around which resulted on removing few internals. These internals should never be used on the first place, but as we expect some WSL end users to still use them regardless of any given warning, we kept <b>few of them</b> inside the code so their websites doesn't break when updating to newer versions.
+</p>
+
+<table class="table table-bordered table-striped">
+	<thead>
+		<tr>
+			<th width="35%">Deprecated</th>
+			<th>Replacement</th>
+		</tr>
+	</thead>
+	<tr>
+		<td><code>wsl_render_login_form()</code></td>
+		<td><code>wsl_render_auth_widget()</code>. Note: It's better to use WSL action instead.</td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_login_form_login()</code></td>
+		<td><code>wsl_action_wordpress_social_login()</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_shortcode_handler()</code></td>
+		<td><code>wsl_shortcode_wordpress_social_login()</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_user_custom_avatar()</code></td>
+		<td><code>wsl_get_wp_user_custom_avatar()</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_bp_user_custom_avatar()</code></td>
+		<td><code>wsl_get_bp_user_custom_avatar()</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_comment_form()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_login_form_login_form()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_login_form_login_on_register_and_login()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_wsl_widget_in_comment_form()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_wsl_widget_in_wp_login_form()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+	<tr>
+		<td><code>wsl_render_wsl_widget_in_wp_register_form()</code></td>
+		<td>Not meant to be used directly. Use WSL action instead: <code>wsl_action_wordpress_social_login</code></td>
+	</tr>
+</table>
+
+<p>
+	All these functions are defined on <b>/includes/settings/wsl.compatibilities.php</b>, under section <em>Old Junk</em> and they will be permanently removed as for WSL 3.0.
+</p>
+
+<p>
+	In conclusion, there is two things to keep in mind:
+</p>
+
+<ul>
+	<li><b>Everything covered in WSL documentation is considered stable and LTS.</b></li>
+	<li><b>Anything else is reserved for internal use and should never be used by end users as it is subject to change without warning.</b></li>
+</ul>
+
+				<hr />
+				<br />
+				<a name="comments"></a>
+				<div style="padding: 8px;background-color:#FAFAFA;border: 1px solid #ccc;padding: 10px;text-align:center;box-shadow: 0 1px 3px rgba(0,0,0,0.13);">
+					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
+
+					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
+				</div> 
+				<br />
+				<div id="disqus_thread"></div>
+				<script type="text/javascript">
+					/* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+					var disqus_shortname = 'miledgithubio'; // required: replace example with your forum shortname
+
+					/* * * DON'T EDIT BELOW THIS LINE * * */
+					(function() {
+						var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+						dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+					})();
+				</script>
+
+				<br />
+				<br />
+			</div>
+		</div>
+	</div>
+
+	<footer>
+		<div class="container">
+			<div class="row"> 
+				<ul>
+					<li><a href="./index.html">Home</a></li>
+					<li><a href="./overview.html">Overview</a></li>
+					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./support.html">Support</a></li>
+					<li><a href="./faq.html">FAQ</a></li>
+					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
+				</ul> 
+				<span class="pull-right footer-extra-info">Generated on November 6, 2014</span>
+			</div>
+		</div>
+	</footer>
+
+	<script>
+		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+		(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+		m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+		})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		ga('create', 'UA-56230142-1', 'auto');
+		ga('send', 'pageview');
+	</script>
+</body>
+</html>
