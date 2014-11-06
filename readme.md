@@ -6,11 +6,11 @@ Basically, WordPress Social Login allow your website visitors and customers to r
 
 For more information about WordPress Social Login, refer to our [online user guide](http://miled.github.io/wordpress-social-login/).
 
+[![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/miled/wordpress-social-login/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/miled/wordpress-social-login/?branch=master) [![Code Coverage](https://coveralls.io/repos/miled/wordpress-social-login/badge.png)](https://coveralls.io/r/miled/wordpress-social-login)
+
     Note: This repository is for development only. 
     The official release is distributed through WordPress website.
 ![WSL Authentication Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-1.png)
-
-[![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/miled/wordpress-social-login/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/miled/wordpress-social-login/?branch=master) [![Code Coverage](https://coveralls.io/repos/miled/wordpress-social-login/badge.png)](https://coveralls.io/r/miled/wordpress-social-login)
 
 ### Key Features
 
