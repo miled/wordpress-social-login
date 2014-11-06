@@ -32,33 +32,29 @@ class Hybrid_Providers_px500 extends Hybrid_Provider_Model_OAuth1
 	*/
 	function getUserProfile()
 	{ 
-	
-
 		try{  
 			$response = $this->api->get( 'users' );
-
-			$this->user->profile->identifier    = (property_exists($response->user,'id'))?$response->user->id:"";
-			$this->user->profile->displayName   = (property_exists($response->user,'username'))?$response->user->username:"";
-			$this->user->profile->description   = (property_exists($response->user,'about'))?$response->user->about:"";
-			$this->user->profile->firstName     = (property_exists($response->user,'firstname'))?$response->user->firstname:"";
-			$this->user->profile->lastName      = (property_exists($response->user,'lastname'))?$response->user->lastname:"";  
-			$this->user->profile->photoURL      = (property_exists($response->user,'userpic_url'))?$response->user->userpic_url:"";
-			$this->user->profile->profileURL    = (property_exists($response->user,'domain'))?("http://".$response->user->domain):"";
-			$this->user->profile->webSiteURL    = (property_exists($response->user->contacts,'website'))?$response->user->contacts->website:""; 
-			$this->user->profile->city          = (property_exists($response->user,'city'))?$response->user->city:"";
-			$this->user->profile->region        = (property_exists($response->user,'state'))?$response->user->state:"";
-			$this->user->profile->country       = (property_exists($response->user,'country'))?$response->user->country:"";
-
-			if(property_exists($response->user,'sex')){
-				if($response->user->sex>0){
-					$this->user->profile->gender   = ($response->user->sex==1)?"male":"female";
-				}
-			}
-
-			return $this->user->profile; 
 		}
 		catch( Exception $e ){
 			throw new Exception( "User profile request failed! {$this->providerId} returned an error while requesting the user profile.", 6 );
+		}
+
+		$this->user->profile->identifier    = (property_exists($response->user,'id'))?$response->user->id:"";
+		$this->user->profile->displayName   = (property_exists($response->user,'username'))?$response->user->username:"";
+		$this->user->profile->description   = (property_exists($response->user,'about'))?$response->user->about:"";
+		$this->user->profile->firstName     = (property_exists($response->user,'firstname'))?$response->user->firstname:"";
+		$this->user->profile->lastName      = (property_exists($response->user,'lastname'))?$response->user->lastname:"";  
+		$this->user->profile->photoURL      = (property_exists($response->user,'userpic_url'))?$response->user->userpic_url:"";
+		$this->user->profile->profileURL    = (property_exists($response->user,'domain'))?("http://".$response->user->domain):"";
+		$this->user->profile->webSiteURL    = (property_exists($response->user->contacts,'website'))?$response->user->contacts->website:""; 
+		$this->user->profile->city          = (property_exists($response->user,'city'))?$response->user->city:"";
+		$this->user->profile->region        = (property_exists($response->user,'state'))?$response->user->state:"";
+		$this->user->profile->country       = (property_exists($response->user,'country'))?$response->user->country:"";
+
+		if(property_exists($response->user,'sex')){
+			if($response->user->sex>0){
+				$this->user->profile->gender = ($response->user->sex==1)?"male":"female";
+			}
 		}
 
 		return $this->user->profile;

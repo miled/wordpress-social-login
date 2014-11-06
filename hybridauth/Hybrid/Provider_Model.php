@@ -86,6 +86,9 @@ abstract class Hybrid_Provider_Model
 		$this->user = new Hybrid_User();
 		$this->user->providerId = $providerId;
 
+		// init api
+		$this->api = new stdClass();
+
 		// initialize the current provider adapter
 		$this->initialize();
 	}

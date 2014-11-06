@@ -235,7 +235,7 @@ function wsl_deprecated_function( $function, $version )
 	// user should be admin and logged in
 	if( current_user_can('manage_options') )
 	{
-		trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since WordPress Social Login %2$s! For more information, check WSL Developer API - Migration.'), $function, $version, $replacement ), E_USER_NOTICE );
+		trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since WordPress Social Login %2$s! For more information, check WSL Developer API - Migration.'), $function, $version ), E_USER_NOTICE );
 	}
 }
 
