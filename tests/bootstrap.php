@@ -36,11 +36,11 @@ activate_plugin( 'wordpress-social-login/wp-social-login.php' );
 
 echo "Uninstall WSL...\n";
 
-wsl_database_uninstall;
+wsl_database_uninstall();
 
 echo "Install WSL...\n";
 
-wsl_database_install()();
+wsl_database_install();
 
 echo "ReInstall WSL...\n";
 
