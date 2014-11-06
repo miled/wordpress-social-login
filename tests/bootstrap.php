@@ -14,12 +14,19 @@ $_SERVER['HTTP_HOST'] = 'localhost';
 
 define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', dirname( __FILE__ ) . '/../' );
 
+$_tests_dir = getenv('WP_TESTS_DIR');
+
+if ( ! $_tests_dir )
+{
+	$_tests_dir = '/tmp/wordpress-tests-lib';
+}
+
 echo "Booting...\n";
 echo "PHP:session_id()=" . session_id() . "\n";
-echo "WPT:WP_TESTS_DIR=" . getenv( 'WP_TESTS_DIR' ) . "\n";
+echo "WPT:WP_TESTS_DIR=" . $_tests_dir . "\n";
 echo "WSL:WORDPRESS_SOCIAL_LOGIN_ABS_PATH=" . realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH ) . "\n";
 
-require_once getenv( 'WP_TESTS_DIR' ) . '/includes/functions.php';
+require_once $_tests_dir . '/includes/functions.php';
 
 function _manually_load_plugin()
 {
@@ -28,7 +35,7 @@ function _manually_load_plugin()
 
 tests_add_filter( 'muplugins_loaded', '_manually_load_plugin' );
 
-require getenv( 'WP_TESTS_DIR' ) . '/includes/bootstrap.php';
+require $_tests_dir . '/includes/bootstrap.php';
 
 echo "Activate WSL...\n";
 
