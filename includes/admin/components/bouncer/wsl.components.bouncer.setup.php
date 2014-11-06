@@ -193,7 +193,7 @@ function wsl_component_bouncer_setup_user_moderation()
 			<li><?php _wsl_e('<b>Admin Approval</b>: New users will need to be approved by an administrator before they may log in', 'wordpress-social-login') ?>.</li>
 		</ul> 
 		<p>
-			<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
+			<b><?php _wsl_e('Notes', 'wordpress-social-login') ?>:</b>
 		</p> 
 		<p class="description">
 			1. <?php _wsl_e('Both <b>Admin Approval</b> and <b>E-mail Confirmation</b> requires <a href="http://wordpress.org/extend/plugins/theme-my-login/" target="_blank">Theme My Login Plugin</a> to be installed', 'wordpress-social-login') ?>.
@@ -254,7 +254,7 @@ function wsl_component_bouncer_setup_membership_level()
 			<?php _wsl_e('For more information about WordPress users roles and capabilities refer to <a href="http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs._Role_Table" target="_blank">http://codex.wordpress.org/Roles_and_Capabilities</a>', 'wordpress-social-login') ?>.
 		</p>  
 		<p class="description">
-			<?php _wsl_e('<b>Notes:</b>', 'wordpress-social-login') ?>
+			<b><?php _wsl_e('Notes', 'wordpress-social-login') ?>:</b>
 			<br /><?php _wsl_e('1. If <b>User Moderation</b> is set to <code>Admin Approval</code>, then <b>Membership level</b> will be ignored', 'wordpress-social-login') ?>. 
 			<br /><?php _wsl_e('2. To assign the same default role as in your website <b>General Settings</b>, set this field to <code>Wordpress User Default Role</code>', 'wordpress-social-login') ?>.
 			<br /><?php _wsl_e('3. If you are not sure, simply leave this field to <code>No role for this site</code>', 'wordpress-social-login') ?>.

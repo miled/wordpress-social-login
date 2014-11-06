@@ -39,7 +39,7 @@ function wsl_component_bouncer_sidebar_what_is_this()
 ?>
 <div class="postbox">
 	<div class="inside">
-		<h3><?php _wsl_e("What's This", 'wordpress-social-login') ?>?</h3>
+		<h3><?php _wsl_e("What's This?", 'wordpress-social-login') ?></h3>
 
 		<div style="padding:0 20px;">
 			<h4 style="cursor: default;border-bottom:1px solid #ccc;font-size: 13px;"><?php _wsl_e("Hey, meet our friend, the Bouncer", 'wordpress-social-login') ?></h4>

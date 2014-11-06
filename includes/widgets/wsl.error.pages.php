@@ -233,7 +233,8 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 
 						<?php
 							// any hint or extra note?
-							if( $notes ) {
+							if( $notes )
+							{
 								?>
 									<p class="error-hint"><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
 								<?php

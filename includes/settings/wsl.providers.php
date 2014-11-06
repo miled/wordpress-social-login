@@ -22,6 +22,7 @@
 *      'require_client_id'   : If a provider uses OAuth 2. Defaults to false.
 *      'callback'            : If the provide require to set a callback url. Defaults to false.
 *      'new_app_link'        : If the provide require to create a new application on his developer site.
+*      'default_api_scope'   : Default scope requested
 *      'default_network'     : If true, it will shows up by default on Admin > WordPress Social Login > Networks
 *      'cat'                 : Provider category. (for future use)
 *   ),
@@ -42,6 +43,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true, 
 		"callback"          => true,
 		"new_app_link"      => "https://developers.facebook.com/apps", 
+		"default_api_scope" => "email, public_profile, user_friends", 
 
 		"default_network"   => true,
 		"cat"               => "socialnetworks",
@@ -52,6 +54,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"callback"          => true,
 		"require_client_id" => true,
 		"new_app_link"      => "https://console.developers.google.com", 
+		"default_api_scope" => "profile https://www.googleapis.com/auth/plus.profile.emails.read", 
 
 		"default_network"   => true,
 		"cat"               => "socialnetworks",
@@ -159,6 +162,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "https://github.com/settings/applications/new", 
+		"default_api_scope" => "user:email", 
 
 		"cat"               => "programmers",
 	),

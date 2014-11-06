@@ -26,7 +26,7 @@ if ( !defined( 'ABSPATH' ) ) exit;
 /**
 * Check and upgrade compatibilities from old WSL versions 
 */
-function wsl_check_compatibilities()
+function wsl_update_compatibilities()
 {
 	delete_option( 'wsl_settings_development_mode_enabled' );
 	delete_option( 'wsl_settings_debug_mode_enabled' );
@@ -165,6 +165,31 @@ function wsl_check_compatibilities()
 		update_option( 'wsl_settings_buddypress_xprofile_map', '' );
 	}
 
+	# if no idp is enabled then we enable the default providers (facebook, google, twitter)
+	global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+	$nok = true; 
+	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+	{
+		$provider_id = $item["provider_id"];
+		
+		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
+		{
+			$nok = false;
+		}
+	}
+
+	if( $nok )
+	{
+		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+		{
+			$provider_id = $item["provider_id"];
+
+			if( isset( $item["default_network"] ) && $item["default_network"] ){
+				update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
+			} 
+		} 
+	}	
+
 	global $wpdb;
 
 	# migrate steam users id to id64. Prior to 2.2
@@ -185,22 +210,24 @@ function wsl_check_compatibilities()
 * doesn't break when updating to newer versions.
 *
 * TO BE REMOVED AS OF WSL 3.0
+**
+* Ref: http://miled.github.io/wordpress-social-login/developer-api-migrating-2.2.html
 */
 
 // 2.1.6
-function wsl_render_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); return wsl_render_auth_widget(); }
-function wsl_render_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_render_login_form_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_render_login_form_login_on_register_and_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_render_login_form_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_shortcode_handler(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); return wsl_render_auth_widget(); }
+function wsl_render_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_render_auth_widget(); }
+function wsl_render_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_render_login_form_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_render_login_form_login_on_register_and_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_render_login_form_login(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_shortcode_handler(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_shortcode_wordpress_social_login(); }
 
 // 2.2.2
-function wsl_render_wsl_widget_in_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_render_wsl_widget_in_wp_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_render_wsl_widget_in_wp_register_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_render_auth_widget' ); echo wsl_render_auth_widget(); }
-function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_get_wp_user_custom_avatar' ); return wsl_get_wp_user_custom_avatar($html, $mixed, $size, $default, $alt); }
-function wsl_bp_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3', 'wsl_get_bp_user_custom_avatar' ); return wsl_get_bp_user_custom_avatar($html, $args); }
+function wsl_render_wsl_widget_in_comment_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_render_wsl_widget_in_wp_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_render_wsl_widget_in_wp_register_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
+function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_get_wp_user_custom_avatar($html, $mixed, $size, $default, $alt); }
+function wsl_bp_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_get_bp_user_custom_avatar($html, $args); }
 
 // nag about it
 function wsl_deprecated_function( $function, $version, $replacement )
@@ -208,7 +235,7 @@ function wsl_deprecated_function( $function, $version, $replacement )
 	// user should be admin and logged in
 	if( current_user_can('manage_options') )
 	{
-		trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since WordPress Social Login %2$s! Use %3$s instead. For more information, check WSL Developer API.'), $function, $version, $replacement ), E_USER_NOTICE );
+		trigger_error( sprintf( __('%1$s is <strong>deprecated</strong> since WordPress Social Login %2$s! For more information, check WSL Developer API - Migration.'), $function, $version, $replacement ), E_USER_NOTICE );
 	}
 }
 

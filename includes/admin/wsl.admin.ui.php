@@ -232,6 +232,8 @@ function wsl_admin_ui_footer()
 <div class="clear"></div>
 
 <?php
+	wsl_admin_help_us_localize_note();
+
 	// HOOKABLE: 
 	do_action( "wsl_admin_ui_footer_end" );
 
@@ -268,7 +270,7 @@ function wsl_admin_ui_error()
 
 	<div>
 		<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/support.html" target="_blank"><?php _wsl_e( "Report as bug", 'wordpress-social-login' ) ?></a>
-		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:right"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
+		<a class="button-primary" href="options-general.php?page=wordpress-social-login&wslp=components" style="float:<?php if( is_rtl() ) echo 'left'; else echo 'right'; ?>"><?php _wsl_e( "Check enabled components", 'wordpress-social-login' ) ?></a>
 	</div> 
 </div>  
 <?php
@@ -427,11 +429,10 @@ function wsl_admin_help_us_localize_note()
 	$assets_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
 
 	?> 
-		<div id="l10n-footer" style="float: left; display: block; ">
-			<br style="clear:both;" />
-			<hr />
+		<div id="l10n-footer">
+			<br /><br />
 			<img src="<?php echo $assets_url ?>flags.png">
-			<a href="options-general.php?page=wordpress-social-login&wslp=help&wslhelp=translate"><?php _wsl_e( "Help us translate WordPress Social Login into your language", 'wordpress-social-login' ) ?></a>
+			<a href="https://www.transifex.com/projects/p/wordpress-social-login/" target="_blank"><?php _wsl_e( "Help us translate WordPress Social Login into your language", 'wordpress-social-login' ) ?></a>
 		</div>
 	<?php
 }

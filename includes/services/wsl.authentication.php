@@ -896,11 +896,15 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
 	}
 
-	// set default scope and display mode for facebook
+	// set default scope
+	if( get_option( 'wsl_settings_' . $provider . '_app_scope' ) )
+	{
+		$config["providers"][$provider]["scope"] = get_option( 'wsl_settings_' . $provider . '_app_scope' );
+	}
+
+	// set custom config for facebook
 	if( strtolower( $provider ) == "facebook" )
 	{
-		// > do not reset this scope manually, use wsl filter 'hook wsl_hook_alter_provider_scope'
-		$config["providers"][$provider]["scope"] = "email, public_profile, user_friends";
 		$config["providers"][$provider]["display"] = "popup";
 		$config["providers"][$provider]["trustForwarded"] = true;
 
@@ -911,22 +915,19 @@ function wsl_process_login_build_provider_config( $provider )
 		}
 	}
 
-	// set default scope for google
+	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
-		// > do not reset this scope manually, use wsl filter 'hook wsl_hook_alter_provider_scope'
-		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
-
 		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
-		if( get_option( 'wsl_settings_contacts_import_google' ) == 1 && wsl_is_component_enabled( 'contacts' ) )
+		if( wsl_is_component_enabled( 'contacts' ) && get_option( 'wsl_settings_contacts_import_google' ) == 1 )
 		{
 			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
 		}
 	}
 
-	// HOOKABLE: allow to overwrite scopes
 	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ; 
 
+	// HOOKABLE: allow to overwrite scopes
 	$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
 
 	// HOOKABLE: allow to overwrite hybridauth config for the selected provider

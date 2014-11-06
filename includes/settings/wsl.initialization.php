@@ -198,16 +198,29 @@ function wsl_register_setting()
 	// idps credentials
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
 	{
-		$provider_id          = isset( $item["provider_id"]       ) ? $item["provider_id"]       : null; 
+		$provider_id          = isset( $item["provider_id"]       ) ? $item["provider_id"]       : null;
 		$require_client_id    = isset( $item["require_client_id"] ) ? $item["require_client_id"] : null;
 		$require_registration = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : null;
+		$default_api_scope    = isset( $item["default_api_scope"] ) ? $item["default_api_scope"] : null;
+		$default_network      = isset( $item["default_network"]   ) ? $item["default_network"]   : null;
+
+		/**
+		* @fixme
+		*
+		* Here we should only register enabled providers settings. postponed. patches are welcome.
+		***
+			if( ! $default_network || get_option( 'wsl_settings_' . $provider_id . '_enabled' ) != 1 .. )
+			{
+				..
+			}
+		*/
 
 		register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_enabled' );
 
 		// require application?
 		if( $require_registration )
 		{
-			// key or id ?
+			// api key or id ?
 			if( $require_client_id )
 			{
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' ); 
@@ -217,7 +230,19 @@ function wsl_register_setting()
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' ); 
 			}
 
+			// api secret
 			register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_secret' ); 
+
+			// api scope?
+			if( $default_api_scope )
+			{
+				if( ! get_option( 'wsl_settings_' . $provider_id . '_app_scope' ) )
+				{
+					update_option( 'wsl_settings_' . $provider_id . '_app_scope', $default_api_scope );
+				}
+
+				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_scope' );
+			}
 		}
 	}
 

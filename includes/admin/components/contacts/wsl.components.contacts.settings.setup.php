@@ -146,6 +146,7 @@ function wsl_component_contacts_settings_setup_live()
 		<label><?php _wsl_e("Windows Live", 'wordpress-social-login') ?></label>
 	</h3>
 	<div class="inside"> 
+		<hr />
 		<select name="wsl_settings_contacts_import_live" <?php if( ! get_option( 'wsl_settings_Live_enabled' ) ) echo "disabled" ?> >
 			<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
 			<option <?php if( get_option( 'wsl_settings_contacts_import_live' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
@@ -165,7 +166,8 @@ function wsl_component_contacts_settings_setup_vkontakte()
 		<label><?php _wsl_e("Vkontakte", 'wordpress-social-login') ?></label>
 	</h3>
 	<div class="inside"> 
-		<select name="wsl_settings_contacts_import_live" <?php if( ! get_option( 'wsl_settings_Vkontakte_enabled' ) ) echo "disabled" ?> >
+		<hr />
+		<select name="wsl_settings_contacts_import_vkontakte" <?php if( ! get_option( 'wsl_settings_Vkontakte_enabled' ) ) echo "disabled" ?> >
 			<option <?php if( get_option( 'wsl_settings_contacts_import_vkontakte' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
 			<option <?php if( get_option( 'wsl_settings_contacts_import_vkontakte' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
 		</select>

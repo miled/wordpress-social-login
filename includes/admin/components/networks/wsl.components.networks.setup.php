@@ -27,30 +27,6 @@ function wsl_component_networks_setup()
 	
 	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	// if no idp is enabled then we enable the default providers (facebook, google, twitter)
-	$nok = true; 
-	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
-	{
-		$provider_id = $item["provider_id"];
-		
-		if( get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
-		{
-			$nok = false;
-		}
-	}
-
-	if( $nok )
-	{
-		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
-		{
-			$provider_id = $item["provider_id"];
-			
-			if( isset( $item["default_network"] ) && $item["default_network"] ){
-				update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
-			} 
-		} 
-	}
-
 	// save settings?
 	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] )
 	{
@@ -103,6 +79,7 @@ function wsl_component_networks_setup()
 
 		$require_client_id          = isset( $item["require_client_id"] ) ? $item["require_client_id"] : '';
 		$require_api_key            = isset( $item["require_api_key"]   ) ? $item["require_api_key"]   : '';
+		$default_api_scope          = isset( $item["default_api_scope"] ) ? $item["default_api_scope"] : '';
 		$provide_email              = isset( $item["provide_email"]     ) ? $item["provide_email"]     : '';
 
 		$provider_new_app_link      = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : '';
@@ -170,12 +147,28 @@ function wsl_component_networks_setup()
 								</tr>  
 							<?php }; ?>	 
 
-							<?php if( ! $require_api_key ) { ?>	 
+							<?php if( ! $require_api_key ) { ?>
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
 									<td><?php _wsl_e("Application Secret", 'wordpress-social-login') ?>:</td>
 									<td><input dir="ltr" type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_secret' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_secret' ); ?>" ></td>
 									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>
+							<?php } ?>
+
+							<?php if( get_option( 'wsl_settings_development_mode_enabled' ) ) { ?>
+								<?php if( $default_api_scope ) { ?>
+									<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
+										<td><?php _wsl_e("Application Scope", 'wordpress-social-login') ?>:</td>
+										<td><input dir="ltr" type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_scope' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_scope' ); ?>" ></td>
+									</tr>
+								<?php } ?>
+
+								<?php if( $provider_callback_url ) { ?>
+									<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
+										<td><?php _wsl_e("Callback URL", 'wordpress-social-login') ?>:</td>
+										<td><input dir="ltr" type="text" name="" value="<?php echo  strip_tags( $provider_callback_url ); ?>" readonly="readonly"></td>
+									</tr>
+								<?php } ?>
 							<?php } ?>
 						<?php } // if require registration ?> 
 					</tbody>

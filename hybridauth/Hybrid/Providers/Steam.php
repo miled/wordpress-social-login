@@ -7,7 +7,7 @@
 
 /**
  * Hybrid_Providers_Steam provider adapter based on OpenID protocol
- * 
+ *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Steam.html
  *
  * This class has been entirely reworked for the new Steam API (http://steamcommunity.com/dev)
@@ -23,30 +23,32 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 	{
 		parent::loginFinish();
 
-		$this->user->profile->identifier = str_replace( "http://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
+		$this->user->profile->identifier = str_ireplace( "http://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
 
 		if( ! $this->user->profile->identifier )
 		{
 			throw new Exception( "Authentication failed! {$this->providerId} returned an invalid user ID.", 5 );
 		}
 
-		// if api key is provided, we attempt to enrich the user profile
-		if( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] )
+		// if api key is provided, we attempt to use steam web api
+		if( isset( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] ) && Hybrid_Auth::$config['providers']['Steam']['keys']['key'] )
 		{
 			$userProfile = $this->getUserProfileWebAPI( Hybrid_Auth::$config['providers']['Steam']['keys']['key'] );
 		}
-		// otherwise just grab basic info
+
+		// otherwise we fallback to community data
 		else
 		{
 			$userProfile = $this->getUserProfileLegacyAPI();
 		}
 
+		// fetch user profile
 		foreach( $userProfile as $k => $v )
 		{
 			$this->user->profile->$k = $v ? $v : $this->user->profile->$k;
 		}
 
-		// store the user profile
+		// store user profile
 		Hybrid_Auth::storage()->set( "hauth_session.{$this->providerId}.user", $this->user );
 	}
 

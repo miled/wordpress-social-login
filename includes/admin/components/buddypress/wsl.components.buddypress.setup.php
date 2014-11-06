@@ -119,7 +119,7 @@ function wsl_component_buddypress_setup_profile_mapping()
 		</p>
 
 		<p>
-			<?php _wsl_e('<b>Notes</b>', 'wordpress-social-login') ?>:
+			<b><?php _wsl_e('Notes', 'wordpress-social-login') ?>:</b>
 		</p> 
 
 		<p class="description">

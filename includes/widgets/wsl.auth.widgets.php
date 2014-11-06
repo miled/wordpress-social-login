@@ -278,7 +278,7 @@ do_action( 'wsl_render_login_form_end' );
 <!-- wsl_render_auth_widget -->
 
 <?php
-	// Display WSL debugging are bellow the widget.  
+	// Display WSL debugging area bellow the widget.  
 	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :) 
 
 	return ob_get_clean();

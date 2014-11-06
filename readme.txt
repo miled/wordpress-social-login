@@ -97,8 +97,9 @@ Those breaking changes are:
 * Few pluggable functions has slightly changed.
 * Steam's users identifiers are converted to a new format.
 
-We also reworked WSL documentation. Please update the WSL hooks you were using accordingly to the new developer API:
+Please update the WSL hooks you were using accordingly to the new developer API:
 
+http://miled.github.io/wordpress-social-login/developer-api-migrating-2.2.html
 http://miled.github.io/wordpress-social-login/developer-api-authentication.html
 http://miled.github.io/wordpress-social-login/developer-api-widget.html
 http://miled.github.io/wordpress-social-login/developer-api-functions.html
@@ -144,6 +145,7 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * Fix an issue where redirect_to get overwritten in some cases.
 * Fix an issue with redirect_to where the callback url was encoded twice.
 * Fix several stability issues.
+* Added testunit to the project (early version).
 * Deprecated hooks, prior to 2.2.2, have been removed.
 * Deprecated internal functions have been removed.
 * Deprecated css selectors, in wsl widget, have been removed.

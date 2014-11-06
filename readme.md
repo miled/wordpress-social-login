@@ -49,11 +49,12 @@ Those breaking changes are:
 * Few pluggable functions has slightly changed.
 * Steam's users identifiers are converted to a new format.
 
-We also reworked WSL documentation. Please update the WSL hooks you were using accordingly to the new developer API:
+Please update the WSL hooks you were using accordingly to the new developer API:
 
-* http://miled.github.io/wordpress-social-login/developer-api-authentication.html 
-* http://miled.github.io/wordpress-social-login/developer-api-widget.html 
-* http://miled.github.io/wordpress-social-login/developer-api-functions.html 
+* http://miled.github.io/wordpress-social-login/developer-api-migrating-2.2.html
+* http://miled.github.io/wordpress-social-login/developer-api-authentication.html
+* http://miled.github.io/wordpress-social-login/developer-api-widget.html
+* http://miled.github.io/wordpress-social-login/developer-api-functions.html
 
 On this release we have reworked Steam provider to fully support their new Web API, and we decided to change Steam's users identifiers to SteamID64. When updated, WSL 2.2.3 will automatically convert all the existing steam users identifiers in wslusersprofiles to the new format.
 
@@ -70,7 +71,7 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 - [ ] Widget shortcode will support arguments
 - [ ] Add a meta shortcode
 - [ ] Add soundcloud developers.soundcloud.com/docs
-- [ ] User moderation will be fully implemented and no longer needs TML.
+- [ ] Add levels or conditionals to Dev mode (i.g., only display is_admin) 
 - [ ] ..
 
 #### License 

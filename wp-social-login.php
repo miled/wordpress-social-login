@@ -62,6 +62,11 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 session_id() or session_start();
 
+global $WORDPRESS_SOCIAL_LOGIN_VERSION;
+global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+global $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
+global $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
+
 $WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
@@ -96,9 +101,7 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 // --------------------------------------------------------------------
 
 /**
-* Check technical requirements before activating the plugin. 
-*
-* Wordpress 3.0 or newer required
+* Check for Wordpress 3.0
 */
 function wsl_activate()
 {
@@ -111,6 +114,26 @@ function wsl_activate()
 }
 
 register_activation_hook( __FILE__, 'wsl_activate' );
+
+// --------------------------------------------------------------------
+
+/**
+* Attempt to install/migrate/repair WSL upon activation
+*
+* Create wsl tables
+* Migrate old versions
+* Register default components
+*/
+function wsl_install()
+{
+	wsl_database_install();
+
+	wsl_update_compatibilities();
+
+	wsl_register_components();
+}
+
+register_activation_hook( __FILE__, 'wsl_install' );
 
 // --------------------------------------------------------------------
 
@@ -155,10 +178,9 @@ function wsl_add_plugin_row_meta( $links, $file )
 	if( $file == $this_plugin )
 	{
 		$wsl_links = array(
-			'<a href="http://miled.github.io/wordpress-social-login/">'             . __( "Docs" )              . '</a>',
-			'<a href="http://miled.github.io/wordpress-social-login/faq.html">'     . __( "FAQ" )               . '</a>',
-			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . __( "Suppot" )            . '</a>',
-			'<a href="https://github.com/miled/wordpress-social-login">'            . __( "Fork me on Github" ) . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/">'             . _wsl__( "Docs"             , 'wordpress-social-login' ) . '</a>',
+			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . _wsl__( "Support"          , 'wordpress-social-login' ) . '</a>',
+			'<a href="https://github.com/miled/wordpress-social-login">'            . _wsl__( "Fork me on Github", 'wordpress-social-login' ) . '</a>',
 		);
 
 		return array_merge( $links, $wsl_links );
@@ -212,37 +234,29 @@ function _wsl__( $text, $domain )
 
 # WSL Setup & Settings
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.providers.php'            ); // List of supported providers (mostly provided by hybridauth library) 
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.database.php'             ); // Create WSL database tables upon installation
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.database.php'             ); // Install/Uninstall WSL database tables
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.initialization.php'       ); // Check WSL requirements and register WSL settings
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/settings/wsl.compatibilities.php'      ); // Check and upgrade WSL database/settings (for older versions)
 
 # Services & Utilities
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.authentication.php'       ); // Authenticate users via social networks. <- that's the most important script
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications.
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.avatar.php'          ); // Displaying the user avatar when available on the comment section
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.mail.notification.php'    ); // Emails and notifications
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.avatar.php'          ); // Display users avatar
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.data.php'            ); // User data functions (database related)
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.utilities.php'            ); // Unclassified functions & utilities
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.watchdog.php'             ); // WSL logging agent
 
 # WSL Widgets & Front-end interfaces 
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widgets.php'          ); // Authentication widget generators (where WSL widget/icons are displayed)
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register.
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.users.gateway.php'         ); // Planned for WSL 2.3. Accounts linking + Profile Completion. 
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages.
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens.
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.users.gateway.php'         ); // Planned for WSL 2.3. Accounts linking + Profile Completion
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens
 
 # WSL Admin interfaces
 if( is_admin() )
 {
 	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
-
-// --------------------------------------------------------------------
-
-/* hooks */
-
-// registers wsl_database_migration_hook() to be run when the WSL is activated.
-// this will create/update wslusersprofiles and wsluserscontacts and register/unregister few options 
-register_activation_hook( __FILE__, 'wsl_database_migration_hook' );
 
 // --------------------------------------------------------------------
