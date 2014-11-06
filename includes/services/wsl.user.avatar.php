@@ -119,10 +119,8 @@ if( ! function_exists( 'wsl_get_bp_user_custom_avatar' ) )
 			return $html;
 		}
 
-		$user_id = null;
-
 		//Check arguments
-		if (is_array($args) )
+		if( is_array( $args ) )
 		{
 			//User Object
 			if( ! empty( $args['object'] ) AND strtolower( $args['object'] ) == 'user' )

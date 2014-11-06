@@ -273,7 +273,6 @@ function wsl_process_login_end()
 	$user_id                 = ''   ; // wp user id 
 	$adapter                 = ''   ; // hybriauth adapter for the selected provider
 	$hybridauth_user_profile = ''   ; // hybriauth user profile 
-	$hybridauth_user_email   = ''   ; // user email as provided by the provider
 	$requested_user_login    = ''   ; // username typed by users in Profile Completion
 	$requested_user_email    = ''   ; // email typed by users in Profile Completion
 
@@ -324,7 +323,6 @@ function wsl_process_login_end()
 			$user_id                ,
 			$adapter                ,
 			$hybridauth_user_profile,
-			$hybridauth_user_email  ,
 			$requested_user_login   ,
 			$requested_user_email   ,
 		)
@@ -554,7 +552,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		$user_id,
 		$adapter,
 		$hybridauth_user_profile, 
-		$hybridauth_user_email, 
 		$requested_user_login, 
 		$requested_user_email, 
 	);
@@ -643,9 +640,9 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 	$display_name = $hybridauth_user_profile->displayName;
 
-	if( $request_user_login )
+	if( $requested_user_login )
 	{
-		$display_name = sanitize_user( $request_user_login, true );
+		$display_name = sanitize_user( $requested_user_login, true );
 	}
 
 	if( empty( $display_name ) )

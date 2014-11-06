@@ -227,10 +227,10 @@ function wsl_render_wsl_widget_in_comment_form(){ wsl_deprecated_function( __FUN
 function wsl_render_wsl_widget_in_wp_login_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
 function wsl_render_wsl_widget_in_wp_register_form(){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); wsl_action_wordpress_social_login(); }
 function wsl_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_get_wp_user_custom_avatar($html, $mixed, $size, $default, $alt); }
-function wsl_bp_user_custom_avatar($avatar, $mixed, $size, $default, $alt){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_get_bp_user_custom_avatar($html, $args); }
+function wsl_bp_user_custom_avatar($html, $args){ wsl_deprecated_function( __FUNCTION__, '2.2.3' ); return wsl_get_bp_user_custom_avatar($html, $args); }
 
 // nag about it
-function wsl_deprecated_function( $function, $version, $replacement )
+function wsl_deprecated_function( $function, $version )
 {
 	// user should be admin and logged in
 	if( current_user_can('manage_options') )

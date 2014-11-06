@@ -254,7 +254,7 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 		}
 	}
 
-	$rs = $wpdb->replace( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
+	$wpdb->replace( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
 
 	return $wpdb->insert_id;
 }

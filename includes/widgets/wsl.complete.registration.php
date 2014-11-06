@@ -24,13 +24,9 @@ function wsl_process_login_complete_registration( $provider, $redirect_to, $hybr
 	// HOOKABLE:
 	do_action( "wsl_process_login_complete_registration_start", $provider, $redirect_to, $hybridauth_user_profile );
 
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
-
 	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email ); 
 	$hybridauth_user_login       = sanitize_user( $hybridauth_user_profile->displayName, true );
 	$hybridauth_user_avatar      = $hybridauth_user_profile->photoURL;
-	$hybridauth_user_website     = $hybridauth_user_profile->webSiteURL;
-	$hybridauth_user_link        = $hybridauth_user_profile->profileURL;
 
 	$request_user_login          = isset( $_REQUEST["user_login"] ) ? $_REQUEST["user_login"] : '';
 	$request_user_email          = isset( $_REQUEST["user_email"] ) ? $_REQUEST["user_email"] : '';

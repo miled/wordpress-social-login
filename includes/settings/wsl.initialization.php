@@ -202,13 +202,14 @@ function wsl_register_setting()
 		$require_client_id    = isset( $item["require_client_id"] ) ? $item["require_client_id"] : null;
 		$require_registration = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : null;
 		$default_api_scope    = isset( $item["default_api_scope"] ) ? $item["default_api_scope"] : null;
-		$default_network      = isset( $item["default_network"]   ) ? $item["default_network"]   : null;
 
 		/**
 		* @fixme
 		*
 		* Here we should only register enabled providers settings. postponed. patches are welcome.
 		***
+			$default_network = isset( $item["default_network"] ) ? $item["default_network"] : null;
+
 			if( ! $default_network || get_option( 'wsl_settings_' . $provider_id . '_enabled' ) != 1 .. )
 			{
 				..
