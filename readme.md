@@ -1,12 +1,12 @@
-## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 2.2.3
- 
+## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 2.2.3 [![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login) 
+
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
 Basically, WordPress Social Login allow your website visitors and customers to register and login via social networks such as twitter, facebook and google but it has much more to offer.
 
 For more information about WordPress Social Login, refer to our [online user guide](http://miled.github.io/wordpress-social-login/).
 
-    Note: This repository is for development only.
+    Note: This repository is for development only. 
     The official release is distributed through WordPress website.
 ![WSL Authentication Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-1.png)
 
