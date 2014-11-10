@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.0
-Stable tag: 2.2.3
+Stable tag: 2.3.0
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -73,6 +73,11 @@ The user guide and frequently asked questions can be found at http://miled.githu
 8. WSL components and add-ons manager.
 
 == Changelog ==
+
+= 2.3.0 = 
+
+* .
+* ..
 
 = 2.2.3 = 
 

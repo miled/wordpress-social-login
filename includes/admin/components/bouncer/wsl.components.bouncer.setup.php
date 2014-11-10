@@ -19,7 +19,7 @@ function wsl_component_bouncer_setup()
 {
 	$sections = array(
 		'wsl_widget'         => 'wsl_component_bouncer_setup_wsl_widget'        ,
-		// 'accounts_linking'   => 'wsl_component_bouncer_setup_accounts_linking'  , // This is planned for 2.3
+		'accounts_linking'   => 'wsl_component_bouncer_setup_accounts_linking'  , // This is planned for 2.3
 		'profile_completion' => 'wsl_component_bouncer_setup_profile_completion',
 		'user_moderation'    => 'wsl_component_bouncer_setup_user_moderation'   , 
 		'membership_level'   => 'wsl_component_bouncer_setup_membership_level'  , 
@@ -130,11 +130,9 @@ function wsl_component_bouncer_setup_profile_completion()
 		<p>
 			<?php _wsl_e("Select required fields. If a social network doesn't return them, Bouncer will then ask your visitors to fill additional form to provide them when registering.", 'wordpress-social-login') ?> 
 		</p>
-		<!-- planned for 2.3
 		<p>
 			<?php _wsl_e("When <b>Hook extra registration fields</b> is set to Yes, Bounce will also add any extra registration fields from other plugins (eg: Newsletter, Register Plus Redux) .", 'wordpress-social-login') ?> 
 		</p>
-		-->
 		<p class="description">
 			<?php _wsl_e("You may activate <b>Profile Completion</b> for both <b>E-mail</b> and <b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to avoid forms and to remove the hassle of registration", 'wordpress-social-login') ?>.
 		</p>
@@ -157,7 +155,6 @@ function wsl_component_bouncer_setup_profile_completion()
 				</select>
 			</td>
 		  </tr>
-		<!-- planned for 2.3
 		  <tr>
 			<td width="200" align="right"><strong><?php _wsl_e("Hook extra registration fields", 'wordpress-social-login') ?> :</strong></td>
 			<td>
@@ -167,7 +164,6 @@ function wsl_component_bouncer_setup_profile_completion()
 				</select>
 			</td>
 		  </tr>
-		-->
 		</table>  
 	</div>
 </div>

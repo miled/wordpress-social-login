@@ -79,6 +79,11 @@ function wsl_update_compatibilities()
 		update_option( 'wsl_settings_bouncer_authentication_enabled', 1 );
 	}
 
+	if( ! get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) )
+	{ 
+		update_option( 'wsl_settings_bouncer_accounts_linking_enabled', 1 );
+	}
+
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) )
 	{ 
 		update_option( 'wsl_settings_bouncer_profile_completion_require_email', 2 );
@@ -87,6 +92,11 @@ function wsl_update_compatibilities()
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) )
 	{ 
 		update_option( 'wsl_settings_bouncer_profile_completion_change_username', 2 );
+	}
+
+	if( ! get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' ) )
+	{ 
+		update_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields', 2 );
 	}
 
 	if( ! get_option( 'wsl_settings_bouncer_new_users_moderation_level' ) )

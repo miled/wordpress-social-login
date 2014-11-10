@@ -397,13 +397,7 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('WSL now support authentications through <a href="https://dribbble.com" target="_blank">Dribbble.com</a>. Hooray for fellow designers', 'wordpress-social-login') ?>!</li> 
-					<li><?php _wsl_e('<a href="http://store.steampowered.com/" target="_blank">Steam</a> provider has been entirely reworked and now fully support the new Web API', 'wordpress-social-login') ?>.</li> 
-					<li><?php _wsl_e('WSL admin interfaces have been reworked and can be now extended with hooks', 'wordpress-social-login') ?>.</li> 
-					<li><?php _wsl_e('Profile completion form has received a visual update', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Bouncer Membership level can be now set to any user role', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('WSL now provide an <a href="http://miled.github.io/wordpress-social-login/developer-api-apis.html" target="_blank">easier access</a> to social networks apis', 'wordpress-social-login') ?>.</li>
-					<li><?php _wsl_e('Fix several stability issues', 'wordpress-social-login') ?>.</li>
+					<li><?php _wsl_e('...', 'wordpress-social-login') ?></li> 
 				</ul>
 			</td>
 		</tr>

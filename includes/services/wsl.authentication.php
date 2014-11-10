@@ -507,7 +507,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		}
 
 		// Bouncer::Accounts linking/mapping
-		// > > not implemented yet! Planned for WSL 2.3
 		if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
 		{
 			do
@@ -520,27 +519,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 					$requested_user_email
 				) 
 				= wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
-			}
-			while( ! $shall_pass );
-		}
-
-		// Bouncer::Profile Completion
-		// > > in WSL 2.3 Profile Completion will be reworked and merged with Accounts linking
-		elseif(
-				( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) ) 
-			|| 
-				get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-		)
-		{
-			do
-			{
-				list
-				( 
-					$shall_pass, 
-					$requested_user_login, 
-					$requested_user_email 
-				)
-				= wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
 			}
 			while( ! $shall_pass );
 		}

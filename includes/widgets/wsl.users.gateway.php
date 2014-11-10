@@ -153,7 +153,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 				if ( strpos( ' ' . $requested_user_login, '_' ) != false )
 				{
-					$profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, usernames may not contain the character &#8220;_&#8221;!', 'wordpress-social-login' );
+					// $profile_completion_errors[] = _wsl__( '<strong>ERROR</strong>: Sorry, usernames may not contain the character &#8220;_&#8221;!', 'wordpress-social-login' );
 				}
 
 				if ( preg_match( '/^[0-9]*$/', $requested_user_login ) )

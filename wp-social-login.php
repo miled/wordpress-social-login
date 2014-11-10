@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.2.3
+Version: 2.3.0
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -67,7 +67,7 @@ global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 global $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 global $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.2.3";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.3.0-work-in-progress";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
@@ -248,8 +248,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.watchdog
 
 # WSL Widgets & Front-end interfaces 
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widgets.php'          ); // Authentication widget generators (where WSL widget/icons are displayed)
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.complete.registration.php' ); // Force users to complete their profile after they register
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.users.gateway.php'         ); // Planned for WSL 2.3. Accounts linking + Profile Completion
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.users.gateway.php'         ); // Accounts linking + Profile Completion
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pages.php'           ); // Generate WSL notices end errors pages
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens
 
