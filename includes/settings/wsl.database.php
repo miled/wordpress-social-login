@@ -158,6 +158,10 @@ function wsl_database_uninstall()
 		delete_option( 'wsl_settings_' . $provider['provider_id'] . '_app_secret' );
 		delete_option( 'wsl_settings_' . $provider['provider_id'] . '_app_scope' );
 	}
+
+	delete_option('wsl_settings_buddypress_xprofile_map' );
+
+	// bye.
 }
 
 // --------------------------------------------------------------------

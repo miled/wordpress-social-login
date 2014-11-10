@@ -853,7 +853,7 @@ function wsl_component_tools_do_repair()
 {
 	global $wpdb;
 
-	wsl_database_migration_process();
+	wsl_database_install();
 	
 	// update_option( 'wsl_settings_development_mode_enabled', 1 );
 ?>

@@ -17,6 +17,8 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_components_gallery()
 {
+	return; // ya men 3ach
+
 	// HOOKABLE: 
 	do_action( "wsl_component_components_gallery_start" ); 
 

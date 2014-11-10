@@ -67,6 +67,13 @@ class WSL_Test_Install extends WP_UnitTestCase
 		$this->assertEquals( 1, $test );
 	}
 
+	// so I don't forget.. to be removed 
+	function test_linking_account_disabled()
+	{
+		$test = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) ? 1 : null;
+		$this->assertNull( $test );
+	}
+
 	function test_devmode_disabled()
 	{
 		$test = get_option( 'wsl_settings_development_mode_enabled' ) ? 1 : null;

@@ -11,7 +11,7 @@
 			<directory prefix="test_" suffix=".php">./tests/</directory>
 		</testsuite>
 	</testsuites>
-    <logging>
+	<logging>
 		<log type="junit" target="tests/junit.xml" logIncompleteSkipped="false"/>
-    </logging>
+	</logging>
 </phpunit>

@@ -13,6 +13,12 @@
 // Exit if accessed directly
 if ( !defined( 'ABSPATH' ) ) exit; 
 
+/*!
+	Important
+
+	Direct access to providers apis is newly introduced into WSL and we are still experimenting, so they may change in future releases.
+*/
+
 // --------------------------------------------------------------------
 
 function wsl_component_authtest()
@@ -203,7 +209,7 @@ function wsl_component_authtest()
 										</tr>
 										<tr>
 											<th width="200"><label><?php _wsl_e("Method", 'wordpress-social-login') ?></label></th>
-											<td><select style="width:100px" name="console-method"><option value="GET" <?php if( $method == 'GET' ) echo 'selected'; ?>>GET</option><option value="POST" <?php if( $method == 'POST' ) echo 'selected'; ?>>POST</option></select></td>
+											<td><select style="width:100px" name="console-method"><option value="GET" <?php if( $method == 'GET' ) echo 'selected'; ?>>GET</option><!-- <option value="POST" <?php if( $method == 'POST' ) echo 'selected'; ?>>POST</option>--></select></td>
 										</tr>
 										<tr>
 											<th width="200"><label><?php _wsl_e("Query", 'wordpress-social-login') ?></label></th>
@@ -227,6 +233,7 @@ function wsl_component_authtest()
 									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $response, true ) ); ?></textarea>
 								</div>
 							</div>
+						<?php if( 0 ): ?>
 							<div class="stuffbox">
 								<h3>
 									<label><?php _wsl_e("Code PHP", 'wordpress-social-login') ?></label>
@@ -234,6 +241,12 @@ function wsl_component_authtest()
 								<div class="inside"> 
 <textarea rows="25" cols="70" wrap="off" style="width:100%;height:210px;margin-bottom:15px;font-family: monospace;font-size: 12px;"
 >include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php';
+
+/*!
+	Important
+
+	Direct access to providers apis is newly introduced into WSL and we are still experimenting, so they may change in future releases.
+*/
 
 try
 {
@@ -267,6 +280,7 @@ catch( Exception $e )
 									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:350px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $_SESSION, true ) ); ?></textarea>
 								</div>
 							</div>
+						<?php endif; ?>
 						<?php endif; ?>
 					<?php endif; ?>
 

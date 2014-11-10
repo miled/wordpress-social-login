@@ -10,7 +10,8 @@
  * 
  * Hybrid_Endpoint class provides a simple way to handle the OpenID and OAuth endpoint.
  */
-class Hybrid_Endpoint {
+class Hybrid_Endpoint
+{
 	public static $request = NULL;
 	public static $initDone = FALSE;
 

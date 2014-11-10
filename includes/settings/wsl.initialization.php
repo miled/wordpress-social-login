@@ -17,6 +17,8 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 /**
 * Check WSL minimum requirements. Display fail page if they are not met.
+*
+* This function will only test the strict minimal
 */
 function wsl_check_requirements()
 {
@@ -291,8 +293,6 @@ function wsl_register_setting()
 
 	register_setting( 'wsl-settings-group-debug'            , 'wsl_settings_debug_mode_enabled' ); 
 	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
-
-	add_option( 'wsl_settings_welcome_panel_enabled' ); 
 }
 
 // --------------------------------------------------------------------

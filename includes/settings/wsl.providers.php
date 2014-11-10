@@ -75,6 +75,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"callback"          => true,
 		"new_app_link"      => "https://developer.wordpress.com/apps/new/", 
 
+		"default_network"   => true,
 		"cat"               => "blogging",
 	),
 	ARRAY( 
