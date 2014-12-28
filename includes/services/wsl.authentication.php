@@ -424,6 +424,28 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		}
 	}
 
+	// because instagram doesn't (do any?) have an email, we need to check if the option "require email" is set and then get the email from
+        // the user BEFORE we filter by email address
+        if(
+             ( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) )
+             ||
+             get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+          )
+        {
+                        do
+                        {
+                                list
+                                (
+                                        $shall_pass,
+                                        $requested_user_login,
+                                        $requested_user_email
+                                )
+                                = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
+                        }
+                        while( ! $shall_pass );
+        }
+        $hybridauth_user_email = $requested_user_email;
+
 	// Bouncer::Filters by e-mails addresses
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 )
 	{
