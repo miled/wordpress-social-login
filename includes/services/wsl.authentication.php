@@ -425,13 +425,49 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	}
 
 	// because instagram doesn't (do any?) have an email, we need to check if the option "require email" is set and then get the email from
-        // the user BEFORE we filter by email address
-        if(
-             ( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) )
-             ||
-             get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-          )
+	// the user BEFORE we filter by email address
+
+        /* 4 Deletegate detection of user id to custom filters hooks */
+
+        $user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
+
+
+        /* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
+
+        if( ! $user_id )
         {
+                // Bouncer :: Accept new registrations?
+                if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 )
+                {
+                        return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
+                }
+
+                // Bouncer::Accounts linking/mapping
+                // > > not implemented yet! Planned for WSL 2.3
+                if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
+                {
+                        do
+                        {
+                                list
+                                (
+                                        $shall_pass,
+                                        $user_id,
+                                        $requested_user_login,
+                                        $requested_user_email
+                                )
+                                = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
+                        }
+                        while( ! $shall_pass );
+                }
+
+                // Bouncer::Profile Completion
+                // > > in WSL 2.3 Profile Completion will be reworked and merged with Accounts linking
+                elseif(
+                                ( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) )
+                        ||
+                                get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+                )
+                {
                         do
                         {
                                 list
@@ -443,12 +479,16 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                                 = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
                         }
                         while( ! $shall_pass );
+                }
         }
-        $hybridauth_user_email = $requested_user_email;
+	$hybridauth_user_email = $requested_user_email;
+
 
 	// Bouncer::Filters by e-mails addresses
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 )
 	{
+		error_log(__METHOD__ . ' start wsl_settings_bouncer_new_users_restrict_email_enabled.');
+		error_log(__METHOD__ . ' hybridauth_user_email is ' . $hybridauth_user_email );
 		if( empty( $hybridauth_user_email ) )
 		{
 			return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_email_text_bounce' ), 'wordpress-social-login') );
@@ -476,13 +516,17 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	// Bouncer::Filters by profile urls
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_enabled' ) == 1 )
 	{ 
+		error_log(__METHOD__ . ' start restrict_profile_enabled.');
 		$list = get_option( 'wsl_settings_bouncer_new_users_restrict_profile_list' );
 		$list = preg_split( '/$\R?^/m', $list ); 
+		error_log(__METHOD__ . ' $list is ' . print_r($list, true));
 
 		$shall_pass = false;
 
 		foreach( $list as $item )
 		{
+			error_log(__METHOD__ . ' $item is ' . $item );
+			error_log(__METHOD__ . ' $hybridauth_user_profile->profileURL is ' . $hybridauth_user_profile->profileURL);
 			if( trim( strtolower( $item ) ) == strtolower( $hybridauth_user_profile->profileURL ) )
 			{
 				$shall_pass = true;
@@ -514,37 +558,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	}
 
 	/* 4 Deletegate detection of user id to custom filters hooks */
-
-	// HOOKABLE:
-	$user_id = apply_filters( 'wsl_hook_process_login_alter_user_id', $user_id, $provider, $hybridauth_user_profile );
-
-	/* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
-
-	if( ! $user_id )
-	{
-		// Bouncer :: Accept new registrations?
-		if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 )
-		{
-			return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
-		}
-
-		// Bouncer::Accounts linking/mapping
-		if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
-		{
-			do
-			{
-				list
-				( 
-					$shall_pass,
-					$user_id,
-					$requested_user_login,
-					$requested_user_email
-				) 
-				= wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
-			}
-			while( ! $shall_pass );
-		}
-	}
 
 	/* 6. returns user data */
 
