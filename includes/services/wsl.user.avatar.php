@@ -82,7 +82,7 @@ if( ! function_exists( 'wsl_get_wp_user_custom_avatar' ) )
 
 			if( $wsl_avatar )
 			{
-				$wsl_html = '<img src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
+				$wsl_html = '<img alt="'. $alt .'" src="' . $wsl_avatar . '" class="avatar avatar-wordpress-social-login avatar-' . $size . ' photo" height="' . $size . '" width="' . $size . '" />';
 
 				// HOOKABLE: 
 				return apply_filters( 'wsl_hook_alter_wp_user_custom_avatar', $wsl_html, $user_id, $wsl_avatar, $html, $mixed, $size, $default, $alt );
