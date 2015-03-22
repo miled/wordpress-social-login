@@ -215,7 +215,8 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line). 
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		$adapter = $hybridauth->authenticate( $provider );
+		$params = apply_filters("wsl_hook_process_login_authenticate_params",array(),$provider);
+		$adapter = $hybridauth->authenticate( $provider,$params );
 	}
 
 	// if hybridauth fails to authenticate the user, then we display an error message
