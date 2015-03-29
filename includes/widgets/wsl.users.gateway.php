@@ -570,7 +570,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<label>
 									<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
 									<br />
-									<input type="text" name="user_name" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
+									<input type="text" name="user_login" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
 								</label>
 
 								<label>
