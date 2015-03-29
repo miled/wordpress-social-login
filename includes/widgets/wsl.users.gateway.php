@@ -461,7 +461,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				<div id="welcome">
 					<img id="idp-icon" src="<?php echo $assets_base_url . strtolower($provider); ?>.png" > 
 					<b><?php printf( _wsl__( "Hi %s", 'wordpress-social-login' ), htmlentities( $hybridauth_user_profile->displayName ) ); ?></b>
-					<p><?php printf( _wsl__( "You're now signed in with your %s account but you still one step away of getting into our website", 'wordpress-social-login' ), $provider ); ?>.</p>
+					<p><?php printf( _wsl__( "You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login' ), $provider ); ?>.</p>
 
 					<hr />
 				</div>
