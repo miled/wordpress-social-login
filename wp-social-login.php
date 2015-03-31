@@ -253,7 +253,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.error.pag
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.screens.php'       ); // Generate WSL loading screens
 
 # WSL Admin interfaces
-if( is_admin() )
+if( is_admin() && ( !defined( 'DOING_AJAX' ) || !DOING_AJAX ) )
 {
 	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
 }
