@@ -87,16 +87,20 @@ if( file_exists( WP_PLUGIN_DIR . '/wp-social-login-custom.php' ) )
 // --------------------------------------------------------------------
 
 /**
-* Define WSL constants, if not already defined
-*/
-defined( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH' ) 
-	|| define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', WP_PLUGIN_DIR . '/wordpress-social-login' );
+ * Define WSL constants, if not already defined
+ */
+defined( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH' )
+|| define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', WP_PLUGIN_DIR . '/wordpress-social-login' );
 
-defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' ) 
-	|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/wordpress-social-login' );
+defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' )
+|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugins_url() . '/wordpress-social-login' );
 
-defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' ) 
-	|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' );
+defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
+|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/hybridauth/' );
+
+defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_BASENAME' )
+|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_BASENAME', plugin_basename(__FILE__) );
+
 
 // --------------------------------------------------------------------
 
@@ -111,6 +115,9 @@ function wsl_activate()
 
 		wp_die( __( "This plugin requires WordPress 3.0 or newer. Please update your WordPress installation to activate this plugin.", 'wordpress-social-login' ) );
 	}
+
+	// ok to install
+	wsl_install();
 }
 
 register_activation_hook( __FILE__, 'wsl_activate' );
@@ -133,63 +140,44 @@ function wsl_install()
 	wsl_register_components();
 }
 
-register_activation_hook( __FILE__, 'wsl_install' );
 
 // --------------------------------------------------------------------
 
-/**
-* Add a settings to plugin_action_links
-*/
-function wsl_add_plugin_action_links( $links, $file )
+
+function wsl_admin_init()
 {
-	static $this_plugin;
-
-	if( ! $this_plugin )
+	/**
+	 * Add a settings to plugin_action_links
+	 */
+	function wsl_add_plugin_action_links($links, $file)
 	{
-		$this_plugin = plugin_basename( __FILE__ );
+		array_unshift($links, '<a href="options-general.php?page=wordpress-social-login">' . __("Settings") . '</a>');
+
+		return $links;
 	}
 
-	if( $file == $this_plugin )
-	{
-		$wsl_links  = '<a href="options-general.php?page=wordpress-social-login">' . __( "Settings" ) . '</a>';
+	add_filter('plugin_action_links_' . WORDPRESS_SOCIAL_LOGIN_PLUGIN_BASENAME, 'wsl_add_plugin_action_links', 10, 2);
 
-		array_unshift( $links, $wsl_links );
+	// --------------------------------------------------------------------
+
+	/**
+	 * Add faq and user guide links to plugin_row_meta
+	 */
+	function wsl_add_plugin_row_meta($links, $file)
+	{
+		if ( $file == WORDPRESS_SOCIAL_LOGIN_PLUGIN_BASENAME ) {
+			return array_merge($links, array (
+				'<a href="http://miled.github.io/wordpress-social-login/">' . _wsl__("Docs", 'wordpress-social-login') . '</a>',
+				'<a href="http://miled.github.io/wordpress-social-login/support.html">' . _wsl__("Support", 'wordpress-social-login') . '</a>',
+				'<a href="https://github.com/miled/wordpress-social-login">' . _wsl__("Fork me on Github", 'wordpress-social-login') . '</a>',
+			));
+		}
+
+		return $links;
 	}
 
-	return $links;
+	add_filter('plugin_row_meta', 'wsl_add_plugin_row_meta', 10, 2);
 }
-
-add_filter( 'plugin_action_links', 'wsl_add_plugin_action_links', 10, 2 );
-
-// --------------------------------------------------------------------
-
-/**
-* Add faq and user guide links to plugin_row_meta
-*/
-function wsl_add_plugin_row_meta( $links, $file )
-{
-	static $this_plugin;
-
-	if( ! $this_plugin )
-	{
-		$this_plugin = plugin_basename( __FILE__ );
-	}
-
-	if( $file == $this_plugin )
-	{
-		$wsl_links = array(
-			'<a href="http://miled.github.io/wordpress-social-login/">'             . _wsl__( "Docs"             , 'wordpress-social-login' ) . '</a>',
-			'<a href="http://miled.github.io/wordpress-social-login/support.html">' . _wsl__( "Support"          , 'wordpress-social-login' ) . '</a>',
-			'<a href="https://github.com/miled/wordpress-social-login">'            . _wsl__( "Fork me on Github", 'wordpress-social-login' ) . '</a>',
-		);
-
-		return array_merge( $links, $wsl_links );
-	}
-
-	return $links;
-}
-
-add_filter( 'plugin_row_meta', 'wsl_add_plugin_row_meta', 10, 2 );
 
 // --------------------------------------------------------------------
 
@@ -246,6 +234,10 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.user.dat
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.utilities.php'            ); // Unclassified functions & utilities
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/services/wsl.watchdog.php'             ); // WSL logging agent
 
+if (defined('DOING_AJAX') && DOING_AJAX) {
+	return; // we don't need ui
+}
+
 # WSL Widgets & Front-end interfaces 
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.auth.widgets.php'          ); // Authentication widget generators (where WSL widget/icons are displayed)
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.users.gateway.php'         ); // Accounts linking + Profile Completion
@@ -255,7 +247,8 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/widgets/wsl.loading.s
 # WSL Admin interfaces
 if( is_admin() )
 {
-	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces 
+	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/includes/admin/wsl.admin.ui.php'        ); // The entry point to WSL Admin interfaces
+	add_action('admin_init', 'wsl_admin_init');
 }
 
 // --------------------------------------------------------------------
