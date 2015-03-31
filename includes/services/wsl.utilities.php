@@ -152,7 +152,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 		color: #4a4 !important;
 	}
 	.wsl-dev-table { 
-		width:100%
+		width:100%;
 		border: 1px solid #e5e5e5;
 		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
 		border-spacing: 0;
