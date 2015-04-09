@@ -13,7 +13,7 @@
 class Hybrid_Providers_TwitchTV extends Hybrid_Provider_Model_OAuth2
 { 
 	// default permissions 
-	public $scope = "user_read channel_read";
+	public $scope = "user_read";
 
 	/**
 	* IDp wrappers initializer 
