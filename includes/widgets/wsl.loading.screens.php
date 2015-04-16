@@ -30,6 +30,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 	function wsl_render_redirect_to_provider_loading_screen( $provider )
 	{
 		$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
+		$actual_link = "http://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]" . '&redirect_to_provider=true';
 ?>
 <!DOCTYPE html>
 	<head>
@@ -67,7 +68,11 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 		<script>
 			function init()
 			{
-				window.location.replace( window.location.href + "&redirect_to_provider=true" );
+				// use set interval beacause sometimes the redirect doesn't work!
+				setInterval(function(){
+					window.location.replace( window.location.href + "&redirect_to_provider=true" );
+				}, 3000);
+				
 			}
 		</script>
 	</head>

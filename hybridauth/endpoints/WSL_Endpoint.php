@@ -148,8 +148,30 @@ function display_wsl_error( $code, $message )
 				color: white;
 			}
 		</style>
+		<script>
+			function init()
+			{
+				<?php
+					if (isset ($_REQUEST['hauth_done'])) {
+						$request_uri = (isset ($_SERVER ['REQUEST_URI']) ? $_SERVER ['REQUEST_URI'] : $_SERVER ['PHP_SELF']);
+						$request_protocol = ($_SERVER ['HTTPS'] ? 'https' : 'http');
+						$request_host = (isset ($_SERVER ['HTTP_X_FORWARDED_HOST']) ? $_SERVER ['HTTP_X_FORWARDED_HOST'] : (isset ($_SERVER ['HTTP_HOST']) ? $_SERVER ['HTTP_HOST'] : $_SERVER ['SERVER_NAME']));
+						
+						$current_base_url = $request_protocol . '://' . $request_host;
+						error_log("WSL_Endpoint.php 161: " . $current_base_url);
+				?>
+				// use set interval beacause sometimes the redirect doesn't work!
+					setInterval(function(){
+						window.location.replace( "<?php echo $current_base_url ?>/wordpress/wp-login.php?action=wordpress_social_authenticate&mode=login&provider=Facebook&redirect_to=<?php echo urlencode($current_base_url) ?>%2Fwordpress%2Fwp-login.php&redirect_to_provider=true" );
+						}, 1000);
+				<?php
+					}
+				?>
+
+			}
+		</script>
 	<head>  
-	<body id="notice-page"> 
+	<body id="notice-page" onload="init()"> 
 		<h1>WordPress Social Login Endpoint.</h1>
 
 		<p>
