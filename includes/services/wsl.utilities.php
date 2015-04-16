@@ -93,8 +93,15 @@ function wsl_get_current_url()
 	//Remove standard ports
 	$request_port = (!in_array($request_port, array (80, 443)) ? $request_port : '');
 
+	error_log("utilities " . $request_port);
+	error_log("utilities " . $request_host);
 	//Build url
-	$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
+	//$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
+	
+	// request_host has just the :port!
+	$current_url = $request_protocol . '://' . $request_host . $request_uri;
+	
+	error_log("utilities " . $current_url);
 
 	// overwrite all the above if ajax
 	if( strpos( $current_url, 'admin-ajax.php') && isset( $_SERVER ['HTTP_REFERER'] ) && $_SERVER ['HTTP_REFERER'] )
