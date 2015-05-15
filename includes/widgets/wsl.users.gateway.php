@@ -10,7 +10,7 @@
 * New Users Gateway: Accounts linking + Profile Completion
 *
 * When enabled, Bouncer will popup this screen for unrecognised user, where they will be given the choice to either associate
-* any existing account in your website with the provider ID they have connected with or to create a new user account. 
+* any existing account in your website with the provider ID they have connected with or to create a new user account.
 *
 * Note:
 * 	1. This is not implemented yet. It still a proof of concept and planned for WSL 2.3.
@@ -32,7 +32,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	// remove wsl widget
 	remove_action( 'register_form', 'wsl_render_auth_widget_in_wp_register_form' );
 
-	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email ); 
+	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email );
 	$hybridauth_user_login       = sanitize_user( $hybridauth_user_profile->displayName, true );
 	$hybridauth_user_avatar      = $hybridauth_user_profile->photoURL;
 	$hybridauth_user_website     = $hybridauth_user_profile->webSiteURL;
@@ -47,18 +47,18 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$requested_user_email        = apply_filters( 'wsl_new_users_gateway_alter_requested_email', $requested_user_email );
 	$requested_user_login        = apply_filters( 'wsl_new_users_gateway_alter_requested_login', $requested_user_login );
 
-	$user_id    = 0; 
-	$shall_pass = false; 
+	$user_id    = 0;
+	$shall_pass = false;
 
-	$bouncer_account_linking    = false; 
-	$account_linking_errors     = array(); 
+	$bouncer_account_linking    = false;
+	$account_linking_errors     = array();
 
-	$bouncer_profile_completion = false; 
-	$profile_completion_errors  = array(); 
+	$bouncer_profile_completion = false;
+	$profile_completion_errors  = array();
 
 	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
 
-	// $linking_enabled = 2; // overide linking_enabled  
+	// $linking_enabled = 2; // overide linking_enabled
 
 	if( isset( $_REQUEST["bouncer_account_linking"] ) )
 	{
@@ -67,7 +67,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			return wsl_process_login_render_notice_page( _wsl__( "Not tonight.", 'wordpress-social-login' ) );
 		}
 
-		$bouncer_account_linking = true; 
+		$bouncer_account_linking = true;
 
 		$username = isset( $_REQUEST["user_login"]    ) ? trim( $_REQUEST["user_login"]    ) : '';
 		$password = isset( $_REQUEST["user_password"] ) ? trim( $_REQUEST["user_password"] ) : '';
@@ -106,7 +106,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 		// otherwise we request email &or username &or extra fields
 		else
 		{
-			$bouncer_profile_completion = true; 
+			$bouncer_profile_completion = true;
 
 			/**
 			* Code based on wpmu_validate_user_signup()
@@ -189,7 +189,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 			$profile_completion_errors = apply_filters( 'wsl_new_users_gateway_alter_profile_completion_errors', $profile_completion_errors );
 
-			// all check? 
+			// all check?
 			if( ! $profile_completion_errors )
 			{
 				$shall_pass = true;
@@ -199,12 +199,12 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 	if( $shall_pass == false )
 	{
-?> 
+?>
 <!DOCTYPE html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<title><?php echo get_bloginfo('name'); ?></title>
-		<style type="text/css"> 
+		<style type="text/css">
 			html, body {
 				height: 100%;
 				margin: 0;
@@ -226,7 +226,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				font-size: 14px;
 				margin-bottom: 10px;
 			}
-			#login { 
+			#login {
 				width: 616px;
 				margin: auto;
 				padding: 114px 0 0;
@@ -330,7 +330,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			}
 			table {
 				width:355px;
-				margin-left:auto; 
+				margin-left:auto;
 				margin-right:auto;
 			}
 			#mapping-options {
@@ -348,7 +348,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				border-left: 4px solid #dd3d36;
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
 				margin: 0 21px;
-				padding: 12px;	
+				padding: 12px;
 				text-align:left;
 			}
 			.back-to-options {
@@ -414,7 +414,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 				toggleEl( 'welcome'        , 'block' );
 				toggleEl( 'mapping-options', 'block' );
-				
+
 				toggleEl( 'errors-profile-completion', 'none' );
 				toggleEl( 'mapping-authenticate'     , 'none' );
 
@@ -429,7 +429,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				toggleEl( 'welcome'        , 'none' );
 				toggleEl( 'mapping-options', 'none' );
 
-				toggleEl( 'errors-account-linking', 'block' ); 
+				toggleEl( 'errors-account-linking', 'block' );
 				toggleEl( 'mapping-authenticate'  , 'block' );
 
 				toggleEl( 'errors-profile-completion', 'none' );
@@ -459,7 +459,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				</div>
 
 				<div id="welcome">
-					<img id="idp-icon" src="<?php echo $assets_base_url . strtolower($provider); ?>.png" > 
+					<img id="idp-icon" src="<?php echo $assets_base_url . strtolower($provider); ?>.png" >
 					<b><?php printf( _wsl__( "Hi %s", 'wordpress-social-login' ), htmlentities( $hybridauth_user_profile->displayName ) ); ?></b>
 					<p><?php printf( _wsl__( "You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login' ), $provider ); ?>.</p>
 
@@ -479,22 +479,22 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 							<p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
 						</td>
 					</tr>
-					
+
 					<tr>
 						<?php if( $linking_enabled == 1 ): ?>
 							<td valign="top"  width="50%" style="text-align:center;">
-								<input type="button" value="<?php _wsl_e( "Link my account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_authenticate();" > 
+								<input type="button" value="<?php _wsl_e( "Link my account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_authenticate();" >
 							</td>
 						<?php endif; ?>
 						<td valign="top"  width="50%" style="text-align:center;">
-							<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" > 
+							<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
 						</td>
 					</tr>
-				</table> 
+				</table>
 
 				<?php
 					if( $account_linking_errors )
-					{ 
+					{
 						echo '<div id="errors-account-linking" class="error">';
 
 						foreach( $account_linking_errors as $error )
@@ -506,7 +506,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					}
 
 					if( $profile_completion_errors )
-					{ 
+					{
 						echo '<div id="errors-profile-completion" class="error">';
 
 						foreach( $profile_completion_errors as $error )
@@ -515,18 +515,18 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						}
 
 						echo '</div>';
-					} 
+					}
 				?>
 
 				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form">
-					<table id="mapping-authenticate" border="0"> 
+					<table id="mapping-authenticate" border="0">
 						<tr>
 							<td valign="top"  width="50%" style="text-align:center;">
-								<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4> 
+								<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
 
 								<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your % ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
 							</td>
-						</tr> 
+						</tr>
 						<tr>
 							<td valign="bottom"  width="50%" style="text-align:left;">
 								<label>
@@ -539,22 +539,22 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
 									<br />
 									<input type="text" name="user_password" class="input" value="" size="25" placeholder="" />
-								</label> 
+								</label>
 
-								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" > 
-								
+								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
+
 								<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
 							</td>
 						</tr>
-					</table> 
+					</table>
 
-					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
-					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
+					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
+					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
 					<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 					<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
 				</form>
 
-				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form"> 
+				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form">
 					<table id="mapping-complete-info" border="0">
 						<tr>
 							<td valign="top"  width="50%" style="text-align:center;">
@@ -577,7 +577,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									<?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
 									<br />
 									<input type="text" name="user_email" class="input" value="<?php echo $requested_user_email; ?>" size="25" placeholder="" />
-								</label> 
+								</label>
 
 								<?php
 									/**
@@ -595,34 +595,34 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									}
 								?>
 
-								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" > 
+								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
 
 								<?php if( $linking_enabled == 1 ): ?>
 									<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
 								<?php endif; ?>
 							</td>
 						</tr>
-					</table> 
+					</table>
 
-					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>"> 
-					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>"> 
+					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
+					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
 					<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 					<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 				</form>
 			</div>
 
 			<p class="back-to-home">
-				<a href="<?php echo site_url(); ?>">&#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo('name') ); ?></a>
+				<a href="<?php echo home_url(); ?>">&#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo('name') ); ?></a>
 			</p>
 		</div>
 
-		<?php 
+		<?php
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) )
 			{
 				wsl_display_dev_mode_debugging_area();
 			}
-		?> 
+		?>
 	</body>
 </html>
 <?php

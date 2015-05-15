@@ -6,8 +6,8 @@
 *  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
-/** 
-* Few utilities and functions 
+/**
+* Few utilities and functions
 */
 
 // Exit if accessed directly
@@ -30,7 +30,7 @@ function wsl_get_version()
 /**
 * Check if the current connection is being made over https
 *
-* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
+* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/
 */
 function wsl_is_https_on()
 {
@@ -66,7 +66,7 @@ function wsl_is_https_on()
 /**
 * Return the current url
 *
-* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/ 
+* Borrowed from http://wordpress.org/extend/plugins/oa-social-login/
 */
 function wsl_get_current_url()
 {
@@ -99,10 +99,10 @@ function wsl_get_current_url()
 	// overwrite all the above if ajax
 	if( strpos( $current_url, 'admin-ajax.php') && isset( $_SERVER ['HTTP_REFERER'] ) && $_SERVER ['HTTP_REFERER'] )
 	{
-		$current_url = $_SERVER ['HTTP_REFERER']; 
+		$current_url = $_SERVER ['HTTP_REFERER'];
 	}
 
-	// HOOKABLE: 
+	// HOOKABLE:
 	$current_url = apply_filters( 'wsl_hook_alter_current_url', $current_url );
 
 	//Done
@@ -141,20 +141,20 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 	}
 	.wsl-dev-usedhook, .wsl-dev-usedhook a {
 		color: #1468fa;
-	} 
+	}
 	.wsl-dev-usedwslhook {
 		color: #a0a !important;
-	} 
+	}
 	.wsl-dev-unusedhook, .wsl-dev-unusedhook a{
 		color: #a3a3a3 !important;
 	}
 	.wsl-dev-hookcallback, .wsl-dev-hookcallback a {
 		color: #4a4 !important;
 	}
-	.wsl-dev-table { 
+	.wsl-dev-table {
 		width:100%;
 		border: 1px solid #e5e5e5;
-		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);	
+		box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
 		border-spacing: 0;
 		clear: both;
 		margin: 0;
@@ -162,7 +162,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 	}
 	.wsl-dev-table td, .wsl-dev-table th {
 		border: 1px solid #dddddd;
-		padding: 8px 10px; 
+		padding: 8px 10px;
 		background-color: #fff;
 		text-align: left;
 	}
@@ -177,7 +177,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 				<tr>
 					<td>
 						<?php echo Hybrid_Error::getApiError(); ?>
-					</td> 
+					</td>
 				</tr>
 			</table>
 		<?php
@@ -191,14 +191,14 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 				1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)
 				<br />
 				2. Calls for get_option() don't necessarily result on a query to the database. WP use both cache and wp_load_alloptions() to load all options at once. Hence, it won't be shown here.
-			</td> 
+			</td>
 		</tr>
 		<?php
-			$queries = $wpdb->queries; 
-			
+			$queries = $wpdb->queries;
+
 			$total_wsl_queries = 0;
 			$total_wsl_queries_time = 0;
-			
+
 			if( $queries )
 			{
 				foreach( $queries as $item )
@@ -206,7 +206,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 					$sql    = trim( $item[0] );
 					$time   = $item[1];
 					$stack  = $item[2];
-					
+
 					$sql = str_ireplace( array( ' FROM ', ' WHERE ' , ' LIMIT ' , ' GROUP BY ' , ' ORDER BY ' , ' SET ' ), ARRAY( "\n" . 'FROM ', "\n" . 'WHERE ', "\n" . 'LIMIT ', "\n" . 'GROUP BY ', "\n" . 'ORDER BY ', "\n" . 'SET ' ), $sql );
 
 					# https://wordpress.org/plugins/query-monitor/
@@ -247,8 +247,8 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 								</td>
 								<td valign="top" class="<?php if( ! stristr( '#' . $sql, '#select ' ) ) echo 'wsl-dev-nonselectsql'; ?>"><?php echo nl2br( $sql ); ?></td>
 								<td valign="top" width="50" nowrap class="<?php if( $time > 0.05 ) echo 'wsl-dev-expensivesql'; ?>"><?php echo number_format( $time, 4, '.', '' ); ?></td>
-							</tr>   
-						<?php 
+							</tr>
+						<?php
 
 						$total_wsl_queries++;
 						$total_wsl_queries_time += $time;
@@ -271,14 +271,14 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 				{
 					if ( isset( $wp_filter[$name] ) )
 					{
-						$action = $wp_filter[$name]; 
+						$action = $wp_filter[$name];
 
 						if( $action )
 						{
 							foreach( $action as $priority => $callbacks )
 							{
 								foreach( $callbacks as $callback )
-								{ 
+								{
 									if( isset( $callback['function'] ) && is_string( $callback['function'] ) )
 									{
 										if( stristr( $callback['function'], $keyword ) || stristr( $name, $keyword ) )
@@ -320,9 +320,9 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 														<?php echo $callback['accepted_args'] ; ?>
 													</td>
 												</tr>
-											<?php   
+											<?php
 										}
-									} 
+									}
 								}
 							}
 						}
@@ -338,12 +338,12 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 								<td></td>
 								<td></td>
 							</tr>
-						<?php   
+						<?php
 					}
 				}
 			}
 		?>
-	</table> 
+	</table>
 
 	<h4>PHP Session</h4>
 	<table class="wsl-dev-table">
@@ -351,7 +351,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 			foreach( $_SESSION as $k => $v )
 			{
 		?>
-			<tr><th width="270"><label><?php echo $k; ?></label></th><td><?php print_r( $v ); ?></td></tr>   
+			<tr><th width="270"><label><?php echo $k; ?></label></th><td><?php print_r( $v ); ?></td></tr>
 		<?php
 			}
 		?>
@@ -361,52 +361,53 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 	<h4>Wordpress</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<tr><th width="270"><label>Version</label></th><td><?php echo get_bloginfo( 'version' ); ?></td></tr>   
+			<tr><th width="270"><label>Version</label></th><td><?php echo get_bloginfo( 'version' ); ?></td></tr>
 			<tr><th><label>Multi-site</label></th><td><?php echo is_multisite() ? 'Yes' . "\n" : 'No'; ?></td></tr>
-			<tr><th><label>Site url</label></th><td><?php echo site_url(); ?></td></tr>   
-			<tr><th><label>Plugins url</label></th><td><?php echo plugins_url(); ?></td></tr>    
+			<tr><th><label>Site url</label></th><td><?php echo site_url(); ?></td></tr>
+			<tr><th><label>Home url</label></th><td><?php echo home_url(); ?></td></tr>
+			<tr><th><label>Plugins url</label></th><td><?php echo plugins_url(); ?></td></tr>
 		</tbody>
 	</table>
 
 	<h4>WSL</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<tr><th width="270"><label>Version</label></th><td><?php echo wsl_get_version(); ?></td></tr>  
-			<tr><th><label>Plugin path</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH; ?></td></tr>  
-			<tr><th><label>Plugin url</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?></td></tr>  
-			<tr><th><label>HA endpoint</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?></td></tr>   
+			<tr><th width="270"><label>Version</label></th><td><?php echo wsl_get_version(); ?></td></tr>
+			<tr><th><label>Plugin path</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_ABS_PATH; ?></td></tr>
+			<tr><th><label>Plugin url</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL; ?></td></tr>
+			<tr><th><label>HA endpoint</label></th><td><?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?></td></tr>
 		</tbody>
-	</table>	
+	</table>
 
 	<h4>Website</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<tr><th width="270"><label>IP</label></th><td><?php echo $_SERVER['SERVER_ADDR']; ?></td></tr>  
-			<tr><th><label>Domain</label></th><td><?php echo $_SERVER['HTTP_HOST']; ?></td></tr>  
-			<tr><th><label>Port</label></th><td><?php echo isset( $_SERVER['SERVER_PORT'] ) ? 'On (' . $_SERVER['SERVER_PORT'] . ')' : 'N/A'; ?></td></tr>  
-			<tr><th><label>X Forward</label></th><td><?php echo isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ? 'On (' . $_SERVER['HTTP_X_FORWARDED_PROTO'] . ')' : 'N/A';; ?></td></tr>   
+			<tr><th width="270"><label>IP</label></th><td><?php echo $_SERVER['SERVER_ADDR']; ?></td></tr>
+			<tr><th><label>Domain</label></th><td><?php echo $_SERVER['HTTP_HOST']; ?></td></tr>
+			<tr><th><label>Port</label></th><td><?php echo isset( $_SERVER['SERVER_PORT'] ) ? 'On (' . $_SERVER['SERVER_PORT'] . ')' : 'N/A'; ?></td></tr>
+			<tr><th><label>X Forward</label></th><td><?php echo isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] ) ? 'On (' . $_SERVER['HTTP_X_FORWARDED_PROTO'] . ')' : 'N/A';; ?></td></tr>
 		</tbody>
 	</table>
-	
+
 	<h4>Software</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<tr><th width="270"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>  
-			<tr><th><label>PHP</label></th><td><?php echo PHP_VERSION; ?></td></tr>  
-			<tr><th><label>MySQL</label></th><td><?php echo $wpdb->db_version(); ?></td></tr>   
-			<tr><th><label>Time</label></th><td><?php echo date( DATE_ATOM, time() ); ?> / <?php echo time(); ?></td></tr>   
+			<tr><th width="270"><label>Server</label></th><td><?php echo $_SERVER['SERVER_SOFTWARE']; ?></td></tr>
+			<tr><th><label>PHP</label></th><td><?php echo PHP_VERSION; ?></td></tr>
+			<tr><th><label>MySQL</label></th><td><?php echo $wpdb->db_version(); ?></td></tr>
+			<tr><th><label>Time</label></th><td><?php echo date( DATE_ATOM, time() ); ?> / <?php echo time(); ?></td></tr>
 		</tbody>
 	</table>
 
 	<h4>MySQL</h4>
 	<table class="wsl-dev-table">
 		<tbody>
-			<tr><th width="270"><label>Host</label></th><td><?php echo $wpdb->dbhost; ?></td></tr>  
-			<tr><th><label>User</label></th><td><?php echo $wpdb->dbuser; ?></td></tr>  
-			<tr><th><label>Database</label></th><td><?php echo $wpdb->dbname; ?></td></tr>  
-			<tr><th><label>Prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
-			<tr><th><label>Base_prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>  
-			<tr><th><label>Num_queries</label></th><td><?php echo$wpdb->num_queries; ?></td></tr>  
+			<tr><th width="270"><label>Host</label></th><td><?php echo $wpdb->dbhost; ?></td></tr>
+			<tr><th><label>User</label></th><td><?php echo $wpdb->dbuser; ?></td></tr>
+			<tr><th><label>Database</label></th><td><?php echo $wpdb->dbname; ?></td></tr>
+			<tr><th><label>Prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>
+			<tr><th><label>Base_prefix</label></th><td><?php echo $wpdb->prefix; ?></td></tr>
+			<tr><th><label>Num_queries</label></th><td><?php echo$wpdb->num_queries; ?></td></tr>
 		</tbody>
 	</table>
 <?php
@@ -430,7 +431,7 @@ function wsl_generate_backtrace()
     {
         $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/' ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
     }
-    
+
     return "\n\t" . implode( "\n\t", $result );
 }
 

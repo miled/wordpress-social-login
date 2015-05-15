@@ -20,9 +20,9 @@ if( !defined( 'ABSPATH' ) ) exit;
 *
 * This function is mainly used by bouncer
 *
-* Note: 
+* Note:
 *   In case you want to customize the content generated, you may redefine this function
-*   Just make sure the script DIES at the end. 
+*   Just make sure the script DIES at the end.
 *
 *   The $message to display for users is passed as a parameter.
 */
@@ -30,7 +30,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 {
 	function wsl_render_notice_page( $message )
 	{
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
 ?>
 <!DOCTYPE html>
 	<head>
@@ -85,9 +85,9 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				margin-top:25px;
 			}
 		</style>
-	<head>  
+	<head>
 	<body>
-		<div id="notice-page"> 
+		<div id="notice-page">
 			<table width="100%" border="0">
 				<tr>
 					<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
@@ -95,14 +95,14 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				<tr>
 					<td align="center">
 						<div class="notice-message">
-							<?php echo nl2br( $message ); ?> 
+							<?php echo nl2br( $message ); ?>
 						</div>
-					</td> 
-				</tr> 
+					</td>
+				</tr>
 			</table>
 		</div>
 
-		<?php 
+		<?php
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) )
 			{
@@ -110,7 +110,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 			}
 		?>
 	</body>
-</html> 
+</html>
 <?php
 		die();
 	}
@@ -120,14 +120,14 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 
 /**
 * Display an error page to the user and kill WordPress execution
-* 
+*
 * This function differ than wsl_render_notice_page as it have some extra parameters and also should allow debugging
 *
 * This function is used when WSL fails to authenticated a user with social networks
-* 
-* Note: 
+*
+* Note:
 *   In case you want to customize the content generated, you may redefine this function
-*   Just make sure the script DIES at the end. 
+*   Just make sure the script DIES at the end.
 *
 *   The $message to display for users is passed as a parameter and it's required.
 */
@@ -135,7 +135,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 {
 	function wsl_render_error_page( $message, $notes = null, $provider = null, $api_error = null, $php_exception = null )
 	{
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/'; 
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
 ?>
 <!DOCTYPE html>
 	<head>
@@ -144,8 +144,8 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 		<title><?php bloginfo('name'); ?> - <?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</title>
 		<style type="text/css">
 			body {
-				background: #f1f1f1;			
-			} 
+				background: #f1f1f1;
+			}
 			h4 {
 				color: #666;
 				font: 20px "Open Sans", sans-serif;
@@ -157,7 +157,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				font-size: 14px;
 				line-height: 1.5;
 				margin: 15px 0;
-				line-height: 25px; 
+				line-height: 25px;
 				padding: 10px;
 				text-align:left;
 			}
@@ -197,9 +197,9 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
 				margin-top:25px;
 			}
-			.error-hint{ 
+			.error-hint{
 				margin:0;
-			} 
+			}
 			#debuginfo {
 				display:none;
 				text-align: center;
@@ -222,13 +222,13 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				</tr>
 
 				<tr>
-					<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td> 
+					<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td>
 				</tr>
 
 				<tr>
 					<td>
 						<div class="error-message">
-							<?php echo $message ; ?> 
+							<?php echo $message ; ?>
 						</div>
 
 						<?php
@@ -240,33 +240,33 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 								<?php
 							}
 						?>
-					</td> 
-				</tr> 
+					</td>
+				</tr>
 
 				<tr>
 					<td>
-						<p style="padding: 0;"> 
+						<p style="padding: 0;">
 							<a href="javascript:xi();" style="float:right"><?php _wsl_e("Details", 'wordpress-social-login') ?></a>
-							<a href="<?php echo site_url(); ?>" style="float:left">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
+							<a href="<?php echo home_url(); ?>" style="float:left">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
 						</p>
-						
+
 						<br style="clear:both;" />
 
 						<p id="debuginfo">&xi; <?php echo $api_error ?></p>
-					</td> 
-				</tr> 
+					</td>
+				</tr>
 			</table>
-		</div> 
+		</div>
 
-		<?php 
+		<?php
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) )
 			{
 				wsl_render_error_page_debug_section( $php_exception );
 			}
-		?> 
+		?>
 	</body>
-</html> 
+</html>
 <?php
 	# keep these 2 LOC
 		do_action( 'wsl_clear_user_php_session' );

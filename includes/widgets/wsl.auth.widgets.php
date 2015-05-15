@@ -97,9 +97,9 @@ do_action( 'wsl_render_login_form_start' );
 		$social_icon_set = "wpzoom/";
 	}
 
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set . '/'; 
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set . '/';
 
-	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url; 
+	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url;
 
 	// HOOKABLE:
 	$assets_base_url = apply_filters( 'wsl_render_auth_widget_alter_assets_base_url', $assets_base_url );
@@ -115,19 +115,19 @@ do_action( 'wsl_render_login_form_start' );
 	// > admin auth playground
 	if( $auth_mode == 'test' )
 	{
-		$authenticate_base_url = site_url() . "/?action=wordpress_social_authenticate&mode=test&";
+		$authenticate_base_url = home_url() . "/?action=wordpress_social_authenticate&mode=test&";
 	}
 
 	// > account linking
 	elseif( $auth_mode == 'link' )
 	{
-		$authenticate_base_url = site_url() . "/?action=wordpress_social_authenticate&mode=link&";
+		$authenticate_base_url = home_url() . "/?action=wordpress_social_authenticate&mode=link&";
 	}
 
 	// Connect with caption
 	$connect_with_label = _wsl__( get_option( 'wsl_settings_connect_with_label' ), 'wordpress-social-login' );
 
-	$connect_with_label = isset( $args['caption'] ) ? $args['caption'] : $connect_with_label; 
+	$connect_with_label = isset( $args['caption'] ) ? $args['caption'] : $connect_with_label;
 
 	// HOOKABLE:
 	$connect_with_label = apply_filters( 'wsl_render_auth_widget_alter_connect_with_label', $connect_with_label );
@@ -138,7 +138,7 @@ do_action( 'wsl_render_login_form_start' );
 	WordPress Social Login <?php echo wsl_get_version(); ?>.
 	http://wordpress.org/plugins/wordpress-social-login/
 -->
-<?php 
+<?php
 	// Widget::Custom CSS
 	$widget_css = get_option( 'wsl_settings_authentication_widget_css' );
 
@@ -157,9 +157,9 @@ do_action( 'wsl_render_login_form_start' );
 			array( '%/\*(?:(?!\*/).)*\*/%s', '/\s{2,}/', "/\s*([;{}])[\r\n\t\s]/", '/\\s*;\\s*/', '/\\s*{\\s*/', '/;?\\s*}\\s*/' ),
 				array( '', ' ', '$1', ';', '{', '}' ),
 					$widget_css );
-?> 
+?>
 </style>
-<?php 
+<?php
 	}
 ?>
 
@@ -168,7 +168,7 @@ do_action( 'wsl_render_login_form_start' );
 	<div class="wp-social-login-connect-with"><?php echo $connect_with_label; ?></div>
 
 	<div class="wp-social-login-provider-list">
-<?php 
+<?php
 	// Widget::Authentication display
 	$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
 
@@ -206,7 +206,7 @@ do_action( 'wsl_render_login_form_start' );
 			// in case, Widget::Authentication display is set to 'popup', then we overwrite 'authenticate_url'
 			// > /assets/js/connect.js will take care of the rest
 			if( $wsl_settings_use_popup == 1 &&  $auth_mode != 'test' )
-			{ 
+			{
 				$authenticate_url= "javascript:void(0);";
 			}
 
@@ -217,7 +217,7 @@ do_action( 'wsl_render_login_form_start' );
 			$provider_icon_markup = apply_filters( 'wsl_render_auth_widget_alter_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
 
 // Depreciated and will be removed
-$provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_icon_markup', $provider_icon_markup, $provider_name, $authenticate_url ); 
+$provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_icon_markup', $provider_icon_markup, $provider_name, $authenticate_url );
 // Depreciated and will be removed
 
 			if( $provider_icon_markup != $provider_id )
@@ -232,12 +232,12 @@ $provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_ico
 			<?php if( $social_icon_set == 'none' ){ echo apply_filters( 'wsl_render_auth_widget_alter_provider_name', $provider_name ); } else { ?><img alt="<?php echo $provider_name ?>" title="<?php echo sprintf( _wsl__("Connect with %s", 'wordpress-social-login'), $provider_name ) ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" /><?php } ?>
 
 		</a>
-<?php 
+<?php
 			}
 
-			$no_idp_used = false; 
-		} 
-	} 
+			$no_idp_used = false;
+		}
+	}
 
 	// no provider enabled?
 	if( $no_idp_used )
@@ -251,7 +251,7 @@ $provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_ico
 	}
 ?>
 
-	</div> 
+	</div>
 
 	<div class="wp-social-login-widget-clearing"></div>
 
@@ -266,7 +266,7 @@ $provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_ico
 <input type="hidden" id="wsl_login_form_uri" value="<?php echo esc_url( site_url( 'wp-login.php', 'login_post' ) ); ?>" />
 
 <?php
-	} 
+	}
 
 	// HOOKABLE: This action runs just after generating the WSL Widget.
 	do_action( 'wsl_render_auth_widget_end' );
@@ -278,8 +278,8 @@ do_action( 'wsl_render_login_form_end' );
 <!-- wsl_render_auth_widget -->
 
 <?php
-	// Display WSL debugging area bellow the widget.  
-	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :) 
+	// Display WSL debugging area bellow the widget.
+	// wsl_display_dev_mode_debugging_area(); // ! keep this line commented unless you know what you are doing :)
 
 	return ob_get_clean();
 }
@@ -287,7 +287,7 @@ do_action( 'wsl_render_login_form_end' );
 // --------------------------------------------------------------------
 
 /**
-* WSL wordpress_social_login action 
+* WSL wordpress_social_login action
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_action
 */
@@ -370,9 +370,9 @@ function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 		return;
 	}
 
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/'; 
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
 
-	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url; 
+	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url;
 
 	$return = '';
 
@@ -391,7 +391,7 @@ function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 	if( 'current_provider' == $meta )
 	{
 		$provider = get_user_meta( $user_id, 'wsl_current_provider', true );
-		
+
 		if( 'plain' == $display )
 		{
 			$return = $provider;
@@ -413,7 +413,7 @@ function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 			?><table class="wp-social-login-linked-accounts-list <?php echo $css_class; ?>"><?php
 
 			foreach( $linked_accounts AS $item )
-			{  
+			{
 				$identity = $item->profileurl;
 				$photourl = $item->photourl;
 
@@ -421,9 +421,9 @@ function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 				{
 					$identity = $item->identifier;
 				}
-				
-				?><tr><td><?php if( $photourl ) { ?><img  style="vertical-align: top;width:16px;height:16px;" src="<?php echo $photourl ?>"> <?php } else { ?><img src="<?php echo $assets_base_url . strtolower(  $item->provider ) . '.png' ?>" /> <?php } ?><?php echo ucfirst( $item->provider ); ?> </td><td><?php echo $identity; ?></td></tr><?php 
-				
+
+				?><tr><td><?php if( $photourl ) { ?><img  style="vertical-align: top;width:16px;height:16px;" src="<?php echo $photourl ?>"> <?php } else { ?><img src="<?php echo $assets_base_url . strtolower(  $item->provider ) . '.png' ?>" /> <?php } ?><?php echo ucfirst( $item->provider ); ?> </td><td><?php echo $identity; ?></td></tr><?php
+
 				echo "\n";
 			}
 
@@ -454,12 +454,12 @@ function wsl_render_auth_widget_in_comment_form()
 
 	if( comments_open() )
 	{
-		if( 
+		if(
 			!  $wsl_settings_widget_display
-		|| 
-			$wsl_settings_widget_display == 1 
-		|| 
-			$wsl_settings_widget_display == 2 
+		||
+			$wsl_settings_widget_display == 1
+		||
+			$wsl_settings_widget_display == 2
 		)
 		{
 			echo wsl_render_auth_widget();
@@ -478,7 +478,7 @@ add_action( 'comment_form_must_log_in_after', 'wsl_render_auth_widget_in_comment
 function wsl_render_auth_widget_in_wp_login_form()
 {
 	$wsl_settings_widget_display = get_option( 'wsl_settings_widget_display' );
-	
+
 	if( $wsl_settings_widget_display == 1 || $wsl_settings_widget_display == 3 )
 	{
 		echo wsl_render_auth_widget();
@@ -516,13 +516,13 @@ function wsl_add_stylesheets()
 {
 	if( ! wp_style_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" ); 
+		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" );
 	}
 
-	wp_enqueue_style( "wsl-widget" ); 
+	wp_enqueue_style( "wsl-widget" );
 }
 
-add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' ); 
+add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' );
 add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 
 // --------------------------------------------------------------------
@@ -546,7 +546,7 @@ function wsl_add_javascripts()
 	wp_enqueue_script( "wsl-widget" );
 }
 
-add_action( 'wp_enqueue_scripts'   , 'wsl_add_javascripts' ); 
+add_action( 'wp_enqueue_scripts'   , 'wsl_add_javascripts' );
 add_action( 'login_enqueue_scripts', 'wsl_add_javascripts' );
 
 // --------------------------------------------------------------------
