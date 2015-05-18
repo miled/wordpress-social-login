@@ -7,9 +7,9 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( !defined( 'ABSPATH' ) ) exit;
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_do_diagnostics()
 {
@@ -23,9 +23,9 @@ function wsl_component_tools_do_diagnostics()
 		<h3>
 			<label><?php _wsl_e("WordPress Social Login Diagnostics", 'wordpress-social-login') ?></label>
 		</h3>
-		<div class="inside"> 
+		<div class="inside">
 			<br />
-			<table class="wp-list-table widefat"> 
+			<table class="wp-list-table widefat">
 				<?php
 					$test = version_compare( PHP_VERSION, '5.2.0', '>=' );
 					// $test = 0;
@@ -38,9 +38,9 @@ function wsl_component_tools_do_diagnostics()
 						<p>PHP >= 5.2.0 installed.</p>
 						<?php
 							if( ! $test )
-							{ 
+							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error</b>: An old version of PHP is installed.</p>
 										<p>The solution is to make a trouble ticket to your web host and request them to upgrade to newer version of PHP.</p>
 									</div>
@@ -49,18 +49,18 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td width="60">
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
 							}
 							else
-							{ 
+							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = isset( $_SESSION["wsl::plugin"] ) && $_SESSION["wsl::plugin"];
@@ -74,18 +74,18 @@ function wsl_component_tools_do_diagnostics()
 						<p>PHP/Session must be enabled and working.</p>
 						<?php
 							if( ! $test )
-							{ 
+							{
 								?>
-								<div class="fade error" style="margin: 20px  0;"> 
+								<div class="fade error" style="margin: 20px  0;">
 									<p><b>Error</b>: PHP Sessions are not working as expected.</p>
 
 									<p>
 										This error may occur for many reasons:
-									</p> 
+									</p>
 
 									<p>
 										1. PHP session are either disabled, renamed or there is files permissions issues.
-									</p> 
+									</p>
 									<p>
 										2. When using a reverse proxy like Varnish or a caching engine that might strip cookies. On this case, WSL will requires these two urls to be white-listed:
 									</p>
@@ -101,12 +101,12 @@ function wsl_component_tools_do_diagnostics()
 							}
 							else
 							{
-						?> 
+						?>
 							<hr />
 							<h4>Notes:</h4>
 							<p>
 								1. If you're hosting your website on <b>WP Engine</b>, refer this topic: <a href="https://wordpress.org/support/topic/500-internal-server-error-when-redirecting" target="_blank">https://wordpress.org/support/topic/500-internal-server-error-when-redirecting</a>
-							</p> 
+							</p>
 							<p>2. In case you're using a reverse proxy like Varnish or a caching engine that might strip cookies, WSL will requires these two urls to be white-listed:</p>
 							<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 								<?php
@@ -120,18 +120,18 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
 							}
 							else
-							{ 
+							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = false;
@@ -153,11 +153,11 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>PHP CURL extension with SSL must be enabled and working.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error</b>: CURL library is either not installed or SSL is not enabled.</p>
 										<p>The solution is to make a trouble ticket to your web host and request them to enable the PHP CURL.</p>
 									</div>
@@ -166,18 +166,18 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
 							}
 							else
-							{ 
+							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = ! ini_get('register_globals') ? true : false;
@@ -189,11 +189,11 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>PHP Register Globals must be OFF.</p>
-					<?php 
+					<?php
 						if(  ! $test )
-						{ 
+						{
 							?>
-								<div class="fade error" style="margin: 20px  0;"> 
+								<div class="fade error" style="margin: 20px  0;">
 									<p><b>Error</b>: REGISTER_GLOBALS are On.</p>
 									<p>This will prevent WSL from working properly and will result on an infinite loop on the authentication page.</p>
 									<p>The solution is to make a trouble ticket with your web host to disable it, Or, if you have a dedicated server and you know what are you doing then edit php.ini file and turn it Off.</p>
@@ -203,13 +203,13 @@ function wsl_component_tools_do_diagnostics()
 					?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
 							}
 							else
-							{ 
+							{
 								echo "<b style='color:red;'>FAIL!</b>";
 							}
 						?>
@@ -234,10 +234,10 @@ function wsl_component_tools_do_diagnostics()
 							<p>In any case, WSL requires this url to be white-listed:</p>
 
 							<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
-								<?php 
+								<?php
 									echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
 								?>
-							</div> 
+							</div>
 						</div>
 
 						<div id="end_points_note" style="margin: 20px  0;">
@@ -249,7 +249,7 @@ function wsl_component_tools_do_diagnostics()
 								<?php
 									echo '<a href="' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '" target="_blank">' . WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '</a>';
 								?>
-							</div> 
+							</div>
 						</div>
 
 						<p>You may double-check this test manually by clicking this <a href="<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>?test=http://example.com" target="_blank">direct link</a>.</p>
@@ -275,7 +275,7 @@ function wsl_component_tools_do_diagnostics()
 							});
 						</script>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					global $wpdb;
@@ -291,11 +291,11 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>Check if WSL database tables (<code>wslusersprofiles</code> and <code>wsluserscontacts</code>) exist.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error:</b> One or more of WordPress Social Login tables do not exist.</p>
 										<p>This may prevent this plugin form working correctly. To fix this, navigate to <b>Tools</b> tab then <b><a href="options-general.php?page=wordpress-social-login&wslp=tools#repair-tables">Repair WSL tables</a></b>.</p>
 									</div>
@@ -315,25 +315,25 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
-			
+				</tr>
+
 				<?php
 					$test = class_exists( 'Hybrid_Auth', false ) ? false : true;
-				?> 				
+				?>
 				<tr>
 					<th width="200">
 						<label>Hybridauth Library</label>
 					</th>
 					<td>
 						<p>Check if the Hybridauth Library is auto-loaded by another plugin.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p>Hybridauth Library is auto-included by another plugin.</p>
 										<p>This is not critical but it may prevent WSL from working.</p>
-										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Hybridauth Library only when required.</p> 
+										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Hybridauth Library only when required.</p>
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'Hybrid_Auth' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
 										</div>
@@ -343,7 +343,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -355,24 +355,24 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 				</tr>
-	
+
 				<?php
 					$test = class_exists( 'OAuthConsumer', false ) ? false : true;
-				?> 
+				?>
 				<tr>
 					<th width="200">
 						<label>OAUTH Library</label>
 					</th>
 					<td>
 						<p>Check if OAUTH Library is auto-loaded by another plugin.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p>OAUTH Library is auto-included by another plugin.</p>
 										<p>This is not critical but it may prevent Twitter, LinkedIn and few other providers from working.</p>
-										<p>Please, inform the developer of that plugin not to auto-include the file below and to use OAUTH Library only when required.</p> 
+										<p>Please, inform the developer of that plugin not to auto-include the file below and to use OAUTH Library only when required.</p>
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'OAuthConsumer' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
 										</div>
@@ -382,7 +382,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -393,25 +393,25 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = class_exists( 'BaseFacebook', false ) ? false : true;
-				?> 
+				?>
 				<tr>
 					<th width="200">
 						<label>Facebook SDK</label>
 					</th>
 					<td>
 						<p>Check if Facebook SDK is auto-loaded by another plugin.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error:</b> Facebook SDK is auto-included by another plugin.</p>
 										<p>This will prevent Facebook from working.</p>
-										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Facebook SDK only when required.</p> 
+										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Facebook SDK only when required.</p>
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'BaseFacebook' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
 										</div>
@@ -421,7 +421,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -432,25 +432,25 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = class_exists( 'LightOpenID', false ) ? false : true;
-				?> 				
+				?>
 				<tr>
 					<th width="200">
 						<label>Class LightOpenID</label>
 					</th>
 					<td>
 						<p>Check if the LightOpenID Class is auto-loaded by another plugin.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p>Class LightOpenID is auto-included by another plugin.</p>
 										<p>This is not critical but it may prevent Yahoo, Steam, and few other providers from working.</p>
-										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Class LightOpenID only when required.</p> 
+										<p>Please, inform the developer of that plugin not to auto-include the file below and to use Class LightOpenID only when required.</p>
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 										<?php try{$reflector = new ReflectionClass( 'LightOpenID' ); echo $reflector->getFileName(); } catch( Exception $e ){} ?>
 										</div>
@@ -460,7 +460,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -496,11 +496,11 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>Check for proxified urls.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p>WSL has detected that you are using a proxy in your website. The URL shown below should match the URL on your browser address bar.</p>
 										<div style="background-color: #FFFFE0;border:1px solid #E6DB55; border-radius: 3px;padding: 10px;margin:2px;">
 											<?php
@@ -513,7 +513,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -524,10 +524,10 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
-				<?php 
-					$test = ! stristr( plugins_url(), site_url() ) ? false : true;
+				<?php
+					$test = ! stristr( plugins_url(), home_url() ) ? false : true;
 				?>
 				<tr>
 					<th width="200">
@@ -535,7 +535,7 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>Check for WordPress directories functions.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
@@ -546,7 +546,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -557,18 +557,18 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$test = true;
 					$used = array();
 
-					$depreciated = array( 
+					$depreciated = array(
 					// auth
-						'wsl_hook_process_login_alter_userdata', 
-						'wsl_hook_process_login_before_insert_user', 
-						'wsl_hook_process_login_after_create_wp_user', 
-						'wsl_hook_process_login_before_set_auth_cookie', 
+						'wsl_hook_process_login_alter_userdata',
+						'wsl_hook_process_login_before_insert_user',
+						'wsl_hook_process_login_after_create_wp_user',
+						'wsl_hook_process_login_before_set_auth_cookie',
 						'wsl_hook_process_login_before_redirect',
 
 					// widget
@@ -586,18 +586,18 @@ function wsl_component_tools_do_diagnostics()
 							$used[] = $v;
 						}
 					}
-				?> 				
+				?>
 				<tr>
 					<th width="200">
 						<label>WSL depreciated hooks</label>
 					</th>
 					<td>
 						<p>Check for depreciated WSL actions and filters in use.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p>WSL has detected that you are using depreciated WSL: <code><?php echo implode( '</code>, <code>', $used ); ?></code></p>
 										<p>Please update the WSL hooks you were using accordingly to the new developer API at <a href="http://miled.github.io/wordpress-social-login/documentation.html" target="_blank">http://miled.github.io/wordpress-social-login/documentation.html</a></p>
 									</div>
@@ -607,7 +607,7 @@ function wsl_component_tools_do_diagnostics()
 						<p> Note: this test is not reliable 100% as we simply match the depreciated hooks against <code>has_filter</code> and <code>has_action</code>.</p>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -618,24 +618,24 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					$itsec_tweaks = get_option( 'itsec_tweaks' );
 
 					$test = $itsec_tweaks && $itsec_tweaks['long_url_strings'] ? false : true;
-				?> 				
+				?>
 				<tr>
 					<th width="200">
 						<label>iThemes Security</label>
 					</th>
 					<td>
 						<p>Check if 'Prevent long URL strings' option is enabled.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error:</b> 'Prevent long URL strings' option is in enabled.</p>
 										<p>This may prevent Facebook and few other providers from working.</p>
 									</div>
@@ -644,7 +644,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -655,7 +655,7 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
+				</tr>
 
 				<?php
 					/**
@@ -691,11 +691,11 @@ function wsl_component_tools_do_diagnostics()
 					</th>
 					<td>
 						<p>Check if your web server clock is in sync.</p>
-						<?php 
+						<?php
 							if( ! $test )
 							{
 								?>
-									<div class="fade error" style="margin: 20px  0;"> 
+									<div class="fade error" style="margin: 20px  0;">
 										<p><b>Error:</b> <?php echo $error; ?>.</p>
 										<?php if( $hint ) echo '<p>' . $hint . '.</p>'; ?>
 									</div>
@@ -704,7 +704,7 @@ function wsl_component_tools_do_diagnostics()
 						?>
 					</td>
 					<td>
-						<?php 
+						<?php
 							if( $test )
 							{
 								echo "<b style='color:green;'>OK!</b>";
@@ -715,8 +715,8 @@ function wsl_component_tools_do_diagnostics()
 							}
 						?>
 					</td>
-				</tr> 
-			</table> 
+				</tr>
+			</table>
 
 			<br />
 			<hr />
@@ -730,7 +730,7 @@ function wsl_component_tools_do_diagnostics()
 
 add_action( 'wsl_component_tools_do_diagnostics', 'wsl_component_tools_do_diagnostics' );
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_do_sysinfo()
 {
@@ -745,7 +745,7 @@ function wsl_component_tools_do_sysinfo()
 		<h3>
 			<label><?php _wsl_e("System information", 'wordpress-social-login') ?></label>
 		</h3>
-		<div class="inside"> 
+		<div class="inside">
 			<ul style="padding-left:15px;">
 				<li>Please include this information when posting support requests. It will help me immensely to better understand any issues.</li>
 				<li>These information should be communicated to the plugin developer <b>PRIVATELY VIA EMAIL</b> : Miled &lt;<a href="mailto:hybridauth@gmail.com">hybridauth@gmail.com</a>&gt;</li>
@@ -754,6 +754,7 @@ function wsl_component_tools_do_sysinfo()
 # GENERAL
 
 SITE_URL:                 <?php echo site_url() . "\n"; ?>
+HOME_URL:                 <?php echo home_url() . "\n"; ?>
 PLUGIN_URL:               <?php echo plugins_url() . "\n"; ?>
 
 # WORDPRESS SOCIAL LOGIN
@@ -808,16 +809,16 @@ HTTP_X_FORWARDED_PROTO:   <?php echo isset( $_SERVER['HTTP_X_FORWARDED_PROTO'] )
 
 # ACTIVE PLUGINS
 
-<?php  
+<?php
 if( function_exists("get_plugins") ):
 	$plugins = get_plugins();
-	foreach ( $plugins as $plugin_path => $plugin ): 
-		echo str_pad( $plugin['Version'], 10, " ", STR_PAD_LEFT ); ?>. <?php echo $plugin['Name']."\n"; 
+	foreach ( $plugins as $plugin_path => $plugin ):
+		echo str_pad( $plugin['Version'], 10, " ", STR_PAD_LEFT ); ?>. <?php echo $plugin['Name']."\n";
 	endforeach;
 else:
 	$active_plugins = get_option( 'active_plugins', array() );
-	foreach ( $active_plugins as $plugin ): 
-		echo $plugin ."\n"; 
+	foreach ( $active_plugins as $plugin ):
+		echo $plugin ."\n";
 	endforeach;
 endif; ?>
 
@@ -834,7 +835,7 @@ if ( get_bloginfo( 'version' ) < '3.4' ) {
 ?>
 
 
-# EOF</textarea> 
+# EOF</textarea>
 
 			<br />
 			<br />
@@ -847,14 +848,14 @@ if ( get_bloginfo( 'version' ) < '3.4' ) {
 
 add_action( 'wsl_component_tools_do_sysinfo', 'wsl_component_tools_do_sysinfo' );
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_do_repair()
 {
 	global $wpdb;
 
 	wsl_database_install();
-	
+
 	// update_option( 'wsl_settings_development_mode_enabled', 1 );
 ?>
 <div class="metabox-holder columns-2" id="post-body">
@@ -862,7 +863,7 @@ function wsl_component_tools_do_repair()
 		<h3>
 			<label><?php _wsl_e("Repair Wordpress Social Login tables", 'wordpress-social-login') ?></label>
 		</h3>
-		<div class="inside"> 
+		<div class="inside">
 			<p>
 				<?php _wsl_e("All Wordpress Social Login tables and fields <em>should</em> be now restored", 'wordpress-social-login') ?>.
 			</p>
@@ -874,7 +875,7 @@ function wsl_component_tools_do_repair()
 		</div>
 	</div>
 </div>
-<?php 
+<?php
 	# ain't this clever :p
 	$db_check_profiles = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wslusersprofiles'" ) === $wpdb->prefix . 'wslusersprofiles' ? 1 : 0;
 	$db_check_contacts = $wpdb->get_var( "SHOW TABLES LIKE '{$wpdb->prefix}wsluserscontacts'" ) === $wpdb->prefix . 'wsluserscontacts' ? 1 : 0;
@@ -890,7 +891,7 @@ function wsl_component_tools_do_repair()
 
 add_action( 'wsl_component_tools_do_repair', 'wsl_component_tools_do_repair' );
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_do_uninstall()
 {
@@ -901,7 +902,7 @@ function wsl_component_tools_do_uninstall()
 		<h3>
 			<label><?php _wsl_e("Uninstall", 'wordpress-social-login') ?></label>
 		</h3>
-		<div class="inside"> 
+		<div class="inside">
 			<p>
 				<?php _wsl_e("All Wordpress Social Login tables and stored options are permanently deleted from your WordPress database", 'wordpress-social-login') ?>.
 			</p>
@@ -924,4 +925,4 @@ function wsl_component_tools_do_uninstall()
 
 add_action( 'wsl_component_tools_do_uninstall', 'wsl_component_tools_do_uninstall' );
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------

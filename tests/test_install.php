@@ -37,7 +37,7 @@ class WSL_Test_Install extends WP_UnitTestCase
 	function test_options_created()
 	{
 		$test = get_option( 'wsl_settings_redirect_url' );
-		$this->assertEquals( site_url(), $test );
+		$this->assertEquals( home_url(), $test );
 
 		$test = get_option( 'wsl_settings_buddypress_xprofile_map' );
 		$this->assertEquals( '', $test );
