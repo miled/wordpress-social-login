@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( !defined( 'ABSPATH' ) ) exit;
 
 /*!
 	Important
@@ -23,23 +23,23 @@ if ( !defined( 'ABSPATH' ) ) exit;
 
 function wsl_component_authtest()
 {
-	// HOOKABLE: 
+	// HOOKABLE:
 	do_action( "wsl_component_authtest_start" );
 
 	$adapter      = null;
 	$provider_id  = isset( $_REQUEST["provider"] ) ? $_REQUEST["provider"] : null;
 	$user_profile = null;
-	
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
+
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 
 	if( ! class_exists( 'Hybrid_Auth', false ) )
 	{
-		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php";
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
 	}
 
 	try
 	{
-		$provider = Hybrid_Auth::getAdapter( $provider_id ); 
+		$provider = Hybrid_Auth::getAdapter( $provider_id );
 
 		// make as few call as possible
 		if( ! ( isset( $_SESSION['wsl::userprofile'] ) && $_SESSION['wsl::userprofile'] && $user_profile = json_decode( $_SESSION['wsl::userprofile'] ) ) )
@@ -69,7 +69,7 @@ function wsl_component_authtest()
 		array( 'field' => 'age'         , 'label' => _wsl__( "Age"              , 'wordpress-social-login') ),
 		array( 'field' => 'birthDay'    , 'label' => _wsl__( "Birth day"        , 'wordpress-social-login') ),
 		array( 'field' => 'birthMonth'  , 'label' => _wsl__( "Birth month"      , 'wordpress-social-login') ),
-		array( 'field' => 'birthYear'   , 'label' => _wsl__( "Birth year"       , 'wordpress-social-login') ), 
+		array( 'field' => 'birthYear'   , 'label' => _wsl__( "Birth year"       , 'wordpress-social-login') ),
 		array( 'field' => 'email'       , 'label' => _wsl__( "Email"            , 'wordpress-social-login') ),
 		array( 'field' => 'phone'       , 'label' => _wsl__( "Phone"            , 'wordpress-social-login') ),
 		array( 'field' => 'address'     , 'label' => _wsl__( "Address"          , 'wordpress-social-login') ),
@@ -77,7 +77,7 @@ function wsl_component_authtest()
 		array( 'field' => 'region'      , 'label' => _wsl__( "Region"           , 'wordpress-social-login') ),
 		array( 'field' => 'city'        , 'label' => _wsl__( "City"             , 'wordpress-social-login') ),
 		array( 'field' => 'zip'         , 'label' => _wsl__( "Zip"              , 'wordpress-social-login') ),
-	);	
+	);
 ?>
 <style>
 	.widefat td, .widefat th { border: 1px solid #DDDDDD; }
@@ -89,7 +89,7 @@ function wsl_component_authtest()
 </style>
 
 <div class="metabox-holder columns-2" id="post-body">
-	<table width="100%"> 
+	<table width="100%">
 		<tr valign="top">
 			<td>
 				<?php if( ! $adapter ): ?>
@@ -101,20 +101,20 @@ function wsl_component_authtest()
 						<h3>
 							<label><?php _wsl_e("Connected adapter specs", 'wordpress-social-login') ?></label>
 						</h3>
-						<div class="inside"> 
+						<div class="inside">
 							<table class="wp-list-table widefat">
 								<tr>
 									<th width="200"><label><?php _wsl_e("Provider", 'wordpress-social-login') ?></label></th>
 									<td><?php echo $adapter->providerId; ?></td>
 								</tr>
-								
+
 								<?php if( isset( $adapter->openidIdentifier ) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("OpenID Identifier", 'wordpress-social-login') ?></label></th>
 										<td><?php echo $adapter->openidIdentifier; ?></td>
 									</tr>
 								<?php endif; ?>
-								
+
 								<?php if( isset( $adapter->scope ) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Scope", 'wordpress-social-login') ?></label></th>
@@ -161,7 +161,7 @@ function wsl_component_authtest()
 					</div>
 
 					<?php
-						$console = false; 
+						$console = false;
 
 						if( ! isset( $adapter->openidIdentifier ) ):
 					?>
@@ -169,12 +169,12 @@ function wsl_component_authtest()
 							<h3>
 								<label><?php _wsl_e("Connected adapter console", 'wordpress-social-login') ?></label>
 							</h3>
-							<div class="inside"> 
+							<div class="inside">
 								<?php
-									$path   = isset( $adapter->api->api_base_url ) ? $adapter->api->api_base_url : ''; 
-									$path   = isset( $_REQUEST['console-path']   ) ? $_REQUEST['console-path']   : $path; 
-									$method = isset( $_REQUEST['console-method'] ) ? $_REQUEST['console-method'] : ''; 
-									$query  = isset( $_REQUEST['console-query']  ) ? $_REQUEST['console-query']  : ''; 
+									$path   = isset( $adapter->api->api_base_url ) ? $adapter->api->api_base_url : '';
+									$path   = isset( $_REQUEST['console-path']   ) ? $_REQUEST['console-path']   : $path;
+									$method = isset( $_REQUEST['console-method'] ) ? $_REQUEST['console-method'] : '';
+									$query  = isset( $_REQUEST['console-query']  ) ? $_REQUEST['console-query']  : '';
 
 									$response = '';
 
@@ -216,20 +216,20 @@ function wsl_component_authtest()
 											<td><textarea style="width:100%;height:60px;margin-top:6px;" name="console-query"><?php echo htmlentities( $query ); ?></textarea></td>
 										</tr>
 									</table>
-									
+
 									<br />
 
 									<input type="submit" value="<?php _wsl_e("Submit", 'wordpress-social-login') ?>" class="button">
 								</form>
 							</div>
 						</div>
-						
+
 						<?php if( $console ): ?>
 							<div class="stuffbox">
 								<h3>
 									<label><?php _wsl_e("API Response", 'wordpress-social-login') ?></label>
 								</h3>
-								<div class="inside"> 
+								<div class="inside">
 									<textarea rows="25" cols="70" wrap="off" style="width:100%;height:400px;margin-bottom:15px;font-family: monospace;font-size: 12px;"><?php echo htmlentities( print_r( $response, true ) ); ?></textarea>
 								</div>
 							</div>
@@ -238,9 +238,9 @@ function wsl_component_authtest()
 								<h3>
 									<label><?php _wsl_e("Code PHP", 'wordpress-social-login') ?></label>
 								</h3>
-								<div class="inside"> 
+								<div class="inside">
 <textarea rows="25" cols="70" wrap="off" style="width:100%;height:210px;margin-bottom:15px;font-family: monospace;font-size: 12px;"
->include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php';
+>include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/Hybrid/Auth.php';
 
 /*!
 	Important
@@ -250,7 +250,7 @@ function wsl_component_authtest()
 
 try
 {
-    $<?php echo strtolower( $adapter->providerId ); ?> = Hybrid_Auth::getAdapter( '<?php echo htmlentities( $provider_id ); ?>' ); 
+    $<?php echo strtolower( $adapter->providerId ); ?> = Hybrid_Auth::getAdapter( '<?php echo htmlentities( $provider_id ); ?>' );
 
 <?php if( $method == 'GET' ): ?>
     $response = $<?php echo strtolower( $adapter->providerId ); ?>->api()->get( '<?php echo htmlentities( $path . ( $query ? '?' . $query : '' ) ); ?>' );
@@ -289,7 +289,7 @@ catch( Exception $e )
 							<h3>
 								<label><?php _wsl_e("Connected user social profile", 'wordpress-social-login') ?></label>
 							</h3>
-							<div class="inside"> 
+							<div class="inside">
 								<table class="wp-list-table widefat">
 									<?php
 										$user_profile = (array) $user_profile;
@@ -322,12 +322,12 @@ catch( Exception $e )
 															}
 															else
 															{
-																echo $field_value; 
+																echo $field_value;
 															}
 														}
 													?>
 												</td>
-											</tr> 
+											</tr>
 										<?php
 										}
 									?>
@@ -350,30 +350,30 @@ catch( Exception $e )
 							<p>
 								<?php _wsl_e('This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>.
 							</p>
-						</div> 
-					</div> 
-				</div> 
+						</div>
+					</div>
+				</div>
 
 				</style>
 				<div class="postbox">
 					<div class="inside">
 						<div style="padding:0 20px;">
 							<p>
-								<?php _wsl_e("Connect with", 'wordpress-social-login') ?>: 
+								<?php _wsl_e("Connect with", 'wordpress-social-login') ?>:
 							</p>
 
 							<div style="width: 380px; padding: 10px; border: 1px solid #ddd; background-color: #fff;">
-								<?php do_action( 'wordpress_social_login', array( 'mode' => 'test', 'caption' => '' ) ); ?> 
-							</div> 
+								<?php do_action( 'wordpress_social_login', array( 'mode' => 'test', 'caption' => '' ) ); ?>
+							</div>
 						</div>
-					</div> 
+					</div>
 				</div>
 			</td>
 		</tr>
 	</table>
-</div> 
-<?php	
-	// HOOKABLE: 
+</div>
+<?php
+	// HOOKABLE:
 	do_action( "wsl_component_authtest_end" );
 }
 

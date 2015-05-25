@@ -18,11 +18,11 @@ class WSL_Test_Users extends WP_UnitTestCase
 	{
 		parent::setUp();
 
-		$this->someUserID = wp_create_user( $this->someUserLogin, wp_generate_password(), $this->someUserMail ); 
+		$this->someUserID = wp_create_user( $this->someUserLogin, wp_generate_password(), $this->someUserMail );
 
-		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/User_Profile.php';
+		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/Hybrid/User_Profile.php';
 
-		$this->someUserProfile = new Hybrid_User_Profile(); 
+		$this->someUserProfile = new Hybrid_User_Profile();
 
 		$this->someUserProfile->identifier    = 'identifier';
 		$this->someUserProfile->firstName     = 'firstName';
@@ -79,7 +79,7 @@ class WSL_Test_Users extends WP_UnitTestCase
 	}
 
 	/*
-	* make sure users social profiles are deleted when the associated wordpress user is deleted 
+	* make sure users social profiles are deleted when the associated wordpress user is deleted
 	*/
 	function test_delete_user_social_profile()
 	{

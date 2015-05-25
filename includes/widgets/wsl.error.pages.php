@@ -30,7 +30,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 {
 	function wsl_render_notice_page( $message )
 	{
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 ?>
 <!DOCTYPE html>
 	<head>
@@ -135,7 +135,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 {
 	function wsl_render_error_page( $message, $notes = null, $provider = null, $api_error = null, $php_exception = null )
 	{
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
+		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 ?>
 <!DOCTYPE html>
 	<head>

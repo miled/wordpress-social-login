@@ -27,7 +27,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	// HOOKABLE:
 	do_action( "wsl_process_login_new_users_gateway_start", $provider, $redirect_to, $hybridauth_user_profile );
 
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
 
 	// remove wsl widget
 	remove_action( 'register_form', 'wsl_render_auth_widget_in_wp_register_form' );
