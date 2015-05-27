@@ -198,7 +198,7 @@ function wsl_process_login_begin()
 	// load hybridauth main class
 	if( ! class_exists('Hybrid_Auth', false) )
 	{
-		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php";
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
 	}
 
 	// HOOKABLE:
@@ -997,7 +997,7 @@ function wsl_process_login_get_provider_adapter( $provider )
 {
 	if( ! class_exists( 'Hybrid_Auth', false ) )
 	{
-		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "/hybridauth/Hybrid/Auth.php";
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
 	}
 
 	return Hybrid_Auth::getAdapter( $provider );
@@ -1077,7 +1077,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 	// HOOKABLE:
 	do_action( "wsl_process_login_render_error_page", $e, $config, $provider, $adapter );
 
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/';
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 
 	$message  = _wsl__("Unspecified error!", 'wordpress-social-login');
 	$notes    = "";

@@ -11,7 +11,7 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
@@ -19,7 +19,7 @@ function wsl_component_watchdog()
 {
  	if( ! get_option( 'wsl_settings_debug_mode_enabled' ) )
 	{
-		return _wsl_e("<p>Debug mode is disabled.</p>", 'wordpress-social-login'); 
+		return _wsl_e("<p>Debug mode is disabled.</p>", 'wordpress-social-login');
 	}
 
 	if( get_option( 'wsl_settings_debug_mode_enabled' ) == 1 )
@@ -40,17 +40,17 @@ function wsl_component_watchdog_files()
 <div style="padding: 5px 20px; border: 1px solid #ddd; background-color: #fff;">
 	<h3></h3>
 	<h3><?php _wsl_e("Authentication log files viewer", 'wordpress-social-login') ?></h3>
-	
+
 	<form method="post" action="" style="float: right;margin-top:-45px">
 		<select name="log_file">
 			<option value=""> &mdash; <?php _wsl_e("Select a log file to display", 'wordpress-social-login') ?> &mdash;</option>
-			
+
 			<?php
 				$wp_upload_dir = wp_upload_dir();
 				$wsl_path = $wp_upload_dir['basedir'] . '/wordpress-social-login';
 
 				$selected = isset( $_REQUEST['log_file'] ) ? $_REQUEST['log_file'] : '';
-				
+
 				$files = scandir( $wsl_path );
 
 				if( $files )
@@ -78,7 +78,7 @@ function wsl_component_watchdog_files()
 
 function wsl_component_watchdog_database()
 {
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
 
 	global $wpdb;
 
@@ -88,12 +88,12 @@ function wsl_component_watchdog_database()
 		if( $_REQUEST['delete'] == 'log' )
 		{
 			$wpdb->query( "TRUNCATE TABLE {$wpdb->prefix}wslwatchdog" );
-		}	
-	}	
+		}
+	}
 ?>
 <style>
 	.widefatop td, .widefatop th { border: 1px solid #DDDDDD; }
-	.widefatop th label { font-weight: bold; }  
+	.widefatop th label { font-weight: bold; }
 </style>
 
 <div style="padding: 5px 20px; border: 1px solid #ddd; background-color: #fff;">
@@ -110,11 +110,11 @@ function wsl_component_watchdog_database()
 	<hr />
 
 	<?php
-		$list_sessions = $wpdb->get_results( "SELECT user_ip, session_id, provider, max(id) as max_id FROM `{$wpdb->prefix}wslwatchdog` GROUP BY session_id, provider ORDER BY max_id DESC LIMIT 25" );  
+		$list_sessions = $wpdb->get_results( "SELECT user_ip, session_id, provider, max(id) as max_id FROM `{$wpdb->prefix}wslwatchdog` GROUP BY session_id, provider ORDER BY max_id DESC LIMIT 25" );
 
 		if( ! $list_sessions )
 		{
-			_wsl_e("<p>No log found!</p>", 'wordpress-social-login'); 
+			_wsl_e("<p>No log found!</p>", 'wordpress-social-login');
 		}
 		else
 		{
@@ -126,7 +126,7 @@ function wsl_component_watchdog_database()
 
 				if( ! $provider )
 				{
-					continue; 
+					continue;
 				}
 
 				?>
@@ -144,7 +144,7 @@ function wsl_component_watchdog_database()
 						<th style="text-align:center">&#916;</th>
 					</tr>
 			<?php
-				$list_calls = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}wslwatchdog` WHERE session_id = '$session_id' AND provider = '$provider' ORDER BY id ASC LIMIT 500" );  
+				$list_calls = $wpdb->get_results( "SELECT * FROM `{$wpdb->prefix}wslwatchdog` WHERE session_id = '$session_id' AND provider = '$provider' ORDER BY id ASC LIMIT 500" );
 
 				$abandon    = false;
 				$newattempt = false;
@@ -153,7 +153,7 @@ function wsl_component_watchdog_database()
 				$exectime   = 0;
 				$oexectime  = 0;
 				$texectime  = 0;
-			
+
 				foreach( $list_calls as $call_data )
 				{
 					$exectime = (float) $call_data->created_at - ( $oexectime ? $oexectime : (float) $call_data->created_at );
@@ -163,9 +163,9 @@ function wsl_component_watchdog_database()
 					$call_data->action_args = json_decode( $call_data->action_args );
 
 					$newattempt = false;
-					
+
 					$action_name_uid = uniqid();
-					
+
 					$action_desc = 'N.A.';
 					?>
 					<tr  style="<?php if( stristr( $call_data->action_name, 'dbg:' ) ) echo 'background-color:#fffcf5;'; ?> <?php if( 'wsl_render_login_form_user_loggedin' == $call_data->action_name || $call_data->action_name == 'wsl_hook_process_login_before_wp_set_auth_cookie' ) echo 'background-color:#edfff7;'; ?><?php if( 'wsl_process_login_complete_registration_start' == $call_data->action_name ) echo 'background-color:#fefff0;'; ?><?php if( 'wsl_process_login_render_error_page' == $call_data->action_name || $call_data->action_name == 'wsl_process_login_render_notice_page' ) echo 'background-color:#fffafa;'; ?>">
@@ -173,7 +173,7 @@ function wsl_component_watchdog_database()
 							<?php echo $call_data->id; ?>
 						</td>
 						<td nowrap width="350">
-							<span style="color:#<?php 
+							<span style="color:#<?php
 											if( stristr( $call_data->action_name, 'dbg:' ) ){
 												echo '333333';
 											}
@@ -232,7 +232,7 @@ function wsl_component_watchdog_database()
 		function action_args_toggle( action )
 		{
 			jQuery('.action_args_' + action ).toggle();
-			
+
 			return false;
 		}
 	</script>

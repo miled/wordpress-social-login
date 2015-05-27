@@ -429,7 +429,7 @@ function wsl_generate_backtrace()
 
     for ( $i = 0; $i < $length; $i++ )
     {
-        $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/' ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
+        $result[] = ( $i + 1 )  . ')' . str_ireplace( array( realpath( WORDPRESS_SOCIAL_LOGIN_ABS_PATH ), realpath( WP_PLUGIN_DIR . '/' ), realpath( ABSPATH . '/' ) ) , '', substr( $trace[$i], strpos( $trace[$i], ' ' ) ) );
     }
 
     return "\n\t" . implode( "\n\t", $result );

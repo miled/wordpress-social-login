@@ -97,7 +97,7 @@ do_action( 'wsl_render_login_form_start' );
 		$social_icon_set = "wpzoom/";
 	}
 
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/32x32/' . $social_icon_set . '/';
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/32x32/' . $social_icon_set . '/';
 
 	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url;
 
@@ -370,7 +370,7 @@ function wsl_shortcode_wordpress_social_login_meta( $args = array() )
 		return;
 	}
 
-	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . '/assets/img/16x16/';
+	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
 
 	$assets_base_url  = isset( $args['assets_base_url'] ) && $args['assets_base_url'] ? $args['assets_base_url'] : $assets_base_url;
 
@@ -516,7 +516,7 @@ function wsl_add_stylesheets()
 {
 	if( ! wp_style_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/css/style.css" );
+		wp_register_style( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "assets/css/style.css" );
 	}
 
 	wp_enqueue_style( "wsl-widget" );
@@ -539,7 +539,7 @@ function wsl_add_javascripts()
 
 	if( ! wp_script_is( 'wsl-widget', 'registered' ) )
 	{
-		wp_register_script( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "/assets/js/widget.js" );
+		wp_register_script( "wsl-widget", WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . "assets/js/widget.js" );
 	}
 
 	wp_enqueue_script( "jquery" );
