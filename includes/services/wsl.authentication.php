@@ -821,6 +821,8 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 			$redirect_to = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "pending=activation";
 
 			// send a new e-mail/activation notification - if TML not enabled, we ensure WSL to keep it quiet
+			$errors = new WP_Error();
+			do_action( 'register_post', $wp_user->user_nicename, $wp_user->$user_email, $errors );
 			@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
 		}
 
