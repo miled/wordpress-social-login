@@ -206,7 +206,7 @@ function wsl_component_bouncer_setup_user_moderation()
 			<td>
 				<?php
 					$users_moderation_level = array(
-						100 => "E-mail Confirmation &mdash; Yield to Theme My Login plugin",
+						101 => "E-mail Confirmation &mdash; Yield to Theme My Login plugin",
 						102 => "Admin Approval &mdash; Yield to Theme My Login plugin",
 					);
 
