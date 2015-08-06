@@ -326,15 +326,19 @@ function wsl_process_login_end()
 			$hybridauth_user_profile,
 			$requested_user_login   ,
 			$requested_user_email   ,
+			$wordpress_user_id
 		)
 		= wsl_process_login_get_user_data( $provider, $redirect_to );
 
 		// if no associated user were found in wslusersprofiles, create new WordPress user
-		if( ! $user_id )
+		if( ! $wordpress_user_id )
 		{
 			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 			$is_new_user = true;
+		}else{
+			$user_id = $wordpress_user_id;
+			$is_new_user = false;
 		}
 	}
 
@@ -380,6 +384,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	$hybridauth_user_profile  = null;
 	$requested_user_login     = '';
 	$requested_user_email     = '';
+	$wordpress_user_id        = 0;
 
 	/* 1. Grab the user profile from social network */
 
@@ -459,6 +464,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                                 = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
                         }
                         while( ! $shall_pass );
+	                $wordpress_user_id = $user_id;
                 }
 
                 // Bouncer::Profile Completion
@@ -568,6 +574,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		$hybridauth_user_profile,
 		$requested_user_login,
 		$requested_user_email,
+		$wordpress_user_id
 	);
 }
 
