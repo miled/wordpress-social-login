@@ -439,7 +439,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 
 
         /* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
-
         if( ! $user_id )
         {
                 // Bouncer :: Accept new registrations?
@@ -487,6 +486,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                         }
                         while( ! $shall_pass );
                 }
+        }else{
+	        $wordpress_user_id = $user_id;
         }
 	$hybridauth_user_email = $requested_user_email;
 
