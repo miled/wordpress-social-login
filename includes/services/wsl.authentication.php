@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -295,6 +295,8 @@ function wsl_process_login_end()
 		// a social account cant be associated with more than one wordpress account.
 
 		$hybridauth_user_profile = wsl_process_login_request_user_social_profile( $provider );
+
+        $adapter = wsl_process_login_get_provider_adapter( $provider );
 
 		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 

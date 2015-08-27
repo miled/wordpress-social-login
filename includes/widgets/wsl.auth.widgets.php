@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -24,8 +24,6 @@ if( !defined( 'ABSPATH' ) ) exit;
 *
 * Note:
 *   WSL shortcode arguments are still experimental and might change in future versions.
-*   Please, avoid using them until it's officially announced and documented.
-*   This feature is planned for WSL 2.3. Contributions to this are very welcome.
 *
 *   [wordpress_social_login
 *        auth_mode="login"
@@ -79,10 +77,6 @@ function wsl_render_auth_widget( $args = array() )
 
 	// HOOKABLE: This action runs just before generating the WSL Widget.
 	do_action( 'wsl_render_auth_widget_start' );
-
-// Depreciated and will be removed
-do_action( 'wsl_render_login_form_start' );
-// Depreciated and will be removed
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
@@ -216,10 +210,6 @@ do_action( 'wsl_render_login_form_start' );
 			// HOOKABLE: allow use of other icon sets
 			$provider_icon_markup = apply_filters( 'wsl_render_auth_widget_alter_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
 
-// Depreciated and will be removed
-$provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_icon_markup', $provider_icon_markup, $provider_name, $authenticate_url );
-// Depreciated and will be removed
-
 			if( $provider_icon_markup != $provider_id )
 			{
 				echo $provider_icon_markup;
@@ -270,10 +260,6 @@ $provider_icon_markup = apply_filters( 'wsl_render_login_form_alter_provider_ico
 
 	// HOOKABLE: This action runs just after generating the WSL Widget.
 	do_action( 'wsl_render_auth_widget_end' );
-
-// Depreciated and will be removed
-do_action( 'wsl_render_login_form_end' );
-// Depreciated and will be removed
 ?>
 <!-- wsl_render_auth_widget -->
 
@@ -305,8 +291,6 @@ add_action( 'wordpress_social_login', 'wsl_action_wordpress_social_login' );
 *
 * Note:
 *   WSL shortcode arguments are still experimental and might change in future versions.
-*   Please, avoid using 'restrict_content' until it's officially announced and documented.
-*   This feature is planned for WSL 2.3. Contributions to this are more than welcome.
 *
 * Ref: http://codex.wordpress.org/Function_Reference/add_shortcode
 */
@@ -336,8 +320,6 @@ add_shortcode( 'wordpress_social_login', 'wsl_shortcode_wordpress_social_login' 
 *
 * Note:
 *   This shortcode is experimental and might change in future versions.
-*   Please, avoid using it until it's officially announced and documented.
-*   This feature is planned for WSL 2.4. Contributions to this are quite welcome.
 *
 *   [wordpress_social_login_meta
 *        user_id="215"

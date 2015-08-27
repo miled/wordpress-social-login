@@ -26,15 +26,6 @@ For more information about WordPress Social Login, refer to our [online user gui
 - Modular design easily extended.
 - Comprehensive documentation.
 
-#### Todo list
-
-- [ ] Accounts linking/mapping
-- [ ] Rework userdata api
-- [ ] Widget shortcode will support arguments 
-- [ ] Add soundcloud developers.soundcloud.com/docs
-- [ ] Add levels or conditionals to Dev mode (i.g., only display is_admin) 
-- [ ] ..
-
 #### License 
 
 MIT — That's short for do whatever you want.
@@ -59,3 +50,5 @@ Big thanks to everyone who have contributed to WordPress Social Login by submitt
 ![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-7.png)
 ===
 ![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-8.png)
+===
+![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-9.png)

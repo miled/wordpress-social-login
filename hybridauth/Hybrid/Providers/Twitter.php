@@ -111,14 +111,13 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
 		}
 		parent::loginFinish();
 	}
-	
 
 	/**
 	* load the user profile from the IDp api client
 	*/
 	function getUserProfile()
 	{
-		$response = $this->api->get( 'account/verify_credentials.json' );
+		$response = $this->api->get( 'account/verify_credentials.json?include_email=true' );
 
 		// check the last HTTP status code returned
 		if ( $this->api->http_code != 200 ){
@@ -138,6 +137,7 @@ class Hybrid_Providers_Twitter extends Hybrid_Provider_Model_OAuth1
 		$this->user->profile->profileURL  = (property_exists($response,'screen_name'))?("http://twitter.com/".$response->screen_name):"";
 		$this->user->profile->webSiteURL  = (property_exists($response,'url'))?$response->url:""; 
 		$this->user->profile->region      = (property_exists($response,'location'))?$response->location:"";
+        $this->user->profile->email       = (property_exists($response,'email'))?$response->email:"";
 
 		return $this->user->profile;
  	}

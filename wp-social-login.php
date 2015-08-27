@@ -43,6 +43,7 @@ Domain Path: /languages
 *  by submitting a Pull Request at https://github.com/miled/wordpress-social-login
 *
 *  Grep's user, read below. Keywords stuffing:<add_action|do_action|add_filter|apply_filters>
+*
 *  If you are here just looking for the hooks, then refer to the online Developer API. If it wasn't possible to
 *  achieve some required functionality in a proper way through the already available and documented WSL hooks,
 *  please ask for support before resorting to hacks. WSL internals are not to be used.
@@ -67,7 +68,7 @@ global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 global $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 global $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.3.0-work-in-progress";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.3.0";
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 

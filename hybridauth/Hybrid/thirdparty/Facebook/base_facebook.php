@@ -166,7 +166,7 @@ abstract class BaseFacebook
    * @var array
    */
   public static $DOMAIN_MAP = array(
-    'api'         => 'https://api.facebook.com/',
+    'api'         => 'https://api.facebook.com/2.4/',
     'api_video'   => 'https://api-video.facebook.com/',
     'api_read'    => 'https://api-read.facebook.com/',
     'graph'       => 'https://graph.facebook.com/',
@@ -730,7 +730,7 @@ abstract class BaseFacebook
    *               code could not be determined.
    */
   protected function getCode() {
-    if (!isset($_REQUEST['code']) || !isset($_REQUEST['state'])) {
+    if (!isset($_REQUEST['code']) || !isset($_REQUEST['state']) || $this->state === null) {
       return false;
     }
     if ($this->state === $_REQUEST['state']) {

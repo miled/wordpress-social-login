@@ -2,7 +2,7 @@
 Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
-Tested up to: 4.0
+Tested up to: 4.3
 Stable tag: 2.3.0
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
@@ -66,18 +66,26 @@ The user guide and frequently asked questions can be found at http://miled.githu
 1. WSL attempts to work with the default WordPress comment, login and registration forms.
 2. WSL come with a simple but flexible and fully customizable authentication widget.
 3. WSL widget can be easily integrated into most WordPress themes and many popular plugins using hooks and shortcodes.
-4. WSL social networks setup.
-5. WSL widget customization.
-6. WSL advanced configuration.
-7. WSL Buddypress Integration.
-8. WSL components and add-ons manager.
+4. Accounts linking/mapping.
+5. WSL social networks setup.
+6. WSL widget customization.
+7. WSL advanced configuration.
+8. WSL Buddypress Integration.
+9. WSL components and add-ons manager.
 
 == Changelog ==
 
 = 2.3.0 = 
 
-* .
-* ..
+* Accounts linking/mapping.
+* Improved Profile Completion.
+* Widget shortcode arguments.
+* Added new translations.
+* Fix an issue with Facebook users profiles.
+* Fix email confirmation in WSL.
+* Small fix for error when merging wsl users with wp users.
+* Remove hardcoded plugin directories.
+* Reduice Twitch TV requested permissions.
 
 = 2.2.3 = 
 

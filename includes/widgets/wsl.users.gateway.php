@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -57,8 +57,9 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$profile_completion_errors  = array();
 
 	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
-
-	// $linking_enabled = 2; // overide linking_enabled
+    $require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
+    $change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
+    $extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
 
 	if( isset( $_REQUEST["bouncer_account_linking"] ) )
 	{
@@ -92,10 +93,6 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 	elseif( isset( $_REQUEST["bouncer_profile_completion"] ) )
 	{
-		$require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
-		$change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
-		$extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
-
 		// Bouncer::Profile Completion enabled?
 		// > if not enabled we just let the user pass
 		if( $require_email == 2 && $change_username == 2 && $extra_fields == 2 )
@@ -474,6 +471,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<p style="font-size: 12px;"><?php printf( _wsl__( "Link your existing account on our website to your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
 							</td>
 						<?php endif; ?>
+
 						<td valign="top"  width="50%" style="text-align:center;">
 							<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
 							<p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
@@ -486,8 +484,13 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<input type="button" value="<?php _wsl_e( "Link my account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_authenticate();" >
 							</td>
 						<?php endif; ?>
+
 						<td valign="top"  width="50%" style="text-align:center;">
-							<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
+							<?php if( $require_email != 1 && $change_username != 1 && $extra_fields != 1 ): ?>
+                                <input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="document.getElementById('info-form').submit();" >
+							<?php else : ?>
+                                <input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
+                            <?php endif; ?>
 						</td>
 					</tr>
 				</table>
@@ -518,7 +521,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					}
 				?>
 
-				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form">
+				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="link-form">
 					<table id="mapping-authenticate" border="0">
 						<tr>
 							<td valign="top"  width="50%" style="text-align:center;">
@@ -554,7 +557,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
 				</form>
 
-				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="login-form">
+				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="info-form">
 					<table id="mapping-complete-info" border="0">
 						<tr>
 							<td valign="top"  width="50%" style="text-align:center;">
@@ -567,17 +570,21 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						</tr>
 						<tr>
 							<td valign="bottom"  width="50%" style="text-align:left;">
-								<label>
-									<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
-									<br />
-									<input type="text" name="user_login" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
-								</label>
+                                <?php if( $change_username == 1 ): ?>
+                                    <label>
+                                        <?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
+                                        <br />
+                                        <input type="text" name="user_login" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
+                                    </label>
+                                <?php endif; ?>
 
-								<label>
-									<?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
-									<br />
-									<input type="text" name="user_email" class="input" value="<?php echo $requested_user_email; ?>" size="25" placeholder="" />
-								</label>
+                                <?php if( $require_email == 1 ): ?>
+                                    <label>
+                                        <?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
+                                        <br />
+                                        <input type="text" name="user_email" class="input" value="<?php echo $requested_user_email; ?>" size="25" placeholder="" />
+                                    </label>
+                                <?php endif; ?>
 
 								<?php
 									/**
@@ -587,8 +594,6 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									*
 									* Ref: http://codex.wordpress.org/Plugin_API/Action_Reference/register_form
 									*/
-									$extra_fields = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
-
 									if( $extra_fields == 1 )
 									{
 										do_action( 'register_form' );
