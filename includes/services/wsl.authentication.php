@@ -326,15 +326,19 @@ function wsl_process_login_end()
 			$hybridauth_user_profile,
 			$requested_user_login   ,
 			$requested_user_email   ,
+			$wordpress_user_id
 		)
 		= wsl_process_login_get_user_data( $provider, $redirect_to );
 
 		// if no associated user were found in wslusersprofiles, create new WordPress user
-		if( ! $user_id )
+		if( ! $wordpress_user_id )
 		{
 			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 			$is_new_user = true;
+		}else{
+			$user_id = $wordpress_user_id;
+			$is_new_user = false;
 		}
 	}
 
@@ -380,6 +384,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	$hybridauth_user_profile  = null;
 	$requested_user_login     = '';
 	$requested_user_email     = '';
+	$wordpress_user_id        = 0;
 
 	/* 1. Grab the user profile from social network */
 
@@ -434,7 +439,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 
 
         /* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
-
         if( ! $user_id )
         {
                 // Bouncer :: Accept new registrations?
@@ -459,6 +463,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                                 = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
                         }
                         while( ! $shall_pass );
+	                $wordpress_user_id = $user_id;
                 }
 
                 // Bouncer::Profile Completion
@@ -481,6 +486,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                         }
                         while( ! $shall_pass );
                 }
+        }else{
+	        $wordpress_user_id = $user_id;
         }
 	$hybridauth_user_email = $requested_user_email;
 
@@ -568,6 +575,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		$hybridauth_user_profile,
 		$requested_user_login,
 		$requested_user_email,
+		$wordpress_user_id
 	);
 }
 
