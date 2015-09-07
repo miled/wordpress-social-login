@@ -172,7 +172,8 @@ class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 
 			$fields = array(
 				'id', 'name', 'first_name', 'last_name', 'link', 'website', 
-				'gender', 'locale', 'about', 'email', 'hometown', 'location'
+				'gender', 'locale', 'about', 'email', 'hometown', 'location',
+				'verified'
 			);
 
 			$data = $this->api->api('/me?fields=' . implode(',', $fields));
