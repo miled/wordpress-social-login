@@ -196,6 +196,18 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 	if( $shall_pass == false )
 	{
+		global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+
+		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG as $provider_settings ) {
+			if ( $provider_settings['provider_id'] == $provider ) {
+				$provider_name = $provider_settings['provider_name'];
+				break;
+			}
+		}
+
+		if ( empty ( $provider_name ) ) {
+			$provider_name = $provider;
+		}
 ?>
 <!DOCTYPE html>
 	<head>
@@ -565,7 +577,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
 								<?php endif; ?>
 
-								<p><?php printf( _wsl__( "Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ); ?>.</p>
+								<p><?php printf( _wsl__( "Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login' ), $provider_name ); ?>.</p>
 							</td>
 						</tr>
 						<tr>
