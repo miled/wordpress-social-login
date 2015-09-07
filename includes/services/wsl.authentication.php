@@ -481,10 +481,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                                 list
                                 (
                                         $shall_pass,
+                                        $user_id,
                                         $requested_user_login,
                                         $requested_user_email
                                 )
-                                = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
+                                = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
                         }
                         while( ! $shall_pass );
                 }
