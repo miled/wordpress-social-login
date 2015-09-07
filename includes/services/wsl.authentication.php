@@ -727,10 +727,6 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		$user_id = wp_insert_user( $userdata );
 	}
 
-  // wp_insert_user may fail on first and last name meta, expliciting setting to correct.
-  update_user_meta($user_id, 'first_name', apply_filters( 'pre_user_first_name',$userdata['first_name']));
-  update_user_meta($user_id, 'last_name', apply_filters( 'pre_user_last_name', $userdata['last_name']));
-
 	// do not continue without user_id
 	if( ! $user_id || ! is_integer( $user_id ) )
 	{
@@ -741,6 +737,10 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 		return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user!", 'wordpress-social-login' ) );
 	}
+
+	// wp_insert_user may fail on first and last name meta, expliciting setting to correct.
+	update_user_meta($user_id, 'first_name', apply_filters( 'pre_user_first_name',$userdata['first_name']));
+	update_user_meta($user_id, 'last_name', apply_filters( 'pre_user_last_name', $userdata['last_name']));
 
 	// Send notifications
 	if( get_option( 'wsl_settings_users_notification' ) == 1 )
