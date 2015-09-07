@@ -659,9 +659,9 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 
 	$display_name = $hybridauth_user_profile->displayName;
 
-	if( $requested_user_login )
+	if( empty( $display_name ) )
 	{
-		$display_name = sanitize_user( $requested_user_login, true );
+		$display_name = $hybridauth_user_profile->firstName;
 	}
 
 	if( empty( $display_name ) )
