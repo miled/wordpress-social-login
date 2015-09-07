@@ -736,7 +736,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 	{
 		if( is_wp_error( $user_id ) )
 		{
-			return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user: " . $user_id->get_error_message(), 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user: ", 'wordpress-social-login' ) . $user_id->get_error_message() );
 		}
 
 		return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user!", 'wordpress-social-login' ) );
