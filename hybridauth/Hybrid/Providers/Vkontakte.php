@@ -125,6 +125,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 
 		// Additional data
 		$this->user->profile->email = Hybrid_Auth::storage()->get( "hauth_session.{$this->providerId}.user_email" );
+		$this->user->profile->emailVerified = $this->user->profile->email;
 
 		return $this->user->profile;
 	}
