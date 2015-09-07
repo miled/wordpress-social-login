@@ -611,6 +611,18 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		$user_email = $requested_user_email;
 	}
 
+	if( ! $user_email )
+	{
+		$user_email = $hybridauth_user_profile->email;
+	}
+
+	// Verify that an email address has been given to us. Whether it's unique will be verified later
+	// by the Wordpress core, during the wp_insert_user() call below.
+	if( ! isset ( $user_email ) OR ! is_email( $user_email ) )
+	{
+		return wsl_process_login_render_notice_page( _wsl__( 'A valid email is required to connect this website', 'wordpress-social-login') );
+	}
+
 	if( ! $user_login )
 	{
 		// attempt to generate user_login from hybridauth user profile display name
@@ -642,27 +654,6 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			while( username_exists ($user_login_tmp));
 
 			$user_login = $user_login_tmp;
-		}
-	}
-
-	if( ! $user_email )
-	{
-		$user_email = $hybridauth_user_profile->email;
-
-		// generate an email if none
-		if( ! isset ( $user_email ) OR ! is_email( $user_email ) )
-		{
-			$user_email = strtolower( $provider . "_user_" . $user_login ) . '@example.com';
-		}
-
-		// email should be unique
-		if( wsl_wp_email_exists ( $user_email ) )
-		{
-			do
-			{
-				$user_email = md5( uniqid( wp_rand( 10000, 99000 ) ) ) . '@example.com';
-			}
-			while( wsl_wp_email_exists( $user_email ) );
 		}
 	}
 
