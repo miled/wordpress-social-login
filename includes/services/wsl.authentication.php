@@ -638,7 +638,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		// if user profile display name is not provided
 		if( empty( $user_login ) )
 		{
-			$user_login = strtolower( $provider ) . "_user";
+			$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
 		}
 
 		// user name should be unique
