@@ -289,7 +289,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				text-shadow: 0 1px 0 rgba(0, 0, 0, 0.1);
 				white-space: nowrap;
 			}
-			button-primary.focus, .button-primary:hover{
+			.button-primary.focus, .button-primary:hover{
 				background:#1e8cbe;
 				border-color:#0074a2;
 				-webkit-box-shadow:inset 0 1px 0 rgba(120,200,230,.6);
