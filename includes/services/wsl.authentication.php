@@ -561,6 +561,9 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wp_users
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 
+		// the user exists in Wordpress
+		$wordpress_user_id = $user_id;
+
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
