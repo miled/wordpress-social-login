@@ -15,7 +15,7 @@
 class Hybrid_Providers_Facebook extends Hybrid_Provider_Model
 {
 	// default permissions, and a lot of them. You can change them from the configuration by setting the scope to what you want/need
-	public $scope = "email, public_profile, user_friends";
+	public $scope = "email, public_profile";
 
 	/**
 	* IDp wrappers initializer 
