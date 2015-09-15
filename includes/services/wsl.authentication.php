@@ -481,10 +481,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                                 list
                                 (
                                         $shall_pass,
+                                        $user_id,
                                         $requested_user_login,
                                         $requested_user_email
                                 )
-                                = wsl_process_login_complete_registration( $provider, $redirect_to, $hybridauth_user_profile );
+                                = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
                         }
                         while( ! $shall_pass );
                 }
@@ -560,6 +561,9 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wp_users
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 
+		// the user exists in Wordpress
+		$wordpress_user_id = $user_id;
+
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
@@ -607,6 +611,18 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		$user_email = $requested_user_email;
 	}
 
+	if( ! $user_email )
+	{
+		$user_email = $hybridauth_user_profile->email;
+	}
+
+	// Verify that an email address has been given to us. Whether it's unique will be verified later
+	// by the Wordpress core, during the wp_insert_user() call below.
+	if( ! isset ( $user_email ) OR ! is_email( $user_email ) )
+	{
+		return wsl_process_login_render_notice_page( _wsl__( 'A valid email is required to connect this website', 'wordpress-social-login') );
+	}
+
 	if( ! $user_login )
 	{
 		// attempt to generate user_login from hybridauth user profile display name
@@ -622,7 +638,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		// if user profile display name is not provided
 		if( empty( $user_login ) )
 		{
-			$user_login = strtolower( $provider ) . "_user";
+			$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
 		}
 
 		// user name should be unique
@@ -641,32 +657,11 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		}
 	}
 
-	if( ! $user_email )
-	{
-		$user_email = $hybridauth_user_profile->email;
-
-		// generate an email if none
-		if( ! isset ( $user_email ) OR ! is_email( $user_email ) )
-		{
-			$user_email = strtolower( $provider . "_user_" . $user_login ) . '@example.com';
-		}
-
-		// email should be unique
-		if( wsl_wp_email_exists ( $user_email ) )
-		{
-			do
-			{
-				$user_email = md5( uniqid( wp_rand( 10000, 99000 ) ) ) . '@example.com';
-			}
-			while( wsl_wp_email_exists( $user_email ) );
-		}
-	}
-
 	$display_name = $hybridauth_user_profile->displayName;
 
-	if( $requested_user_login )
+	if( empty( $display_name ) )
 	{
-		$display_name = sanitize_user( $requested_user_login, true );
+		$display_name = $hybridauth_user_profile->firstName;
 	}
 
 	if( empty( $display_name ) )
@@ -732,20 +727,20 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		$user_id = wp_insert_user( $userdata );
 	}
 
-  // wp_insert_user may fail on first and last name meta, expliciting setting to correct.
-  update_user_meta($user_id, 'first_name', apply_filters( 'pre_user_first_name',$userdata['first_name']));
-  update_user_meta($user_id, 'last_name', apply_filters( 'pre_user_last_name', $userdata['last_name']));
-
 	// do not continue without user_id
 	if( ! $user_id || ! is_integer( $user_id ) )
 	{
 		if( is_wp_error( $user_id ) )
 		{
-			return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user: " . $user_id->get_error_message(), 'wordpress-social-login' ) );
+			return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user: ", 'wordpress-social-login' ) . $user_id->get_error_message() );
 		}
 
 		return wsl_process_login_render_notice_page( _wsl__( "An error occurred while creating a new user!", 'wordpress-social-login' ) );
 	}
+
+	// wp_insert_user may fail on first and last name meta, expliciting setting to correct.
+	update_user_meta($user_id, 'first_name', apply_filters( 'pre_user_first_name',$userdata['first_name']));
+	update_user_meta($user_id, 'last_name', apply_filters( 'pre_user_last_name', $userdata['last_name']));
 
 	// Send notifications
 	if( get_option( 'wsl_settings_users_notification' ) == 1 )

@@ -216,7 +216,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	),
 	ARRAY( 
 		"provider_id"       => "Vkontakte",
-		"provider_name"     => "Vkontakte", 
+		"provider_name"     => "ВКонтакте",
 		"callback"          => true,
 		"require_client_id" => true,
 		"new_app_link"      => "http://vk.com/developers.php", 
