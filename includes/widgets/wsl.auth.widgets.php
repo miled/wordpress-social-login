@@ -191,8 +191,19 @@ function wsl_render_auth_widget( $args = array() )
 				}
 			}
 
+			// Use the provided redirect_to if it is given and this is the login page.
+			if ( in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) &&
+					 !empty( $_REQUEST["redirect_to"] ) )
+			{
+				$redirect_to = $_REQUEST["redirect_to"];
+			}
+			else
+			{
+				$redirect_to = $current_page_url;
+			}
+
 			// build authentication url
-			$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $current_page_url );
+			$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $redirect_to );
 
 			// http://codex.wordpress.org/Function_Reference/esc_url
 			$authenticate_url = esc_url( $authenticate_url );
