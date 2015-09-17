@@ -171,6 +171,17 @@ function wsl_render_auth_widget( $args = array() )
 
 	$no_idp_used = true;
 
+	// Use the provided redirect_to if it is given and this is the login page.
+	if ( in_array( $GLOBALS["pagenow"], array( "wp-login.php", "wp-register.php" ) ) &&
+		 !empty( $_REQUEST["redirect_to"] ) )
+	{
+		$redirect_to = $_REQUEST["redirect_to"];
+	}
+	else
+	{
+		$redirect_to = $current_page_url;
+	}
+
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
 	{
@@ -189,17 +200,6 @@ function wsl_render_auth_widget( $args = array() )
 				{
 					continue;
 				}
-			}
-
-			// Use the provided redirect_to if it is given and this is the login page.
-			if ( in_array( $GLOBALS['pagenow'], array( 'wp-login.php', 'wp-register.php' ) ) &&
-					 !empty( $_REQUEST["redirect_to"] ) )
-			{
-				$redirect_to = $_REQUEST["redirect_to"];
-			}
-			else
-			{
-				$redirect_to = $current_page_url;
 			}
 
 			// build authentication url
