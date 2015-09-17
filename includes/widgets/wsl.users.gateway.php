@@ -11,10 +11,6 @@
 *
 * When enabled, Bouncer will popup this screen for unrecognised user, where they will be given the choice to either associate
 * any existing account in your website with the provider ID they have connected with or to create a new user account.
-*
-* Note:
-* 	1. This is not implemented yet. It still a proof of concept and planned for WSL 2.3.
-*       2. Contributions or Remarks are of course welcome.
 */
 
 // Exit if accessed directly
@@ -57,9 +53,9 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$profile_completion_errors  = array();
 
 	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
-    $require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
-    $change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
-    $extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
+        $require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
+        $change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
+        $extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
 
 	if( isset( $_REQUEST["bouncer_account_linking"] ) )
 	{
@@ -80,7 +76,14 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 		if( is_wp_error( $user ) )
 		{
 			// we give no useful hint.
-			$account_linking_errors[] = sprintf( _wsl__( '<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?', 'wordpress-social-login' ), wp_lostpassword_url( home_url() ) );
+			$account_linking_errors[] = 
+                                sprintf( 
+                                        _wsl__( 
+                                                '<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?', 
+                                                'wordpress-social-login' 
+                                        ), 
+                                        wp_lostpassword_url( home_url() ) 
+                                );
 		}
 
 		elseif( is_a( $user, 'WP_User') )
@@ -196,18 +199,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 	if( $shall_pass == false )
 	{
-		global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
-
-		foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG as $provider_settings ) {
-			if ( $provider_settings['provider_id'] == $provider ) {
-				$provider_name = $provider_settings['provider_name'];
-				break;
-			}
-		}
-
-		if ( empty ( $provider_name ) ) {
-			$provider_name = $provider;
-		}
+		$provider_name = wsl_get_provider_name_by_id( $provider );
 ?>
 <!DOCTYPE html>
 	<head>

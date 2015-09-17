@@ -1183,6 +1183,24 @@ function wsl_process_login_clear_user_php_session()
 // --------------------------------------------------------------------
 
 /**
+* Returns IDP actual name
+*/
+function wsl_get_provider_name_by_id( $provider_id)
+{
+        global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
+
+        foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG as $provider_settings ) {
+                if ( $provider_settings['provider_id'] == $provider_id ) {
+                        return $provider_name = $provider_settings['provider_name'];
+                }
+        }
+
+        return $provider_id;
+}
+
+// --------------------------------------------------------------------
+
+/**
 * Check Php session
 */
 function wsl_process_login_check_php_session()
