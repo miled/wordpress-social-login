@@ -100,10 +100,18 @@ function wsl_render_auth_widget( $args = array() )
 
 	// get the current page url, which we will use to redirect the user to,
 	// unless Widget::Force redirection is set to 'yes', then this will be ignored and Widget::Redirect URL will be used instead
-	$current_page_url = wsl_get_current_url();
+	$redirect_to = wsl_get_current_url();
+
+	// Use the provided redirect_to if it is given and this is the login page.
+	if ( in_array( $GLOBALS["pagenow"], array( "wp-login.php", "wp-register.php" ) ) && !empty( $_REQUEST["redirect_to"] ) )
+	{
+		$redirect_to = $_REQUEST["redirect_to"];
+	}
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
-	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) . "action=wordpress_social_authenticate&mode=login&";
+	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) 
+                                        . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) 
+                                                . "action=wordpress_social_authenticate&mode=login&";
 
 	// if not in mode login, we overwrite the auth base url
 	// > admin auth playground
@@ -137,7 +145,7 @@ function wsl_render_auth_widget( $args = array() )
 	$widget_css = get_option( 'wsl_settings_authentication_widget_css' );
 
 	// HOOKABLE:
-	$widget_css = apply_filters( 'wsl_render_auth_widget_alter_widget_css', $widget_css, $current_page_url );
+	$widget_css = apply_filters( 'wsl_render_auth_widget_alter_widget_css', $widget_css, $redirect_to );
 
 	// show the custom widget css if not empty
 	if( ! empty( $widget_css ) )
@@ -170,17 +178,6 @@ function wsl_render_auth_widget( $args = array() )
 	$wsl_settings_use_popup = function_exists( 'wp_is_mobile' ) ? wp_is_mobile() ? 2 : $wsl_settings_use_popup : $wsl_settings_use_popup;
 
 	$no_idp_used = true;
-
-	// Use the provided redirect_to if it is given and this is the login page.
-	if ( in_array( $GLOBALS["pagenow"], array( "wp-login.php", "wp-register.php" ) ) &&
-		 !empty( $_REQUEST["redirect_to"] ) )
-	{
-		$redirect_to = $_REQUEST["redirect_to"];
-	}
-	else
-	{
-		$redirect_to = $current_page_url;
-	}
 
 	// display provider icons
 	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
@@ -216,7 +213,7 @@ function wsl_render_auth_widget( $args = array() )
 			}
 
 			// HOOKABLE: allow user to rebuilt the auth url
-			$authenticate_url = apply_filters( 'wsl_render_auth_widget_alter_authenticate_url', $authenticate_url, $provider_id, $auth_mode, $current_page_url, $wsl_settings_use_popup );
+			$authenticate_url = apply_filters( 'wsl_render_auth_widget_alter_authenticate_url', $authenticate_url, $provider_id, $auth_mode, $redirect_to, $wsl_settings_use_popup );
 
 			// HOOKABLE: allow use of other icon sets
 			$provider_icon_markup = apply_filters( 'wsl_render_auth_widget_alter_provider_icon_markup', $provider_id, $provider_name, $authenticate_url );
