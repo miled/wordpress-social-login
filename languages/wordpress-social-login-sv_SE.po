@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Login\n"
 "POT-Creation-Date: 2015-08-27 21:07+0200\n"
-"PO-Revision-Date: 2015-12-18 17:05+0100\n"
+"PO-Revision-Date: 2015-12-18 17:25+0100\n"
 "Last-Translator: Mrassi Med <hybridauth@gmail.com>\n"
 "Language-Team: WordPress Social Login <hybridauth@gmail.com>\n"
 "Language: sv_SE\n"
@@ -2607,7 +2607,7 @@ msgstr "Github"
 
 #: admin/wsl.admin.ui.php:182
 msgid "WordPress Social Login"
-msgstr "Reparera “Wordpress sociala inloggning”’s tabeller"
+msgstr "WordPress Social inloggning"
 
 #: admin/wsl.admin.ui.php:257
 msgid "Oops! We ran into an issue."
