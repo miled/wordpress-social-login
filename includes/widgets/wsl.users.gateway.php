@@ -531,7 +531,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 							<td valign="top"  width="50%" style="text-align:center;">
 								<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
 
-								<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your % ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
+								<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
 							</td>
 						</tr>
 						<tr>
@@ -545,7 +545,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<label>
 									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
 									<br />
-									<input type="text" name="user_password" class="input" value="" size="25" placeholder="" />
+									<input type="password" name="user_password" class="input" value="" size="25" placeholder="" />
 								</label>
 
 								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
