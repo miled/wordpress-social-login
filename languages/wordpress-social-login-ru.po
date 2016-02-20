@@ -12,7 +12,7 @@ msgstr ""
 "PO-Revision-Date: 2015-06-22 17:30+0000\n"
 "Last-Translator: Сергей Жигулев <sergori@mail.ru>\n"
 "Language-Team: Russian (http://www.transifex.com/wsl/wordpress-social-login/language/ru/)\n"
-"MIME-Version: 1.0\n"
+"MIME-Version: 1.0\n"Con
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ru\n"
@@ -1819,7 +1819,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:873
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:991
 msgid "Back to Tools"
-msgstr ""
+msgstr "Вернуться к инструментам"
 
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.job.php:746
 #: wordpress-social-login/includes/admin/components/tools/wsl.components.tools.actions.php:84
@@ -2714,31 +2714,31 @@ msgstr "Привет %s"
 msgid ""
 "You're now signed in with your %s account but you still one step away of "
 "getting into our website"
-msgstr ""
+msgstr "Вы уже вошли на сайт с вашим аккаунтом %s. Выберите один из двух вариантов для входа"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:473
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:525
 msgid "Already have an account"
-msgstr ""
+msgstr "У вас уже есть аккаунт на этом сайте"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:474
 #, php-format
 msgid "Link your existing account on our website to your %s ID."
-msgstr ""
+msgstr "Привяжите ваш существующий аккаунт на этом сайте к вашему аккаунту %s."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:478
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:562
 msgid "New to our website"
-msgstr ""
+msgstr "Впервые здесь"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:479
 #, php-format
 msgid "Create a new account and it will be associated with your %s ID."
-msgstr ""
+msgstr "Создайте новый аккаунт и привяжите к нему ваш аккаунт %s."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:486
 msgid "Link my account"
-msgstr ""
+msgstr "Привязать мой аккаунт"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:490
 msgid "Create a new account"
