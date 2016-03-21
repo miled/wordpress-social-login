@@ -300,7 +300,8 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				box-shadow:inset 0 1px 0 rgba(120,200,230,.6);
 				color:#fff
 			}
-			input[type="text"]{
+			input[type="text"],
+			input[type="password"] {{
 				border: 1px solid #e5e5e5;
 				box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;
 				color: #555;
@@ -314,7 +315,8 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				padding: 3px;
 				width: 100%;
 			}
-			input[type="text"]:focus{
+			input[type="text"]:focus,
+			input[type="password"]:focus {
 				border-color:#5b9dd9;
 				-webkit-box-shadow:0 0 2px rgba(30,140,190,.8);
 				box-shadow:0 0 2px rgba(30,140,190,.8)
@@ -545,7 +547,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<label>
 									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
 									<br />
-									<input type="text" name="user_password" class="input" value="" size="25" placeholder="" />
+									<input type="password" name="user_password" class="input" value="" size="25" placeholder="" />
 								</label>
 
 								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
