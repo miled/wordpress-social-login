@@ -633,6 +633,9 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			{
 				wsl_display_dev_mode_debugging_area();
 			}
+
+			// HOOKABLE:
+			do_action( "wsl_process_login_new_users_gateway_closing_body", $provider, $redirect_to, $hybridauth_user_profile );
 		?>
 	</body>
 </html>
