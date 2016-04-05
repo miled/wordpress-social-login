@@ -545,7 +545,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								<label>
 									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
 									<br />
-									<input type="text" name="user_password" class="input" value="" size="25" placeholder="" />
+									<input type="password" name="user_password" class="input" value="" size="25" placeholder="" />
 								</label>
 
 								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
