@@ -74,7 +74,10 @@ class OAuth2Client
 			"redirect_uri"  => $this->redirect_uri,
 			"code"          => $code
 		);
-
+		
+		if (strpos($this->token_url, "googleapis") !== false)
+			array_push($this->curl_header, 'Content-Type: application/x-www-form-urlencoded');
+		
 		$response = $this->request( $this->token_url, $params, $this->curl_authenticate_method );
 		
 		$response = $this->parseRequestResult( $response );
@@ -186,7 +189,12 @@ class OAuth2Client
 
 		if( $type == "POST" ){
 			curl_setopt($ch, CURLOPT_POST, 1); 
-			if($params) curl_setopt( $ch, CURLOPT_POSTFIELDS, $params );
+			if($params) {
+				if (in_array('Content-Type: application/x-www-form-urlencoded', $this->curl_header))
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, http_build_query($params) );
+				else
+					curl_setopt( $ch, CURLOPT_POSTFIELDS, $params );
+			}
 		}
 
 		$response = curl_exec($ch);
