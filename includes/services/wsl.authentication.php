@@ -338,6 +338,7 @@ function wsl_process_login_end()
 			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 			$is_new_user = true;
+			$redirect_to = apply_filters('wsl_redirect_after_registration', $redirect_to);
 		}else{
 			$user_id = $wordpress_user_id;
 			$is_new_user = false;
@@ -1219,5 +1220,15 @@ function wsl_process_login_check_php_session()
 		return true;
 	}
 }
+
+// --------------------------------------------------------------------
+
+/**
+ * Returns redirect url for when a new account was created
+ */
+function wsl_new_register_redirect_url($redirect_to) {
+	return $redirect_to;
+}
+add_filter("wsl_redirect_after_registration", "wsl_new_register_redirect_url", 10, 1);
 
 // --------------------------------------------------------------------
