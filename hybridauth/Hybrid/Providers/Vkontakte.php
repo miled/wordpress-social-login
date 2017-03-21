@@ -26,7 +26,7 @@ class Hybrid_Providers_Vkontakte extends Hybrid_Provider_Model_OAuth2
 		'lastName'    => 'last_name',
 		'displayName' => 'screen_name',
 		'gender'      => 'sex',
-		'photoURL'    => 'photo_big',
+		'photoURL'    => 'photo_200',
 		'home_town'   => 'home_town',
 		'profileURL'  => 'domain',      // Will be converted in getUserByResponse()
 		// New
