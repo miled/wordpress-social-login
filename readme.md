@@ -1,4 +1,4 @@
-## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 2.3.0 [![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/miled/wordpress-social-login/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/miled/wordpress-social-login/?branch=master)
+## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 2.3.0 [![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login)
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
