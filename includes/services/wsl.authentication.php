@@ -823,8 +823,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	if(  $hybridauth_user_profile->photoURL )
 	{
 		update_user_meta( $user_id, 'wsl_current_user_image', $hybridauth_user_profile->photoURL );
+	}	
+	if(  $hybridauth_user_profile->identifier )
+	{
+		update_user_meta( $user_id, 'wsl_current_user_identifier',$hybridauth_user_profile->identifier );
 	}
-
 	// Bouncer::User Moderation
 	// > When Bouncer::User Moderation is enabled, WSL will check for the current user role. If equal to 'pending', then Bouncer will do the following :
 	// 	1. Halt the authentication process,
