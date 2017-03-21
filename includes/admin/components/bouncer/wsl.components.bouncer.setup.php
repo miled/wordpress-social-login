@@ -70,6 +70,7 @@ function wsl_component_bouncer_setup_wsl_widget()
 				<select name="wsl_settings_bouncer_registration_enabled">
 					<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
 					<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
+					<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 3 ) echo "selected"; ?> value="3"><?php _wsl_e("No, but allow existing users to connect", 'wordpress-social-login') ?></option>
 				</select>
 			</td>
 		  </tr> 

@@ -448,6 +448,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                 {
                         return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
                 }
+				// Bouncer :: Only accept new connections for existing users?
+				else if (get_option( 'wsl_settings_bouncer_registration_enabled' ) == 3 && !email_exists($hybridauth_user_email))
+				{
+						return wsl_process_login_render_notice_page( _wsl__( "Only connections for existing users are allowed.", 'wordpress-social-login' ) );
+				}
 
                 // Bouncer::Accounts linking/mapping
                 // > > not implemented yet! Planned for WSL 2.3
