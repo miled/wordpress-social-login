@@ -85,13 +85,6 @@ function wsl_process_login()
 		return false;
 	}
 
-	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/autoload.php' ) )
-	{
-		wsl_process_login_render_notice_page( _wsl__( "Require autoload helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
-	}
-
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
-
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
 
@@ -200,7 +193,13 @@ function wsl_process_login_begin()
 
 	$config = wsl_process_login_build_provider_config( $provider );
 
-	/* 3. Instantiate the class Hybridauth and redirect the user to provider to ask for authorisation for this website */
+	/* 3. Instantiate the class Hybrid_Auth and redirect the user to provider to ask for authorisation for this website */
+
+	// load hybridauth main class
+	if( ! class_exists('Hybrid_Auth', false) )
+	{
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
+	}
 
 	// HOOKABLE:
 	do_action( "wsl_hook_process_login_before_hybridauth_authenticate", $provider, $config );
@@ -208,7 +207,7 @@ function wsl_process_login_begin()
 	try
 	{
 		// create an instance oh hybridauth with the generated config
-		$hybridauth = new \Hybridauth\Hybridauth( $config );
+		$hybridauth = new Hybrid_Auth( $config );
 
 		// start the authentication process via hybridauth
 		// > if not already connected hybridauth::authenticate() will redirect the user to the provider
@@ -216,12 +215,8 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line).
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		$params = apply_filters("wsl_hook_process_login_authenticate_params", array(), $provider);
-
-		set_provider_config_in_session_storage( $provider, $config );
-		set_provider_params_in_session_storage( $provider, $params );
-
-		$adapter = $hybridauth->authenticate( $provider, $params );
+		$params = apply_filters("wsl_hook_process_login_authenticate_params",array(),$provider);
+		$adapter = $hybridauth->authenticate( $provider,$params );
 	}
 
 	// if hybridauth fails to authenticate the user, then we display an error message
@@ -453,6 +448,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                 {
                         return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
                 }
+				// Bouncer :: Only accept new connections for existing users?
+				else if (get_option( 'wsl_settings_bouncer_registration_enabled' ) == 3 && !email_exists($hybridauth_user_email))
+				{
+						return wsl_process_login_render_notice_page( _wsl__( "Only connections for existing users are allowed.", 'wordpress-social-login' ) );
+				}
 
                 // Bouncer::Accounts linking/mapping
                 // > > not implemented yet! Planned for WSL 2.3
@@ -823,8 +823,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 	if(  $hybridauth_user_profile->photoURL )
 	{
 		update_user_meta( $user_id, 'wsl_current_user_image', $hybridauth_user_profile->photoURL );
+	}	
+	if(  $hybridauth_user_profile->identifier )
+	{
+		update_user_meta( $user_id, 'wsl_current_user_identifier',$hybridauth_user_profile->identifier );
 	}
-
 	// Bouncer::User Moderation
 	// > When Bouncer::User Moderation is enabled, WSL will check for the current user role. If equal to 'pending', then Bouncer will do the following :
 	// 	1. Halt the authentication process,
@@ -902,8 +905,7 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 function wsl_process_login_build_provider_config( $provider )
 {
 	$config = array();
-	$config["current_page"] = \Hybridauth\HttpClient\Util::getCurrentUrl(true);
-	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . strtolower($provider) . '.php';
+	$config["base_url"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
 	$config["providers"][$provider]["enabled"] = true;
@@ -989,10 +991,10 @@ function wsl_process_login_request_user_social_profile( $provider )
 		// get idp adapter
 		$adapter = wsl_process_login_get_provider_adapter( $provider );
 
-		$config = get_provider_config_from_session_storage( $provider );
+		$config = $adapter->config;
 
 		// if user authenticated successfully with social network
-		if( $adapter->isAuthorized() )
+		if( $adapter->isUserConnected() )
 		{
 			// grab user profile via hybridauth api
 			$hybridauth_user_profile = $adapter->getUserProfile();
@@ -1021,11 +1023,12 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
-	$config = get_provider_config_from_session_storage( $provider );
+	if( ! class_exists( 'Hybrid_Auth', false ) )
+	{
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
+	}
 
-	$hybridauth = new \Hybridauth\Hybridauth( $config );
-
-	return $hybridauth->getAdapter( $provider );
+	return Hybrid_Auth::getAdapter( $provider );
 }
 
 // --------------------------------------------------------------------

@@ -208,7 +208,7 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	}
 
 	$table_data = array(
-		"id"         => 'null',
+		"id"         => null,
 		"user_id"    => $user_id,
 		"provider"   => $provider,
 		"object_sha" => $object_sha
