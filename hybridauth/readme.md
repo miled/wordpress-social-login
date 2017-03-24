@@ -1,3 +1,3 @@
-#### INORMATION
+Currently migrating to Hybridauth 3. 
 
-This is a heavily edited fork of the HybridAuth library and no longer compatible with the master branch.
+Only Github is implemented as a POC.

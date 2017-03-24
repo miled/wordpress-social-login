@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 2.3.0
+Version: 3.0.1
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -61,16 +61,12 @@ if( !defined( 'ABSPATH' ) ) exit;
 
 // --------------------------------------------------------------------
 
-session_id() or session_start();
-
 global $WORDPRESS_SOCIAL_LOGIN_VERSION;
 global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 global $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 global $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "2.3.0";
-
-$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.1";
 
 // --------------------------------------------------------------------
 
@@ -98,6 +94,17 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' )
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'hybridauth/' );
+
+// --------------------------------------------------------------------
+
+if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/session.php' ) )
+{
+	wp_die( __( "Require session helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
+}
+
+include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/session.php' );
+
+$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
 // --------------------------------------------------------------------
 

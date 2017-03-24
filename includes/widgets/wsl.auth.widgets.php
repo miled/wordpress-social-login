@@ -522,12 +522,7 @@ add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 */
 function wsl_add_javascripts()
 {
-	$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
-    
-    // if a user is visiting using a mobile device, WSL will fall back to more in page
-	$wsl_settings_use_popup = function_exists( 'wp_is_mobile' ) ? wp_is_mobile() ? 2 : $wsl_settings_use_popup : $wsl_settings_use_popup;
-
-	if( $wsl_settings_use_popup != 1 )
+	if( get_option( 'wsl_settings_use_popup' ) != 1 )
 	{
 		return null;
 	}

@@ -1,4 +1,4 @@
-## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 2.3.0 [![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login)
+## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.1-dev [![Build Status](https://travis-ci.org/miled/wordpress-social-login.svg?branch=master)](https://travis-ci.org/miled/wordpress-social-login) [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/miled/wordpress-social-login/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/miled/wordpress-social-login/?branch=master)
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
@@ -8,6 +8,10 @@ For more information about WordPress Social Login, refer to our [online user gui
 
     Note: This repository is for development only. 
     The official release is distributed through WordPress website.
+    
+    Important: As of WSL 3.0.1, I'm attempting to migrate WSL to work with hybridauth 3,
+    hence this repo is unusuable until further notice.
+
 ![WSL Authentication Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/screenshot-1.png)
 
 ### Key Features
@@ -15,7 +19,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 - No premium features.
 - One-click social login.
 - Absolute privacy of your website users data.
-- Wide variety of identities providers (25+ IDP).
+- Wide variety of identities providers.
 - A highly customizable and fully extensible widgets.
 - Easy-to-use and clean user interfaces.
 - Contacts import from google, facebook, live, linkedin and vkontakte.
