@@ -25,17 +25,17 @@ class Authentiq extends OAuth2
     /**
     * {@inheritdoc}
     */
-    protected $apiBaseUrl = 'https://connect.authentiq.test/';
+    protected $apiBaseUrl = 'https://connect.authentiq.io/';
 
     /**
     * {@inheritdoc}
     */
-    protected $authorizeUrl = 'https://connect.authentiq.test/authorize';
+    protected $authorizeUrl = 'https://connect.authentiq.io/authorize';
 
     /**
     * {@inheritdoc}
     */
-    protected $accessTokenUrl = 'https://connect.authentiq.test/token';
+    protected $accessTokenUrl = 'https://connect.authentiq.io/token';
 
     /**
     * {@inheritdoc}
@@ -64,6 +64,15 @@ class Authentiq extends OAuth2
         $this->apiRequestHeaders = [
             'Authorization' => 'Bearer ' . $this->getStoredData('access_token')
         ];
+    }
+
+    /**
+    * {@inheritdoc}
+    *
+    * Disable functionality as Authentiq Provider doesn't support this yet
+    */
+    public function refreshAccessToken($parameters = [])
+    {
     }
 
     /**

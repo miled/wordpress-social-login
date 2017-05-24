@@ -13,12 +13,12 @@
 require_once "autoload.php";
 require_once "session.php";
 
-$config = get_provider_config_from_session_storage($provider);
-$params = get_provider_params_from_session_storage($provider);
-
-$hybridauth = new Hybridauth\Hybridauth($config, $params);
-
 try {
+    $config = get_provider_config_from_session_storage($provider);
+    $params = get_provider_params_from_session_storage($provider);
+
+    $hybridauth = new Hybridauth\Hybridauth($config, $params);
+
     $adapter = $hybridauth->authenticate( $provider );
 
     $url = $config['current_page'];
@@ -26,5 +26,10 @@ try {
     Hybridauth\HttpClient\Util::redirect($url);
 }
 catch( Exception $e ){
-    echo $e->getMessage();
+
+    // Load WordPress Core
+    define( 'WP_USE_THEMES', false );
+    require_once __DIR__ . '/../../../../../wp-load.php';
+
+    return wsl_process_login_render_error_page($e);
 }

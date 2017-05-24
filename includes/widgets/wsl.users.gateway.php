@@ -31,6 +31,12 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email );
 	$hybridauth_user_login       = sanitize_user( $hybridauth_user_profile->displayName, true );
 	$hybridauth_user_avatar      = $hybridauth_user_profile->photoURL;
+
+	if ( empty( $hybridauth_user_avatar ) )
+	{
+		$hybridauth_user_avatar = 'https://secure.gravatar.com/avatar/' . md5( $hybridauth_user_email ) . '?size=145';
+	}
+
 	$hybridauth_user_website     = $hybridauth_user_profile->webSiteURL;
 	$hybridauth_user_link        = $hybridauth_user_profile->profileURL;
 

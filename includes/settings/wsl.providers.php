@@ -274,6 +274,16 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "misc",
 	),
+	ARRAY(
+		"provider_id"       => "Authentiq",
+		"provider_name"     => "Authentiq",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://dashboard.authentiq.com/",
+		"default_api_scope" => "openid aq:name email~rs aq:push",
+
+		"cat"               => "misc",
+	),
 );
 
 // --------------------------------------------------------------------
