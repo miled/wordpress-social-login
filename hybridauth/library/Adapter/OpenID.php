@@ -11,7 +11,7 @@ use Hybridauth\Exception;
 use Hybridauth\Exception\InvalidOpenidIdentifierException;
 use Hybridauth\Exception\AuthorizationDeniedException;
 use Hybridauth\Exception\InvalidOpenidResponseException;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\HttpClient;
 use Hybridauth\User;
@@ -40,11 +40,9 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
     protected $openidIdentifier = '';
 
     /**
-    * Adapter initializer
-    *
-    * @throws InvalidOpenidIdentifierException
+    * {@inheritdoc}
     */
-    protected function initialize()
+    protected function configure()
     {
         if ($this->config->exists('openid_identifier')) {
             $this->openidIdentifier = $this->config->get('openid_identifier');
@@ -54,10 +52,19 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
             throw new InvalidOpenidIdentifierException('OpenID adapter requires an openid_identifier.', 4);
         }
 
-        $hostPort = parse_url($this->endpoint, PHP_URL_PORT);
-        $hostUrl  = parse_url($this->endpoint, PHP_URL_HOST);
+        $this->setCallback($this->config->get('callback'));
+        $this->setApiEndpoints($this->config->get('endpoints'));
+    }
 
-        if ($hostPort != null) {
+    /**
+    * {@inheritdoc}
+    */
+    protected function initialize()
+    {
+        $hostPort = parse_url($this->callback, PHP_URL_PORT);
+        $hostUrl  = parse_url($this->callback, PHP_URL_HOST);
+
+        if ($hostPort) {
             $hostUrl .= ':' . $hostPort;
         }
 
@@ -70,11 +77,15 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
     */
     public function authenticate()
     {
-        if ($this->isAuthorized()) {
+        $this->logger->info(sprintf('%s::authenticate()', get_class($this)));
+
+        if ($this->isConnected()) {
             return true;
         }
 
-        if (! isset($_GET['openid_mode'])) {
+        $openid_mode = filter_input(INPUT_GET, 'openid_mode');
+
+        if (empty($openid_mode)) {
             $this->authenticateBegin();
         } else {
             return $this->authenticateFinish();
@@ -84,7 +95,7 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
     /**
     * {@inheritdoc}
     */
-    public function isAuthorized()
+    public function isConnected()
     {
         return (bool) $this->storage->get($this->providerId . '.user');
     }
@@ -104,10 +115,10 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
     *
     * Include and instantiate LightOpenID
     */
-    public function authenticateBegin()
+    protected function authenticateBegin()
     {
         $this->openIdClient->identity  = $this->openidIdentifier;
-        $this->openIdClient->returnUrl = $this->endpoint;
+        $this->openIdClient->returnUrl = $this->callback;
         $this->openIdClient->required  = [
             'namePerson/first'       ,
             'namePerson/last'        ,
@@ -127,29 +138,35 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
             'media/image/default'    ,
         ];
 
-        HttpClient\Util::redirect($this->openIdClient->authUrl());
+        $authUrl = $this->openIdClient->authUrl();
+
+        $this->logger->debug(sprintf('%s::authenticateBegin(), redirecting user to:', get_class($this)), [$authUrl]);
+
+        HttpClient\Util::redirect($authUrl);
     }
 
     /**
     * Finalize the authorization process.
     *
     * @throws AuthorizationDeniedException
-    * @throws UnexpectedValueException
+    * @throws UnexpectedApiResponseException 
     */
-    public function authenticateFinish()
+    protected function authenticateFinish()
     {
+        $this->logger->debug(sprintf('%s::authenticateFinish(), callback url:', get_class($this)), [HttpClient\Util::getCurrentUrl(true)]);
+
         if ($this->openIdClient->mode == 'cancel') {
             throw new AuthorizationDeniedException('User has cancelled the authentication.');
         }
 
         if (! $this->openIdClient->validate()) {
-            throw new UnexpectedValueException('Invalid response received.');
+            throw new UnexpectedApiResponseException('Invalid response received.');
         }
 
         $openidAttributes = $this->openIdClient->getAttributes();
 
         if (! $this->openIdClient->identity) {
-            throw new UnexpectedValueException('Provider returned an expected response.');
+            throw new UnexpectedApiResponseException('Provider returned an expected response.');
         }
 
         $userProfile = $this->fetchUserProfile($openidAttributes);
@@ -234,7 +251,7 @@ abstract class OpenID extends AbstractAdapter implements AdapterInterface
         $userProfile = $this->storage->get($this->providerId . '.user');
 
         if (! is_object($userProfile)) {
-            throw new UnexpectedValueException('Provider returned an expected response.');
+            throw new UnexpectedApiResponseException('Provider returned an expected response.');
         }
 
         return $userProfile;

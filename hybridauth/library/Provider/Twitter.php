@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth1;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
-* Twitter provider adapter.
+ * Twitter provider adapter.
  *
  * Example:
  *
@@ -69,8 +69,7 @@ class Twitter extends OAuth1
     */
     protected function getAuthorizeUrl($parameters = [])
     {
-        if($this->config->get("authorize") === true)
-        {
+        if ($this->config->get('authorize') === true) {
             $this->authorizeUrl = 'https://api.twitter.com/oauth/authorize';
         }
 
@@ -87,7 +86,7 @@ class Twitter extends OAuth1
         $data = new Data\Collection($response);
 
         if (! $data->exists('id')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
@@ -97,7 +96,7 @@ class Twitter extends OAuth1
         $userProfile->description   = $data->get('description');
         $userProfile->firstName     = $data->get('name');
         $userProfile->email         = $data->get('email');
-        $userProfile->emailVerified = $data->get('email'); 
+        $userProfile->emailVerified = $data->get('email');
         $userProfile->webSiteURL    = $data->get('url');
         $userProfile->region        = $data->get('location');
 
@@ -124,7 +123,7 @@ class Twitter extends OAuth1
         $data = new Data\Collection($response);
 
         if (! $data->exists('ids')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         if ($data->filter('ids')->isEmpty()) {
@@ -142,13 +141,12 @@ class Twitter extends OAuth1
             try {
                 $response = $this->apiRequest('users/lookup.json', 'GET', $parameters);
 
-                if ($response && count($response)){
+                if ($response && count($response)) {
                     foreach ($response as $item) {
                         $contacts[] = $this->fetchUserContact($item);
                     }
                 }
-            }
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
                 continue;
             }
         }
@@ -202,7 +200,7 @@ class Twitter extends OAuth1
     /**
     * {@inheritdoc}
     */
-    public function getUserActivity($stream = 'home')
+    public function getUserActivity($stream = 'me')
     {
         $apiUrl = ($stream == 'me')
                     ? 'statuses/user_timeline.json'

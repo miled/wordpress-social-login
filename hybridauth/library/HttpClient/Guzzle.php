@@ -113,17 +113,33 @@ class Guzzle implements HttpClientInterface
     {
         $this->requestArguments = [ 'uri' => $uri, 'method' => $method, 'parameters' => $parameters, 'headers' => $headers ];
 
-        $this->requestHeader = array_merge($this->requestHeader, $headers);
+        $this->requestHeader = array_replace($this->requestHeader, (array)$headers);
 
         $response = null;
 
         try {
             if ('GET' == $method) {
-                $response = $this->client->get($uri, [ 'query' => $parameters, 'headers' => $this->requestHeader ]);
+                $response = $this->client->get($uri, ['query' => $parameters, 'headers' => $this->requestHeader]);
             }
 
             if ('POST' == $method) {
-                $response = $this->client->post($uri, [ 'form_params' => $parameters, 'headers' => $this->requestHeader ]);
+                $body_content = 'form_params';
+
+                if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
+                    $body_content = 'json';
+                }
+
+                $response = $this->client->post($uri, [$body_content => $parameters, 'headers' => $this->requestHeader]);
+            }
+
+            if ('PUT' == $method) {
+                $body_content = 'form_params';
+
+                if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
+                    $body_content = 'json';
+                }
+
+                $response = $this->client->put($uri, [$body_content => $parameters, 'headers' => $this->requestHeader]);
             }
         }
 
@@ -141,10 +157,10 @@ class Guzzle implements HttpClientInterface
         }
 
         if ($this->logger) {
-            $this->logger->debug("HttpClient\Guzzle::request( $uri, $method ), response:", $this->getResponse());
+            $this->logger->debug(sprintf('%s::request( %s, %s ), response:', get_class($this), $uri, $method), $this->getResponse());
 
             if ($this->responseClientError) {
-                $this->logger->error("HttpClient\Guzzle::request( $uri, $method ), GuzzleHttp error: ", [$this->responseClientError]);
+                $this->logger->error(sprintf('%s::request( %s, %s ), error:', get_class($this), $uri, $method), [$this->responseClientError]);
             }
         }
 
@@ -157,12 +173,12 @@ class Guzzle implements HttpClientInterface
     public function getResponse()
     {
         return [
+            'request' => $this->getRequestArguments(),
             'response' => [
                 'code'    => $this->getResponseHttpCode(),
                 'headers' => $this->getResponseHeader(),
                 'body'    => $this->getResponseBody(),
             ],
-            'request' => $this->getRequestArguments(),
             'client' => [
                 'error' => $this->getResponseClientError(),
                 'info'  => $this->getResponseClientInfo(),

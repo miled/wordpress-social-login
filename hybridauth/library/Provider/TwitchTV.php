@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- *
+ * TwitchTV OAuth2 provider adapter.
  */
 class TwitchTV extends OAuth2
 {
@@ -45,22 +45,28 @@ class TwitchTV extends OAuth2
     /**
     * {@inheritdoc}
     */
+    protected $apiDocumentation = 'https://dev.twitch.tv/docs/v5/guides/authentication/';
+
+    /**
+    * {@inheritdoc}
+    */
     public function getUserProfile()
     {
         $response = $this->apiRequest('user');
 
         $data = new Data\Collection($response);
 
-        if (! $data->exists('id')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+        if (! $data->exists('_id')) {
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
 
-        $userProfile->identifier  = $data->get('id');
+        $userProfile->identifier  = $data->get('_id');
         $userProfile->displayName = $data->get('display_name');
         $userProfile->photoURL    = $data->get('logo');
         $userProfile->email       = $data->get('email');
+        $userProfile->description = strip_tags($data->get('bio'));
 
         $userProfile->profileURL = 'http://www.twitch.tv/' . $data->get('name');
 

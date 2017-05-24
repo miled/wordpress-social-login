@@ -9,12 +9,11 @@ namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
 use Hybridauth\Data;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\User;
 
 /**
- * Hybrid_Providers_Odnoklassniki provider adapter based on OAuth2 protocol
- *
+ * Odnoklassniki OAuth2 provider adapter.
  */
 class Odnoklassniki extends OAuth2
 {
@@ -49,7 +48,7 @@ class Odnoklassniki extends OAuth2
             'application_key=' . $this->config->get('keys')['key'] .
             'fields=' . implode(',', $fields) .
             'method=users.getCurrentUser' .
-            md5($this->token('access_token') . $this->config->get('keys')['secret'])
+            md5($this->getStoredData('access_token') . $this->config->get('keys')['secret'])
         );
 
         $parameters = [
@@ -64,7 +63,7 @@ class Odnoklassniki extends OAuth2
         $data = new Data\Collection($response);
 
         if (! $data->exists('uid')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();

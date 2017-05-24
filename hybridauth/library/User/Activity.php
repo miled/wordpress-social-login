@@ -7,12 +7,10 @@
 
 namespace Hybridauth\User;
 
+use Hybridauth\Exception\UnexpectedValueException;
+
 /**
- * Hybrid_User_Activity
- *
- * used to provider the connected user activity stream on a standardized structure across supported social apis.
- *
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Activity.html
+ * Hybridauth\User\Activity
  */
 final class Activity
 {
@@ -64,10 +62,10 @@ final class Activity
     * @var string $name
     * @var mixed  $value
     *
-    * @throws \LogicException
+    * @throws Exception\UnexpectedValueException
     */
     public function __set($name, $value)
     {
-        throw new \LogicException('Adding new properties to ' . __CLASS__ . ' is not allowed.');
+        throw new UnexpectedValueException(sprintf('Adding new property "%s\' to %s is not allowed.', $name, __CLASS__));
     }
 }

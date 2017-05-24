@@ -113,9 +113,7 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     protected $apiDocumentation = '';
 
     /**
-    * Redirection Endpoint
-    *
-    * The redirection endpoint URI is generated and used internally by Hybridauth Endpoint class.
+    * Redirection Endpoint or Callback
     *
     * RFC6749: After completing its interaction with the resource owner, the
     * authorization server directs the resource owner's user-agent back to
@@ -125,7 +123,14 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * @var string
     */
-    protected $endpoint = '';
+    protected $callback = '';
+
+    /**
+    * Authorization Url Parameters
+    *
+    * @var boolean
+    */
+    protected $AuthorizeUrlParameters = [];
 
     /**
     * Authorization Request State
@@ -176,6 +181,37 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     protected $tokenExchangeHeaders = [];
 
     /**
+    * Refresh Token Request HTTP method.
+    *
+    * See refreshAccessToken()
+    *
+    * @var string
+    */
+    protected $tokenRefreshMethod = 'POST';
+
+    /**
+    * Refresh Token Request URL parameters.
+    *
+    * Sub classes may change add any additional parameter when necessary.
+    *
+    * See refreshAccessToken()
+    *
+    * @var array
+    */
+    protected $tokenRefreshParameters = [];
+
+    /**
+    * Refresh Token Request HTTP headers.
+    *
+    * Sub classes may add any additional header when necessary.
+    *
+    * See refreshAccessToken()
+    *
+    * @var array
+    */
+    protected $tokenRefreshHeaders = [];
+
+    /**
     * Authorization Request URL parameters.
     *
     * Sub classes may change add any additional parameter when necessary.
@@ -198,44 +234,52 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     protected $apiRequestHeaders = [];
 
     /**
-    * Adapter initializer
-    *
-    * @throws InvalidApplicationCredentialsException
+    * {@inheritdoc}
     */
-    protected function initialize()
+    protected function configure()
     {
-        if (! $this->config->filter('keys')->get('id')) {
+        $this->clientId     = $this->config->filter('keys')->get('id') ?: $this->config->filter('keys')->get('key');
+        $this->clientSecret = $this->config->filter('keys')->get('secret');
+
+        if (! $this->clientId || !$this->clientSecret) {
             throw new InvalidApplicationCredentialsException(
                 'Your application id is required in order to connect to ' . $this->providerId
             );
         }
 
-        $this->clientId     = $this->config->filter('keys')->get('id');
-        $this->clientSecret = $this->config->filter('keys')->get('secret');
-
-        $this->scope = $this->config->exists('scope')
-                            ? $this->config->get('scope')
-                            : $this->scope;
+        $this->scope = $this->config->exists('scope') ? $this->config->get('scope') : $this->scope;
 
         if ($this->config->exists('tokens')) {
             $this->setAccessToken($this->config->get('tokens'));
         }
 
-        /**
-        * Set the default Access Token Request parameters
-        *
-        * Sub classes may reset this when necessary
-        *
-        * See exchangeCodeForAccessToken()
-        */
+        $this->setCallback($this->config->get('callback'));
+        $this->setApiEndpoints($this->config->get('endpoints'));
+    }
+
+    /**
+    * {@inheritdoc}
+    */
+    protected function initialize()
+    {
+        $this->AuthorizeUrlParameters = [
+            'response_type' => 'code',
+            'client_id'     => $this->clientId,
+            'redirect_uri'  => $this->callback,
+            'scope'         => $this->scope,
+        ];
+
         $this->tokenExchangeParameters = [
             'client_id'     => $this->clientId,
             'client_secret' => $this->clientSecret,
             'grant_type'    => 'authorization_code',
-            'redirect_uri'  => $this->endpoint
+            'redirect_uri'  => $this->callback
         ];
 
-        $this->overrideEndpoints();
+        $this->tokenRefreshParameters = [
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $this->getStoredData('refresh_token'),
+        ];
     }
 
     /**
@@ -243,22 +287,49 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     */
     public function authenticate()
     {
-        if ($this->isAuthorized()) {
+        $this->logger->info(sprintf('%s::authenticate()', get_class($this)));
+
+        if ($this->isConnected()) {
             return true;
         }
 
         try {
-            if (! isset($_GET['code'])) {
+            $this->authenticateCheckError();
+
+            $code = filter_input(INPUT_GET, 'code');
+
+            if (empty($code)) {
                 $this->authenticateBegin();
-            }
-            else {
+            } else {
                 $this->authenticateFinish();
             }
-        }
-        catch (\Exception $e) {
-            $this->clearTokens();
+        } catch (\Exception $e) {
+            $this->clearStoredData();
 
             throw $e;
+        }
+    }
+
+    /**
+    * Authorization Request Error Response
+    *
+    * RFC6749: If the request fails due to a missing, invalid, or mismatching
+    * redirection URI, or if the client identifier is missing or invalid,
+    * the authorization server SHOULD inform the resource owner of the error.
+    *
+    * http://tools.ietf.org/html/rfc6749#section-4.1.2.1
+    */
+    protected function authenticateCheckError()
+    {
+        $error = filter_input(INPUT_GET, 'error', FILTER_SANITIZE_SPECIAL_CHARS);
+
+        if (! empty($error)) {
+            $error_description = filter_input(INPUT_GET, 'error_description', FILTER_SANITIZE_SPECIAL_CHARS);
+            $error_uri = filter_input(INPUT_GET, 'error_uri', FILTER_SANITIZE_SPECIAL_CHARS);
+
+            throw new InvalidAuthorizationCodeException(
+                sprintf('Provider returned an error: %s %s %s', $error, $error_description, $error_uri)
+            );
         }
     }
 
@@ -268,9 +339,11 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     * Build Authorization URL for Authorization Request and redirect the user-agent to the
     * Authorization Server.
     */
-    public function authenticateBegin()
+    protected function authenticateBegin()
     {
         $authUrl = $this->getAuthorizeUrl();
+
+        $this->logger->debug(sprintf('%s::authenticateBegin(), redirecting user to:', get_class($this)), [$authUrl]);
 
         HttpClient\Util::redirect($authUrl);
     }
@@ -281,9 +354,12 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     * @throws InvalidAuthorizationStateException
     * @throws InvalidAuthorizationCodeException
     */
-    public function authenticateFinish()
+    protected function authenticateFinish()
     {
-        $collection = new Data\Collection($_GET);
+        $this->logger->debug(sprintf('%s::authenticateFinish(), callback url:', get_class($this)), [HttpClient\Util::getCurrentUrl(true)]);
+
+        $state = filter_input(INPUT_GET, 'state');
+        $code = filter_input(INPUT_GET, 'code');
 
         /**
         * Authorization Request State
@@ -295,26 +371,11 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
         * http://tools.ietf.org/html/rfc6749#section-4.1.1
         */
         if ($this->supportRequestState
-            &&  $this->token('authorization_state') != $collection->get('state')
+            &&  $this->getStoredData('authorization_state') != $state
         ) {
             throw new InvalidAuthorizationStateException(
-                'The authorization state [state=' . substr(htmlentities($collection->get('state')), 0, 100). '] ' 
+                'The authorization state [state=' . substr(htmlentities($state), 0, 100). '] '
                     . 'of this page is either invalid or has already been consumed.'
-            );
-        }
-
-        /**
-        * Authorization Request Error Response
-        *
-        * RFC6749: If the request fails due to a missing, invalid, or mismatching
-        * redirection URI, or if the client identifier is missing or invalid,
-        * the authorization server SHOULD inform the resource owner of the error.
-        *
-        * http://tools.ietf.org/html/rfc6749#section-4.1.2.1
-        */
-        if ($collection->get('error')) {
-            throw new InvalidAuthorizationCodeException(
-                'Provider returned an error: ' . htmlentities($collection->get('error'))
             );
         }
 
@@ -326,7 +387,7 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
         *
         * http://tools.ietf.org/html/rfc6749#section-4.1.2
         */
-        $response = $this->exchangeCodeForAccessToken($collection->get('code'));
+        $response = $this->exchangeCodeForAccessToken($code);
 
         $this->validateAccessTokenExchange($response);
 
@@ -355,24 +416,19 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     */
     protected function getAuthorizeUrl($parameters = [])
     {
-        $defaults = [
-            'response_type' => 'code',
-            'client_id'     => $this->clientId,
-            'redirect_uri'  => $this->endpoint,
-            'scope'         => $this->scope,
-        ];
-
-        $parameters = array_merge($defaults, (array) $parameters);
+        $this->AuthorizeUrlParameters = !empty($parameters)
+            ? $parameters
+            : array_replace((array) $this->AuthorizeUrlParameters, (array) $this->config->get("authorize_url_parameters"));
 
         if ($this->supportRequestState) {
             $state = 'HA-' . str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
 
-            $this->token('authorization_state', $state);
+            $this->storeData('authorization_state', $state);
 
-            $parameters['state'] = $state;
+            $this->AuthorizeUrlParameters['state'] = $state;
         }
 
-        return $this->authorizeUrl . '?' . http_build_query($parameters, '', '&');
+        return $this->authorizeUrl . '?' . http_build_query($this->AuthorizeUrlParameters, '', '&');
     }
 
     /**
@@ -456,19 +512,24 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
             );
         }
 
-        $this->token('access_token', $collection->get('access_token'));
-        $this->token('token_type', $collection->get('token_type'));
-        $this->token('refresh_token', $collection->get('refresh_token'));
-        $this->token('expires_in', $collection->get('expires_in'));
+        $this->storeData('access_token', $collection->get('access_token'));
+        $this->storeData('token_type', $collection->get('token_type'));
+
+        if ($collection->get('refresh_token')) {
+            $this->storeData('refresh_token', $collection->get('refresh_token'));
+        }
 
         // calculate when the access token expire
         if ($collection->exists('expires_in')) {
             $expires_at = time() + (int) $collection->get('expires_in');
 
-            $this->token('access_token_expires_at', $expires_at);
+            $this->storeData('expires_in', $collection->get('expires_in'));
+            $this->storeData('expires_at', $expires_at);
         }
 
-        $this->deleteToken('authorization_state');
+        $this->deleteStoredData('authorization_state');
+
+        $this->initialize();
 
         return $collection;
     }
@@ -491,38 +552,17 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * @return string Raw Provider API response
     */
-    public function refreshAccessToken($forceRefresh = false)
+    public function refreshAccessToken($parameters = [])
     {
-        $proceed = $forceRefresh;
-
-        // have an access token?
-        if ($this->token('access_token')) {
-
-            // have to refresh?
-            if ($this->token('refresh_token') && $this->token('access_token_expires_at')) {
-                
-                // expired?
-                if ($this->token('access_token_expires_at') <= time()) {
-                    $proceed = true;
-                }
-            }
-        }
-
-        if(! $proceed )
-            return;
-
-        $defaults = [
-            'grant_type'    => 'refresh_token',
-            'refresh_token' => $this->token('refresh_token'),
-        ];
-
-        $this->tokenExchangeParameters = array_merge($defaults, (array) $this->tokenExchangeParameters);
+        $this->tokenRefreshParameters = !empty($parameters)
+            ? $parameters
+            : $this->tokenRefreshParameters;
 
         $response = $this->httpClient->request(
             $this->accessTokenUrl,
-            $this->tokenExchangeMethod,
-            $this->tokenExchangeParameters,
-            $this->tokenExchangeHeaders
+            $this->tokenRefreshMethod,
+            $this->tokenRefreshParameters,
+            $this->tokenRefreshHeaders
         );
 
         $this->validateApiResponse('Unable to refresh the access token');
@@ -530,6 +570,24 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
         $this->validateRefreshAccessToken($response);
 
         return $response;
+    }
+
+    /**
+    * Check whether access token has expired
+    *
+    * @return string Raw Provider API response
+    */
+    public function hasAccessTokenExpired()
+    {
+        if (! $this->getStoredData('expires_at')) {
+            return null;
+        }
+
+        if ($this->getStoredData('expires_at') <= time()) {
+            return true;
+        }
+
+        return false;
     }
 
     /**
@@ -579,19 +637,25 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     */
     public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
     {
+        // refresh tokens if needed
+        if ($this->hasAccessTokenExpired() === true) {
+            $this->refreshAccessToken();
+        }
+
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0) {
             $url = $this->apiBaseUrl . $url;
         }
 
-        $this->apiRequestParameters[ $this->accessTokenName ] = $this->token('access_token');
+        if($this->getStoredData('access_token')) {
+            $this->apiRequestParameters[$this->accessTokenName] = $this->getStoredData('access_token');
+        }
 
-        $parameters = array_merge($this->apiRequestParameters, (array) $parameters);
-
-        $headers = array_merge($this->apiRequestHeaders, (array) $headers);
+        $parameters = array_replace($this->apiRequestParameters, (array) $parameters);
+        $headers = array_replace($this->apiRequestHeaders, (array) $headers);
 
         $response = $this->httpClient->request(
-            $url, //
-            $method, // HTTP Request Method. Defaults to GET.
+            $url,
+            $method,     // HTTP Request Method. Defaults to GET.
             $parameters, // Request Parameters
             $headers     // Request Headers
         );

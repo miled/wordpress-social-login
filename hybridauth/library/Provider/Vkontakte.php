@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- *
+ * Vkontakte OAuth2 provider adapter.
  */
 class Vkontakte extends OAuth2
 {
@@ -41,8 +41,8 @@ class Vkontakte extends OAuth2
     {
         $data = parent::validateAccessTokenExchange($response);
 
-        $this->token('user_id', $data->get('user_id'));
-        $this->token('email', $data->get('email'));
+        $this->storeData('user_id', $data->get('user_id'));
+        $this->storeData('email', $data->get('email'));
     }
 
     /**
@@ -51,7 +51,7 @@ class Vkontakte extends OAuth2
     public function getUserProfile()
     {
         $parameters = [
-            'uid'    => $this->token('user_id'),
+            'uid'    => $this->getStoredData('user_id'),
             'fields' => 'first_name,last_name,nickname,screen_name,sex,' .
                             'bdate,timezone,photo_rec,photo_big,photo_max_orig'
         ];
@@ -61,13 +61,13 @@ class Vkontakte extends OAuth2
         $data = new Data\Collection($response->response[0]);
 
         if (! $data->exists('uid')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
 
         $userProfile->identifier  = $data->get('uid');
-        $userProfile->email       = $this->token('email');
+        $userProfile->email       = $this->getStoredData('email');
         $userProfile->firstName   = $data->get('first_name');
         $userProfile->lastName    = $data->get('last_name');
         $userProfile->displayName = $data->get('screen_name');
@@ -77,13 +77,9 @@ class Vkontakte extends OAuth2
                                         ? 'http://vk.com/' . $data->get('screen_name')
                                         : '';
 
-        if ($data->exists('sex')) {
-            switch ($data->get('sex')) {
-                case 1: $userProfile->gender = 'female';
-                    break;
-                case 2: $userProfile->gender =   'male';
-                    break;
-            }
+        switch ($data->get('sex')) {
+            case 1: $userProfile->gender = 'female'; break;
+            case 2: $userProfile->gender =   'male'; break;
         }
 
         return $userProfile;

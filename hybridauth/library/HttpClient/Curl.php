@@ -30,6 +30,7 @@ class Curl implements HttpClientInterface
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_MAXREDIRS      => 5,
         CURLINFO_HEADER_OUT    => true,
+        CURLOPT_ENCODING       => 'identity',
         CURLOPT_USERAGENT      => 'HybridAuth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)',
     ];
 
@@ -48,11 +49,11 @@ class Curl implements HttpClientInterface
     * @var array
     */
     protected $requestHeader = [
-        'Accept'        => '*/*',
-        'Cache-Control' => 'max-age=0',
-        'Connection'    => 'keep-alive',
-        'Expect'        => '',
-        'Pragma'        => '',
+        'Accept'          => '*/*',
+        'Cache-Control'   => 'max-age=0',
+        'Connection'      => 'keep-alive',
+        'Expect'          => '',
+        'Pragma'          => '',
     ];
 
     /**
@@ -114,11 +115,26 @@ class Curl implements HttpClientInterface
         }
 
         if ('POST' == $method) {
-            $this->curlOptions[CURLOPT_POST]       = true;
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $parameters;
+            $body_content = http_build_query($parameters);
+            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
+                $body_content = json_encode($parameters);
+            }
+
+            $this->curlOptions[CURLOPT_POST] = true;
+            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
         }
 
-        $this->requestHeader = array_merge($this->requestHeader, $headers);
+        if ('PUT' == $method) {
+            $body_content = http_build_query($parameters);
+            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
+                $body_content = json_encode($parameters);
+            }
+
+            $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'PUT';
+            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
+        }
+
+        $this->requestHeader = array_merge($this->requestHeader, (array)$headers);
 
         $this->requestArguments['headers'] = $this->requestHeader;
 
@@ -138,10 +154,10 @@ class Curl implements HttpClientInterface
         $this->responseClientInfo  = curl_getinfo($curl);
 
         if ($this->logger) {
-            $this->logger->debug("HttpClient\Curl::request( $uri, $method ), response:", $this->getResponse());
+            $this->logger->debug(sprintf('%s::request( %s, %s ), response:', get_class($this), $uri, $method), $this->getResponse());
 
             if (false === $response) {
-                $this->logger->error("HttpClient\Curl::request( $uri, $method ), curl_exec error: ", [$this->responseClientError]);
+                $this->logger->error(sprintf('%s::request( %s, %s ), error:', get_class($this), $uri, $method), [$this->responseClientError]);
             }
         }
 
@@ -160,12 +176,12 @@ class Curl implements HttpClientInterface
         $curlOptions[CURLOPT_HEADERFUNCTION] = '*omitted';
 
         return [
+            'request' => $this->getRequestArguments(),
             'response' => [
                 'code'    => $this->getResponseHttpCode(),
                 'headers' => $this->getResponseHeader(),
                 'body'    => $this->getResponseBody(),
             ],
-            'request' => $this->getRequestArguments(),
             'client' => [
                 'error' => $this->getResponseClientError(),
                 'info'  => $this->getResponseClientInfo(),

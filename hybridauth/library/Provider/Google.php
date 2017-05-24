@@ -8,7 +8,7 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
@@ -20,8 +20,16 @@ use Hybridauth\User;
  *   $config = [
  *       'callback' => Hybridauth\HttpClient\Util::getCurrentUrl(),
  *       'keys'     => [ 'id' => '', 'secret' => '' ],
- *       'scope'    => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read https://www.google.com/m8/feeds/',
- *       'authorize_url_parameters' => ['approval_prompt' => 'force']
+ *       'scope'    => 'profile https://www.googleapis.com/auth/plus.login https://www.googleapis.com/auth/plus.profile.emails.read',
+ *
+ *        // google's custom auth url params
+ *       'authorize_url_parameters' => [
+ *              'approval_prompt' => 'force', // to pass only when you need to acquire a new refresh token.
+ *              'access_type'     => ..,      // is set to 'offline' by default
+ *              'hd'              => ..,
+ *              'state'           => ..,
+ *              // etc.
+ *       ]
  *   ];
  *
  *   $adapter = new Hybridauth\Provider\Google( $config );
@@ -30,7 +38,7 @@ use Hybridauth\User;
  *       $adapter->authenticate();
  *
  *       $userProfile = $adapter->getUserProfile();
- *       $tokens = $adapter->getAccessToken(); 
+ *       $tokens = $adapter->getAccessToken();
  *       $contacts = $adapter->getUserContacts(['max-results' => 75]);
  *   }
  *   catch( Exception $e ){
@@ -66,29 +74,19 @@ class Google extends OAuth2
 
     /**
     * {@inheritdoc}
-    *
-    * Extra parameters for authorize url can be set in config:
-    *
-    * Example:
-    *
-    *   $config = [
-    *       'callback' => '...',
-    *       'keys'     => [ 'id' => '', 'secret' => '' ],
-    *       'authorize_url_parameters' => [
-    *              'approval_prompt' => 'force',
-    *              'hd'              => ..
-    *              'state'           => ..
-    *              // etc.
-    *       ]
-    *   ];
     */
-    protected function getAuthorizeUrl($parameters = [])
+    protected function initialize()
     {
-        $parameters = ['access_type' => 'offline']
-                     + (array) $this->config->get("authorize_url_parameters")
-                     + $parameters;
+        parent::initialize();
 
-        return parent::getAuthorizeUrl($parameters);
+        $this->AuthorizeUrlParameters += [
+            'access_type' => 'offline'
+        ];
+
+        $this->tokenRefreshParameters += [
+            'client_id' => $this->clientId,
+            'client_secret' => $this->clientSecret
+        ];
     }
 
     /**
@@ -96,15 +94,12 @@ class Google extends OAuth2
     */
     public function getUserProfile()
     {
-        // refresh tokens if needed
-        $this->refreshAccessToken();
-
         $response = $this->apiRequest('people/me');
 
         $data = new Data\Collection($response);
 
         if (! $data->exists('id')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
@@ -130,15 +125,15 @@ class Google extends OAuth2
             $userProfile->photoURL = substr($data->filter('image')->get('url'), 0, -2) . 150;
         }
 
-        if(! $userProfile->email && $data->exists('emails')){
+        if (! $userProfile->email && $data->exists('emails')) {
             $userProfile = $this->fetchUserEmail($userProfile, $data);
         }
 
-        if(! $userProfile->profileURL && $data->exists('urls')){
-           $userProfile = $this->fetchUserProfileUrl($userProfile, $data);
+        if (! $userProfile->profileURL && $data->exists('urls')) {
+            $userProfile = $this->fetchUserProfileUrl($userProfile, $data);
         }
 
-        if(! $userProfile->profileURL && $data->exists('urls')){
+        if (! $userProfile->profileURL && $data->exists('urls')) {
             $userProfile = $this->fetchBirthday($userProfile, $data->get('birthday'));
         }
 
@@ -197,9 +192,6 @@ class Google extends OAuth2
     */
     public function getUserContacts($parameters = [])
     {
-        // refresh tokens if needed
-        $this->refreshAccessToken();
-
         $parameters = ['max-results' => 500] + $parameters;
 
         // Google Gmail and Android contacts
@@ -219,7 +211,7 @@ class Google extends OAuth2
     protected function getGmailContacts($parameters = [])
     {
         $url = 'https://www.google.com/m8/feeds/contacts/default/full?'
-                    . http_build_query(array_merge([ 'alt' => 'json', 'v' => '3.0' ], $parameters));
+                    . http_build_query(array_replace([ 'alt' => 'json', 'v' => '3.0' ], (array)$parameters));
 
         $response = $this->apiRequest($url);
 
@@ -233,8 +225,8 @@ class Google extends OAuth2
             foreach ($response->feed->entry as $idx => $entry) {
                 $uc = new User\Contact();
 
-                $uc->email = isset($entry->{'gd$email'}[0]->address) 
-                            ? (string) $entry->{'gd$email'}[0]->address 
+                $uc->email = isset($entry->{'gd$email'}[0]->address)
+                            ? (string) $entry->{'gd$email'}[0]->address
                             : '';
 
                 $uc->displayName = isset($entry->title->{'$t'}) ? (string) $entry->title->{'$t'} : '';
@@ -244,15 +236,14 @@ class Google extends OAuth2
                 if (property_exists($response, 'website')) {
                     if (is_array($response->website)) {
                         foreach ($response->website as $w) {
-                            if ($w->primary == true)
+                            if ($w->primary == true) {
                                 $uc->webSiteURL = $w->value;
+                            }
                         }
-                    }
-                    else {
+                    } else {
                         $uc->webSiteURL = $response->website->value;
                     }
-                }
-                else {
+                } else {
                     $uc->webSiteURL = '';
                 }
 

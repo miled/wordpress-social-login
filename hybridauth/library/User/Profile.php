@@ -7,14 +7,10 @@
 
 namespace Hybridauth\User;
 
+use Hybridauth\Exception\UnexpectedValueException;
+
 /**
- * User\Profile object represents the current logged in user profile.
- * The list of fields available in the normalized user profile structure used by HybridAuth.
- *
- * The User\Profile object is populated with as much information about the user as
- * HybridAuth was able to pull from the given API or authentication provider.
- *
- * http://hybridauth.sourceforge.net/userguide/Profile_Data_User_Profile.html
+ * Hybridauth\Userobject represents the current logged in user profile.
  */
 final class Profile
 {
@@ -178,10 +174,10 @@ final class Profile
     * @var string $name
     * @var mixed  $value
     *
-    * @throws \LogicException
+    * @throws Exception\UnexpectedValueException
     */
     public function __set($name, $value)
     {
-        throw new \LogicException('Adding new properties to ' . __CLASS__ . ' is not allowed.');
+        throw new UnexpectedValueException(sprintf('Adding new property "%s\' to %s is not allowed.', $name, __CLASS__));
     }
 }
