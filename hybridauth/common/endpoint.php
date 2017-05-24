@@ -16,14 +16,14 @@ require_once "session.php";
 $config = get_provider_config_from_session_storage($provider);
 $params = get_provider_params_from_session_storage($provider);
 
-$hybridauth = new \Hybridauth\Hybridauth($config, $params);
+$hybridauth = new Hybridauth\Hybridauth($config, $params);
 
 try {
     $adapter = $hybridauth->authenticate( $provider );
 
     $url = $config['current_page'];
-	
-	\Hybridauth\HttpClient\Util::redirect($url);
+
+    Hybridauth\HttpClient\Util::redirect($url);
 }
 catch( Exception $e ){
     echo $e->getMessage();

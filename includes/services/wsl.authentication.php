@@ -34,13 +34,13 @@
 *     .       wsl_process_login()
 *     .       .       wsl_process_login_begin()
 *     .       .       .       wsl_render_redirect_to_provider_loading_screen()
-*     .       .       .       Hybrid_Auth::authenticate()
+*     .       .       .       Hybridauth\Hybridauth::authenticate()
 *     .       .       .       wsl_render_return_from_provider_loading_screen()
 *     .       .
 *     .       .       wsl_process_login_end()
 *     .       .       .       wsl_process_login_get_user_data()
 *     .       .       .       .       wsl_process_login_request_user_social_profile()
-*     .       .       .       .       .       Hybrid_Auth::getUserProfile()
+*     .       .       .       .       .       Hybridauth\Hybridauth::getUserProfile()
 *     .       .       .       .
 *     .       .       .       .       wsl_process_login_complete_registration()
 *     .       .       .
@@ -153,7 +153,7 @@ add_action( 'init', 'wsl_process_login' );
 * Steps:
 *     1. Display a loading screen while hybridauth is redirecting the user to the selected provider
 *     2. Build the hybridauth config for the selected provider (keys, scope, etc)
-*     3. Instantiate the class Hybrid_Auth and redirect the user to provider to ask for authorisation for this website
+*     3. Instantiate the class Hybridauth\Hybridauth and redirect the user to provider to ask for authorisation for this website
 *     4. Display a loading screen after user come back from provider as we redirect the user back to Widget::Redirect URL
 */
 function wsl_process_login_begin()
@@ -208,7 +208,7 @@ function wsl_process_login_begin()
 	try
 	{
 		// create an instance oh hybridauth with the generated config
-		$hybridauth = new \Hybridauth\Hybridauth( $config );
+		$hybridauth = new Hybridauth\Hybridauth( $config );
 
 		// start the authentication process via hybridauth
 		// > if not already connected hybridauth::authenticate() will redirect the user to the provider
@@ -564,7 +564,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
 	{
 		// check if the verified email exist in wp_users
-		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
+		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->email );
 
 		// the user exists in Wordpress
 		$wordpress_user_id = $user_id;
@@ -669,7 +669,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			}
 			while( wsl_wp_email_exists( $user_email ) );
 		}
-	}        
+	}
 
 	$display_name = $hybridauth_user_profile->displayName;
 
@@ -901,9 +901,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 */
 function wsl_process_login_build_provider_config( $provider )
 {
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+
 	$config = array();
-	$config["current_page"] = \Hybridauth\HttpClient\Util::getCurrentUrl(true);
-	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . strtolower($provider) . '.php';
+	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
+	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
 	$config["providers"][$provider]["enabled"] = true;
@@ -992,7 +994,7 @@ function wsl_process_login_request_user_social_profile( $provider )
 		$config = get_provider_config_from_session_storage( $provider );
 
 		// if user authenticated successfully with social network
-		if( $adapter->isAuthorized() )
+		if( $adapter->isConnected() )
 		{
 			// grab user profile via hybridauth api
 			$hybridauth_user_profile = $adapter->getUserProfile();
@@ -1021,9 +1023,11 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+
 	$config = get_provider_config_from_session_storage( $provider );
 
-	$hybridauth = new \Hybridauth\Hybridauth( $config );
+	$hybridauth = new Hybridauth\Hybridauth( $config );
 
 	return $hybridauth->getAdapter( $provider );
 }
@@ -1125,7 +1129,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	if( is_object( $adapter ) )
 	{
-		$adapter->logout();
+		$adapter->disconnect();
 	}
 
 	// provider api response

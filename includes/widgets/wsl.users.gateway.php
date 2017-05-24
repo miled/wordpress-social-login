@@ -53,9 +53,9 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$profile_completion_errors  = array();
 
 	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
-        $require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
-        $change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
-        $extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
+	$require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
+	$change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
+	$extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
 
 	if( isset( $_REQUEST["bouncer_account_linking"] ) )
 	{
@@ -298,10 +298,10 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				border-color:#0074a2;
 				-webkit-box-shadow:inset 0 1px 0 rgba(120,200,230,.6);
 				box-shadow:inset 0 1px 0 rgba(120,200,230,.6);
-				color:#fff
+				color:#fff;
 			}
 			input[type="text"],
-			input[type="password"] {{
+			input[type="password"] {
 				border: 1px solid #e5e5e5;
 				box-shadow: 1px 1px 2px rgba(200, 200, 200, 0.2) inset;
 				color: #555;
