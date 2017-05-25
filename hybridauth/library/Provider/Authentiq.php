@@ -99,7 +99,7 @@ class Authentiq extends OAuth2
 
         if (!empty($userProfile->displayName)) {
             $userProfile->displayName = join(' ', array($userProfile->firstName,
-                                                        $userProfile->middleName,
+                                                        // $userProfile->middleName,
                                                         $userProfile->lastName));
         }
 
