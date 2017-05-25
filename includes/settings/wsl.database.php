@@ -26,6 +26,8 @@ function wsl_database_install()
 {
 	global $wpdb;
 
+	$charset_collate = $wpdb->get_charset_collate();
+
 	// create wsl tables
 	$wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
 	$wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
@@ -62,7 +64,7 @@ function wsl_database_install()
 			UNIQUE KEY id (id),
 			KEY user_id (user_id),
 			KEY provider (provider)
-		)"; 
+		) $charset_collate;";
 	dbDelta( $sql );
 
 	$sql = "CREATE TABLE $wsluserscontacts (
@@ -76,7 +78,7 @@ function wsl_database_install()
 			photo_url varchar(255) DEFAULT '',
 			UNIQUE KEY id (id),
 			KEY user_id (user_id)
-		)"; 
+		) $charset_collate;";
 	dbDelta( $sql );
 }
 
