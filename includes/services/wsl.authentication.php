@@ -572,7 +572,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
-			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
+			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->email );
 		}
 	}
 
