@@ -495,11 +495,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
                         }
                         while( ! $shall_pass );
                 }
+
+                $hybridauth_user_email = $requested_user_email;
         }else{
 	        $wordpress_user_id = $user_id;
         }
-	$hybridauth_user_email = $requested_user_email;
-
 
 	// Bouncer::Filters by e-mails addresses
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_email_enabled' ) == 1 )
