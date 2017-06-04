@@ -8,7 +8,7 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
@@ -52,7 +52,7 @@ class BitBucket extends OAuth2
         $data = new Data\Collection($response);
 
         if (! $data->exists('uuid')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
@@ -66,7 +66,12 @@ class BitBucket extends OAuth2
         $userProfile->displayName = $userProfile->displayName ?: $data->get('username');
 
         if (empty($userProfile->email) && strpos($this->scope, 'email') !== false) {
-            $userProfile = $this->requestUserEmail($userProfile);
+            try {
+                $userProfile = $this->requestUserEmail($userProfile);
+            }
+            // user email is not mandatory so keep it quite
+            catch (\Exception $e) {
+            }
         }
 
         return $userProfile;
@@ -77,22 +82,18 @@ class BitBucket extends OAuth2
     */
     protected function requestUserEmail($userProfile)
     {
-        try {
-            $response = $this->apiRequest('user/emails');
-            foreach ($response->values as $idx => $item) {
-                if (! empty($item->is_primary) && $item->is_primary == true) {
-                    $userProfile->email = $item->email;
+        $response = $this->apiRequest('user/emails');
 
-                    if (! empty($item->is_confirmed) && $item->is_confirmed == true) {
-                        $userProfile->emailVerified = $userProfile->email;
-                    }
+        foreach ($response->values as $idx => $item) {
+            if (! empty($item->is_primary) && $item->is_primary == true) {
+                $userProfile->email = $item->email;
 
-                    break;
+                if (! empty($item->is_confirmed) && $item->is_confirmed == true) {
+                    $userProfile->emailVerified = $userProfile->email;
                 }
+
+                break;
             }
-        }
-        // user email is not mandatory so keep it quite
-        catch (\Exception $e) {
         }
 
         return $userProfile;

@@ -13,29 +13,34 @@ use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * Dribbble OAuth2 provider adapter.
+ * GitLab OAuth2 provider adapter.
  */
-class Dribbble extends OAuth2
+class GitLab extends OAuth2
 {
     /**
     * {@inheritdoc}
     */
-    protected $apiBaseUrl = 'https://api.dribbble.com/v1/';
+    public $scope = 'api';
 
     /**
     * {@inheritdoc}
     */
-    protected $authorizeUrl = 'https://dribbble.com/oauth/authorize';
+    protected $apiBaseUrl = 'https://gitlab.com/api/v3/';
 
     /**
     * {@inheritdoc}
     */
-    protected $accessTokenUrl = 'https://dribbble.com/oauth/token';
+    protected $authorizeUrl = 'https://gitlab.com/oauth/authorize"';
 
     /**
     * {@inheritdoc}
     */
-    protected $apiDocumentation = 'http://developer.dribbble.com/v1/oauth/';
+    protected $accessTokenUrl = 'https://gitlab.com/oauth/token';
+
+    /**
+    * {@inheritdoc}
+    */
+    protected $apiDocumentation = 'https://docs.gitlab.com/ee/api/oauth2.html';
 
     /**
     * {@inheritdoc}
@@ -53,15 +58,14 @@ class Dribbble extends OAuth2
         $userProfile = new User\Profile();
 
         $userProfile->identifier  = $data->get('id');
-        $userProfile->profileURL  = $data->get('html_url');
-        $userProfile->photoURL    = $data->get('avatar_url');
-        $userProfile->description = $data->get('bio');
-        $userProfile->region      = $data->get('location');
         $userProfile->displayName = $data->get('name');
+        $userProfile->description = $data->get('bio');
+        $userProfile->photoURL    = $data->get('avatar_url');
+        $userProfile->profileURL  = $data->get('web_url');
+        $userProfile->email       = $data->get('email');
+        $userProfile->webSiteURL  = $data->get('website_url');
 
         $userProfile->displayName = $userProfile->displayName ?: $data->get('username');
-
-        $userProfile->webSiteURL  = $data->filter('links')->get('web');
 
         return $userProfile;
     }

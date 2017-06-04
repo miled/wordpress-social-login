@@ -103,7 +103,7 @@ if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 	function wsl_render_return_from_provider_loading_screen( $provider, $authenticated_url, $redirect_to, $wsl_settings_use_popup )
 	{
 		/*
-		* If Authentication displayis undefined or eq Popup ($wsl_settings_use_popup==1)
+		* If Authentication display is undefined or eq Popup ($wsl_settings_use_popup==1)
 		* > create a from with javascript in parent window and submit it to wp-login.php ($authenticated_url)
 		* > with action=wordpress_social_authenticated, then close popup
 		*

@@ -8,6 +8,7 @@
 namespace Hybridauth\Adapter;
 
 use Hybridauth\Exception\NotImplementedException;
+use Hybridauth\Exception\InvalidArgumentException;
 use Hybridauth\Exception\HttpClientFailureException;
 use Hybridauth\Exception\HttpRequestFailedException;
 use Hybridauth\Storage\StorageInterface;
@@ -24,6 +25,8 @@ use Hybridauth\Deprecated\DeprecatedAdapterTrait;
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
+    use DataStoreTrait;
+
     /**
      * Provider ID (unique name).
      *
@@ -46,11 +49,11 @@ abstract class AbstractAdapter implements AdapterInterface
     protected $params;
 
     /**
-     * Redirection Endpoint (i.e., redirect_uri, callback_url).
+     * Callback url
      *
      * @var string
      */
-    protected $endpoint = '';
+    protected $callback = '';
 
     /**
      * Storage.
@@ -74,6 +77,13 @@ abstract class AbstractAdapter implements AdapterInterface
     public $logger;
 
     /**
+     * Wheteher to validate API status codes of http responses
+     *
+     * @var validateApiResponseHttpCode
+     */
+    protected $validateApiResponseHttpCode = true;
+
+    /**
      * Common adapters constructor.
      *
      * @param array               $config
@@ -89,47 +99,45 @@ abstract class AbstractAdapter implements AdapterInterface
     ) {
         $this->providerId = str_replace('Hybridauth\\Provider\\', '', get_class($this));
 
-        $this->storage = $storage ?: new Session();
-
-        $this->logger = $logger ?: new Logger(
-            isset($config['debug_mode']) ? $config['debug_mode'] : Logger::NONE,
-            isset($config['debug_file']) ? $config['debug_file'] : ''
-        );
-
-        $this->httpClient = $httpClient ?: new HttpClient();
-
-        if (isset($config['curl_options']) && method_exists($this->httpClient, 'setCurlOptions')) {
-            $this->httpClient->setCurlOptions($this->config['curl_options']);
-        }
-
-        if (method_exists($this->httpClient, 'setLogger')) {
-            $this->httpClient->setLogger($this->logger);
-        }
-
-        $this->logger->debug('Initialize '.get_class($this).'. Provider config: ', $config);
-
         $this->config = new Data\Collection($config);
 
-        $this->endpoint = $this->config->get('callback');
+        $this->configure();
+
+        $this->setHttpClient($httpClient);
+
+        $this->setStorage($storage);
+
+        $this->setLogger($logger);
+
+        $this->logger->debug(sprintf('Initialize %s, config: ', get_class($this)), $config);
 
         $this->initialize();
     }
 
     /**
+    * Load adapter's configuration
+    */
+    abstract protected function configure();
+
+    /**
     * Adapter initializer
-    *
-    * @throws InvalidArgumentException
-    * @throws InvalidApplicationCredentialsException
-    * @throws InvalidOpenidIdentifierException
     */
     abstract protected function initialize();
 
     /**
      * {@inheritdoc}
      */
+    public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
+    {
+        throw new NotImplementedException('Provider does not support this feature.');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getUserProfile()
     {
-        throw new NotImplementedException('Provider does not support this feature.', 8);
+        throw new NotImplementedException('Provider does not support this feature.');
     }
 
     /**
@@ -137,7 +145,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getUserContacts()
     {
-        throw new NotImplementedException('Provider does not support this feature.', 8);
+        throw new NotImplementedException('Provider does not support this feature.');
     }
 
     /**
@@ -145,7 +153,7 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function setUserStatus($status)
     {
-        throw new NotImplementedException('Provider does not support this feature.', 8);
+        throw new NotImplementedException('Provider does not support this feature.');
     }
 
     /**
@@ -153,23 +161,17 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function getUserActivity($stream)
     {
-        throw new NotImplementedException('Provider does not support this feature.', 8);
+        throw new NotImplementedException('Provider does not support this feature.');
     }
 
     /**
      * {@inheritdoc}
+     *
+     * Checking access_token only works for oauth1 and oauth2, openid will overwrite this method.
      */
-    public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
+    public function isConnected()
     {
-        throw new NotImplementedException('Provider does not support this feature.', 8);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function isAuthorized()
-    {
-        return (bool) $this->token('access_token');
+        return (bool) $this->getStoredData('access_token');
     }
 
     /**
@@ -177,36 +179,30 @@ abstract class AbstractAdapter implements AdapterInterface
      */
     public function disconnect()
     {
-        $this->clearTokens();
+        $this->clearStoredData();
 
         return true;
     }
 
     /**
-     * Return oauth access tokens.
-     *
-     * @param array $tokenNames
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function getAccessToken($tokenNames = [])
+    public function getAccessToken()
     {
-        if (empty($tokenNames)) {
-            $tokenNames = [
-                'access_token',
-                'access_token_secret',
-                'token_type',
-                'refresh_token',
-                'expires_in',
-                'expires_at',
-            ];
-        }
+        $tokenNames = [
+            'access_token',
+            'access_token_secret',
+            'token_type',
+            'refresh_token',
+            'expires_in',
+            'expires_at',
+        ];
 
         $tokens = [];
 
         foreach ($tokenNames as $name) {
-            if ($this->token($name)) {
-                $tokens[ $name ] = $this->token($name);
+            if ($this->getStoredData($name)) {
+                $tokens[ $name ] = $this->getStoredData($name);
             }
         }
 
@@ -214,66 +210,31 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * Reset adapter access tokens.
-     *
-     * @param array $tokens
+     * {@inheritdoc}
      */
     public function setAccessToken($tokens = [])
     {
-        $this->clearTokens();
+        $this->clearStoredData();
 
         foreach ($tokens as $token => $value) {
-            $this->token($token, $value);
+            $this->storeData($token, $value);
         }
     }
 
     /**
-     * Get or Set a token.
-     *
-     * This method provide a common way for providers adapter to store data internally.
-     * These tokens can be either OAuth tokens or any useful data (i.e., user_id, auth_nonce, etc.)
-     *
-     * @param string $token
-     * @param mixed  $value
-     *
-     * @return mixed
+     * {@inheritdoc}
      */
-    public function token($token, $value = null)
+    public function setHttpClient(HttpClientInterface $httpClient = null)
     {
-        if ($value === null) {
-            return $this->storage->get($this->providerId.'.token.'.$token);
-        }
+        $this->httpClient = $httpClient ?: new HttpClient();
 
-        // we only store necessary data
-        if (empty($value)) {
-            $this->deleteToken($token);
-        } else {
-            $this->storage->set($this->providerId.'.token.'.$token, $value);
+        if ($this->config->exists('curl_options') && method_exists($this->httpClient, 'setCurlOptions')) {
+            $this->httpClient->setCurlOptions($this->config->get('curl_options'));
         }
     }
 
     /**
-     * Delete all tokens of the instantiated adapter.
-     */
-    public function clearTokens()
-    {
-        $this->storage->deleteMatch($this->providerId.'.');
-    }
-
-    /**
-     * Delete a stored token.
-     *
-     * @param string $token
-     */
-    protected function deleteToken($token)
-    {
-        $this->storage->delete($this->providerId.'.token.'.$token);
-    }
-
-    /**
-     * Return http client instance.
-     *
-     * @return HttpClientInterface
+     * {@inheritdoc}
      */
     public function getHttpClient()
     {
@@ -281,10 +242,78 @@ abstract class AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * Validate Signed API Requests responses.
+     * {@inheritdoc}
+     */
+    public function setStorage(StorageInterface $storage = null)
+    {
+        $this->storage = $storage ?: new Session();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStorage()
+    {
+        return $this->storage;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLogger(LoggerInterface $logger = null)
+    {
+        $this->logger = $logger ?: new Logger(
+            $this->config->get('debug_mode'), $this->config->get('debug_file')
+        );
+
+        if (method_exists($this->httpClient, 'setLogger')) {
+            $this->httpClient->setLogger($this->logger);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLogger()
+    {
+        return $this->logger;
+    }
+
+    /**
+    * Set Adapter's API callback url
+     *
+     * @throws InvalidArgumentException
+    */
+    protected function setCallback($callback)
+    {
+        if (! filter_var($callback, FILTER_VALIDATE_URL)) {
+            throw new InvalidArgumentException('A valid callback url is required.');
+        }
+
+        $this->callback = $callback;
+    }
+
+    /**
+    * Overwrite Adapter's API endpoints
+    */
+    protected function setApiEndpoints($endpoints)
+    {
+        if (empty($endpoints)) {
+            return;
+        }
+
+        $this->apiBaseUrl = $endpoints->get('api_base_url') ?: $this->apiBaseUrl;
+        $this->authorizeUrl = $endpoints->get('authorize_url') ?: $this->authorizeUrl;
+        $this->accessTokenUrl = $endpoints->get('access_token_url') ?: $this->accessTokenUrl;
+    }
+
+    /**
+     * Validate signed API responses Http status code.
      *
      * Since the specifics of error responses is beyond the scope of RFC6749 and OAuth Core specifications,
      * Hybridauth will consider any HTTP status code that is different than '200 OK' as an ERROR.
+     *
+     * @param string $error String to pre append to message thrown in exception
      *
      * @throws HttpClientFailureException
      * @throws HttpRequestFailedException
@@ -295,32 +324,20 @@ abstract class AbstractAdapter implements AdapterInterface
 
         if ($this->httpClient->getResponseClientError()) {
             throw new HttpClientFailureException(
-                $error . 'HTTP client error: '.
-                $this->httpClient->getResponseClientError().
-                '.'
+                $error.'HTTP client error: '.$this->httpClient->getResponseClientError().'.'
             );
+        }
+
+        // if validateApiResponseHttpCode is set to false, we by pass verification of http status code
+        if (! $this->validateApiResponseHttpCode) {
+            return;
         }
 
         if (200 != $this->httpClient->getResponseHttpCode()) {
             throw new HttpRequestFailedException(
-                $error . 'HTTP error '.
-                $this->httpClient->getResponseHttpCode().
-                '. Raw Provider API response: '.
-                $this->httpClient->getResponseBody().
-                '.'
+                $error . 'HTTP error '.$this->httpClient->getResponseHttpCode().
+                '. Raw Provider API response: '.$this->httpClient->getResponseBody().'.'
             );
         }
-    }
-
-    /**
-     * Override defaults endpoints.
-     */
-    protected function overrideEndpoints()
-    {
-        $endpoints = $this->config->filter('endpoints');
-
-        $this->apiBaseUrl = $endpoints->get('api_base_url')     ?: $this->apiBaseUrl;
-        $this->authorizeUrl = $endpoints->get('authorize_url')    ?: $this->authorizeUrl;
-        $this->accessTokenUrl = $endpoints->get('access_token_url') ?: $this->accessTokenUrl;
     }
 }

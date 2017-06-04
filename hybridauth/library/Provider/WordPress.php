@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- *
+ * WordPress OAuth2 provider adapter.
  */
 class WordPress extends OAuth2
 {
@@ -35,12 +35,17 @@ class WordPress extends OAuth2
     /**
     * {@inheritdoc}
     */
+    protected $apiDocumentation = 'https://developer.wordpress.com/docs/api/';
+
+    /**
+    * {@inheritdoc}
+    */
     protected function initialize()
     {
         parent::initialize();
 
         $this->apiRequestHeaders = [
-            'Authorization' => 'Bearer ' . $this->token('access_token')
+            'Authorization' => 'Bearer ' . $this->getStoredData('access_token')
         ];
     }
 
@@ -54,7 +59,7 @@ class WordPress extends OAuth2
         $data = new Data\Collection($response);
 
         if (! $data->exists('ID')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();

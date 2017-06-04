@@ -16,6 +16,20 @@ use Hybridauth\Deprecated\DeprecatedStorageTrait;
 class Session implements StorageInterface
 {
     /**
+     * Namespace
+     *
+     * @var string
+     */
+    protected $storeNamespace = 'HYBRIDAUTH::STORAGE';
+
+    /**
+     * Key prefix
+     *
+     * @var string
+     */
+    protected $keyPrefix = '';
+
+    /**
     * Initiate a new session
     *
     * @throws RuntimeException
@@ -27,7 +41,7 @@ class Session implements StorageInterface
         }
 
         if (headers_sent()) {
-            throw new RuntimeException('Hybridauth wasn\'t able to start PHP session. HTTP headers already sent.');
+            throw new RuntimeException('HTTP headers already sent to browser and Hybridauth won\'t be able to start/resume PHP session. To resolve this, session_start() must be called before outputing any data.');
         }
 
         if (! session_start()) {
@@ -40,10 +54,10 @@ class Session implements StorageInterface
     */
     public function get($key)
     {
-        $key = 'hauth_session.' . strtolower($key);
+        $key = $this->keyPrefix . strtolower($key);
 
-        if (isset($_SESSION['HA::STORE'], $_SESSION['HA::STORE'][$key])) {
-            return unserialize($_SESSION['HA::STORE'][$key]);
+        if (isset($_SESSION[$this->storeNamespace], $_SESSION[$this->storeNamespace][$key])) {
+            return $_SESSION[$this->storeNamespace][$key];
         }
 
         return null;
@@ -54,9 +68,9 @@ class Session implements StorageInterface
     */
     public function set($key, $value)
     {
-        $key = 'hauth_session.' . strtolower($key);
+        $key = $this->keyPrefix . strtolower($key);
 
-        $_SESSION['HA::STORE'][$key] = serialize($value);
+        $_SESSION[$this->storeNamespace][$key] = $value;
     }
 
     /**
@@ -64,7 +78,7 @@ class Session implements StorageInterface
     */
     public function clear()
     {
-        $_SESSION['HA::STORE'] = [];
+        $_SESSION[$this->storeNamespace] = [];
     }
 
     /**
@@ -72,14 +86,14 @@ class Session implements StorageInterface
     */
     public function delete($key)
     {
-        $key = 'hauth_session.' . strtolower($key);
+        $key = $this->keyPrefix . strtolower($key);
 
-        if (isset($_SESSION['HA::STORE'], $_SESSION['HA::STORE'][$key])) {
-            $tmp = $_SESSION['HA::STORE'];
+        if (isset($_SESSION[$this->storeNamespace], $_SESSION[$this->storeNamespace][$key])) {
+            $tmp = $_SESSION[$this->storeNamespace];
 
             unset($tmp[$key]);
 
-            $_SESSION['HA::STORE'] = $tmp;
+            $_SESSION[$this->storeNamespace] = $tmp;
         }
     }
 
@@ -88,10 +102,10 @@ class Session implements StorageInterface
     */
     public function deleteMatch($key)
     {
-        $key = 'hauth_session.' . strtolower($key);
+        $key = $this->keyPrefix . strtolower($key);
 
-        if (isset($_SESSION['HA::STORE']) && count($_SESSION['HA::STORE'])) {
-            $tmp = $_SESSION['HA::STORE'];
+        if (isset($_SESSION[$this->storeNamespace]) && count($_SESSION[$this->storeNamespace])) {
+            $tmp = $_SESSION[$this->storeNamespace];
 
             foreach ($tmp as $k => $v) {
                 if (strstr($k, $key)) {
@@ -99,7 +113,7 @@ class Session implements StorageInterface
                 }
             }
 
-            $_SESSION['HA::STORE'] = $tmp;
+            $_SESSION[$this->storeNamespace] = $tmp;
         }
     }
 }

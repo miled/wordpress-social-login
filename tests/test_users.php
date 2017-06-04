@@ -62,8 +62,8 @@ class WSL_Test_Users extends WP_UnitTestCase
 		$this->assertEquals( $this->someUserProfile->email         , $profile[0]->email );
 		$this->assertEquals( $this->someUserProfile->emailVerified , $profile[0]->emailverified );
 
-		$profile = (array) wsl_get_stored_hybridauth_user_id_by_email_verified( $this->someUserProfile->emailVerified );
-		$this->assertEquals( 1, count( $profile ) );
+		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $this->someUserProfile->email );
+		$this->assertEquals( $this->someUserID, $user_id );
 
 		$profile = (array) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $this->someUserIDP, $this->someUserProfile->identifier );
 		$this->assertEquals( 1, count( $profile ) );

@@ -10,6 +10,9 @@ namespace Hybridauth\Provider;
 use Hybridauth\Adapter\OpenID;
 use Hybridauth\HttpClient;
 
+/**
+ * PayPal OpenID provider adapter.
+ */
 class PaypalOpenID extends OpenID
 {
     /**
@@ -23,7 +26,7 @@ class PaypalOpenID extends OpenID
     public function authenticateBegin()
     {
         $this->openIdClient->identity  = $this->openidIdentifier;
-        $this->openIdClient->returnUrl = $this->endpoint;
+        $this->openIdClient->returnUrl = $this->callback;
         $this->openIdClient->required  = [
             'namePerson/prefix',
             'namePerson/first',

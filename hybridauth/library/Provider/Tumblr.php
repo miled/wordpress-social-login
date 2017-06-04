@@ -8,10 +8,13 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth1;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
+/**
+ * Tumblr OAuth1 provider adapter.
+ */
 class Tumblr extends OAuth1
 {
     /**
@@ -37,6 +40,11 @@ class Tumblr extends OAuth1
     /**
     * {@inheritdoc}
     */
+    protected $apiDocumentation = 'https://www.tumblr.com/docs/en/api/v2';
+
+    /**
+    * {@inheritdoc}
+    */
     public function getUserProfile()
     {
         $response = $this->apiRequest('user/info');
@@ -44,14 +52,16 @@ class Tumblr extends OAuth1
         $data = new Data\Collection($response);
 
         if (! $data->exists('response')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
 
         $userProfile->displayName = $data->filter('response')->filter('user')->get('name');
 
-        foreach ($data->filter('response')->filter('user')->filter('blogs')->all() as $blog) {
+        foreach ($data->filter('response')->filter('user')->filter('blogs')->toArray() as $blog) {
+            $blog = new Data\Collection($blog);
+
             if ($blog->get('primary') && $blog->exists('url')) {
                 $userProfile->identifier  = $blog->get('url');
                 $userProfile->profileURL  = $blog->get('url');
@@ -61,7 +71,8 @@ class Tumblr extends OAuth1
                 $bloghostname = explode('://', $blog->get('url'));
                 $bloghostname = substr($bloghostname[1], 0, -1);
 
-                $this->token('primary_blog', $bloghostname);
+                // store user's primary blog which will be used as target by setUserStatus
+                $this->storeData('primary_blog', $bloghostname);
 
                 break;
             }
@@ -79,7 +90,7 @@ class Tumblr extends OAuth1
                     ? [ 'type' => 'text', 'body' => $status ]
                     : $status;
 
-        $response = $this->apiRequest('blog/' . $this->token('primary_blog') . '/post', 'POST', $status);
+        $response = $this->apiRequest('blog/' . $this->getStoredData('primary_blog') . '/post', 'POST', $status);
 
         return $response;
     }

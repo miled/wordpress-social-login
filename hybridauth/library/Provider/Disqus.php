@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- *
+ * Disqus OAuth2 provider adapter.
  */
 class Disqus extends OAuth2
 {
@@ -40,6 +40,11 @@ class Disqus extends OAuth2
     /**
     * {@inheritdoc}
     */
+    protected $apiDocumentation = 'https://disqus.com/api/docs/auth/';
+
+    /**
+    * {@inheritdoc}
+    */
     protected function initialize()
     {
         parent::initialize();
@@ -59,7 +64,7 @@ class Disqus extends OAuth2
         $data = new Data\Collection($response);
 
         if (! $data->filter('response')->exists('id')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();

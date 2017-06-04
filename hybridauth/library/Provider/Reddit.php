@@ -8,12 +8,12 @@
 namespace Hybridauth\Provider;
 
 use Hybridauth\Adapter\OAuth2;
-use Hybridauth\Exception\UnexpectedValueException;
+use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * Reddit provider adapter.
+ * Reddit OAuth2 provider adapter.
  */
 class Reddit extends OAuth2
 {
@@ -49,10 +49,14 @@ class Reddit extends OAuth2
     {
         parent::initialize();
 
+        $this->AuthorizeUrlParameters += [
+            'duration' => 'permanent'
+        ];
+
         $this->tokenExchangeParameters = [
             'client_id'    => $this->clientId,
             'grant_type'   => 'authorization_code',
-            'redirect_uri' => $this->endpoint
+            'redirect_uri' => $this->callback
         ];
 
         $this->tokenExchangeHeaders = [
@@ -60,20 +64,10 @@ class Reddit extends OAuth2
         ];
 
         $this->apiRequestHeaders = [
-            'Authorization' => 'Bearer ' . $this->token('access_token')
+            'Authorization' => 'Bearer ' . $this->getStoredData('access_token')
         ];
-    }
 
-    /**
-    * {@inheritdoc}
-    */
-    protected function getAuthorizeUrl($parameters = [])
-    {
-        $parameters = ['duration' => 'temporary']
-                     + (array) $this->config->get("authorize_url_parameters")
-                     + $parameters;
-
-        return parent::getAuthorizeUrl($parameters);
+        $this->tokenRefreshHeaders = $this->tokenExchangeHeaders;
     }
 
     /**
@@ -86,7 +80,7 @@ class Reddit extends OAuth2
         $data = new Data\Collection($response);
 
         if (! $data->exists('id')) {
-            throw new UnexpectedValueException('Provider API returned an unexpected response.');
+            throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
 
         $userProfile = new User\Profile();
