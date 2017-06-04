@@ -638,23 +638,23 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );		
 			}
 		}
-
-		// user name should be unique
-		if( username_exists( $user_login ) )
-		{
-			$i = 1;
-			$user_login_tmp = $user_login;
-
-			do
-			{
-				$user_login_tmp = $user_login . "_" . ($i++);
-			}
-			while( username_exists ($user_login_tmp));
-
-			$user_login = $user_login_tmp;
-		}
 	}
-        
+
+	// user name should be unique
+	if( username_exists( $user_login ) )
+	{
+		$i = 1;
+		$user_login_tmp = $user_login;
+
+		do
+		{
+			$user_login_tmp = $user_login . "_" . ($i++);
+		}
+		while( username_exists ($user_login_tmp));
+
+		$user_login = $user_login_tmp;
+	}
+
 	if( ! $user_email )
 	{
 		$user_email = $hybridauth_user_profile->email;
