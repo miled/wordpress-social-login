@@ -101,9 +101,7 @@ function wsl_process_login()
 	// halt, if mode login and user already logged in
 	if( 'login' == $auth_mode && is_user_logged_in() )
 	{
-		global $current_user;
-
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 
 		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?", 'wordpress-social-login' ), $current_user->display_name, wp_logout_url( home_url() ) ) );
 	}
