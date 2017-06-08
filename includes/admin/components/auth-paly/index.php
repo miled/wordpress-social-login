@@ -30,25 +30,29 @@ function wsl_component_authtest()
 	$provider_id  = isset( $_REQUEST["provider"] ) ? $_REQUEST["provider"] : null;
 	$user_profile = null;
 
-	if ( ! empty( $provider_id ) )
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
+
+	if( ! class_exists( 'Hybrid_Auth', false ) )
 	{
-		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
+	}
 
-		try
+	try
+	{
+		$provider = Hybrid_Auth::getAdapter( $provider_id );
+
+		// make as few call as possible
+		if( ! ( isset( $_SESSION['wsl::userprofile'] ) && $_SESSION['wsl::userprofile'] && $user_profile = json_decode( $_SESSION['wsl::userprofile'] ) ) )
 		{
-			$adapter = wsl_process_login_get_provider_adapter( $provider_id );
+			$user_profile = $provider->getUserProfile();
 
-			// make as few call as possible
-			if( ! ( isset( $_SESSION['wsl::userprofile'] ) && $_SESSION['wsl::userprofile'] && $user_profile = json_decode( $_SESSION['wsl::userprofile'] ) ) )
-			{
-				$user_profile = $adapter->getUserProfile();
-				$_SESSION['wsl::userprofile'] = json_encode( $user_profile );
-			}
+			$_SESSION['wsl::userprofile'] = json_encode( $user_profile );
+		}
 
-		}
-		catch( Exception $e )
-		{
-		}
+		$adapter = $provider->adapter;
+	}
+	catch( Exception $e )
+	{
 	}
 
 	$ha_profile_fields = array(
@@ -101,7 +105,7 @@ function wsl_component_authtest()
 							<table class="wp-list-table widefat">
 								<tr>
 									<th width="200"><label><?php _wsl_e("Provider", 'wordpress-social-login') ?></label></th>
-									<td><?php echo $provider_id; ?></td>
+									<td><?php echo $adapter->providerId; ?></td>
 								</tr>
 
 								<?php if( isset( $adapter->openidIdentifier ) ): ?>
@@ -125,31 +129,31 @@ function wsl_component_authtest()
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["access_token"] ): ?>
+								<?php if( $adapter->token("access_token") ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token", 'wordpress-social-login') ?></label></th>
-										<td><div style="max-width:650px"><?php echo $adapter->getAccessToken()["access_token"]; ?></div></td>
+										<td><div style="max-width:650px"><?php echo $adapter->token("access_token"); ?></div></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["access_token_secret"] ): ?>
+								<?php if( $adapter->token("access_token_secret") ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token secret", 'wordpress-social-login') ?></label></th>
-										<td><?php echo $adapter->getAccessToken()["access_token_secret"]; ?></td>
+										<td><?php echo $adapter->token("access_token_secret"); ?></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["expires_in"] ): ?>
+								<?php if( $adapter->token("expires_in") ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token expires in", 'wordpress-social-login') ?></label></th>
-										<td><?php echo (int) $adapter->getAccessToken()["expires_at"] - time(); ?> <?php _wsl_e("second(s)", 'wordpress-social-login') ?></td>
+										<td><?php echo (int) $adapter->token("expires_at") - time(); ?> <?php _wsl_e("second(s)", 'wordpress-social-login') ?></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["expires_at"] ): ?>
+								<?php if( $adapter->token("expires_at") ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token expires at", 'wordpress-social-login') ?></label></th>
-										<td><?php echo date( DATE_W3C, $adapter->getAccessToken()["expires_at"] ); ?></td>
+										<td><?php echo date( DATE_W3C, $adapter->token("expires_at" ) ); ?></td>
 									</tr>
 								<?php endif; ?>
 							</table>
@@ -182,11 +186,11 @@ function wsl_component_authtest()
 										{
 											if( $method == 'GET' )
 											{
-												$response = $adapter->apiRequest( $path . ( $query ? '?' . $query : '' ) );
+												$response = $adapter->api->get( $path . ( $query ? '?' . $query : '' ) );
 											}
 											else
 											{
-												$response = $adapter->apiRequest( $path, $query );
+												$response = $adapter->api->get( $path, $query );
 											}
 
 											$response = $response ? $response : Hybrid_Error::getApiError();
@@ -236,7 +240,7 @@ function wsl_component_authtest()
 								</h3>
 								<div class="inside">
 <textarea rows="25" cols="70" wrap="off" style="width:100%;height:210px;margin-bottom:15px;font-family: monospace;font-size: 12px;"
->
+>include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/Hybrid/Auth.php';
 
 /*!
 	Important
@@ -246,7 +250,7 @@ function wsl_component_authtest()
 
 try
 {
-    $<?php echo strtolower( $adapter->providerId ); ?> = $adapter = wsl_process_login_get_provider_adapter( '<?php echo htmlentities( $provider_id ); ?>' );
+    $<?php echo strtolower( $adapter->providerId ); ?> = Hybrid_Auth::getAdapter( '<?php echo htmlentities( $provider_id ); ?>' );
 
 <?php if( $method == 'GET' ): ?>
     $response = $<?php echo strtolower( $adapter->providerId ); ?>->api()->get( '<?php echo htmlentities( $path . ( $query ? '?' . $query : '' ) ); ?>' );

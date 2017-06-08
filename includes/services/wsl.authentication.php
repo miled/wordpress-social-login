@@ -34,13 +34,13 @@
 *     .       wsl_process_login()
 *     .       .       wsl_process_login_begin()
 *     .       .       .       wsl_render_redirect_to_provider_loading_screen()
-*     .       .       .       Hybridauth\Hybridauth::authenticate()
+*     .       .       .       Hybrid_Auth::authenticate()
 *     .       .       .       wsl_render_return_from_provider_loading_screen()
 *     .       .
 *     .       .       wsl_process_login_end()
 *     .       .       .       wsl_process_login_get_user_data()
 *     .       .       .       .       wsl_process_login_request_user_social_profile()
-*     .       .       .       .       .       Hybridauth\Hybridauth::getUserProfile()
+*     .       .       .       .       .       Hybrid_Auth::getUserProfile()
 *     .       .       .       .
 *     .       .       .       .       wsl_process_login_complete_registration()
 *     .       .       .
@@ -84,13 +84,6 @@ function wsl_process_login()
 	{
 		return false;
 	}
-
-	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/autoload.php' ) )
-	{
-		wsl_process_login_render_notice_page( _wsl__( "Require autoload helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
-	}
-
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
 
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
@@ -153,7 +146,7 @@ add_action( 'init', 'wsl_process_login' );
 * Steps:
 *     1. Display a loading screen while hybridauth is redirecting the user to the selected provider
 *     2. Build the hybridauth config for the selected provider (keys, scope, etc)
-*     3. Instantiate the class Hybridauth\Hybridauth and redirect the user to provider to ask for authorisation for this website
+*     3. Instantiate the class Hybrid_Auth and redirect the user to provider to ask for authorisation for this website
 *     4. Display a loading screen after user come back from provider as we redirect the user back to Widget::Redirect URL
 */
 function wsl_process_login_begin()
@@ -200,7 +193,13 @@ function wsl_process_login_begin()
 
 	$config = wsl_process_login_build_provider_config( $provider );
 
-	/* 3. Instantiate the class Hybridauth and redirect the user to provider to ask for authorisation for this website */
+	/* 3. Instantiate the class Hybrid_Auth and redirect the user to provider to ask for authorisation for this website */
+
+	// load hybridauth main class
+	if( ! class_exists('Hybrid_Auth', false) )
+	{
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
+	}
 
 	// HOOKABLE:
 	do_action( "wsl_hook_process_login_before_hybridauth_authenticate", $provider, $config );
@@ -208,7 +207,7 @@ function wsl_process_login_begin()
 	try
 	{
 		// create an instance oh hybridauth with the generated config
-		$hybridauth = new Hybridauth\Hybridauth( $config );
+		$hybridauth = new Hybrid_Auth( $config );
 
 		// start the authentication process via hybridauth
 		// > if not already connected hybridauth::authenticate() will redirect the user to the provider
@@ -216,12 +215,8 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line).
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		$params = apply_filters("wsl_hook_process_login_authenticate_params", array(), $provider);
-
-		set_provider_config_in_session_storage( $provider, $config );
-		set_provider_params_in_session_storage( $provider, $params );
-
-		$adapter = $hybridauth->authenticate( $provider, $params );
+		$params = apply_filters("wsl_hook_process_login_authenticate_params",array(),$provider);
+		$adapter = $hybridauth->authenticate( $provider,$params );
 	}
 
 	// if hybridauth fails to authenticate the user, then we display an error message
@@ -343,7 +338,6 @@ function wsl_process_login_end()
 			$user_id = wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, $requested_user_login, $requested_user_email );
 
 			$is_new_user = true;
-			$redirect_to = apply_filters('wsl_redirect_after_registration', $redirect_to);
 		}else{
 			$user_id = $wordpress_user_id;
 			$is_new_user = false;
@@ -565,7 +559,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
 	{
 		// check if the verified email exist in wp_users
-		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->email );
+		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
 
 		// the user exists in Wordpress
 		$wordpress_user_id = $user_id;
@@ -573,7 +567,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
-			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->email );
+			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
 		}
 	}
 
@@ -632,30 +626,25 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		// if user profile display name is not provided
 		if( empty( $user_login ) )
 		{
-			// may be that $user_email is empty then we got wp error login can't be empty, so check it now
-			if ( $user_email ) {
-				$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
-			} else {
-				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );		
-			}
+			$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
 		}
-	}
 
-	// user name should be unique
-	if( username_exists( $user_login ) )
-	{
-		$i = 1;
-		$user_login_tmp = $user_login;
-
-		do
+		// user name should be unique
+		if( username_exists( $user_login ) )
 		{
-			$user_login_tmp = $user_login . "_" . ($i++);
+			$i = 1;
+			$user_login_tmp = $user_login;
+
+			do
+			{
+				$user_login_tmp = $user_login . "_" . ($i++);
+			}
+			while( username_exists ($user_login_tmp));
+
+			$user_login = $user_login_tmp;
 		}
-		while( username_exists ($user_login_tmp));
-
-		$user_login = $user_login_tmp;
 	}
-
+        
 	if( ! $user_email )
 	{
 		$user_email = $hybridauth_user_profile->email;
@@ -675,7 +664,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			}
 			while( wsl_wp_email_exists( $user_email ) );
 		}
-	}
+	}        
 
 	$display_name = $hybridauth_user_profile->displayName;
 
@@ -907,11 +896,8 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 */
 function wsl_process_login_build_provider_config( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
-
 	$config = array();
-	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
-	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
+	$config["base_url"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
 	$config["providers"][$provider]["enabled"] = true;
@@ -936,7 +922,7 @@ function wsl_process_login_build_provider_config( $provider )
 	}
 
 	// set custom endpoint?
-	if( in_array( strtolower( $provider ), array( 'dribbble' ) ) )
+	if( in_array( strtolower( $provider ), array( 'dribbble', 'live' ) ) )
 	{
 		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
 	}
@@ -997,10 +983,10 @@ function wsl_process_login_request_user_social_profile( $provider )
 		// get idp adapter
 		$adapter = wsl_process_login_get_provider_adapter( $provider );
 
-		$config = get_provider_config_from_session_storage( $provider );
+		$config = $adapter->config;
 
 		// if user authenticated successfully with social network
-		if( $adapter->isConnected() )
+		if( $adapter->isUserConnected() )
 		{
 			// grab user profile via hybridauth api
 			$hybridauth_user_profile = $adapter->getUserProfile();
@@ -1029,13 +1015,12 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	if( ! class_exists( 'Hybrid_Auth', false ) )
+	{
+		require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/Hybrid/Auth.php";
+	}
 
-	$config = get_provider_config_from_session_storage( $provider );
-
-	$hybridauth = new Hybridauth\Hybridauth( $config );
-
-	return $hybridauth->getAdapter( $provider );
+	return Hybrid_Auth::getAdapter( $provider );
 }
 
 // --------------------------------------------------------------------
@@ -1135,7 +1120,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	if( is_object( $adapter ) )
 	{
-		$adapter->disconnect();
+		$adapter->logout();
 	}
 
 	// provider api response
@@ -1234,15 +1219,5 @@ function wsl_process_login_check_php_session()
 		return true;
 	}
 }
-
-// --------------------------------------------------------------------
-
-/**
- * Returns redirect url for when a new account was created
- */
-function wsl_new_register_redirect_url($redirect_to) {
-	return $redirect_to;
-}
-add_filter("wsl_redirect_after_registration", "wsl_new_register_redirect_url", 10, 1);
 
 // --------------------------------------------------------------------

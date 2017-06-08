@@ -26,8 +26,6 @@ function wsl_database_install()
 {
 	global $wpdb;
 
-	$charset_collate = $wpdb->get_charset_collate();
-
 	// create wsl tables
 	$wslusersprofiles = "{$wpdb->prefix}wslusersprofiles";
 	$wsluserscontacts = "{$wpdb->prefix}wsluserscontacts";
@@ -40,31 +38,31 @@ function wsl_database_install()
 			provider varchar(50) NOT NULL,
 			object_sha varchar(45) NOT NULL,
 			identifier varchar(255) NOT NULL,
-			profileurl varchar(255) DEFAULT '',
-			websiteurl varchar(255) DEFAULT '',
-			photourl varchar(255) DEFAULT '',
-			displayname varchar(150) DEFAULT '',
-			description varchar(255) DEFAULT '',
-			firstname varchar(150) DEFAULT '',
-			lastname varchar(150) DEFAULT '',
-			gender varchar(10) DEFAULT '',
-			language varchar(20) DEFAULT '',
-			age varchar(10) DEFAULT '',
-			birthday int(11) DEFAULT '',
-			birthmonth int(11) DEFAULT '',
-			birthyear int(11) DEFAULT '',
-			email varchar(255) DEFAULT '',
-			emailverified varchar(255) DEFAULT '',
-			phone varchar(75) DEFAULT '',
-			address varchar(255) DEFAULT '',
-			country varchar(75) DEFAULT '',
-			region varchar(50) DEFAULT '',
-			city varchar(50) DEFAULT '',
-			zip varchar(25) DEFAULT '',
+			profileurl varchar(255) NOT NULL,
+			websiteurl varchar(255) NOT NULL,
+			photourl varchar(255) NOT NULL,
+			displayname varchar(150) NOT NULL,
+			description varchar(255) NOT NULL,
+			firstname varchar(150) NOT NULL,
+			lastname varchar(150) NOT NULL,
+			gender varchar(10) NOT NULL,
+			language varchar(20) NOT NULL,
+			age varchar(10) NOT NULL,
+			birthday int(11) NOT NULL,
+			birthmonth int(11) NOT NULL,
+			birthyear int(11) NOT NULL,
+			email varchar(255) NOT NULL,
+			emailverified varchar(255) NOT NULL,
+			phone varchar(75) NOT NULL,
+			address varchar(255) NOT NULL,
+			country varchar(75) NOT NULL,
+			region varchar(50) NOT NULL,
+			city varchar(50) NOT NULL,
+			zip varchar(25) NOT NULL,
 			UNIQUE KEY id (id),
 			KEY user_id (user_id),
 			KEY provider (provider)
-		) $charset_collate;";
+		)"; 
 	dbDelta( $sql );
 
 	$sql = "CREATE TABLE $wsluserscontacts (
@@ -72,13 +70,13 @@ function wsl_database_install()
 			user_id int(11) NOT NULL,
 			provider varchar(50) NOT NULL,
 			identifier varchar(255) NOT NULL,
-			full_name varchar(150) DEFAULT '',
-			email varchar(255) DEFAULT '',
-			profile_url varchar(255) DEFAULT '',
-			photo_url varchar(255) DEFAULT '',
+			full_name varchar(150) NOT NULL,
+			email varchar(255) NOT NULL,
+			profile_url varchar(255) NOT NULL,
+			photo_url varchar(255) NOT NULL,
 			UNIQUE KEY id (id),
 			KEY user_id (user_id)
-		) $charset_collate;";
+		)"; 
 	dbDelta( $sql );
 }
 

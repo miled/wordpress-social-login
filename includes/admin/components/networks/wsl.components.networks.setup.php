@@ -251,6 +251,11 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to Settings page and click on <b>Add Platform</b>. Choose website and enter in the new screen your website url in <b>App Domains</b> and <b>Site URL</b> fields", 'wordpress-social-login') ?>.
 									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("<b>Facebook</b> normally shouldn't require an Authorized redirect URI, however if it did, use both of those urls on <b>Facebook Login</b> > <b>Settings</b> > <b>Valid OAuth redirect URIs</b>:", 'wordpress-social-login') ?>.</p>
+								<ul style="margin-left:35px">
+									<li><?php echo $provider_callback_url ?></li>
+									<li><?php echo str_replace('?hauth.done=Facebook', '?hauth_done=Facebook', $provider_callback_url) ?></li>
+								</ul>
 							<?php else: ?>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p>

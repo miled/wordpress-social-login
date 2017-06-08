@@ -2,8 +2,8 @@
 Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
-Tested up to: 4.3
-Stable tag: 2.3.0
+Tested up to: 4.7.3
+Stable tag: 2.3.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -18,6 +18,8 @@ Wordpress Social Login also allow you to import users contact list from Google G
 
 Wordpress Social Login gives you absolute control over users access to your website and comes a list of rules and restrictions for you to setup.
 
+Wordpress Social Login comprehensive User's Guide and FAQ can be found at [http://miled.github.io/wordpress-social-login/](http://miled.github.io/wordpress-social-login/) 
+
 <strong>Easy to customize and integrate</strong> <br>
 Wordpress Social Login come with a simple but flexible and fully customizable authentication widget. And if you are a developer or designer then you can customize it to your heart's content.
 
@@ -30,36 +32,7 @@ Facebook, Google, Twitter, Windows Live, Yahoo!, LinkedIn, Reddit, Disqus, Tumbl
 <strong>Free, unlimited and white-label</strong> <br>
 Wordpress Social Login is open-source and completely free. The source code is publicly available on [GitHub](https://github.com/hybridauth/WordPress-Social-Login) for anyone to help and contribute. You are free to use a Wordpress Social Login in commercial projects as long as the copyright header is left intact.
 
-<strong>Special thanks to:</strong>
-
-* [Thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin.
-* [Pat Anvil](http://patanvil.com) for adding Goodreads.
-* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki.
-* [Social Login plugin](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
-* [Query Monitor plugin](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress plugins developers.
-
 Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum.
-
-== Installation ==
-
-= The hard way =
-
-1. Download, Unzip and drop the extension on /wp-content/plugins/ directory,
-1. As administrator, activate the plugin through the 'Plugins' menu in WordPress,
-1. Goto the Settings > WP Social Login to get started.
-
-= The easy way =
-
-1. As administrator, goto 'Plugins' then Click on 'Add New',
-2. Search for 'WordPress Social Login' then Click on 'Install Now',
-3. Wait for it to download, Unpack and to install,
-4. Activate the plugin by Clicking on 'Activate Plugin'
-5. Goto the Settings > WP Social Login to get started.
-
-
-== Frequently Asked Questions ==
-
-The user guide and frequently asked questions can be found at http://miled.github.io/wordpress-social-login/
 
 == Screenshots ==
 
@@ -74,6 +47,12 @@ The user guide and frequently asked questions can be found at http://miled.githu
 9. WSL components and add-ons manager.
 
 == Changelog ==
+
+= 2.3.3 = 
+
+* Update Facebook SDK to 5.4.4 which requires PHP 5.4+
+* Update translations files.
+* Fix minor issues in gateway page.
 
 = 2.3.0 = 
 
