@@ -409,7 +409,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 
 	/* 2. Run Bouncer::Filters if enabled (domains, emails, profiles urls) */
 
-    // Bouncer::Filters by emails domains name
+	// Bouncer::Filters by emails domains name
 	if( get_option( 'wsl_settings_bouncer_new_users_restrict_domain_enabled' ) == 1 )
 	{
 		if( empty( $hybridauth_user_email ) )
