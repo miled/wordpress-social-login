@@ -29,7 +29,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	remove_action( 'register_form', 'wsl_render_auth_widget_in_wp_register_form' );
 
 	$hybridauth_user_email          = sanitize_email( $hybridauth_user_profile->email );
-    $hybridauth_user_email_verified = !empty( $hybridauth_user_profile->emailVerified );
+    $hybridauth_user_email_verified = sanitize_email( $hybridauth_user_profile->emailVerified );
 	$hybridauth_user_login          = sanitize_user( $hybridauth_user_profile->displayName, true );
 	$hybridauth_user_avatar         = $hybridauth_user_profile->photoURL;
 
@@ -71,10 +71,10 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 		// when linking is enabled, email is verified by IDp
 		// then try to do account linking WITHOUT asking the user to link to WP account
 		// if verified email exists to a WP user
-		if( $linking_enabled == 1 && $hybridauth_user_email_verified )
+		if( $linking_enabled == 1 && ! empty( $hybridauth_user_email_verified ) )
 		{
 			// check if the verified email exist in wp_users
-			$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email );
+			$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email_verified );
 
 			if( $user_id )
 			{
@@ -88,7 +88,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			// Bouncer::Profile Completion enabled?
 			// > if not enabled or email is verified by IDp
 			//   we just let the user pass
-			if( ( $require_email == 2 || ( ! empty( $hybridauth_user_email ) && $hybridauth_user_email_verified ) )
+			if( ( $require_email == 2 || ( ! empty( $hybridauth_user_email_verified ) ) )
 				&& $change_username == 2 && $extra_fields == 2 )
 			{
 				$shall_pass = true;

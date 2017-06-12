@@ -405,7 +405,8 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 
 	$adapter = wsl_process_login_get_provider_adapter( $provider );
 
-	$hybridauth_user_email = sanitize_email( $hybridauth_user_profile->email );
+	$hybridauth_user_email          = sanitize_email( $hybridauth_user_profile->email );
+	$hybridauth_user_email_verified = sanitize_email( $hybridauth_user_profile->emailVerified );
 
 	/* 2. Run Bouncer::Filters if enabled (domains, emails, profiles urls) */
 
@@ -499,10 +500,10 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 	$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 
 	// if not found in wslusersprofiles, then check his verified email
-	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
+	if( ! $user_id && ! empty( $hybridauth_user_email_verified ) )
 	{
 		// check if the verified email exist in wp_users
-		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->email );
+		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email_verified );
 
 		// the user exists in Wordpress
 		$wordpress_user_id = $user_id;
@@ -510,7 +511,7 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
-			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->email );
+			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_email_verified );
 		}
 	}
 
@@ -526,8 +527,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2
 			&& ( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 || get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 2 ) )
 		{
-//			$adapter->disconnect();
-
 			return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
 		}
 
