@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
 Tested up to: 4.7.3
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -47,6 +47,10 @@ Big thanks to everyone who have contributed to WordPress Social Login by submitt
 9. WSL components and add-ons manager.
 
 == Changelog ==
+
+= 2.3.4 =
+
+* WSL now support authentications through Authentiq.com.
 
 = 2.3.3 = 
 

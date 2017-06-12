@@ -432,66 +432,87 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		}
 	}
 
+  /* 3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email */
+
+  // check if user already exist in wslusersprofiles
+  $user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
+
+  // if not found in wslusersprofiles, then check his verified email
+  if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
+  {
+    // check if the verified email exist in wp_users
+    $user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
+
+    // the user exists in Wordpress
+    $wordpress_user_id = $user_id;
+
+    // check if the verified email exist in wslusersprofiles
+    if( ! $user_id )
+    {
+      $user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
+    }
+  }
+
 	// because instagram doesn't (do any?) have an email, we need to check if the option "require email" is set and then get the email from
 	// the user BEFORE we filter by email address
 
-        /* 4 Deletegate detection of user id to custom filters hooks */
+  /* 4 Deletegate detection of user id to custom filters hooks */
 
-        $user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
+  $user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
 
+  /* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) or continue with account linking if enabled */
+  if( ! $user_id )
+  {
 
-        /* 5. If Bouncer::Profile Completion is enabled and user didn't exist, we require the user to complete the registration (user name & email) */
-        if( ! $user_id )
-        {
-                // Bouncer :: Accept new registrations?
-                if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 )
-                {
-                        return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
-                }
+          // Bouncer :: Accept new registrations?
+          if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 && ( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 || get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 2 ) )
+          {
+                  return wsl_process_login_render_notice_page( _wsl__( "Registration is now closed.", 'wordpress-social-login' ) );
+          }
 
-                // Bouncer::Accounts linking/mapping
-                // > > not implemented yet! Planned for WSL 2.3
-                if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
-                {
-                        do
-                        {
-                                list
-                                (
-                                        $shall_pass,
-                                        $user_id,
-                                        $requested_user_login,
-                                        $requested_user_email
-                                )
-                                = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
-                        }
-                        while( ! $shall_pass );
-	                $wordpress_user_id = $user_id;
-                }
+          // Bouncer::Accounts linking/mapping
+          // > > not implemented yet! Planned for WSL 2.3
+          if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 )
+          {
+                  do
+                  {
+                          list
+                          (
+                                  $shall_pass,
+                                  $user_id,
+                                  $requested_user_login,
+                                  $requested_user_email
+                          )
+                          = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
+                  }
+                  while( ! $shall_pass );
+            $wordpress_user_id = $user_id;
+          }
 
-                // Bouncer::Profile Completion
-                // > > in WSL 2.3 Profile Completion will be reworked and merged with Accounts linking
-                elseif(
-                                ( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) )
-                        ||
-                                get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
-                )
-                {
-                        do
-                        {
-                                list
-                                (
-                                        $shall_pass,
-                                        $user_id,
-                                        $requested_user_login,
-                                        $requested_user_email
-                                )
-                                = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
-                        }
-                        while( ! $shall_pass );
-                }
-        }else{
-	        $wordpress_user_id = $user_id;
-        }
+          // Bouncer::Profile Completion
+          // > > in WSL 2.3 Profile Completion will be reworked and merged with Accounts linking
+          elseif(
+                          ( get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) == 1 && empty( $hybridauth_user_email ) )
+                  ||
+                          get_option( 'wsl_settings_bouncer_profile_completion_change_username' ) == 1
+          )
+          {
+                  do
+                  {
+                          list
+                          (
+                                  $shall_pass,
+                                  $user_id,
+                                  $requested_user_login,
+                                  $requested_user_email
+                          )
+                          = wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridauth_user_profile );
+                  }
+                  while( ! $shall_pass );
+          }
+  }else{
+    $wordpress_user_id = $user_id;
+  }
 	$hybridauth_user_email = $requested_user_email;
 
 
@@ -549,29 +570,6 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 			return wsl_process_login_render_notice_page( _wsl__( get_option( 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce' ), 'wordpress-social-login') );
 		}
 	}
-
-	/* 3. Check if user exist in database by looking for the couple (Provider name, Provider user ID) or verified email */
-
-	// check if user already exist in wslusersprofiles
-	$user_id = (int) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provider, $hybridauth_user_profile->identifier );
-
-	// if not found in wslusersprofiles, then check his verified email
-	if( ! $user_id && ! empty( $hybridauth_user_profile->emailVerified ) )
-	{
-		// check if the verified email exist in wp_users
-		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_profile->emailVerified );
-
-		// the user exists in Wordpress
-		$wordpress_user_id = $user_id;
-
-		// check if the verified email exist in wslusersprofiles
-		if( ! $user_id )
-		{
-			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_profile->emailVerified );
-		}
-	}
-
-	/* 4 Deletegate detection of user id to custom filters hooks */
 
 	/* 6. returns user data */
 
