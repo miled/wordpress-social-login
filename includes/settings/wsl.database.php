@@ -115,6 +115,7 @@ function wsl_database_uninstall()
 	delete_option('wsl_components_contacts_enabled' );
 	delete_option('wsl_components_buddypress_enabled' );
 
+	delete_option('wsl_settings_disable_password_login' );
 	delete_option('wsl_settings_redirect_url' );
 	delete_option('wsl_settings_force_redirect_url' );
 	delete_option('wsl_settings_connect_with_label' );

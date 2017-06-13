@@ -268,6 +268,7 @@ function wsl_register_setting()
 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_registration_enabled'                     ); 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_authentication_enabled'                   ); 
+  register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_disable_password_login'                           );
 
 	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_accounts_linking_enabled'                 );
 

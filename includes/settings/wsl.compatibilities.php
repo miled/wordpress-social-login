@@ -33,6 +33,11 @@ function wsl_update_compatibilities()
 
 	update_option( 'wsl_settings_welcome_panel_enabled', 1 );
 
+  if( ! get_option( 'wsl_settings_disable_password_login' ) )
+  {
+    update_option( 'wsl_settings_disable_password_login', 2 );
+  }
+
 	if( ! get_option( 'wsl_settings_redirect_url' ) )
 	{
 		update_option( 'wsl_settings_redirect_url', home_url() );

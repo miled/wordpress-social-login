@@ -510,6 +510,15 @@ function wsl_add_stylesheets()
 	}
 
 	wp_enqueue_style( "wsl-widget" );
+
+	if( get_option( 'wsl_settings_disable_password_login' ) == 1 )
+	{
+	?>
+		<style type="text/css">
+			#loginform > p { display: none !important; }
+		</style>
+	<?php
+	}
 }
 
 add_action( 'wp_enqueue_scripts'   , 'wsl_add_stylesheets' );
@@ -543,5 +552,38 @@ function wsl_add_javascripts()
 
 add_action( 'wp_enqueue_scripts'   , 'wsl_add_javascripts' );
 add_action( 'login_enqueue_scripts', 'wsl_add_javascripts' );
+
+// --------------------------------------------------------------------
+
+/**
+* Disallow authentication using the username/email and password form
+*/
+
+if( get_option( 'wsl_settings_disable_password_login' ) == 1 )
+{
+	// allow account linking
+	if( ! ( isset( $_REQUEST["bouncer_account_linking"] ) && get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 ) )
+	{
+		function wsl_disable_password_authentication()
+		{
+			return new WP_Error( 'incorrect_password',
+        _wsl__( '<strong>ERROR</strong>: Signing in with username and password is not allowed. Please use a Social method to login.', 'wordpress-social-login' )
+      );
+		}
+		add_filter( 'wp_authenticate_user', 'wsl_disable_password_authentication' );
+	}
+
+	function wsl_disable_lost_password()
+	{
+		return false;
+	}
+	add_filter( 'allow_password_reset', 'disable_lost_password' );
+
+	function wsl_remove_lost_password($text)
+	{
+		return str_replace( array('Lost your password?', 'Lost your password'), '', trim($text, '?') );
+	}
+	add_filter( 'gettext', 'wsl_remove_lost_password' );
+}
 
 // --------------------------------------------------------------------

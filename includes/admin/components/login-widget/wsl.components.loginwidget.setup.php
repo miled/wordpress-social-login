@@ -151,6 +151,20 @@ function wsl_component_loginwidget_setup_advanced_settings()
 			<?php _wsl_e("<b>Notification :</b> Determines whether you want to receive a notification by mail when a new user is logged in via WSL", 'wordpress-social-login') ?>. 
 		</p>
 
+		<p> 
+			<?php _wsl_e("<b>Disable password login :</b> Deactivates access with username and password, and only show alternative sign in methods", 'wordpress-social-login') ?>.
+
+			<?php
+			if ( get_option( 'wsl_settings_disable_password_login' ) == 1 ) {
+			?>
+				<div style="background-color: #EDEFF4;border:1px solid #6B84B4; border-radius: 3px;padding: 10px;margin-top:15px;margin-left:10px;">
+					<?php _wsl_e("In case you get locked out, the easiest way to get access back is to rename the plugin folder in", 'wordpress-social-login') ?>
+
+					<code>wp-content/plugins/wordpress-social-login</code>.
+				</div>
+			<?php } ?>
+		</p>
+
 		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
 		  <tr>
 			<td width="180" align="right"><strong><?php _wsl_e("Redirect URL", 'wordpress-social-login') ?> :</strong></td>
@@ -227,7 +241,16 @@ function wsl_component_loginwidget_setup_advanced_settings()
 					?>
 				</select> 
 			</td>
-		  </tr> 
+			</tr>
+			<tr>
+			<td width="180" align="right"><strong><?php _wsl_e("Disable password login", 'wordpress-social-login') ?> :</strong></td>
+			<td>
+				<select name="wsl_settings_disable_password_login" style="width:100px">
+					<option <?php if( get_option( 'wsl_settings_disable_password_login' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+					<option <?php if( get_option( 'wsl_settings_disable_password_login' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+				</select>
+			</td>
+			</tr>
 		</table>
 	</div>
 </div>
