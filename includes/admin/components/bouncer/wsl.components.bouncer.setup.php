@@ -63,25 +63,25 @@ function wsl_component_bouncer_setup_wsl_widget()
 		<p> 
 			<?php _wsl_e("Here you can tell Bouncer if you are accepting new users registration and authentication into your website or not any more. Note that Bouncer only works for WSL and will not interfere with users authenticating through the regulars wordpress Login and Register pages with their usernames and passwords (to to achieve that kind of restrictions, you may need to use another plugin(s) in combination with WSL).", 'wordpress-social-login') ?>
 		</p> 
-		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
-		  <tr>
-			<td width="200" align="right"><strong><?php _wsl_e("Accept new registration", 'wordpress-social-login') ?> :</strong></td>
-			<td> 
-				<select name="wsl_settings_bouncer_registration_enabled">
-					<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
-					<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
-				</select>
-			</td>
-		  </tr> 
-		  <tr>
+		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">
+			<tr>
+				<td width="200" align="right"><strong><?php _wsl_e("Accept new registration", 'wordpress-social-login') ?> :</strong></td>
+				<td>
+					<select name="wsl_settings_bouncer_registration_enabled">
+						<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_bouncer_registration_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
 			<td width="200" align="right"><strong><?php _wsl_e("Allow authentication", 'wordpress-social-login') ?> :</strong></td>
-			<td> 
-				<select name="wsl_settings_bouncer_authentication_enabled">
-					<option <?php if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
-					<option <?php if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
-				</select>
-			</td>
-		  </tr> 
+				<td>
+					<select name="wsl_settings_bouncer_authentication_enabled">
+						<option <?php if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_bouncer_authentication_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+					</select>
+				</td>
+			</tr>
 		</table>
 	</div>
 </div>
@@ -102,15 +102,24 @@ function wsl_component_bouncer_setup_accounts_linking()
 			<?php _wsl_e("When enabled, Bouncer will popup a new screen for unrecognised user where they will be given the choice to either associate any existing account in your website with the provider ID they have connected with or to create a new user account", 'wordpress-social-login') ?>.
 		</p>
 		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
-		  <tr>
-			<td width="200" align="right"><strong><?php _wsl_e("Link user account", 'wordpress-social-login') ?> :</strong></td>
-			<td> 
-				<select name="wsl_settings_bouncer_accounts_linking_enabled">
-					<option <?php if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option> 
-					<option <?php if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
-				</select>
-			</td>
-		  </tr>
+			<tr>
+				<td width="200" align="right"><strong><?php _wsl_e("Link user account", 'wordpress-social-login') ?> :</strong></td>
+				<td>
+					<select name="wsl_settings_bouncer_accounts_linking_enabled">
+						<option <?php if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+					</select>
+				</td>
+			</tr>
+			<tr>
+				<td width="200" align="right"><strong><?php _wsl_e("Limit to one social account per social network", 'wordpress-social-login') ?> :</strong></td>
+				<td>
+					<select name="wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user">
+						<option <?php if( get_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+						<option <?php if( get_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+					</select>
+				</td>
+			</tr>
 		</table>  
 	</div>
 </div>
