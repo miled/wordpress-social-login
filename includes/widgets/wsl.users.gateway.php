@@ -65,7 +65,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
 	$extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
 
- // Better UX when possible without UI prompts to user
+	// Better UX when possible without UI prompts to user
 	if( ! isset( $_REQUEST["bouncer_profile_completion"] ) && ! isset( $_REQUEST["bouncer_profile_completion"] ) )
 	{
 		// when linking is enabled, email is verified by IDp
