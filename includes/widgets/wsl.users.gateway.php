@@ -82,8 +82,8 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			}
 		}
 
-		//  if account_linking wasn't possible, it means that no user found and a new user has to be created
-		if( ! $shall_pass )
+		//  if account_linking is disabled, try to create a new user
+		if( ! $shall_pass && $linking_enabled == 2 )
 		{
 			// Bouncer::Profile Completion enabled?
 			// > if not enabled or email is verified by IDp
@@ -535,7 +535,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 						<?php if( $registration_enabled == 1 ): ?>
 						<td valign="top"  width="50%" style="text-align:center;">
-							<?php if( $require_email != 1 && $change_username != 1 && $extra_fields != 1 ): ?>
+							<?php if( ( $require_email != 1 || ! empty( $hybridauth_user_email_verified ) ) && $change_username != 1 && $extra_fields != 1 ): ?>
 								<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="document.getElementById('info-form').submit();" >
 							<?php else : ?>
 								<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
