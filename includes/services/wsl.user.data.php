@@ -89,6 +89,17 @@ function wsl_get_stored_hybridauth_user_profiles_count()
 
 // --------------------------------------------------------------------
 
+function wsl_get_stored_hybridauth_user_profiles_count_by_provider( $provider )
+{
+	global $wpdb;
+
+	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles` WHERE provider = %s";
+
+	return $wpdb->get_var( $wpdb->prepare( $sql, $provider ) );
+}
+
+// --------------------------------------------------------------------
+
 function wsl_get_stored_hybridauth_user_profiles_count_by_field( $field )
 {
 	global $wpdb;

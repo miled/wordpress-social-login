@@ -350,6 +350,15 @@ function wsl_process_login_end()
 		}
 	}
 
+	// If user exists and is not a new user and linking multiple profiles of same provider is permitted, show warning
+	if ($user_id && ! $is_new_user && get_option('wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user') == 1 ) {
+		$has_existing_profiles_for_provider = (int) wsl_get_stored_hybridauth_user_profiles_count_by_provider( $provider );
+
+		if ( $has_existing_profiles_for_provider > 0 ) {
+			return wsl_process_login_render_notice_page(sprintf( _wsl__("Only one <b>%s ID</b> account allowed per WordPress user.", 'wordpress-social-login'), $provider ) );
+		}
+	}
+
 	// if user is found in wslusersprofiles but the associated WP user account no longer exist
 	// > this should never happen! but just in case: we delete the user wslusersprofiles/wsluserscontacts entries and we reset the process
 	$wp_user = get_userdata( $user_id );

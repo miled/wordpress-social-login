@@ -84,6 +84,11 @@ function wsl_update_compatibilities()
 		update_option( 'wsl_settings_bouncer_accounts_linking_enabled', 1 );
 	}
 
+	if( ! get_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user' ) )
+	{
+		update_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user', 1 );
+	}
+
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_require_email' ) )
 	{
 		update_option( 'wsl_settings_bouncer_profile_completion_require_email', 2 );
