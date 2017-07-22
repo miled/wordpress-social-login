@@ -14,29 +14,22 @@ class EventBrite extends OAuth2
 	protected $accessTokenUrl 	= 'https://www.eventbrite.com/oauth/token';
 	protected $apiDocumentation = 'https://www.eventbrite.fr/developer/v3/api_overview';
 	protected $accessTokenName 	= 'token';
-	
-	protected function initialize()
-	{
-		parent::initialize();
-		
-		/*
-		if($accessToken = $this->getStoredData('access_token')) 
-		{
-            $this->apiRequestParameters['appsecret_proof'] = hash_hmac('sha256', $accessToken, $this->clientSecret);
-        }
-		*/
-	}
+
 	public function getUserProfile()
 	{
 		$res = $this->apiRequest('users/me/');
+
 		$data = new Data\Collection($res);
+
 		if ( !$data->exists('id')) 
 		{
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
-		//print_r($data);die();
+
 		$emails = $data->get('emails');
+		
 		$email = $emails[0];
+
 		$userProfile = new User\Profile();
 
         $userProfile->identifier  = $data->get('id');
@@ -51,7 +44,7 @@ class EventBrite extends OAuth2
         $userProfile->email       = $email->email;
 
         $userProfile->region = $data->filter('hometown')->get('name');
-		//##image profile
+
 		if( $image_id = $data->get('image_id') )
 		{
 			try
@@ -60,13 +53,10 @@ class EventBrite extends OAuth2
 				$idata 	= new Data\Collection($res);
 				$userProfile->photoURL = $idata->get('url');
 			}
-			catch(Exception $e)
-			{
-			}
+			catch(Exception $e){}
 		}
-		$userProfile->emailVerified = (bool)$email->verified ? $userProfile->email : '';
-        //$userProfile = $this->fetchUserRegion($userProfile, $userProfile);
-        //$userProfile = $this->fetchBirthday($userProfile, $data->get('birthday'));
+
+		$userProfile->emailVerified = (bool) $email->verified ? $userProfile->email : '';
 
         return $userProfile;
 	}
