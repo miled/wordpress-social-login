@@ -125,28 +125,32 @@ function wsl_component_authtest()
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["access_token"] ): ?>
+								<?php 
+									$accessToken = $adapter->getAccessToken();
+								?>
+								
+								<?php if( isset($accessToken["access_token"]) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token", 'wordpress-social-login') ?></label></th>
 										<td><div style="max-width:650px"><?php echo $adapter->getAccessToken()["access_token"]; ?></div></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["access_token_secret"] ): ?>
+								<?php if( isset($accessToken["access_token_secret"]) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token secret", 'wordpress-social-login') ?></label></th>
 										<td><?php echo $adapter->getAccessToken()["access_token_secret"]; ?></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["expires_in"] ): ?>
+								<?php if( isset($accessToken["expires_in"]) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token expires in", 'wordpress-social-login') ?></label></th>
 										<td><?php echo (int) $adapter->getAccessToken()["expires_at"] - time(); ?> <?php _wsl_e("second(s)", 'wordpress-social-login') ?></td>
 									</tr>
 								<?php endif; ?>
 
-								<?php if( $adapter->getAccessToken()["expires_at"] ): ?>
+								<?php if( isset($accessToken["expires_at"]) ): ?>
 									<tr>
 										<th width="200"><label><?php _wsl_e("Access token expires at", 'wordpress-social-login') ?></label></th>
 										<td><?php echo date( DATE_W3C, $adapter->getAccessToken()["expires_at"] ); ?></td>
