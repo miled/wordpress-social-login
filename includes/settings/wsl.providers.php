@@ -127,13 +127,13 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "microblogging",
 	),
-	ARRAY( 
-		"provider_id"       => "LastFM",
-		"provider_name"     => "Last.FM", 
-		"new_app_link"      => "http://www.lastfm.com/api/account", 
+	// ARRAY( 
+		// "provider_id"       => "LastFM",
+		// "provider_name"     => "Last.FM", 
+		// "new_app_link"      => "http://www.lastfm.com/api/account", 
 
-		"cat"               => "media",
-	),
+		// "cat"               => "media",
+	// ),
 	ARRAY( 
 		"provider_id"       => "Tumblr",
 		"provider_name"     => "Tumblr", 
@@ -141,14 +141,14 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "microblogging", // o well 
 	),
-	ARRAY( 
-		"provider_id"       => "Goodreads",
-		"provider_name"     => "Goodreads", 
-		"callback"          => true,
-		"new_app_link"      => "http://www.goodreads.com/api", 
+	// ARRAY( 
+		// "provider_id"       => "Goodreads",
+		// "provider_name"     => "Goodreads", 
+		// "callback"          => true,
+		// "new_app_link"      => "http://www.goodreads.com/api", 
 
-		"cat"               => "media",
-	),  
+		// "cat"               => "media",
+	// ),  
 	ARRAY( 
 		"provider_id"       => "Stackoverflow",
 		"provider_name"     => "Stackoverflow", 
@@ -175,28 +175,28 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "designers",
 	),
-	ARRAY( 
-		"provider_id"       => "500px",
-		"provider_name"     => "px500", 
-		"new_app_link"      => "http://developers.500px.com/", 
+	// ARRAY( 
+		// "provider_id"       => "500px",
+		// "provider_name"     => "px500", 
+		// "new_app_link"      => "http://developers.500px.com/", 
 
-		"cat"               => "media",
-	), 
-	ARRAY( 
-		"provider_id"       => "Skyrock",
-		"provider_name"     => "Skyrock", 
-		"callback"          => true,
-		"new_app_link"      => "https://www.skyrock.com/developer/application", 
+		// "cat"               => "media",
+	// ), 
+	// ARRAY( 
+		// "provider_id"       => "Skyrock",
+		// "provider_name"     => "Skyrock", 
+		// "callback"          => true,
+		// "new_app_link"      => "https://www.skyrock.com/developer/application", 
 
-		"cat"               => "socialnetworks",
-	),
-	ARRAY( 
-		"provider_id"       => "Mixi",
-		"provider_name"     => "Mixi", 
-		"new_app_link"      => null, 
+		// "cat"               => "socialnetworks",
+	// ),
+	// ARRAY( 
+		// "provider_id"       => "Mixi",
+		// "provider_name"     => "Mixi", 
+		// "new_app_link"      => null, 
 
-		"cat"               => "socialnetworks",
-	), 
+		// "cat"               => "socialnetworks",
+	// ), 
 	ARRAY( 
 		"provider_id"       => "Steam",
 		"provider_name"     => "Steam",
@@ -223,24 +223,24 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "socialnetworks",
 	),
-	ARRAY( 
-		"provider_id"       => "Mailru",
-		"provider_name"     => "Mailru", 
-		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "http://api.mail.ru/", 
+	// ARRAY( 
+		// "provider_id"       => "Mailru",
+		// "provider_name"     => "Mailru", 
+		// "require_client_id" => true,
+		// "callback"          => true,
+		// "new_app_link"      => "http://api.mail.ru/", 
 
-		"cat"               => "misc",
-	),
-	ARRAY( 
-		"provider_id"       => "Yandex",
-		"provider_name"     => "Yandex", 
-		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "https://oauth.yandex.ru", 
+		// "cat"               => "misc",
+	// ),
+	// ARRAY( 
+		// "provider_id"       => "Yandex",
+		// "provider_name"     => "Yandex", 
+		// "require_client_id" => true,
+		// "callback"          => true,
+		// "new_app_link"      => "https://oauth.yandex.ru", 
 
-		"cat"               => "misc",
-	),
+		// "cat"               => "misc",
+	// ),
 	ARRAY( 
 		"provider_id"       => "Odnoklassniki",
 		"provider_name"     => "Odnoklassniki", 
@@ -265,15 +265,15 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 
 		"cat"               => "pleasedie",
 	),
-	ARRAY( 
-		"provider_id"       => "PixelPin",
-		"provider_name"     => "PixelPin",
-		"require_client_id" => true,
-		"callback"          => true,
-		"new_app_link"      => "https://login.pixelpin.co.uk/", 
+	// ARRAY( 
+		// "provider_id"       => "PixelPin",
+		// "provider_name"     => "PixelPin",
+		// "require_client_id" => true,
+		// "callback"          => true,
+		// "new_app_link"      => "https://login.pixelpin.co.uk/", 
 
-		"cat"               => "misc",
-	),
+		// "cat"               => "misc",
+	// ),
 	ARRAY(
 		"provider_id"       => "Authentiq",
 		"provider_name"     => "Authentiq",
@@ -281,6 +281,16 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"callback"          => true,
 		"new_app_link"      => "https://dashboard.authentiq.com/",
 		"default_api_scope" => "openid aq:name email~rs aq:push",
+
+		"cat"               => "misc",
+	),
+	ARRAY(
+		"provider_id"       => "EventBrite",
+		"provider_name"     => "EventBrite",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "http://www.eventbrite.com/myaccount/apps/",
+		"default_api_scope" => "",
 
 		"cat"               => "misc",
 	),
