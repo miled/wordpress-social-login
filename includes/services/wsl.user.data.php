@@ -89,6 +89,17 @@ function wsl_get_stored_hybridauth_user_profiles_count()
 
 // --------------------------------------------------------------------
 
+function wsl_get_stored_hybridauth_user_profiles_count_by_provider( $provider )
+{
+	global $wpdb;
+
+	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles` WHERE provider = %s";
+
+	return $wpdb->get_var( $wpdb->prepare( $sql, $provider ) );
+}
+
+// --------------------------------------------------------------------
+
 function wsl_get_stored_hybridauth_user_profiles_count_by_field( $field )
 {
 	global $wpdb;
@@ -144,13 +155,13 @@ function wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $provid
 
 // --------------------------------------------------------------------
 
-function wsl_get_stored_hybridauth_user_id_by_email_verified( $email )
+function wsl_get_stored_hybridauth_user_id_by_email_verified( $email_verified )
 {
 	global $wpdb;
 
-	$sql = "SELECT user_id FROM `{$wpdb->prefix}wslusersprofiles` WHERE email = %s AND emailverified = 1";
+	$sql = "SELECT user_id FROM `{$wpdb->prefix}wslusersprofiles` WHERE emailverified = %s";
 
-	return $wpdb->get_var( $wpdb->prepare( $sql, $email ) );
+	return $wpdb->get_var( $wpdb->prepare( $sql, $email_verified ) );
 }
 
 // --------------------------------------------------------------------

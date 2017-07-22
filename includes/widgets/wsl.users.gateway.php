@@ -28,13 +28,14 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	// remove wsl widget
 	remove_action( 'register_form', 'wsl_render_auth_widget_in_wp_register_form' );
 
-	$hybridauth_user_email       = sanitize_email( $hybridauth_user_profile->email );
-	$hybridauth_user_login       = sanitize_user( $hybridauth_user_profile->displayName, true );
-	$hybridauth_user_avatar      = $hybridauth_user_profile->photoURL;
+	$hybridauth_user_email          = sanitize_email( $hybridauth_user_profile->email );
+    $hybridauth_user_email_verified = sanitize_email( $hybridauth_user_profile->emailVerified );
+	$hybridauth_user_login          = sanitize_user( $hybridauth_user_profile->displayName, true );
+	$hybridauth_user_avatar         = $hybridauth_user_profile->photoURL;
 
 	if ( empty( $hybridauth_user_avatar ) )
 	{
-		$hybridauth_user_avatar = 'https://secure.gravatar.com/avatar/' . md5( $hybridauth_user_email ) . '?size=145';
+		$hybridauth_user_avatar  = 'https://secure.gravatar.com/avatar/' . md5( $hybridauth_user_email ) . '?size=145';
 	}
 
 	$hybridauth_user_website     = $hybridauth_user_profile->webSiteURL;
@@ -58,10 +59,43 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 	$bouncer_profile_completion = false;
 	$profile_completion_errors  = array();
 
-	$linking_enabled = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
-	$require_email   = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
-	$change_username = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
-	$extra_fields    = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
+	$registration_enabled = get_option( 'wsl_settings_bouncer_registration_enabled' );
+	$linking_enabled      = get_option( 'wsl_settings_bouncer_accounts_linking_enabled' );
+	$require_email        = get_option( 'wsl_settings_bouncer_profile_completion_require_email' );
+	$change_username      = get_option( 'wsl_settings_bouncer_profile_completion_change_username' );
+	$extra_fields         = get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' );
+
+	// Better UX when possible without UI prompts to user
+	if( ! isset( $_REQUEST["bouncer_profile_completion"] ) && ! isset( $_REQUEST["bouncer_profile_completion"] ) )
+	{
+		// when linking is enabled, email is verified by IDp
+		// then try to do account linking WITHOUT asking the user to link to WP account
+		// if verified email exists to a WP user
+		if( $linking_enabled == 1 && ! empty( $hybridauth_user_email_verified ) )
+		{
+			// check if the verified email exist in wp_users
+			$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email_verified );
+
+			if( $user_id )
+			{
+				$shall_pass = true;
+			}
+		}
+
+		//  if account_linking is disabled, try to create a new user
+		if( ! $shall_pass && $linking_enabled == 2 )
+		{
+			// Bouncer::Profile Completion enabled?
+			// > if not enabled or email is verified by IDp
+			//   we just let the user pass
+			if( ( $require_email == 2 || ( ! empty( $hybridauth_user_email_verified ) ) )
+				&& $change_username == 2 && $extra_fields == 2 )
+			{
+				$shall_pass = true;
+			}
+
+		}
+	}
 
 	if( isset( $_REQUEST["bouncer_account_linking"] ) )
 	{
@@ -83,13 +117,13 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 		{
 			// we give no useful hint.
 			$account_linking_errors[] = 
-                                sprintf( 
-                                        _wsl__( 
-                                                '<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?', 
-                                                'wordpress-social-login' 
-                                        ), 
-                                        wp_lostpassword_url( home_url() ) 
-                                );
+								sprintf(
+										_wsl__(
+												'<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?',
+												'wordpress-social-login'
+										),
+										wp_lostpassword_url( home_url() )
+								);
 		}
 
 		elseif( is_a( $user, 'WP_User') )
@@ -484,10 +518,12 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 							</td>
 						<?php endif; ?>
 
+						<?php if( $registration_enabled == 1 ): ?>
 						<td valign="top"  width="50%" style="text-align:center;">
 							<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
 							<p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
 						</td>
+						<?php endif; ?>
 					</tr>
 
 					<tr>
@@ -497,13 +533,15 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 							</td>
 						<?php endif; ?>
 
+						<?php if( $registration_enabled == 1 ): ?>
 						<td valign="top"  width="50%" style="text-align:center;">
-							<?php if( $require_email != 1 && $change_username != 1 && $extra_fields != 1 ): ?>
-                                <input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="document.getElementById('info-form').submit();" >
+							<?php if( ( $require_email != 1 || ! empty( $hybridauth_user_email_verified ) ) && $change_username != 1 && $extra_fields != 1 ): ?>
+								<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="document.getElementById('info-form').submit();" >
 							<?php else : ?>
-                                <input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
-                            <?php endif; ?>
+								<input type="button" value="<?php _wsl_e( "Create a new account", 'wordpress-social-login' ); ?>" class="button-primary" onclick="display_mapping_complete_info();" >
+							<?php endif; ?>
 						</td>
+						<?php endif; ?>
 					</tr>
 				</table>
 
@@ -533,100 +571,106 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					}
 				?>
 
-				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="link-form">
-					<table id="mapping-authenticate" border="0">
-						<tr>
-							<td valign="top"  width="50%" style="text-align:center;">
-								<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
+				<?php if( $linking_enabled == 1 ): ?>
 
-								<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
-							</td>
-						</tr>
-						<tr>
-							<td valign="bottom"  width="50%" style="text-align:left;">
-								<label>
-									<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
-									<br />
-									<input type="text" name="user_login" class="input" value=""  size="25" placeholder="" />
-								</label>
+					<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="link-form">
+						<table id="mapping-authenticate" border="0">
+							<tr>
+								<td valign="top"  width="50%" style="text-align:center;">
+									<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
 
-								<label>
-									<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
-									<br />
-									<input type="password" name="user_password" class="input" value="" size="25" placeholder="" />
-								</label>
+									<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="bottom"  width="50%" style="text-align:left;">
+									<label>
+										<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
+										<br />
+										<input type="text" name="user_login" class="input" value=""  size="25" placeholder="" />
+									</label>
 
-								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
+									<label>
+										<?php _wsl_e( "Password", 'wordpress-social-login' ); ?>
+										<br />
+										<input type="password" name="user_password" class="input" value="" size="25" placeholder="" />
+									</label>
 
-								<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
-							</td>
-						</tr>
-					</table>
+									<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
 
-					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
-					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
-					<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
-					<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
-				</form>
-
-				<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="info-form">
-					<table id="mapping-complete-info" border="0">
-						<tr>
-							<td valign="top"  width="50%" style="text-align:center;">
-								<?php if( $linking_enabled == 1 ): ?>
-									<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
-								<?php endif; ?>
-
-								<p><?php printf( _wsl__( "Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login' ), $provider_name ); ?>.</p>
-							</td>
-						</tr>
-						<tr>
-							<td valign="bottom"  width="50%" style="text-align:left;">
-                                <?php if( $change_username == 1 ): ?>
-                                    <label>
-                                        <?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
-                                        <br />
-                                        <input type="text" name="user_login" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
-                                    </label>
-                                <?php endif; ?>
-
-                                <?php if( $require_email == 1 ): ?>
-                                    <label>
-                                        <?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
-                                        <br />
-                                        <input type="text" name="user_email" class="input" value="<?php echo $requested_user_email; ?>" size="25" placeholder="" />
-                                    </label>
-                                <?php endif; ?>
-
-								<?php
-									/**
-									* Fires following the 'E-mail' field in the user registration form.
-									*
-									* hopefully, this won't become a pain in future
-									*
-									* Ref: http://codex.wordpress.org/Plugin_API/Action_Reference/register_form
-									*/
-									if( $extra_fields == 1 )
-									{
-										do_action( 'register_form' );
-									}
-								?>
-
-								<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
-
-								<?php if( $linking_enabled == 1 ): ?>
 									<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
-								<?php endif; ?>
-							</td>
-						</tr>
-					</table>
+								</td>
+							</tr>
+						</table>
 
-					<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
-					<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
-					<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
-					<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
-				</form>
-			</div>
+						<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
+						<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
+						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
+						<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
+					</form>
+				<?php endif; ?>
+
+				<?php if( $registration_enabled == 1 ): ?>
+
+					<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="info-form">
+						<table id="mapping-complete-info" border="0">
+							<tr>
+								<td valign="top"  width="50%" style="text-align:center;">
+									<?php if( $linking_enabled == 1 ): ?>
+										<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
+									<?php endif; ?>
+
+									<p><?php printf( _wsl__( "Please fill in your information in the form below. Once completed, you will be able to automatically sign into our website through your %s ID", 'wordpress-social-login' ), $provider_name ); ?>.</p>
+								</td>
+							</tr>
+							<tr>
+								<td valign="bottom"  width="50%" style="text-align:left;">
+									<?php if( $change_username == 1 ): ?>
+										<label>
+											<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
+											<br />
+											<input type="text" name="user_login" class="input" value="<?php echo $requested_user_login; ?>" size="25" placeholder="" />
+										</label>
+									<?php endif; ?>
+
+									<?php if( $require_email == 1 && empty( $requested_user_email ) ): ?>
+										<label>
+											<?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
+											<br />
+											<input type="text" name="user_email" class="input" value="<?php echo $requested_user_email; ?>" size="25" placeholder="" />
+										</label>
+									<?php endif; ?>
+
+									<?php
+										/**
+										* Fires following the 'E-mail' field in the user registration form.
+										*
+										* hopefully, this won't become a pain in future
+										*
+										* Ref: http://codex.wordpress.org/Plugin_API/Action_Reference/register_form
+										*/
+										if( $extra_fields == 1 )
+										{
+											do_action( 'register_form' );
+										}
+									?>
+
+									<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
+
+									<?php if( $linking_enabled == 1 ): ?>
+										<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
+									<?php endif; ?>
+								</td>
+							</tr>
+						</table>
+
+						<input type="hidden" id="redirect_to" name="redirect_to" value="<?php echo $redirect_to ?>">
+						<input type="hidden" id="provider" name="provider" value="<?php echo $provider ?>">
+						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
+						<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
+					</form>
+				<?php endif; ?>
+            </div>
 
 			<p class="back-to-home">
 				<a href="<?php echo home_url(); ?>">&#8592; <?php printf( _wsl__( "Back to %s", 'wordpress-social-login' ), get_bloginfo('name') ); ?></a>
