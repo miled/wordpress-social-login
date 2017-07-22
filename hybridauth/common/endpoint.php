@@ -14,12 +14,15 @@ require_once "autoload.php";
 require_once "session.php";
 
 try {
-    $config = get_provider_config_from_session_storage($provider);
-    $params = get_provider_params_from_session_storage($provider);
+    if( isset( $_REQUEST['hauth_done'] ) ){
+		$provider = $_REQUEST['hauth_done'];
+	}
 
-    $hybridauth = new Hybridauth\Hybridauth($config, $params);
+	$config = get_provider_config_from_session_storage($provider);
 
-    $adapter = $hybridauth->authenticate( $provider );
+    $hybridauth = new Hybridauth\Hybridauth($config);
+
+    $adapter = $hybridauth->authenticate($provider);
 
     $url = $config['current_page'];
 

@@ -19,17 +19,3 @@ function get_provider_config_from_session_storage($provider){
 
 	return $_SESSION['wsl:' . $provider . ':config'];
 }
-
-//
-
-function set_provider_params_in_session_storage($provider, $params){
-	$provider = strtolower($provider);
-
-	$_SESSION['wsl:' . $provider . ':params'] = $config;
-}
-
-function get_provider_params_from_session_storage($provider){
-	$provider = strtolower($provider);
-
-	return $_SESSION['wsl:' . $provider . ':params'];
-}

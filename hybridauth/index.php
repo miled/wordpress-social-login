@@ -6,6 +6,4 @@
 *    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
-if( isset( $_REQUEST['hauth_done'] ) ) $provider = $_REQUEST['hauth_done'];
-
 require_once "common/endpoint.php";
