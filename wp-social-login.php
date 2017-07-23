@@ -90,7 +90,7 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH' )
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_ABS_PATH', plugin_dir_path( __FILE__ ) );
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' )
-	|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', plugin_dir_url( __FILE__ ) );
+	|| define( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL', site_url() . plugin_dir_url( __FILE__ ) );
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'hybridauth/' );
