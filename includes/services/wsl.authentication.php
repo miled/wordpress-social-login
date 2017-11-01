@@ -458,6 +458,9 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		$list = get_option( 'wsl_settings_bouncer_new_users_restrict_email_list' );
 		$list = preg_split( '/$\R?^/m', $list );
 
+		// allow the list to be filtered
+		$list = apply_filters( 'wsl_settings_bouncer_new_users_restrict_email_list', $list );
+
 		$shall_pass = false;
 
 		foreach( $list as $item )
