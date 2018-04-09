@@ -10,11 +10,11 @@
  *
  * http://hybridauth.sourceforge.net/userguide/IDProvider_info_Steam.html
  *
- * This class has been entirely reworked for the new Steam API (http://steamcommunity.com/dev)
+ * This class has been entirely reworked for the new Steam API (https://steamcommunity.com/dev)
  */
 class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 {
-	var $openidIdentifier = "http://steamcommunity.com/openid";
+	var $openidIdentifier = "https://steamcommunity.com/openid";
 
 	/**
 	* finish login step 
@@ -23,7 +23,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 	{
 		parent::loginFinish();
 
-		$this->user->profile->identifier = str_ireplace( "http://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
+		$this->user->profile->identifier = str_ireplace( "https://steamcommunity.com/openid/id/", "", $this->user->profile->identifier );
 
 		if( ! $this->user->profile->identifier )
 		{
@@ -54,7 +54,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 	function getUserProfileWebAPI( $apiKey )
 	{
-		$apiUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $apiKey . '&steamids=' . $this->user->profile->identifier;
+		$apiUrl = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $apiKey . '&steamids=' . $this->user->profile->identifier;
 
 		$data = $this->httpRequest( $apiUrl );
 		$data = json_decode( $data['response'] );
@@ -75,7 +75,7 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 
 	function getUserProfileLegacyAPI()
 	{
-		$apiUrl = 'http://steamcommunity.com/profiles/' . $this->user->profile->identifier . '/?xml=1';
+		$apiUrl = 'https://steamcommunity.com/profiles/' . $this->user->profile->identifier . '/?xml=1';
 
 		$data = $this->httpRequest( $apiUrl );
 		$data = @ new SimpleXMLElement( $data['response'] );
@@ -88,8 +88,8 @@ class Hybrid_Providers_Steam extends Hybrid_Provider_Model_OpenID
 		$userProfile['description' ] = property_exists( $data, 'summary'     ) ? (string) $data->summary     : '';
 		$userProfile['region'      ] = property_exists( $data, 'location'    ) ? (string) $data->location    : '';
 		$userProfile['profileURL'  ] = property_exists( $data, 'customURL'   )
-			? "http://steamcommunity.com/id/{$data->customURL}/"
-			: "http://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
+			? "https://steamcommunity.com/id/{$data->customURL}/"
+			: "https://steamcommunity.com/profiles/{$this->user->profile->identifier}/";
 
 		return $userProfile;
 	}
