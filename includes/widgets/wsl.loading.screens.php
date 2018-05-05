@@ -35,6 +35,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><?php _wsl_e("Redirecting...", 'wordpress-social-login') ?> - <?php bloginfo('name'); ?></title>
 		<style type="text/css">
 			html {
@@ -117,6 +118,7 @@ if( ! function_exists( 'wsl_render_return_from_provider_loading_screen' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title><?php _wsl_e("Redirecting...", 'wordpress-social-login') ?> - <?php bloginfo('name'); ?></title>
 		<style type="text/css">
 			html {
