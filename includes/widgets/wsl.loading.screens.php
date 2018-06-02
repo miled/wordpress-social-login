@@ -31,8 +31,7 @@ if( ! function_exists( 'wsl_render_redirect_to_provider_loading_screen' ) )
 	{
 		$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 
-        $provider_config = wsl_get_provider_config( $provider_id );
-        $provider_name   = $provider_config['provider_name'];
+        $provider_name = wsl_get_provider_name_by_id( $provider_id );
 ?>
 <!DOCTYPE html>
 	<head>

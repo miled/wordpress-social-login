@@ -262,10 +262,11 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			}
 			h4 {
 				font-size: 14px;
-				margin-bottom: 10px;
+				margin-bottom: 10px; 
 			}
 			#login {
-				width: 616px;
+				max-width: 620px;
+				min-width: 340px;
 				margin: auto;
 				padding: 114px 0 0;
 			}
@@ -369,7 +370,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				text-align: left;
 			}
 			table {
-				width:355px;
+				width:530px;
 				margin-left:auto;
 				margin-right:auto;
 			}
@@ -382,13 +383,18 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			#mapping-complete-info {
 				display:none;
 			}
+			#mapping-authenticate, #mapping-complete-info {
+				width: 100%;
+                padding-left: 15px;
+                padding-right: 20px;
+			}
 			.error {
 				display:none;
 				background-color: #fff;
 				border-left: 4px solid #dd3d36;
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
-				margin: 0 21px;
-				padding: 12px;
+                margin: 0 22px;
+                padding: 6px 12px;
 				text-align:left;
 			}
 			.back-to-options {
@@ -411,7 +417,6 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				if( $linking_enabled == 2 )
 				{
 					?>
-					#login {width: 400px;}
 					#welcome, #mapping-options, #errors-account-linking, #mapping-complete-info {display: none;}
 					#errors-profile-completion, #mapping-complete-info {display: block;}
 					<?php
@@ -419,7 +424,6 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				elseif( $bouncer_account_linking )
 				{
 					?>
-					#login {width: 400px;}
 					#welcome, #mapping-options, #errors-profile-completion, #mapping-complete-info {display: none;}
 					#errors-account-linking, #mapping-authenticate {display: block;}
 					<?php
@@ -427,7 +431,6 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				elseif( $bouncer_profile_completion )
 				{
 					?>
-					#login {width: 400px;}
 					#welcome, #mapping-options, #errors-account-linking, #mapping-complete-info {display: none;}
 					#errors-profile-completion, #mapping-complete-info {display: block;}
 					<?php
@@ -468,12 +471,12 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 			function display_mapping_authenticate()
 			{
-				toggleWidth( 'login', '400px' );
-
+                toggleWidth( 'login', 'auto' );
+                
 				toggleEl( 'welcome'        , 'none' );
 				toggleEl( 'mapping-options', 'none' );
 
-				toggleEl( 'errors-account-linking', 'block' );
+				toggleEl( 'errors-account-linking', 'none' );
 				toggleEl( 'mapping-authenticate'  , 'block' );
 
 				toggleEl( 'errors-profile-completion', 'none' );
@@ -482,15 +485,15 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 			function display_mapping_complete_info()
 			{
-				toggleWidth( 'login', '400px' );
-
+                toggleWidth( 'login', 'auto' );
+                
 				toggleEl( 'welcome'        , 'none' );
 				toggleEl( 'mapping-options', 'none' );
 
 				toggleEl( 'errors-account-linking', 'none' );
 				toggleEl( 'mapping-authenticate'  , 'none' );
 
-				toggleEl( 'errors-profile-completion', 'block' );
+				toggleEl( 'errors-profile-completion', 'none' );
 				toggleEl( 'mapping-complete-info'    , 'block' );
 			}
 		</script>
@@ -505,24 +508,24 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				<div id="welcome">
 					<img id="idp-icon" src="<?php echo $assets_base_url . strtolower($provider); ?>.png" >
 					<b><?php printf( _wsl__( "Hi %s", 'wordpress-social-login' ), htmlentities( $hybridauth_user_profile->displayName ) ); ?></b>
-					<p><?php printf( _wsl__( "You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login' ), $provider ); ?>.</p>
+					<p><?php printf( _wsl__( "You're now signed in with your %s account but you are still one step away of getting into our website", 'wordpress-social-login' ), $provider_name ); ?>.</p>
 
 					<hr />
 				</div>
 
-				<table id="mapping-options" border="0">
+				<table id="mapping-options" style="padding-top: 12px;" border="0">
 					<tr>
 						<?php if( $linking_enabled == 1 ): ?>
 							<td valign="top"  width="50%" style="text-align:center;">
 								<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
-								<p style="font-size: 12px;"><?php printf( _wsl__( "Link your existing account on our website to your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
+								<p style="font-size: 12px;"><?php printf( _wsl__( "Link your existing account on our website to your %s ID.", 'wordpress-social-login' ), $provider_name ); ?></p>
 							</td>
 						<?php endif; ?>
 
 						<?php if( $registration_enabled == 1 ): ?>
 						<td valign="top"  width="50%" style="text-align:center;">
 							<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
-							<p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider ); ?></p>
+							<p style="font-size: 12px;"><?php printf( _wsl__( "Create a new account and it will be associated with your %s ID.", 'wordpress-social-login' ), $provider_name ); ?></p>
 						</td>
 						<?php endif; ?>
 					</tr>
@@ -553,7 +556,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 						foreach( $account_linking_errors as $error )
 						{
-							?><p><?php echo $error; ?></p><?php
+							?><p style="padding: 2px; margin: 0px;"><?php echo $error; ?></p><?php
 						}
 
 						echo '</div>';
@@ -565,7 +568,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 						foreach( $profile_completion_errors as $error )
 						{
-							?><p><?php echo $error; ?></p><?php
+							?><p style="padding: 2px; margin: 0px;"><?php echo $error; ?></p><?php
 						}
 
 						echo '</div>';
@@ -577,14 +580,14 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="link-form">
 						<table id="mapping-authenticate" border="0">
 							<tr>
-								<td valign="top"  width="50%" style="text-align:center;">
+								<td valign="top" style="text-align:center;">
 									<h4><?php _wsl_e( "Already have an account", 'wordpress-social-login' ); ?>?</h4>
 
-									<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), ucfirst( $provider ) ) ; ?>.</p>
+									<p><?php printf( _wsl__( "Please enter your username and password of your existing account on our website. Once verified, it will linked to your %s ID", 'wordpress-social-login' ), $provider_name ) ; ?>.</p>
 								</td>
 							</tr>
 							<tr>
-								<td valign="bottom"  width="50%" style="text-align:left;">
+								<td valign="bottom" style="text-align:left;">
 									<label>
 										<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
 										<br />
@@ -609,6 +612,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 						<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
 					</form>
+                    
 				<?php endif; ?>
 
 				<?php if( $registration_enabled == 1 ): ?>
@@ -616,7 +620,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 					<form method="post" action="<?php echo site_url( 'wp-login.php', 'login_post' ); ?>" id="info-form">
 						<table id="mapping-complete-info" border="0">
 							<tr>
-								<td valign="top"  width="50%" style="text-align:center;">
+								<td valign="top" style="text-align:center;">
 									<?php if( $linking_enabled == 1 ): ?>
 										<h4><?php _wsl_e( "New to our website", 'wordpress-social-login' ); ?>?</h4>
 									<?php endif; ?>
@@ -625,7 +629,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 								</td>
 							</tr>
 							<tr>
-								<td valign="bottom"  width="50%" style="text-align:left;">
+								<td valign="bottom" style="text-align:left;">
 									<?php if( $change_username == 1 ): ?>
 										<label>
 											<?php _wsl_e( "Username", 'wordpress-social-login' ); ?>
@@ -634,7 +638,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 										</label>
 									<?php endif; ?>
 
-									<?php if( $require_email == 1 && empty( $requested_user_email ) ): ?>
+									<?php if( $require_email == 1 ): ?>
 										<label>
 											<?php _wsl_e( "E-mail", 'wordpress-social-login' ); ?>
 											<br />
@@ -670,6 +674,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 						<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 					</form>
+                    
 				<?php endif; ?>
             </div>
 
