@@ -70,6 +70,10 @@ $WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.1";
 
 // --------------------------------------------------------------------
 
+session_id() or session_start();
+
+// --------------------------------------------------------------------
+
 /**
 * This file might be used to :
 *     1. Redefine WSL constants, so you can move WSL folder around.
@@ -94,17 +98,6 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL' )
 
 defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 	|| define( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL', WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'hybridauth/' );
-
-// --------------------------------------------------------------------
-
-if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/session.php' ) )
-{
-	wp_die( __( "Required session helper wasn't found in Hybridauth folder.", 'wordpress-social-login' ) );
-}
-
-include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/session.php' );
-
-$_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
 // --------------------------------------------------------------------
 
@@ -251,6 +244,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.authentic
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.mail.notification.php'    ); // Emails and notifications
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.user.avatar.php'          ); // Display users avatar
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.user.data.php'            ); // User data functions (database related)
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.session.php'              ); // Manage PHP session 
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.utilities.php'            ); // Unclassified functions & utilities
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.watchdog.php'             ); // WSL logging agent
 

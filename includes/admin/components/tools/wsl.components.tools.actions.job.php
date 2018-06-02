@@ -479,7 +479,7 @@ function wsl_component_tools_do_diagnostics()
 
 					if( ! class_exists( 'Hybridauth\Hybridauth', false ) )
 					{
-						require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
+						require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 						$curl = Hybridauth\HttpClient\Util::getCurrentUrl();
 					}

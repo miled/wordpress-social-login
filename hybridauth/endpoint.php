@@ -12,13 +12,15 @@
 //  Note: The way we handle errors is a bit messy and should be reworked
 // ------------------------------------------------------------------------
 
-require_once "autoload.php";
-require_once "session.php";
+session_start();
+
+require_once '../includes/services/wsl.session.php';
+require_once 'library/src/autoload.php';
 
 $provider_id     = filter_input(INPUT_GET, 'hauth_done', FILTER_SANITIZE_SPECIAL_CHARS); 
-$provider_config = get_provider_config_from_session_storage($provider_id);
+$provider_config = wsl_get_provider_config_from_session_storage($provider_id);
 $callback_url    = $provider_config['current_page'];
-$wp_abspath      = $_SESSION['wsl:const:ABSPATH'];
+$wp_abspath      = $_SESSION['wsl:consts:ABSPATH'];
 
 try { 
     $hybridauth = new Hybridauth\Hybridauth($provider_config);

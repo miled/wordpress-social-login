@@ -85,12 +85,7 @@ function wsl_process_login()
 		return false;
 	}
 
-	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/autoload.php' ) )
-	{
-		wsl_process_login_render_notice_page( _wsl__( "Required autoload helper wasn't found in Hybridauth folder.", 'wordpress-social-login' ) );
-	}
-
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
@@ -101,9 +96,7 @@ function wsl_process_login()
 	// halt, if mode login and user already logged in
 	if( 'login' == $auth_mode && is_user_logged_in() )
 	{
-		global $current_user;
-
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 
 		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?", 'wordpress-social-login' ), $current_user->display_name, wp_logout_url( home_url() ) ) );
 	}
@@ -216,11 +209,7 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line).
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		set_provider_config_in_session_storage( $provider, $config );
-
-        $_SESSION['wsl:const:ABSPATH'] = ABSPATH;
-        $_SESSION['wsl:const:WP_PLUGIN_DIR'] = WP_PLUGIN_DIR;
-        $_SESSION['wsl:const:WORDPRESS_SOCIAL_LOGIN_ABS_PATH'] = WORDPRESS_SOCIAL_LOGIN_ABS_PATH;
+		wsl_set_provider_config_in_session_storage( $provider, $config );
 
 		$adapter = $hybridauth->authenticate( $provider );
 	}
@@ -901,11 +890,10 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 */
 function wsl_process_login_build_provider_config( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 	$config = array();
-	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
-	$config["wp_abspath"] = ABSPATH;
+	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true); 
 	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
@@ -986,7 +974,7 @@ function wsl_process_login_request_user_social_profile( $provider )
 		// get idp adapter
 		$adapter = wsl_process_login_get_provider_adapter( $provider );
 
-		$config = get_provider_config_from_session_storage( $provider );
+		$config = wsl_get_provider_config_from_session_storage( $provider );
 
 		// if user authenticated successfully with social network
 		if( $adapter->isConnected() )
@@ -1018,9 +1006,9 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
-	$config = get_provider_config_from_session_storage( $provider );
+	$config = wsl_get_provider_config_from_session_storage( $provider );
 
 	$hybridauth = new Hybridauth\Hybridauth( $config );
 

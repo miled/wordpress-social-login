@@ -218,16 +218,3 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 );
 
 // --------------------------------------------------------------------
-
-function wsl_get_provider_config($provider_id)
-{
-    global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
-    
-	foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
-	{
-		if( $provider_id == $item["provider_id"] )
-		{
-			return $item;
-		}
-	}
-}
