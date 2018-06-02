@@ -20,9 +20,9 @@ class WSL_Test_Users extends WP_UnitTestCase
 
 		$this->someUserID = wp_create_user( $this->someUserLogin, wp_generate_password(), $this->someUserMail );
 
-		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/Hybrid/User_Profile.php';
+		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
-		$this->someUserProfile = new Hybrid_User_Profile();
+		$this->someUserProfile = new Hybridauth\User\Profile();
 
 		$this->someUserProfile->identifier    = 'identifier';
 		$this->someUserProfile->firstName     = 'firstName';
