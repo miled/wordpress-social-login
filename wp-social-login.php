@@ -97,12 +97,12 @@ defined( 'WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL' )
 
 // --------------------------------------------------------------------
 
-if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/session.php' ) )
+if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/session.php' ) )
 {
-	wp_die( __( "Require session helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
+	wp_die( __( "Required session helper wasn't found in Hybridauth folder.", 'wordpress-social-login' ) );
 }
 
-include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/session.php' );
+include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/session.php' );
 
 $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
 

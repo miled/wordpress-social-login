@@ -27,7 +27,7 @@ function wsl_component_tools_do_diagnostics()
 			<br />
 			<table class="wp-list-table widefat">
 				<?php
-					$test = version_compare( PHP_VERSION, '5.2.0', '>=' );
+					$test = version_compare( PHP_VERSION, '5.4.0', '>=' );
 					// $test = 0;
 				?>
 				<tr>
@@ -35,7 +35,7 @@ function wsl_component_tools_do_diagnostics()
 						<label>PHP Version</label>
 					</th>
 					<td>
-						<p>PHP >= 5.2.0 installed.</p>
+						<p>PHP >= 5.4.0 installed.</p>
 						<?php
 							if( ! $test )
 							{
@@ -479,7 +479,7 @@ function wsl_component_tools_do_diagnostics()
 
 					if( ! class_exists( 'Hybridauth\Hybridauth', false ) )
 					{
-						require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+						require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
 
 						$curl = Hybridauth\HttpClient\Util::getCurrentUrl();
 					}

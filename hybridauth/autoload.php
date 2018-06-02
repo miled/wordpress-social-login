@@ -14,7 +14,7 @@ spl_autoload_register(
     function ($class) {
         $prefix = 'Hybridauth\\'; // < only kick in for Hybridauth namespace
 
-        $base_dir = __DIR__ . '/../library/'; // < change this path if necessary
+        $base_dir = __DIR__ . '/library/src/'; // < change this path if necessary
 
         $len = strlen($prefix);
 

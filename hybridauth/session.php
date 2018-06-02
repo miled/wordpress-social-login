@@ -11,11 +11,13 @@ session_id() or session_start();
 function set_provider_config_in_session_storage($provider, $config){
 	$provider = strtolower($provider);
 
-	$_SESSION['wsl:' . $provider . ':config'] = $config;
+	$_SESSION['wsl:' . $provider . ':config'] = (array) $config;
 }
 
 function get_provider_config_from_session_storage($provider){
 	$provider = strtolower($provider);
 
-	return $_SESSION['wsl:' . $provider . ':config'];
+    if(isset($_SESSION['wsl:' . $provider . ':config'])){
+        return (array) $_SESSION['wsl:' . $provider . ':config'];
+    }
 }

@@ -85,12 +85,12 @@ function wsl_process_login()
 		return false;
 	}
 
-	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/autoload.php' ) )
+	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/autoload.php' ) )
 	{
-		wsl_process_login_render_notice_page( _wsl__( "Require autoload helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
+		wsl_process_login_render_notice_page( _wsl__( "Required autoload helper wasn't found in Hybridauth folder.", 'wordpress-social-login' ) );
 	}
 
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
 
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
@@ -217,6 +217,10 @@ function wsl_process_login_begin()
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
 		set_provider_config_in_session_storage( $provider, $config );
+
+        $_SESSION['wsl:const:ABSPATH'] = ABSPATH;
+        $_SESSION['wsl:const:WP_PLUGIN_DIR'] = WP_PLUGIN_DIR;
+        $_SESSION['wsl:const:WORDPRESS_SOCIAL_LOGIN_ABS_PATH'] = WORDPRESS_SOCIAL_LOGIN_ABS_PATH;
 
 		$adapter = $hybridauth->authenticate( $provider );
 	}
@@ -906,10 +910,11 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 */
 function wsl_process_login_build_provider_config( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
 
 	$config = array();
 	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
+	$config["wp_abspath"] = ABSPATH;
 	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
@@ -938,12 +943,6 @@ function wsl_process_login_build_provider_config( $provider )
 	if( in_array( strtolower( $provider ), array( 'dribbble' ) ) )
 	{
 		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
-	}
-
-	// set default scope
-	if( get_option( 'wsl_settings_' . $provider . '_app_scope' ) )
-	{
-		$config["providers"][$provider]["scope"] = get_option( 'wsl_settings_' . $provider . '_app_scope' );
 	}
 
 	// set custom config for facebook
@@ -1028,7 +1027,7 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/autoload.php";
 
 	$config = get_provider_config_from_session_storage( $provider );
 
@@ -1135,20 +1134,6 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 	if( is_object( $adapter ) )
 	{
 		$adapter->disconnect();
-	}
-
-	// provider api response
-	if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
-	{
-		$tmp = Hybrid_Error::getApiError();
-
-		$apierror = $apierror . "\n" . '<br />' . $tmp;
-
-		// network issue
-		if( trim( $tmp ) == '0.' )
-		{
-			$apierror = "Could not establish connection to provider API";
-		}
 	}
 
 	return wsl_render_error_page( $message, $notes, $provider, $apierror, $e );

@@ -244,18 +244,15 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 <!DOCTYPE html>
 	<head>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title><?php echo get_bloginfo('name'); ?></title>
 		<style type="text/css">
-			html, body {
-				height: 100%;
-				margin: 0;
-				padding: 0;
-			}
 			body {
-				background: none repeat scroll 0 0 #f1f1f1;
-				font-size: 14px;
-				color: #444;
-				font-family: "Open Sans",sans-serif;
+				background: #f3f6f8;
+				color: #324155;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
+				font-size: 16px;
+				line-height: 1.6;
 			}
 			hr {
 				border-color: #eeeeee;
@@ -399,11 +396,15 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				margin: 7px 0px;
 			}
 			.back-to-home {
-				font-size: 12px;
-				margin-top: -18px;
+				font-size: 14px;
+				margin-top: -22px;
+			}
+			a {
+				color: #00aadc;
+				text-decoration: none;
 			}
 			.back-to-home a {
-				color: #999;
+				color: #005082;
 				text-decoration: none;
 			}
 			<?php

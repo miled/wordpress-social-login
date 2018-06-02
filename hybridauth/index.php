@@ -6,4 +6,4 @@
 *    (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/extend/plugins/wordpress-social-login/
 */
 
-require_once "common/endpoint.php";
+require_once "endpoint.php";

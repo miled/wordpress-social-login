@@ -397,11 +397,7 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('Accounts linking/mapping.', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Improved Profile Completion.', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Widget shortcode arguments.', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Added new translations.', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Fix an issue with Facebook users profiles.', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('...', 'wordpress-social-login') ?></li>
 				</ul>
 			</td>
 		</tr>

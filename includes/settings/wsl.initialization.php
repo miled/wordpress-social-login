@@ -24,7 +24,7 @@ function wsl_check_requirements()
 {
 	if
 	(
-		   ! version_compare( PHP_VERSION, '5.2.0', '>=' )
+		   ! version_compare( PHP_VERSION, '5.4.0', '>=' )
 		|| ! isset( $_SESSION["wsl::plugin"] )
 		|| ! function_exists('curl_init')
 		|| ! function_exists('json_decode')
@@ -203,7 +203,6 @@ function wsl_register_setting()
 		$provider_id          = isset( $item["provider_id"]       ) ? $item["provider_id"]       : null;
 		$require_client_id    = isset( $item["require_client_id"] ) ? $item["require_client_id"] : null;
 		$require_registration = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : null;
-		$default_api_scope    = isset( $item["default_api_scope"] ) ? $item["default_api_scope"] : null;
 
 		/**
 		* @fixme
@@ -234,18 +233,7 @@ function wsl_register_setting()
 			}
 
 			// api secret
-			register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_secret' ); 
-
-			// api scope?
-			if( $default_api_scope )
-			{
-				if( ! get_option( 'wsl_settings_' . $provider_id . '_app_scope' ) )
-				{
-					update_option( 'wsl_settings_' . $provider_id . '_app_scope', $default_api_scope );
-				}
-
-				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_scope' );
-			}
+			register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_secret' );
 		}
 	}
 
