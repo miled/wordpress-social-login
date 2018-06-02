@@ -111,15 +111,6 @@ function wsl_component_bouncer_setup_accounts_linking()
 				</select>
 			</td>
 			</tr>
-			<tr>
-				<td width="200" align="right"><strong><?php _wsl_e("Limit to one social account per social network", 'wordpress-social-login') ?> :</strong></td>
-				<td>
-					<select name="wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user">
-						<option <?php if( get_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
-						<option <?php if( get_option( 'wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
-					</select>
-				</td>
-			</tr>
 		</table>  
 	</div>
 </div>
