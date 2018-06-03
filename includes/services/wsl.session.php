@@ -20,8 +20,7 @@ function wsl_init_php_session_storage()
     global $WORDPRESS_SOCIAL_LOGIN_VERSION;
 
     $_SESSION["wsl::plugin"] = "WordPress Social Login " . $WORDPRESS_SOCIAL_LOGIN_VERSION;
-    $_SESSION['wsl:consts:ABSPATH'] = ABSPATH;
-    $_SESSION['wsl:consts:WORDPRESS_SOCIAL_LOGIN_ABS_PATH'] = WORDPRESS_SOCIAL_LOGIN_ABS_PATH;
+    if( defined( 'ABSPATH' ) ) $_SESSION['wsl:consts:ABSPATH'] = ABSPATH;
 }
 
 // --------------------------------------------------------------------

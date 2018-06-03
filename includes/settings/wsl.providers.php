@@ -201,12 +201,12 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		// "provider_name"     => "LastFM",
 		// "callback"          => true,
 	// ),
-	// ARRAY( 
-		// "provider_id"       => "Goodreads",
-		// "provider_name"     => "Goodreads", 
-		// "callback"          => true,
-		// "new_app_link"      => "http://www.goodreads.com/api",
-	// ),
+	ARRAY( 
+		"provider_id"       => "Goodreads",
+		"provider_name"     => "Goodreads", 
+		"callback"          => true,
+		"new_app_link"      => "https://www.goodreads.com/api/keys",
+	),
 	// ARRAY( 
 		// "provider_id"       => "Yandex",
 		// "provider_name"     => "Yandex", 
