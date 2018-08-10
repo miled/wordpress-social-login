@@ -495,14 +495,18 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wp_users
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email_verified );
 
-		// the user exists in Wordpress
-		$wordpress_user_id = $user_id;
-
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
 			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_email_verified );
 		}
+
+		if( $user_id )
+		{
+			// the user exists in Wordpress
+			$wordpress_user_id = $user_id;
+		}
+
 	}
 
 	/* 4 Deletegate detection of user id to custom filters hooks */
@@ -619,7 +623,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			if ( $user_email ) {
 				$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
 			} else {
-				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );		
+				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );
 			}
 		}
 	}
@@ -893,7 +897,7 @@ function wsl_process_login_build_provider_config( $provider )
 	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 	$config = array();
-	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true); 
+	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
 	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
