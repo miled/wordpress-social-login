@@ -93,6 +93,9 @@ function wsl_get_current_url()
 	//Remove standard ports
 	$request_port = (!in_array($request_port, array (80, 443)) ? $request_port : '');
 
+	//Ignore $request_port if $request_host already contains it
+	$request_port = ( substr_compare( $request_host, ":$request_port", -strlen( ":$request_port" ) ) === 0 ? '' : $request_port );
+
 	//Build url
 	$current_url = $request_protocol . '://' . $request_host . ( ! empty ($request_port) ? (':'.$request_port) : '') . $request_uri;
 
