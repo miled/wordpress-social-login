@@ -7,9 +7,9 @@
 */
 
 /**
-* List of supported providers by Hybridauth Library 
+* List of supported providers by Hybridauth Library
 *
-*   ARRAY( 
+*   ARRAY(
 *      'provider_id'         : String  - Alphanumeric(a-zA-Z0-9) code/name of a provider
 *      'provider_name'       : String  - Real provider name.
 *      'require_client_id'   : Boolean - If a provider uses OAuth 2. Defaults to false.
@@ -25,12 +25,12 @@ if ( !defined( 'ABSPATH' ) ) exit;
 // --------------------------------------------------------------------
 
 $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Facebook",
-		"provider_name"     => "Facebook", 
-		"require_client_id" => true, 
+		"provider_name"     => "Facebook",
+		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://developers.facebook.com/apps", 
+		"new_app_link"      => "https://developers.facebook.com/apps",
 
 		"default_network"   => true,
 	),
@@ -39,134 +39,134 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"provider_name"     => "Google",
 		"callback"          => true,
 		"require_client_id" => true,
-		"new_app_link"      => "https://console.developers.google.com", 
+		"new_app_link"      => "https://console.developers.google.com",
 
 		"default_network"   => true,
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Twitter",
-		"provider_name"     => "Twitter", 
+		"provider_name"     => "Twitter",
 		"callback"          => true,
-		"new_app_link"      => "https://dev.twitter.com/apps", 
+		"new_app_link"      => "https://dev.twitter.com/apps",
 
 		"default_network"  => true,
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "WordPress",
-		"provider_name"     => "WordPress", 
+		"provider_name"     => "WordPress",
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "https://developer.wordpress.com/apps/new/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Yahoo",
 		"provider_name"     => "Yahoo!",
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://developer.yahoo.com/apps/create/", 
+		"new_app_link"      => "https://developer.yahoo.com/apps/create/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "LinkedIn",
-		"provider_name"     => "LinkedIn", 
+		"provider_name"     => "LinkedIn",
 		"new_app_link"      => "https://www.linkedin.com/secure/developer",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Disqus",
-		"provider_name"     => "Disqus", 
+		"provider_name"     => "Disqus",
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://disqus.com/api/applications/", 
+		"new_app_link"      => "https://disqus.com/api/applications/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Instagram",
-		"provider_name"     => "Instagram", 
+		"provider_name"     => "Instagram",
 		"callback"          => true,
 		"require_client_id" => true,
-		"new_app_link"      => "http://instagr.am/developer/clients/manage/", 
+		"new_app_link"      => "http://instagr.am/developer/clients/manage/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Reddit",
-		"provider_name"     => "Reddit", 
+		"provider_name"     => "Reddit",
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://ssl.reddit.com/prefs/apps", 
+		"new_app_link"      => "https://ssl.reddit.com/prefs/apps",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Foursquare",
 		"provider_name"     => "Foursquare",
 		"callback"          => true,
-		"require_client_id" => true, 
+		"require_client_id" => true,
 		"new_app_link"      => "https://www.foursquare.com/oauth/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Tumblr",
-		"provider_name"     => "Tumblr", 
-		"new_app_link"      => "http://www.tumblr.com/oauth/apps", 
+		"provider_name"     => "Tumblr",
+		"new_app_link"      => "http://www.tumblr.com/oauth/apps",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Stackoverflow",
 		"provider_name"     => "Stackoverflow",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "StackExchange",
-		"provider_name"     => "StackExchange", 
+		"provider_name"     => "StackExchange",
 		"callback"          => true,
-		"require_client_id" => true, 
-		"new_app_link"      => "https://stackapps.com/apps/oauth/register", 
+		"require_client_id" => true,
+		"new_app_link"      => "https://stackapps.com/apps/oauth/register",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "GitHub",
-		"provider_name"     => "GitHub", 
+		"provider_name"     => "GitHub",
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://github.com/settings/applications/new", 
+		"new_app_link"      => "https://github.com/settings/applications/new",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Dribbble",
-		"provider_name"     => "Dribbble", 
-		"require_client_id" => true, 
+		"provider_name"     => "Dribbble",
+		"require_client_id" => true,
 		"custom_callback"   => true,
-		"new_app_link"      => "https://dribbble.com/account/applications/new", 
+		"new_app_link"      => "https://dribbble.com/account/applications/new",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Steam",
 		"provider_name"     => "Steam",
 		"new_app_link"      => "https://steamcommunity.com/dev/apikey",
 		"require_api_key"   => true,
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "TwitchTV",
-		"provider_name"     => "Twitch.tv", 
+		"provider_name"     => "Twitch.tv",
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "http://www.twitch.tv/settings?section=applications",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Vkontakte",
 		"provider_name"     => "ВКонтакте",
 		"callback"          => true,
 		"require_client_id" => true,
 		"new_app_link"      => "http://vk.com/developers.php",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Mailru",
-		"provider_name"     => "Mailru", 
+		"provider_name"     => "Mailru",
 		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "http://api.mail.ru/", 
+		"new_app_link"      => "http://api.mail.ru/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Odnoklassniki",
-		"provider_name"     => "Odnoklassniki", 
+		"provider_name"     => "Odnoklassniki",
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "http://dev.odnoklassniki.ru/",
 	),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "WindowsLive",
-		"provider_name"     => "Windows Live", 
+		"provider_name"     => "Windows Live",
 		"require_client_id" => true,
-		"new_app_link"      => "https://account.live.com/developers/applications/create", 
+		"new_app_link"      => "https://account.live.com/developers/applications/create",
 	),
 	ARRAY(
 		"provider_id"       => "Authentiq",
@@ -190,31 +190,31 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "https://v2.steemconnect.com/dashboard",
 	),
 
-#- 
+#-
 
-	// ARRAY( 
+	// ARRAY(
 		// "provider_id"       => "AOL",
 		// "provider_name"     => "AOL",
 	// ),
-	// ARRAY( 
+	// ARRAY(
 		// "provider_id"       => "LastFM",
 		// "provider_name"     => "LastFM",
 		// "callback"          => true,
 	// ),
-	ARRAY( 
+	ARRAY(
 		"provider_id"       => "Goodreads",
-		"provider_name"     => "Goodreads", 
+		"provider_name"     => "Goodreads",
 		"callback"          => true,
 		"new_app_link"      => "https://www.goodreads.com/api/keys",
 	),
-	// ARRAY( 
+	// ARRAY(
 		// "provider_id"       => "Yandex",
-		// "provider_name"     => "Yandex", 
+		// "provider_name"     => "Yandex",
 		// "require_client_id" => true,
 		// "callback"          => true,
 		// "new_app_link"      => "https://oauth.yandex.ru",
 	// ),
-    
+
 );
 
 // --------------------------------------------------------------------
