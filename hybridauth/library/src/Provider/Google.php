@@ -82,8 +82,6 @@ class Google extends OAuth2
         $this->AuthorizeUrlParameters += [
             'access_type' => 'offline'
         ];
-        
-        $this->AuthorizeUrlParameters['scope'] = 'profile https://www.googleapis.com/auth/plus.profile.emails.read';
 
         $this->tokenRefreshParameters += [
             'client_id' => $this->clientId,

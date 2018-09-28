@@ -33,7 +33,7 @@ class Steam extends OpenID
     /**
     * {@inheritdoc}
     */
-    protected $openidIdentifier = 'https://steamcommunity.com/openid';
+    protected $openidIdentifier = 'http://steamcommunity.com/openid';
 
     /**
     * {@inheritdoc}
@@ -44,7 +44,7 @@ class Steam extends OpenID
 
         $userProfile = $this->storage->get($this->providerId . '.user');
 
-        $userProfile->identifier = str_ireplace('https://steamcommunity.com/openid/id/', '', $userProfile->identifier);
+        $userProfile->identifier = str_ireplace('http://steamcommunity.com/openid/id/', '', $userProfile->identifier);
 
         if (! $userProfile->identifier) {
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
@@ -80,7 +80,7 @@ class Steam extends OpenID
     */
     public function getUserProfileWebAPI($apiKey, $steam64)
     {
-        $apiUrl = 'https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $apiKey . '&steamids=' . $steam64;
+        $apiUrl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' . $apiKey . '&steamids=' . $steam64;
 
         $response = $this->httpClient->request($apiUrl);
 
@@ -108,7 +108,7 @@ class Steam extends OpenID
     {
         libxml_use_internal_errors(false);
 
-        $apiUrl = 'https://steamcommunity.com/profiles/' . $steam64 . '/?xml=1';
+        $apiUrl = 'http://steamcommunity.com/profiles/' . $steam64 . '/?xml=1';
 
         $response = $this->httpClient->request($apiUrl);
 
@@ -124,8 +124,8 @@ class Steam extends OpenID
         $userProfile['description'] = (string)$data->get('summary');
         $userProfile['region'] = (string)$data->get('location');
         $userProfile['profileURL'] = (string)$data->get('customURL')
-          ? 'https://steamcommunity.com/id/' . (string)$data->get('customURL')
-          : 'https://steamcommunity.com/profiles/' . $steam64;
+          ? 'http://steamcommunity.com/id/' . (string)$data->get('customURL')
+          : 'http://steamcommunity.com/profiles/' . $steam64;
 
         return $userProfile;
     }
