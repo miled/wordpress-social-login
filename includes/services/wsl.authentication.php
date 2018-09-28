@@ -501,12 +501,11 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_email_verified );
 		}
 
+		// if the user exists in Wordpress
 		if( $user_id )
 		{
-			// the user exists in Wordpress
 			$wordpress_user_id = $user_id;
 		}
-
 	}
 
 	/* 4 Deletegate detection of user id to custom filters hooks */
@@ -944,6 +943,9 @@ function wsl_process_login_build_provider_config( $provider )
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
+		// set the default google scope
+		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
+
 		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
 		if( wsl_is_component_enabled( 'contacts' ) && get_option( 'wsl_settings_contacts_import_google' ) == 1 )
 		{
