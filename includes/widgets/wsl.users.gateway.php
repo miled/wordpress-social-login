@@ -384,7 +384,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				display:none;
 			}
 			#mapping-authenticate, #mapping-complete-info {
-				width: 100%;
+				width: 93%;
                 padding-left: 15px;
                 padding-right: 20px;
 			}
@@ -394,6 +394,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				border-left: 4px solid #dd3d36;
 				box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.1);
                 margin: 0 22px;
+                margin-top: 16px;
                 padding: 6px 12px;
 				text-align:left;
 			}
@@ -602,7 +603,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 
 									<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
 
-									<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
+									<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Cancel", 'wordpress-social-login' ); ?></a>
 								</td>
 							</tr>
 						</table>
@@ -663,7 +664,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 									<input type="submit" value="<?php _wsl_e( "Continue", 'wordpress-social-login' ); ?>" class="button-primary" >
 
 									<?php if( $linking_enabled == 1 ): ?>
-										<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Back", 'wordpress-social-login' ); ?></a>
+										<a href="javascript:void(0);" onclick="display_mapping_options();" class="back-to-options"><?php _wsl_e( "Cancel", 'wordpress-social-login' ); ?></a>
 									<?php endif; ?>
 								</td>
 							</tr>
