@@ -1097,24 +1097,9 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 
-	$message  = _wsl__("Unspecified error!", 'wordpress-social-login');
+	$message  = "";
 	$notes    = "";
 	$apierror = substr( $e->getMessage(), 0, 145 );
-
-	switch( $e->getCode() )
-	{
-		case 0 : $message = _wsl__("Unspecified error.", 'wordpress-social-login'); break;
-		case 1 : $message = _wsl__("WordPress Social Login is not properly configured.", 'wordpress-social-login'); break;
-		case 2 : $message = sprintf( __wsl__("WordPress Social Login is not properly configured.<br /> <b>%s</b> need to be properly configured.", 'wordpress-social-login'), $provider ); break;
-		case 3 : $message = _wsl__("Unknown or disabled provider.", 'wordpress-social-login'); break;
-		case 4 : $message = sprintf( _wsl__("WordPress Social Login is not properly configured.<br /> <b>%s</b> requires your application credentials.", 'wordpress-social-login'), $provider );
-			 $notes   = sprintf( _wsl__("<b>What does this error mean ?</b><br />Most likely, you didn't setup the correct application credentials for this provider. These credentials are required in order for <b>%s</b> users to access your website and for WordPress Social Login to work.", 'wordpress-social-login'), $provider ) . _wsl__('<br />Instructions for use can be found in the <a href="http://miled.github.io/wordpress-social-login/networks.html" target="_blank">User Manual</a>.', 'wordpress-social-login');
-			 break;
-		case 5 : $message = sprintf( _wsl__("Authentication failed. Either you have cancelled the authentication or <b>%s</b> refused the connection.", 'wordpress-social-login'), $provider ); break;
-		case 6 : $message = sprintf( _wsl__("Request failed. Either you have cancelled the authentication or <b>%s</b> refused the connection.", 'wordpress-social-login'), $provider ); break;
-		case 7 : $message = _wsl__("You're not connected to the provider.", 'wordpress-social-login'); break;
-		case 8 : $message = _wsl__("Provider does not support this feature.", 'wordpress-social-login'); break;
-	}
 
 	if( is_object( $adapter ) )
 	{

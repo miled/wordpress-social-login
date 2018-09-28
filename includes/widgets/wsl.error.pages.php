@@ -36,7 +36,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title><?php bloginfo('name'); ?></title>
 		<style type="text/css">
 			body {
@@ -63,11 +63,11 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 				line-height: 1.6em;
 				margin: 1em 0 .5em;
 				transition: all .5s ease;
-                text-align: center;
+				text-align: center;
 			}
-            p{
-                text-align: center;
-            }
+			p{
+				text-align: center;
+			}
 			a {
 				text-decoration: none;
 			}
@@ -77,7 +77,7 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 		<div>
 			<img src="<?php echo $assets_base_url ?>error-52.png" />
 
-            <p><?php echo nl2br( $message ); ?></p>
+			<p><?php echo nl2br( $message ); ?></p>
 		</div>
 	</body>
 </html>
@@ -111,7 +111,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title><?php bloginfo('name'); ?> - <?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</title>
 		<style type="text/css">
 			body {
@@ -138,13 +138,16 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 				line-height: 1.6em;
 				margin: 1em 0 .5em;
 				transition: all .5s ease;
-                text-align: center;
+				text-align: center;
 			}
-            p{
-                text-align: center;
-            }
+			p{
+				text-align: center;
+			}
 			a {
 				text-decoration: none;
+			}
+			#technical-details-message{
+				display:none;
 			}
 		</style>
 	</head>
@@ -154,28 +157,53 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 
 			<h1><?php _wsl_e("We're unable to complete your request", 'wordpress-social-login') ?>!</h1>
 
-            <p><?php echo htmlentities($api_error); ?></p>
+			<?php 
+				if(! empty($message) ){ 
+					?>
+						<p><?php echo $message; ?></p>
+					<?php 
+				}
+			?>
 
-            <?php
-                // any hint or extra note?
-                if( $notes )
-                {
-                    ?>
-                        <p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
-                    <?php
-                }
-            ?>
+			<?php 
+				if(! empty($api_error) ){ 
+					?>
+						<p id="technical-details-btn"><a href="javascript:showTechnicals()">Show technical details</a></p>
 
-            <p><a href="<?php echo home_url(); ?>">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a></p>
+						<p id="technical-details-message"><code><?php echo htmlentities($api_error); ?></code></p>
+
+						<script>
+							function showTechnicals(){
+								document.getElementById('technical-details-btn').style.display = 'none';
+								document.getElementById('technical-details-message').style.display = 'block';
+
+								return false;
+							}
+						</script>
+					<?php 
+				}
+			?>
+
+			<?php
+				// any hint or extra note?
+				if( $notes )
+				{
+					?>
+						<p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
+					<?php
+				}
+			?>
+
+			<p><a href="<?php echo home_url(); ?>">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a></p>
 		</div>
 
 		<?php
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) )
 			{
-                ?><style>div {position: unset; transform: none;}</style><?php
+				?><style>div {position: unset; transform: none;}</style><?php
 
-                wsl_render_error_page_debug_section( $php_exception );
+				wsl_render_error_page_debug_section( $php_exception );
 			}
 		?>
 	</body>
