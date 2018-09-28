@@ -25,6 +25,8 @@ Defunct providers/adapters :
 
 New adapters added in HA3:
 
+    - Blizzard US/EU/APAC
+    - MicrosoftGraph
     - StackExchange
     - Discord
     - BitBucket
