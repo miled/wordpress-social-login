@@ -97,7 +97,8 @@ function wsl_component_networks_setup()
 
 		if( isset( $item["callback"] ) && $item["callback"] )
 		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'hauth.done=' . $provider_id . '</span>';
+			$provider_callback_querystring_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
 		}
 
 		if( isset( $item["custom_callback"] ) && $item["custom_callback"] )
@@ -232,6 +233,7 @@ function wsl_component_networks_setup()
 									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p>
 							<?php else: ?>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("You must apply for a Twitter developer account and be approved before you may create new apps", 'wordpress-social-login') ?>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p>
 							<?php endif; ?>
@@ -286,6 +288,20 @@ function wsl_component_networks_setup()
 								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>"></a></td>
 								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>"></a></td>
 							</table>
+							<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Please update <b>Callback URL</b> for your application", 'wordpress-social-login') ?>.
+							<br />
+							<?php echo sprintf( _wsl__( '- Go to: <a href="%s" target ="_blank">%s</a>', 'wordpress-social-login'), $provider_new_app_link, $provider_new_app_link ) ?>
+							<br />
+							<?php echo _wsl_e("- Click on App Name", 'wordpress-social-login') ?>
+							<br />
+							<?php echo _wsl_e("- Click on Settings Tab ", 'wordpress-social-login') ?>
+							<br />
+							<?php echo _wsl_e("- Replace existing Callback url with below one ", 'wordpress-social-login') ?>
+							<br />
+							<?php echo $provider_callback_querystring_url ?>
+							<br />
+							<?php echo _wsl_e("- Click on update settings button.", 'wordpress-social-login') ?>
+							</p>
 						<?php endif; ?>
 
 						<?php if ( $provider_id == "WordPress" ) : ?>
