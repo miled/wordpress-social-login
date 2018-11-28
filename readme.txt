@@ -2,8 +2,8 @@
 Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
-Tested up to: 4.3
-Stable tag: 2.3.0
+Tested up to: 4.9.6
+Stable tag: 3.0.1
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -75,6 +75,10 @@ The user guide and frequently asked questions can be found at http://miled.githu
 
 == Changelog ==
 
+= 3.0.1 = 
+
+* ..
+
 = 2.3.0 = 
 
 * Accounts linking/mapping.
@@ -85,7 +89,7 @@ The user guide and frequently asked questions can be found at http://miled.githu
 * Fix email confirmation in WSL.
 * Small fix for error when merging wsl users with wp users.
 * Remove hardcoded plugin directories.
-* Reduice Twitch TV requested permissions.
+* Reduce Twitch TV requested permissions.
 
 = 2.2.3 = 
 

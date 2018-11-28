@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -85,12 +85,7 @@ function wsl_process_login()
 		return false;
 	}
 
-	if( ! file_exists( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/common/autoload.php' ) )
-	{
-		wsl_process_login_render_notice_page( _wsl__( "Require autoload helper wasn't found Hybridauth folder.", 'wordpress-social-login' ) );
-	}
-
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 	// authentication mode
 	$auth_mode = wsl_process_login_get_auth_mode();
@@ -101,9 +96,7 @@ function wsl_process_login()
 	// halt, if mode login and user already logged in
 	if( 'login' == $auth_mode && is_user_logged_in() )
 	{
-		global $current_user;
-
-		get_currentuserinfo();
+		$current_user = wp_get_current_user();
 
 		return wsl_process_login_render_notice_page( sprintf( _wsl__( "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?", 'wordpress-social-login' ), $current_user->display_name, wp_logout_url( home_url() ) ) );
 	}
@@ -216,7 +209,7 @@ function wsl_process_login_begin()
 		// > after that, the provider will redirect the user back to this same page (and this same line).
 		// > if the user is successfully connected to provider, then this time hybridauth::authenticate()
 		// > will just return the provider adapter
-		set_provider_config_in_session_storage( $provider, $config );
+		wsl_set_provider_config_in_session_storage( $provider, $config );
 
 		$adapter = $hybridauth->authenticate( $provider );
 	}
@@ -344,15 +337,6 @@ function wsl_process_login_end()
 		}else{
 			$user_id = $wordpress_user_id;
 			$is_new_user = false;
-		}
-	}
-
-	// If user exists and is not a new user and linking multiple profiles of same provider is permitted, show warning
-	if ($user_id && ! $is_new_user && get_option('wsl_settings_bouncer_limit_to_one_profile_per_provider_per_user') == 1 ) {
-		$has_existing_profiles_for_provider = (int) wsl_get_stored_hybridauth_user_profiles_count_by_provider( $provider );
-
-		if ( $has_existing_profiles_for_provider > 0 ) {
-			return wsl_process_login_render_notice_page(sprintf( _wsl__("Only one <b>%s ID</b> account allowed per WordPress user.", 'wordpress-social-login'), $provider ) );
 		}
 	}
 
@@ -511,13 +495,16 @@ function wsl_process_login_get_user_data( $provider, $redirect_to )
 		// check if the verified email exist in wp_users
 		$user_id = (int) wsl_wp_email_exists( $hybridauth_user_email_verified );
 
-		// the user exists in Wordpress
-		$wordpress_user_id = $user_id;
-
 		// check if the verified email exist in wslusersprofiles
 		if( ! $user_id )
 		{
 			$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $hybridauth_user_email_verified );
+		}
+
+		// if the user exists in Wordpress
+		if( $user_id )
+		{
+			$wordpress_user_id = $user_id;
 		}
 	}
 
@@ -635,7 +622,7 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			if ( $user_email ) {
 				$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
 			} else {
-				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );		
+				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );
 			}
 		}
 	}
@@ -906,7 +893,7 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 */
 function wsl_process_login_build_provider_config( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
 	$config = array();
 	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
@@ -940,12 +927,6 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
 	}
 
-	// set default scope
-	if( get_option( 'wsl_settings_' . $provider . '_app_scope' ) )
-	{
-		$config["providers"][$provider]["scope"] = get_option( 'wsl_settings_' . $provider . '_app_scope' );
-	}
-
 	// set custom config for facebook
 	if( strtolower( $provider ) == "facebook" )
 	{
@@ -962,6 +943,9 @@ function wsl_process_login_build_provider_config( $provider )
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
+		// set the default google scope
+		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
+
 		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
 		if( wsl_is_component_enabled( 'contacts' ) && get_option( 'wsl_settings_contacts_import_google' ) == 1 )
 		{
@@ -996,7 +980,7 @@ function wsl_process_login_request_user_social_profile( $provider )
 		// get idp adapter
 		$adapter = wsl_process_login_get_provider_adapter( $provider );
 
-		$config = get_provider_config_from_session_storage( $provider );
+		$config = wsl_get_provider_config_from_session_storage( $provider );
 
 		// if user authenticated successfully with social network
 		if( $adapter->isConnected() )
@@ -1028,9 +1012,9 @@ function wsl_process_login_request_user_social_profile( $provider )
 */
 function wsl_process_login_get_provider_adapter( $provider )
 {
-	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . "hybridauth/common/autoload.php";
+	require_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
-	$config = get_provider_config_from_session_storage( $provider );
+	$config = wsl_get_provider_config_from_session_storage( $provider );
 
 	$hybridauth = new Hybridauth\Hybridauth( $config );
 
@@ -1113,42 +1097,13 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	$assets_base_url  = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 
-	$message  = _wsl__("Unspecified error!", 'wordpress-social-login');
+	$message  = "";
 	$notes    = "";
 	$apierror = substr( $e->getMessage(), 0, 145 );
-
-	switch( $e->getCode() )
-	{
-		case 0 : $message = _wsl__("Unspecified error.", 'wordpress-social-login'); break;
-		case 1 : $message = _wsl__("WordPress Social Login is not properly configured.", 'wordpress-social-login'); break;
-		case 2 : $message = sprintf( __wsl__("WordPress Social Login is not properly configured.<br /> <b>%s</b> need to be properly configured.", 'wordpress-social-login'), $provider ); break;
-		case 3 : $message = _wsl__("Unknown or disabled provider.", 'wordpress-social-login'); break;
-		case 4 : $message = sprintf( _wsl__("WordPress Social Login is not properly configured.<br /> <b>%s</b> requires your application credentials.", 'wordpress-social-login'), $provider );
-			 $notes   = sprintf( _wsl__("<b>What does this error mean ?</b><br />Most likely, you didn't setup the correct application credentials for this provider. These credentials are required in order for <b>%s</b> users to access your website and for WordPress Social Login to work.", 'wordpress-social-login'), $provider ) . _wsl__('<br />Instructions for use can be found in the <a href="http://miled.github.io/wordpress-social-login/networks.html" target="_blank">User Manual</a>.', 'wordpress-social-login');
-			 break;
-		case 5 : $message = sprintf( _wsl__("Authentication failed. Either you have cancelled the authentication or <b>%s</b> refused the connection.", 'wordpress-social-login'), $provider ); break;
-		case 6 : $message = sprintf( _wsl__("Request failed. Either you have cancelled the authentication or <b>%s</b> refused the connection.", 'wordpress-social-login'), $provider ); break;
-		case 7 : $message = _wsl__("You're not connected to the provider.", 'wordpress-social-login'); break;
-		case 8 : $message = _wsl__("Provider does not support this feature.", 'wordpress-social-login'); break;
-	}
 
 	if( is_object( $adapter ) )
 	{
 		$adapter->disconnect();
-	}
-
-	// provider api response
-	if( class_exists( 'Hybrid_Error', false ) && Hybrid_Error::getApiError() )
-	{
-		$tmp = Hybrid_Error::getApiError();
-
-		$apierror = $apierror . "\n" . '<br />' . $tmp;
-
-		// network issue
-		if( trim( $tmp ) == '0.' )
-		{
-			$apierror = "Could not establish connection to provider API";
-		}
 	}
 
 	return wsl_render_error_page( $message, $notes, $provider, $apierror, $e );
