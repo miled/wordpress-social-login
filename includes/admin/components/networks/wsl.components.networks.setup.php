@@ -97,12 +97,7 @@ function wsl_component_networks_setup()
 
 		if( isset( $item["callback"] ) && $item["callback"] )
 		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
-		}
-
-		if( isset( $item["custom_callback"] ) && $item["custom_callback"] )
-		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'endpoints/' . strtolower( $provider_id ) . '.php</span>';
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'callbacks/' . strtolower($provider_id) . '.php</span>';
 		}
 
 		$setupsteps = 0;
