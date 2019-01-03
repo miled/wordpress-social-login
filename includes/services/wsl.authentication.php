@@ -939,7 +939,7 @@ function wsl_process_login_build_provider_config( $provider )
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
-		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
+		$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
 	}
 
 	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ;
