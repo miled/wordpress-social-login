@@ -258,38 +258,6 @@ function wsl_component_networks_setup()
 							<?php endif; ?>
 
 						<?php endif; ?>
-
-						<?php if ( $provider_id == "Facebook" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "Google" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "Twitter" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "WordPress" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
 					</div>
 
 					<?php if ( $provider_new_app_link  ) : ?>
