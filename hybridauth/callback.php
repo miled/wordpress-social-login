@@ -29,7 +29,7 @@ require_once __DIR__ . '/library/src/autoload.php';
 
 $provider_config = wsl_get_provider_config_from_session_storage($provider_id);
 $callback_url    = $provider_config['current_page'];
-$wp_abspath      = $_SESSION['wsl:consts:ABSPATH'];
+$wp_abspath      = isset($_SESSION['wsl:consts:ABSPATH']) ? $_SESSION['wsl:consts:ABSPATH'] : dirname(__FILE__, 5);
 
 try {
     $hybridauth = new Hybridauth\Hybridauth($provider_config);
