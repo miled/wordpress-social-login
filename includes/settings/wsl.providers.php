@@ -188,33 +188,64 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "https://v2.steemconnect.com/dashboard",
-	),
+    ),
 
-#-
-
-	// ARRAY(
-		// "provider_id"       => "AOL",
-		// "provider_name"     => "AOL",
-	// ),
-	// ARRAY(
-		// "provider_id"       => "LastFM",
-		// "provider_name"     => "LastFM",
-		// "callback"          => true,
-	// ),
 	ARRAY(
-		"provider_id"       => "Goodreads",
-		"provider_name"     => "Goodreads",
+		"provider_id"       => "Amazon",
+		"provider_name"     => "Amazon",
+		"require_client_id" => true,
 		"callback"          => true,
-		"new_app_link"      => "https://www.goodreads.com/api/keys",
+		"new_app_link"      => "https://developer.amazon.com/home.html",
 	),
-	// ARRAY(
-		// "provider_id"       => "Yandex",
-		// "provider_name"     => "Yandex",
-		// "require_client_id" => true,
-		// "callback"          => true,
-		// "new_app_link"      => "https://oauth.yandex.ru",
-	// ),
+	ARRAY(
+		"provider_id"       => "BitBucket",
+		"provider_name"     => "BitBucket",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://api.bitbucket.org/",
+	),
+	ARRAY(
+		"provider_id"       => "Discord",
+		"provider_name"     => "Discord",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://discordapp.com/developers/applications/",
+	),
+	ARRAY(
+		"provider_id"       => "GitLab",
+		"provider_name"     => "GitLab",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://docs.gitlab.com/ee/integration/oauth_provider.html",
+	),
+	ARRAY(
+		"provider_id"       => "Spotify",
+		"provider_name"     => "Spotify",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://developer.spotify.com/dashboard/",
+	),
+	ARRAY(
+		"provider_id"       => "WeChat",
+		"provider_name"     => "WeChat",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://open.wechat.com/",
+	),
+	ARRAY(
+		"provider_id"       => "Yandex",
+		"provider_name"     => "Yandex",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://tech.yandex.com/direct/doc/dg/concepts/register-docpage/#request",
+	),
 
+    // ARRAY(
+		// "provider_id"       => "Goodreads",
+		// "provider_name"     => "Goodreads",
+		// "callback"          => true,
+		// "new_app_link"      => "https://www.goodreads.com/api/keys",
+	// ),
 );
 
 // --------------------------------------------------------------------
