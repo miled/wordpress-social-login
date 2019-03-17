@@ -45,7 +45,7 @@ function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`"; 
+	$sql = "SELECT COUNT( * ) AS items FROM `$wpdb->users`";           
 
 	return $wpdb->get_var( $sql );
 }
@@ -452,3 +452,4 @@ function wsl_delete_stored_hybridauth_user_data( $user_id )
 add_action( 'delete_user', 'wsl_delete_stored_hybridauth_user_data' );
 
 // --------------------------------------------------------------------
+?>
