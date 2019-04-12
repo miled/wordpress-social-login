@@ -109,9 +109,10 @@ function wsl_render_auth_widget( $args = array() )
 	}
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
-	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) 
-                                        . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) 
-                                                . "action=wordpress_social_authenticate&mode=login&";
+	$authenticate_base_url = add_query_arg( array(
+		'action' => 'wordpress_social_authenticate',
+		'mode'   => 'login',
+	), site_url( 'wp-login.php', 'login_post' ) );
 
 	// if not in mode login, we overwrite the auth base url
 	// > admin auth playground
