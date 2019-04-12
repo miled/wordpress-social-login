@@ -201,7 +201,10 @@ function wsl_render_auth_widget( $args = array() )
 			}
 
 			// build authentication url
-			$authenticate_url = $authenticate_base_url . "provider=" . $provider_id . "&redirect_to=" . urlencode( $redirect_to );
+			$authenticate_url = add_query_arg( array(
+				'provider'    => $provider_id,
+				'redirect_to' => urlencode( $redirect_to ),
+			), $authenticate_base_url );
 
 			// http://codex.wordpress.org/Function_Reference/esc_url
 			$authenticate_url = esc_url( $authenticate_url );
