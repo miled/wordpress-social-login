@@ -940,6 +940,11 @@ function wsl_process_login_build_provider_config( $provider )
 		}
 	}
 
+	if( strtolower( $provider ) == "linkedin" )
+	{
+		$config["providers"][$provider]["scope"] = "r_liteprofile r_emailaddress w_member_social";
+	}
+
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
@@ -953,7 +958,7 @@ function wsl_process_login_build_provider_config( $provider )
 		}
 	}
 
-	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ;
+	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '';
 
 	// HOOKABLE: allow to overwrite scopes
 	$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
