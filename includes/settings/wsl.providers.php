@@ -71,6 +71,11 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "https://www.linkedin.com/secure/developer",
 	),
 	ARRAY(
+		"provider_id"       => "LinkedIn2",
+		"provider_name"     => "LinkedIn v2",
+		"new_app_link"      => "https://www.linkedin.com/secure/developer",
+	),
+	ARRAY(
 		"provider_id"       => "Disqus",
 		"provider_name"     => "Disqus",
 		"require_client_id" => true,

@@ -109,8 +109,8 @@ function wsl_render_auth_widget( $args = array() )
 	}
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
-	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' ) 
-                                        . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' ) 
+	$authenticate_base_url = site_url( 'wp-login.php', 'login_post' )
+                                        . ( strpos( site_url( 'wp-login.php', 'login_post' ), '?' ) ? '&' : '?' )
                                                 . "action=wordpress_social_authenticate&mode=login&";
 
 	// if not in mode login, we overwrite the auth base url
@@ -523,7 +523,7 @@ add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 function wsl_add_javascripts()
 {
 	$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
-    
+
     // if a user is visiting using a mobile device, WSL will fall back to more in page
 	$wsl_settings_use_popup = function_exists( 'wp_is_mobile' ) ? wp_is_mobile() ? 2 : $wsl_settings_use_popup : $wsl_settings_use_popup;
 

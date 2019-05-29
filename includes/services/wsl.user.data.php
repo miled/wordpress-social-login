@@ -6,7 +6,7 @@
 *   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
-/** 
+/**
 * User data functions (database related)
 *
 * Notes:
@@ -45,7 +45,7 @@ function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`"; 
+	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`";
 
 	return $wpdb->get_var( $sql );
 }
@@ -56,7 +56,7 @@ function wsl_get_wsl_users_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT( distinct user_id ) AS items FROM `{$wpdb->prefix}wslusersprofiles`"; 
+	$sql = "SELECT COUNT( distinct user_id ) AS items FROM `{$wpdb->prefix}wslusersprofiles`";
 
 	return $wpdb->get_var( $sql );
 }
@@ -82,7 +82,7 @@ function wsl_get_stored_hybridauth_user_profiles_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles`"; 
+	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles`";
 
 	return $wpdb->get_var( $sql );
 }
@@ -202,11 +202,11 @@ function wsl_get_stored_hybridauth_user_profiles_by_user_id( $user_id )
 function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 {
 	global $wpdb;
-	
-	$wpdb->show_errors(); 
+
+	$wpdb->show_errors();
 
 	$sql = "SELECT id, object_sha FROM `{$wpdb->prefix}wslusersprofiles` where user_id = %d and provider = %s and identifier = %s";
-	
+
 	$rs  = $wpdb->get_results( $wpdb->prepare( $sql, $user_id, $provider, $profile->identifier ) );
 
 	// we only sotre the user profile if it has changed since last login.
@@ -230,28 +230,28 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 		$table_data['id'] = $rs[0]->id;
 	}
 
-	$fields = array( 
-		'identifier', 
-		'profileurl', 
-		'websiteurl', 
-		'photourl', 
-		'displayname', 
-		'description', 
-		'firstname', 
-		'lastname', 
-		'gender', 
-		'language', 
-		'age', 
-		'birthday', 
-		'birthmonth', 
-		'birthyear', 
-		'email', 
-		'emailverified', 
-		'phone', 
-		'address', 
-		'country', 
-		'region', 
-		'city', 
+	$fields = array(
+		'identifier',
+		'profileurl',
+		'websiteurl',
+		'photourl',
+		'displayname',
+		'description',
+		'firstname',
+		'lastname',
+		'gender',
+		'language',
+		'age',
+		'birthday',
+		'birthmonth',
+		'birthyear',
+		'email',
+		'emailverified',
+		'phone',
+		'address',
+		'country',
+		'region',
+		'city',
 		'zip'
 	);
 
@@ -265,7 +265,7 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 		}
 	}
 
-	$wpdb->replace( "{$wpdb->prefix}wslusersprofiles", $table_data ); 
+	$wpdb->replace( "{$wpdb->prefix}wslusersprofiles", $table_data );
 
 	return $wpdb->insert_id;
 }
@@ -286,7 +286,8 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 			get_option( 'wsl_settings_contacts_import_facebook' )  == 1 && strtolower( $provider ) == "facebook"   ||
 			get_option( 'wsl_settings_contacts_import_google' )    == 1 && strtolower( $provider ) == "google"     ||
 			get_option( 'wsl_settings_contacts_import_twitter' )   == 1 && strtolower( $provider ) == "twitter"    ||
-			get_option( 'wsl_settings_contacts_import_linkedin' )  == 1 && strtolower( $provider ) == "linkedin"   || 
+			get_option( 'wsl_settings_contacts_import_linkedin' )  == 1 && strtolower( $provider ) == "linkedin"   ||
+			get_option( 'wsl_settings_contacts_import_linkedin2' ) == 1 && strtolower( $provider ) == "linkedin2"  ||
 			get_option( 'wsl_settings_contacts_import_live' )      == 1 && strtolower( $provider ) == "live"       ||
 			get_option( 'wsl_settings_contacts_import_vkontakte' ) == 1 && strtolower( $provider ) == "vkontakte"
 		)
@@ -315,7 +316,7 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 		$user_contacts = $adapter->getUserContacts();
 	}
 	catch( Exception $e )
-	{ 
+	{
 		// well.. we can't do much.
 	}
 
@@ -327,8 +328,8 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 	foreach( $user_contacts as $contact )
 	{
 		$wpdb->insert(
-			"{$wpdb->prefix}wsluserscontacts", 
-				array( 
+			"{$wpdb->prefix}wsluserscontacts",
+				array(
 					"user_id"     => $user_id,
 					"provider"    => $provider,
 					"identifier"  => $contact->identifier,
@@ -337,7 +338,7 @@ function wsl_store_hybridauth_user_contacts( $user_id, $provider, $adapter )
 					"profile_url" => $contact->profileURL,
 					"photo_url"   => $contact->photoURL,
 				)
-			); 
+			);
 	}
 }
 
@@ -353,7 +354,7 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 
 	do_action('bp_setup_globals');
 
-	// make sure buddypress is loaded. 
+	// make sure buddypress is loaded.
 	// > is this a legit way to check?
 	if( ! function_exists( 'xprofile_set_field_data' ) )
 	{
@@ -362,7 +363,7 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 
 	// check if profiles mapping is enabled
 	$wsl_settings_buddypress_enable_mapping = get_option( 'wsl_settings_buddypress_enable_mapping' );
-	
+
 	if( $wsl_settings_buddypress_enable_mapping != 1 )
 	{
 		return;
@@ -371,7 +372,7 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 	// get current mapping
 	$wsl_settings_buddypress_xprofile_map = get_option( 'wsl_settings_buddypress_xprofile_map' );
 
-	$hybridauth_fields = array(  
+	$hybridauth_fields = array(
 		'identifier'   ,
 		'profileURL'   ,
 		'webSiteURL'   ,
@@ -386,7 +387,7 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 		'birthDay'     ,
 		'birthMonth'   ,
 		'birthYear'    ,
-		'email'        , 
+		'email'        ,
 		'phone'        ,
 		'address'      ,
 		'country'      ,
@@ -394,7 +395,7 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 		'city'         ,
 		'zip'          ,
 	);
-	
+
 	$hybridauth_user_profile = (array) $hybridauth_user_profile;
 
 	// all check: start mapping process
@@ -419,11 +420,11 @@ function wsl_buddypress_xprofile_mapping( $user_id, $provider, $hybridauth_user_
 			// if eq birthDate
 			if( $field_name == 'birthDate' )
 			{
-				$value = 
+				$value =
 					str_pad( (int) $hybridauth_user_profile[ 'birthYear'  ], 4, '0', STR_PAD_LEFT )
-					. '-' . 
+					. '-' .
 					str_pad( (int) $hybridauth_user_profile[ 'birthMonth' ], 2, '0', STR_PAD_LEFT )
-					. '-' . 
+					. '-' .
 					str_pad( (int) $hybridauth_user_profile[ 'birthDay'   ], 2, '0', STR_PAD_LEFT )
 					. ' 00:00:00';
 

@@ -940,7 +940,7 @@ function wsl_process_login_build_provider_config( $provider )
 		}
 	}
 
-	if( strtolower( $provider ) == "linkedin" )
+	if( strtolower( $provider ) == "linkedin2" )
 	{
 		$config["providers"][$provider]["scope"] = "r_liteprofile r_emailaddress w_member_social";
 	}

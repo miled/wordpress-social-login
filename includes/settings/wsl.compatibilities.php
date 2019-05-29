@@ -165,6 +165,11 @@ function wsl_update_compatibilities()
 		update_option( 'wsl_settings_contacts_import_linkedin', 2 );
 	}
 
+	if( ! get_option( 'wsl_settings_contacts_import_linkedin2' ) )
+	{
+		update_option( 'wsl_settings_contacts_import_linkedin2', 2 );
+	}
+
 	if( ! get_option( 'wsl_settings_buddypress_enable_mapping' ) )
 	{
 		update_option( 'wsl_settings_buddypress_enable_mapping', 2 );

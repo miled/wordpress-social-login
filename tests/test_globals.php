@@ -29,7 +29,7 @@ class WSL_Test_Globals extends WP_UnitTestCase
 	{
 		global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
-		$this->assertGreaterThan( 25, count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG ) );
+		$this->assertGreaterThan( 26, count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG ) );
 	}
 
 	function test_components()

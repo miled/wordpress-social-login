@@ -250,7 +250,7 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
 							<?php endif; ?>
 
-							<?php if ( $provider_id == "LinkedIn" ) : ?>
+							<?php if ( $provider_id == "LinkedIn" || $provider_id == "LinkedIn2" ) : ?>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Choose <b>Live</b> on <b>Live Status</b>.', 'wordpress-social-login') ?></p>
 							<?php endif; ?>
 
