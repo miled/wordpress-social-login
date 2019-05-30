@@ -232,8 +232,11 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to Settings page and click on <b>Add Platform</b>. Choose website and enter in the new screen your website url in <b>App Domains</b> and <b>Site URL</b> fields", 'wordpress-social-login') ?>.
 									<?php _wsl_e("They should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to the <b>Status & Review</b> page and choose <b>yes</b> where it says <b>Do you want to make this app and all its live features available to the general public?</b>", 'wordpress-social-login') ?>.</p>
-							<?php else: ?>
+							<?php elseif ( $provider_id == "Twitter" ) :  ?>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("You must apply for a Twitter developer account and be approved before you may create new apps", 'wordpress-social-login') ?>.</p>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p>
+							<?php else: ?>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p>
 							<?php endif; ?>
@@ -251,7 +254,8 @@ function wsl_component_networks_setup()
 							<?php endif; ?>
 
 							<?php if ( $provider_id == "LinkedIn" || $provider_id == "LinkedIn2" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Choose <b>Live</b> on <b>Live Status</b>.', 'wordpress-social-login') ?></p>
+								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Add the following URL address to Redirect URLs:', 'wordpress-social-login') ?></p>
+								<p><span style="color:green"><?php echo $endpoint_url . '?hauth.done=' . $provider_id; ?></span></p>
 							<?php endif; ?>
 
 							<?php if ( $provider_id == "Google" ) : ?>
