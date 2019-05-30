@@ -112,7 +112,10 @@ function wsl_component_networks_setup()
 		<div class="stuffbox" id="namediv">
 			<h3>
 				<label class="wp-neworks-label">
-					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php _wsl_e( $provider_name, 'wordpress-social-login' ) ?>
+					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php _wsl_e( $provider_name, 'wordpress-social-login' ); ?>
+
+					<?php if ( $provider_id == 'LinkedIn' ) { echo _wsl_e( ' (for old applications)', 'wordpress-social-login' ); }
+					elseif ( $provider_id == 'LinkedIn2' ) { echo _wsl_e( ' (for new applications)', 'wordpress-social-login' ); } ?>
 				</label>
 			</h3>
 			<div class="inside">
