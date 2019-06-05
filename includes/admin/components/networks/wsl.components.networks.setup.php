@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -80,7 +80,6 @@ function wsl_component_networks_setup()
 
 		$require_client_id          = isset( $item["require_client_id"] ) ? $item["require_client_id"] : '';
 		$require_api_key            = isset( $item["require_api_key"]   ) ? $item["require_api_key"]   : '';
-		$default_api_scope          = isset( $item["default_api_scope"] ) ? $item["default_api_scope"] : '';
 		$provide_email              = isset( $item["provide_email"]     ) ? $item["provide_email"]     : '';
 
 		$provider_new_app_link      = isset( $item["new_app_link"]      ) ? $item["new_app_link"]      : '';
@@ -98,12 +97,7 @@ function wsl_component_networks_setup()
 
 		if( isset( $item["callback"] ) && $item["callback"] )
 		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . '?hauth.done=' . $provider_id . '</span>';
-		}
-
-		if( isset( $item["custom_callback"] ) && $item["custom_callback"] )
-		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'endpoints/' . strtolower( $provider_id ) . '.php</span>';
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'callbacks/' . strtolower($provider_id) . '.php</span>';
 		}
 
 		$setupsteps = 0;
@@ -155,22 +149,6 @@ function wsl_component_networks_setup()
 									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>
 							<?php } ?>
-
-							<?php if( get_option( 'wsl_settings_development_mode_enabled' ) ) { ?>
-								<?php if( $default_api_scope ) { ?>
-									<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
-										<td><?php _wsl_e("Application Scope", 'wordpress-social-login') ?>:</td>
-										<td><input dir="ltr" type="text" name="<?php echo 'wsl_settings_' . $provider_id . '_app_scope' ?>" value="<?php echo get_option( 'wsl_settings_' . $provider_id . '_app_scope' ); ?>" ></td>
-									</tr>
-								<?php } ?>
-
-								<?php if( $provider_callback_url ) { ?>
-									<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
-										<td><?php _wsl_e("Callback URL", 'wordpress-social-login') ?>:</td>
-										<td><input dir="ltr" type="text" name="" value="<?php echo  strip_tags( $provider_callback_url ); ?>" readonly="readonly"></td>
-									</tr>
-								<?php } ?>
-							<?php } ?>
 						<?php } // if require registration ?>
 					</tbody>
 				</table>
@@ -215,12 +193,9 @@ function wsl_component_networks_setup()
 					<hr class="wsl" />
 					<?php if (  $provider_id == "Steam" ) : ?>
 					<?php elseif ( $provider_new_app_link  ) : ?>
-						<?php _wsl_e('<span style="color:#CB4B16;">Application</span> id and secret (also sometimes referred as <span style="color:#CB4B16;">Consumer</span> key and secret or <span style="color:#CB4B16;">Client</span> id and secret) are what we call an application credentials', 'wordpress-social-login') ?>.
+						<?php _wsl_e('<span style="color:#CB4B16;">Application <strong>ID</strong> and <strong>Secret</strong></span> (also sometimes referred as <span style="color:#CB4B16;">API</span> key and secret or <span style="color:#CB4B16;">Consumer</span> key and secret or <span style="color:#CB4B16;">Client</span> ID and secret) are what we call an application credentials', 'wordpress-social-login') ?>.
 
-						<?php echo sprintf( _wsl__( 'This application will link your website <code>%s</code> to <code>%s API</code> and these credentials are needed in order for <b>%s</b> users to access your website', 'wordpress-social-login'), $_SERVER["SERVER_NAME"], $provider_name, $provider_name ) ?>.
-						<br />
-
-						<?php _wsl_e("These credentials may also differ in format, name and content depending on the social network.", 'wordpress-social-login') ?>
+						<?php echo sprintf( _wsl__( 'The application will link your website to <b>%s\'s API</b> and it\'s needed in order for <b>%s\'s Users</b> to access your website', 'wordpress-social-login'), $provider_name, $provider_name ) ?>.
 						<br />
 						<br />
 
@@ -282,38 +257,6 @@ function wsl_component_networks_setup()
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials into the boxes above", 'wordpress-social-login') ?>.</p>
 							<?php endif; ?>
 
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "Facebook" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'facebook/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'facebook/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "Google" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'google/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'google/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "Twitter" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'twitter/3.png' ?>"></a></td>
-							</table>
-						<?php endif; ?>
-
-						<?php if ( $provider_id == "WordPress" ) : ?>
-							<table style="text-align: center;margin-bottom:12px;">
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/1.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/1.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/2.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/2.png' ?>"></a></td>
-								<td><a class="span4 thumbnail" href="<?php echo $assets_setup_base_url . 'wordpress/3.png' ?>" target="_blank"><img src="<?php echo $assets_setup_base_url . 'wordpress/3.png' ?>"></a></td>
-							</table>
 						<?php endif; ?>
 					</div>
 

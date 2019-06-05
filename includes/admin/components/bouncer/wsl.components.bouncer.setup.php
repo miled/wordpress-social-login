@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -102,7 +102,7 @@ function wsl_component_bouncer_setup_accounts_linking()
 			<?php _wsl_e("When enabled, Bouncer will popup a new screen for unrecognised user where they will be given the choice to either associate any existing account in your website with the provider ID they have connected with or to create a new user account", 'wordpress-social-login') ?>.
 		</p>
 		<table width="100%" border="0" cellpadding="5" cellspacing="2" style="border-top:1px solid #ccc;">  
-		  <tr>
+			<tr>
 			<td width="200" align="right"><strong><?php _wsl_e("Link user account", 'wordpress-social-login') ?> :</strong></td>
 			<td> 
 				<select name="wsl_settings_bouncer_accounts_linking_enabled">
@@ -110,7 +110,7 @@ function wsl_component_bouncer_setup_accounts_linking()
 					<option <?php if( get_option( 'wsl_settings_bouncer_accounts_linking_enabled' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
 				</select>
 			</td>
-		  </tr>
+			</tr>
 		</table>  
 	</div>
 </div>

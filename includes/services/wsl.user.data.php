@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /** 
@@ -45,7 +45,7 @@ function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`"; 
+	$sql = "SELECT COUNT( * ) AS items FROM `$wpdb->users`";           
 
 	return $wpdb->get_var( $sql );
 }
@@ -85,6 +85,17 @@ function wsl_get_stored_hybridauth_user_profiles_count()
 	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles`"; 
 
 	return $wpdb->get_var( $sql );
+}
+
+// --------------------------------------------------------------------
+
+function wsl_get_stored_hybridauth_user_profiles_count_by_provider( $provider )
+{
+	global $wpdb;
+
+	$sql = "SELECT COUNT(`id`) FROM `{$wpdb->prefix}wslusersprofiles` WHERE provider = %s";
+
+	return $wpdb->get_var( $wpdb->prepare( $sql, $provider ) );
 }
 
 // --------------------------------------------------------------------
@@ -208,7 +219,7 @@ function wsl_store_hybridauth_user_profile( $user_id, $provider, $profile )
 	}
 
 	$table_data = array(
-		"id"         => 'null',
+		"id"         => null,
 		"user_id"    => $user_id,
 		"provider"   => $provider,
 		"object_sha" => $object_sha
@@ -441,3 +452,4 @@ function wsl_delete_stored_hybridauth_user_data( $user_id )
 add_action( 'delete_user', 'wsl_delete_stored_hybridauth_user_data' );
 
 // --------------------------------------------------------------------
+?>

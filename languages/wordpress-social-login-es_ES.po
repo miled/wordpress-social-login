@@ -2,18 +2,19 @@ msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Login\n"
 "POT-Creation-Date: 2014-11-06 01:46+0100\n"
-"PO-Revision-Date: 2015-05-08 08:53+0100\n"
+"PO-Revision-Date: 2017-01-04 02:06+0100\n"
 "Last-Translator: Mrassi Med <hybridauth@gmail.com>\n"
 "Language-Team: WordPress Social Login <hybridauth@gmail.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 1.7.6\n"
+"X-Generator: Poedit 1.8.11\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "Language: es_ES\n"
 
 #: wordpress-social-login/includes/admin/components/auth-paly/index.php:53
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:36
+#, fuzzy
 msgid "Provider user ID"
 msgstr "ID del proveedor del usuario"
 
@@ -1057,7 +1058,7 @@ msgstr "Componente"
 #: wordpress-social-login/includes/admin/components/components/wsl.components.help.setup.php:81
 #, php-format
 msgid "Version %s"
-msgstr ""
+msgstr "Version %s"
 
 #: wordpress-social-login/includes/admin/components/components/wsl.components.help.setup.php:88
 #, php-format
@@ -1554,7 +1555,7 @@ msgstr ""
 
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:120
 msgid "Tip"
-msgstr ""
+msgstr "Truco"
 
 #: wordpress-social-login/includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:122
 msgid ""
@@ -1861,7 +1862,7 @@ msgstr ""
 #: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.sidebar.php:143
 #: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.sidebar.php:152
 msgid "Conversions"
-msgstr ""
+msgstr "Conversiones"
 
 #: wordpress-social-login/includes/admin/components/networks/wsl.components.networks.sidebar.php:146
 msgid "WP users"
@@ -2136,7 +2137,7 @@ msgstr ""
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:533
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:571
 msgid "Username"
-msgstr ""
+msgstr "Usuario"
 
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.list.php:51
 msgid ""
@@ -2224,7 +2225,7 @@ msgstr ""
 
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:97
 msgid "Wordpress User ID"
-msgstr ""
+msgstr "ID de usuario"
 
 #: wordpress-social-login/includes/admin/components/users/wsl.components.users.profiles.php:101
 msgid "Website"
@@ -2324,7 +2325,7 @@ msgstr ""
 
 #: wordpress-social-login/includes/admin/wsl.admin.ui.php:255
 msgid "Oops! We ran into an issue."
-msgstr ""
+msgstr "¡Ups! Nos encontramos con un problema."
 
 #: wordpress-social-login/includes/admin/wsl.admin.ui.php:260
 msgid ""
@@ -2457,6 +2458,8 @@ msgid ""
 "You have to be logged in to be able to link your existing account. Do you "
 "want to <a href='%s'>login</a>?"
 msgstr ""
+"Tienes que estar conectado para enlazar tu cuenta existente... ¿Quieres ? <a "
+"href='%s'>acceder</a>?"
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:113
 msgid "You do not have sufficient permissions to access this page."
@@ -2500,6 +2503,8 @@ msgstr "El Rebotador dice no."
 #, php-format
 msgid "Sorry, we couldn't connect you. <a href=\"%s\">Please try again</a>."
 msgstr ""
+"Disculpe, no pudimos conectarle. <a href=\"%s\">Por favor intente de nuevo</"
+"a>."
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:508
 msgid "Registration is now closed."
@@ -2519,6 +2524,8 @@ msgid ""
 "Sorry, we couldn't connect you with <b>%s</b>. <a href=\"%s\">Please try "
 "again</a>."
 msgstr ""
+"Lo sentimos, no pudimos conectarle con <b>% s </ b>. <a href=\"%s\"> Por "
+"favor, inténtelo de nuevo </a>."
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:1071
 msgid "Unspecified error!"
@@ -2562,6 +2569,8 @@ msgid ""
 "Authentication failed. Either you have cancelled the authentication or <b>"
 "%s</b> refused the connection."
 msgstr ""
+"Fallo en la autentificación. O se ha cancelado o <b>%s</b> ha rechazado la "
+"conexión"
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:1085
 #, php-format
@@ -2569,6 +2578,7 @@ msgid ""
 "Request failed. Either you have cancelled the authentication or <b>%s</b> "
 "refused the connection."
 msgstr ""
+"Fallo en la petición. O se ha cancelado o <b>%s</b> ha rechazado la conexión"
 
 #: wordpress-social-login/includes/services/wsl.authentication.php:1086
 msgid "You're not connected to the provider."
@@ -2675,7 +2685,7 @@ msgstr ""
 #: wordpress-social-login/includes/widgets/wsl.auth.widgets.php:232
 #, php-format
 msgid "Connect with %s"
-msgstr ""
+msgstr "Conectar con %s"
 
 #: wordpress-social-login/includes/widgets/wsl.auth.widgets.php:247
 msgid ""
@@ -2688,54 +2698,54 @@ msgstr ""
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:66
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:73
 msgid "E-mail is not valid!"
-msgstr ""
+msgstr "E-mail no válido"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:80
 msgid "That E-mail is already registered!"
-msgstr ""
+msgstr "Este E-mail ya está registrado"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:90
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:97
 msgid "Username is not valid!"
-msgstr ""
+msgstr "Nombre de usuario no válido"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:104
 msgid "That Username is already registered!"
-msgstr ""
+msgstr "Nombre de usuario ya en uso"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:291
 #, php-format
 msgid "Hi %s, you're one step away from completing your account."
-msgstr ""
+msgstr "Hola %s, estás a un paso de completar tu cuenta."
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:294
 msgid "Please, fill in your information in the form below to continue"
-msgstr ""
+msgstr "Por favor, rellena tu información aquí abajo para continuar"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:339
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:544
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:598
 msgid "Continue"
-msgstr ""
+msgstr "Continuar"
 
 #: wordpress-social-login/includes/widgets/wsl.complete.registration.php:352
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:615
 #, php-format
 msgid "Back to %s"
-msgstr ""
+msgstr "Volver a %s"
 
 #: wordpress-social-login/includes/widgets/wsl.error.pages.php:144
 #: wordpress-social-login/includes/widgets/wsl.error.pages.php:225
 msgid "Oops! We ran into an issue"
-msgstr ""
+msgstr "¡Ups! Nos encontramos con un problema"
 
 #: wordpress-social-login/includes/widgets/wsl.error.pages.php:249
 msgid "Details"
-msgstr ""
+msgstr "Detalles"
 
 #: wordpress-social-login/includes/widgets/wsl.error.pages.php:250
 msgid "Back to home"
-msgstr ""
+msgstr "Volver al inicio"
 
 #: wordpress-social-login/includes/widgets/wsl.error.pages.php:299
 msgid ""
@@ -2746,20 +2756,20 @@ msgstr ""
 #: wordpress-social-login/includes/widgets/wsl.loading.screens.php:38
 #: wordpress-social-login/includes/widgets/wsl.loading.screens.php:120
 msgid "Redirecting..."
-msgstr ""
+msgstr "Redirigiendo…"
 
 #: wordpress-social-login/includes/widgets/wsl.loading.screens.php:82
 #, php-format
 msgid "Contacting <b>%s</b>, please wait..."
-msgstr ""
+msgstr "Conectando con <b>%s</b>, espera un momento..."
 
 #: wordpress-social-login/includes/widgets/wsl.loading.screens.php:187
 msgid "Processing, please wait..."
-msgstr ""
+msgstr "Procesando, por favor espera..."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:67
 msgid "Not tonight."
-msgstr ""
+msgstr "Esta noche no."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:82
 #, php-format
@@ -2767,40 +2777,48 @@ msgid ""
 "<strong>ERROR</strong>: Invalid username or incorrect password. <a href=\"%s"
 "\">Lost your password</a>?"
 msgstr ""
+"<strong>ERROR</strong>: Nombre de usuario o clave incorrectos. <a href=\"%s"
+"\">¿Olvidaste tu clave</a>?"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:122
 msgid "<strong>ERROR</strong>: Please type your e-mail address."
-msgstr ""
+msgstr "<strong>ERROR</strong>: Pon tu e-mail"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:127
 msgid "<strong>ERROR</strong>: Please enter a valid email address."
-msgstr ""
+msgstr "<strong>ERROR</strong>: Pon un email válido"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:132
 msgid "<strong>ERROR</strong>: Sorry, that email address is already used!"
-msgstr ""
+msgstr "<strong>ERROR</strong>: Disculpa ese email ya está en uso."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:146
 msgid "<strong>ERROR</strong>: That username is not allowed."
-msgstr ""
+msgstr "<strong>ERROR</strong>: Nombre de usuario no permitido"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:151
 msgid "<strong>ERROR</strong>: Username must be at least 4 characters."
 msgstr ""
+"<strong>ERROR</strong>: El nombre de usuario tiene que tener al menos 4 "
+"letras."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:156
 msgid ""
 "<strong>ERROR</strong>: Sorry, usernames may not contain the character "
 "&#8220;_&#8221;!"
 msgstr ""
+"<strong>ERROR</strong>: Disculpa el nombre de usuario no puede tener el "
+"caracter &#8220;_&#8221;!"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:161
 msgid "<strong>ERROR</strong>: Sorry, usernames must have letters too!"
 msgstr ""
+"<strong>ERROR</strong>: Disculpa pero el nombre de usuario tiene que tener "
+"letras también."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:166
 msgid "<strong>ERROR</strong>: Sorry, that username already exists!"
-msgstr ""
+msgstr "<strong>ERROR</strong>: Disculpa, ese nombre de usuario ya existe."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:463
 #, php-format
@@ -2813,26 +2831,28 @@ msgid ""
 "You're now signed in with your %s account but you still one step away of "
 "getting into our website"
 msgstr ""
+"Ya estás conectado con tu cuenta %s pero aún queda un paso para acceder a "
+"nuestra web"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:473
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:525
 msgid "Already have an account"
-msgstr ""
+msgstr "Ya tienes una cuenta"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:474
 #, php-format
 msgid "Link your existing account on our website to your %s ID."
-msgstr ""
+msgstr "Enlaza tu cuenta con tu cuenta de %s"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:478
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:562
 msgid "New to our website"
-msgstr ""
+msgstr "Nuevo en el sitio"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:479
 #, php-format
 msgid "Create a new account and it will be associated with your %s ID."
-msgstr ""
+msgstr "Crea una nueva cuenta y asociala con tu ID de %s"
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:486
 msgid "Link my account"
@@ -2847,6 +2867,8 @@ msgid ""
 "Please enter your username and password of your existing account on our "
 "website. Once verified, it will linked to your % ID"
 msgstr ""
+"Pon tu nombre de usuario y clave para enlazar tu perfil con la cuenta de %. "
+"Cuando se verifique estará enlazado."
 
 #: wordpress-social-login/includes/widgets/wsl.users.gateway.php:539
 msgid "Password"
