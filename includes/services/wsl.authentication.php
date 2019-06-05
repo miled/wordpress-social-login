@@ -897,7 +897,7 @@ function wsl_process_login_build_provider_config( $provider )
 
 	$config = array();
 	$config["current_page"] = Hybridauth\HttpClient\Util::getCurrentUrl(true);
-	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . '?hauth.done=' . $provider;
+	$config["callback"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'callbacks/' . strtolower( $provider ) . '.php';
 	$config["providers"] = array();
 	$config["providers"][$provider] = array();
 	$config["providers"][$provider]["enabled"] = true;
@@ -921,12 +921,6 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["keys"]["secret"] = get_option( 'wsl_settings_' . $provider . '_app_secret' );
 	}
 
-	// set custom endpoint?
-	if( in_array( strtolower( $provider ), array( 'dribbble' ) ) )
-	{
-		$config["providers"][$provider]["endpoint"] = WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL . 'endpoints/' . strtolower( $provider ) . '.php';
-	}
-
 	// set custom config for facebook
 	if( strtolower( $provider ) == "facebook" )
 	{
@@ -938,6 +932,8 @@ function wsl_process_login_build_provider_config( $provider )
 		{
 			$config["providers"][$provider]["display"] = "page";
 		}
+
+		$config["providers"][$provider]["scope"] = "email, public_profile";
 	}
 
 	if( strtolower( $provider ) == "linkedin2" )
@@ -948,14 +944,7 @@ function wsl_process_login_build_provider_config( $provider )
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
-		// set the default google scope
-		$config["providers"][$provider]["scope"] = "profile https://www.googleapis.com/auth/plus.profile.emails.read";
-
-		// if contacts import enabled, we request an extra permission 'https://www.google.com/m8/feeds/'
-		if( wsl_is_component_enabled( 'contacts' ) && get_option( 'wsl_settings_contacts_import_google' ) == 1 )
-		{
-			$config["providers"][$provider]["scope"] .= " https://www.google.com/m8/feeds/";
-		}
+		$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
 	}
 
 	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '';
@@ -1104,7 +1093,7 @@ function wsl_process_login_render_error_page( $e, $config = null, $provider = nu
 
 	$message  = "";
 	$notes    = "";
-	$apierror = substr( $e->getMessage(), 0, 145 );
+	$apierror = substr( $e->getMessage(), 0, 256 );
 
 	if( is_object( $adapter ) )
 	{
