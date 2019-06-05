@@ -97,7 +97,7 @@ function wsl_component_networks_setup()
 
 		if( isset( $item["callback"] ) && $item["callback"] )
 		{
-			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'hauth.done=' . $provider_id . '</span>';
+			$provider_callback_url  = '<span style="color:green">' . $endpoint_url . 'callbacks/' . strtolower( $provider_id ) . '.php</span>';
 		}
 
 		if( isset( $item["custom_callback"] ) && $item["custom_callback"] )
@@ -253,11 +253,6 @@ function wsl_component_networks_setup()
 
 							<?php if ( $provider_id == "Live" ) : ?>
 								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
-							<?php endif; ?>
-
-							<?php if ( $provider_id == "LinkedIn" || $provider_id == "LinkedIn2" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Add the following URL address to Redirect URLs:', 'wordpress-social-login') ?></p>
-								<p><span style="color:green"><?php echo $endpoint_url . '?hauth.done=' . $provider_id; ?></span></p>
 							<?php endif; ?>
 
 							<?php if ( $provider_id == "Google" ) : ?>

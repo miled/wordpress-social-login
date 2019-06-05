@@ -22,7 +22,7 @@
 *  - That loading screen will refresh it self adding &redirect_to_provider=ture to the url, which will trigger the next step,
 *  - Next, WSL will instantiate Hybridauth main class, build the required provider config then initiate the auth protocol /hybridauth/?hauth.start=PROVIDER_ID,
 *  - Hybridauth will redirect the user to the selected provider site to ask for his consent (authorisation to access his profile),
-*  - If the user gives his authorisation for your application, the provider will redirect the user back to Hybridauth entry point /hybridauth/?hauth.done=PROVIDER_ID,
+*  - If the user gives his authorisation for your application, the provider will redirect the user back to Hybridauth entry point /hybridauth/callbacks/PROVIDER_ID.php,
 *  - Hybridauth will redirect the user to the given callback url.
 *  - In that callback url, WSL will display a second loading screen This loading screen will generate and submit a form with a hidden input &action= wordpress_social_authenticated to the current url which will trigger the second part of the auth process,
 *  - WSL will grab the user profile from the provider, attempt to identify him and create a new WordPress user if he doesn't exist. In this step, and when enabled, WSL will also import the user contacts and map his profile data to Buddypress xporfiles tables,

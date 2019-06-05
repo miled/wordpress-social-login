@@ -68,11 +68,13 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY(
 		"provider_id"       => "LinkedIn",
 		"provider_name"     => "LinkedIn",
+		"callback"          => true,
 		"new_app_link"      => "https://www.linkedin.com/secure/developer",
 	),
 	ARRAY(
 		"provider_id"       => "LinkedIn2",
 		"provider_name"     => "LinkedIn v2",
+		"callback"          => true,
 		"new_app_link"      => "https://www.linkedin.com/secure/developer",
 	),
 	ARRAY(
