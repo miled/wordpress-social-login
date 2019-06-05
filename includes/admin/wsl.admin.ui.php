@@ -170,6 +170,21 @@ function wsl_admin_ui_header( $wslp = null )
 				</div>
 			<?php
 		}
+
+		if( true )
+		{
+			?>
+				<div class="fade updated" style="margin: 4px 0 20px; border-left-color: #006a95;">
+					<p>
+						<?php _wsl_e("<b>Breaking Changes Notice:</b> In WordPress Social Login 3.0 we have reworked the IDPs <b>Callback URLs</b>. To make sure the plugin will keep working correctly, you can either create a new application for each enabled provider, or simply update the already created application with the newly generated callback urls (First, go to <b>Networks</b> tab, then refer to <b>Where do I get this info?</b> section to copy the new callback url, and finally update that link in the provider developer website). It's also important to note that a number of providers are now made obsolete in WSL 3.0, while a few other were added", 'wordpress-social-login') ?>.
+					</p>
+					<p>
+						<a class="button-secondary" style="background-color: #0085ba; border-color: #006a95 #00648c #00648c; color: #fff;" href="options-general.php?page=wordpress-social-login&wslp=networks&disablemigrationnotice"><?php _wsl_e('Alright', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/migrating-to-3.0.html" target="_blank"><?php _wsl_e('Read about the latest update', 'wordpress-social-login') ?></a>
+					</p>
+				</div>
+			<?php
+		}
 	?>
 
 	<div class="alignright">
@@ -397,7 +412,12 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('...', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('WSL fully migrated to Hybridauth 3', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Reworked providers Callback URLs', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Added new providers: Amazon, Discord and Spotify to name a few', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('A number of providers are now defunct', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Obligatory minor improvement', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('and whatnot.', 'wordpress-social-login') ?></li>
 				</ul>
 			</td>
 		</tr>

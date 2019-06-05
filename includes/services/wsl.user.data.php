@@ -44,9 +44,7 @@ function wsl_wp_email_exists( $email )
 function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
-
-	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`";           
-
+	$sql = "SELECT COUNT( * ) AS items FROM `$wpdb->users`";           
 	return $wpdb->get_var( $sql );
 }
 
