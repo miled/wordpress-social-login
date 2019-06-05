@@ -45,7 +45,7 @@ function wsl_get_wordpess_users_count()
 {
 	global $wpdb;
 
-	$sql = "SELECT COUNT( * ) AS items FROM `$wpdb->users`";           
+	$sql = "SELECT COUNT( * ) AS items FROM `{$wpdb->prefix}users`";           
 
 	return $wpdb->get_var( $sql );
 }
