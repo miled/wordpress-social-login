@@ -1,13 +1,9 @@
 <?php
 /*
-Plugin Name: WordPress Social Login **Customized for GGC**
-** !!
-** This plugin contains alterations not found in the main plugin repository. Before performing an update, please see commit history and make sure to migrate any changes made to the plugin after an update. **
-** !!
-
+Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
-Description: * !See comments in code before updating! * Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 999999999.3.0.1
+Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
+Version: 3.0.1
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -248,7 +244,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.authentic
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.mail.notification.php' ); // Emails and notifications
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.user.avatar.php'       ); // Display users avatar
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.user.data.php'         ); // User data functions (database related)
-require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.session.php'           ); // Manage PHP session 
+require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.session.php'           ); // Manage PHP session
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.utilities.php'         ); // Unclassified functions & utilities
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/services/wsl.watchdog.php'          ); // WSL logging agent
 
