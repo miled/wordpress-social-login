@@ -21,8 +21,8 @@
 
 			provider = $(this).attr("data-provider");
 
-			var width  = 1000;
-			var height = 600;
+			var width  = 580;
+			var height = 400;
 			var top    = ( screen.height / 2 ) - ( height / 2 ) - 50;
 			var left   = ( screen.width  / 2 ) - ( width  / 2 );
 
