@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 class WSL_Test_Users extends WP_UnitTestCase
@@ -20,9 +20,9 @@ class WSL_Test_Users extends WP_UnitTestCase
 
 		$this->someUserID = wp_create_user( $this->someUserLogin, wp_generate_password(), $this->someUserMail );
 
-		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/Hybrid/User_Profile.php';
+		include_once WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'hybridauth/library/src/autoload.php';
 
-		$this->someUserProfile = new Hybrid_User_Profile();
+		$this->someUserProfile = new Hybridauth\User\Profile();
 
 		$this->someUserProfile->identifier    = 'identifier';
 		$this->someUserProfile->firstName     = 'firstName';
@@ -62,8 +62,8 @@ class WSL_Test_Users extends WP_UnitTestCase
 		$this->assertEquals( $this->someUserProfile->email         , $profile[0]->email );
 		$this->assertEquals( $this->someUserProfile->emailVerified , $profile[0]->emailverified );
 
-		$profile = (array) wsl_get_stored_hybridauth_user_id_by_email_verified( $this->someUserProfile->emailVerified );
-		$this->assertEquals( 1, count( $profile ) );
+		$user_id = (int) wsl_get_stored_hybridauth_user_id_by_email_verified( $this->someUserProfile->email );
+		$this->assertEquals( $this->someUserID, $user_id );
 
 		$profile = (array) wsl_get_stored_hybridauth_user_id_by_provider_and_provider_uid( $this->someUserIDP, $this->someUserProfile->identifier );
 		$this->assertEquals( 1, count( $profile ) );

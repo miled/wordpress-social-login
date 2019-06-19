@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2015 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -36,79 +36,49 @@ if( ! function_exists( 'wsl_render_notice_page' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title><?php bloginfo('name'); ?></title>
 		<style type="text/css">
 			body {
-				background: #f1f1f1;
+				background: #f3f6f8;
+				color: #324155;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
+				font-size: 16px;
+				line-height: 1.6;
 			}
-			h4 {
-				color: #666;
-				font: 20px "Open Sans", sans-serif;
-				margin: 0;
-				padding: 0;
-				padding-bottom: 12px;
+			div {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+			}
+			img {
+				display: block;
+				margin: 0 auto;
+			}
+			h1 {
+				font-size: 1.4em;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
+				font-weight: 400;
+				line-height: 1.6em;
+				margin: 1em 0 .5em;
+				transition: all .5s ease;
+				text-align: center;
+			}
+			p{
+				text-align: center;
 			}
 			a {
-				color: #21759B;
 				text-decoration: none;
-			}
-			a:hover {
-				color: #D54E21;
-			}
-			p {
-				font-size: 14px;
-				line-height: 1.5;
-				margin: 25px 0 20px;
-			}
-			#notice-page {
-				background: #fff;
-				color: #444;
-				font-family: "Open Sans", sans-serif;
-				margin: 2em auto;
-				padding: 1em 2em;
-				max-width: 700px;
-				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				margin-top: 50px;
-			}
-			#notice-page code {
-				font-family: Consolas, Monaco, monospace;
-			}
-			.notice-message {
-				line-height: 26px;
-				padding: 8px;
-				background-color: #f2f2f2;
-				border: 1px solid #ccc;
-				padding: 10px;
-				text-align:center;
-				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				margin-top:25px;
 			}
 		</style>
 	<head>
 	<body>
-		<div id="notice-page">
-			<table width="100%" border="0">
-				<tr>
-					<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
-				</tr>
-				<tr>
-					<td align="center">
-						<div class="notice-message">
-							<?php echo nl2br( $message ); ?>
-						</div>
-					</td>
-				</tr>
-			</table>
-		</div>
+		<div>
+			<img src="<?php echo $assets_base_url ?>error-52.png" />
 
-		<?php
-			// Development mode on?
-			if( get_option( 'wsl_settings_development_mode_enabled' ) )
-			{
-				wsl_render_error_page_debug_section();
-			}
-		?>
+			<p><?php echo nl2br( $message ); ?></p>
+		</div>
 	</body>
 </html>
 <?php
@@ -141,127 +111,98 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 	<head>
 		<meta name="robots" content="NOINDEX, NOFOLLOW">
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title><?php bloginfo('name'); ?> - <?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</title>
 		<style type="text/css">
 			body {
-				background: #f1f1f1;
+				background: #f3f6f8;
+				color: #324155;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
+				font-size: 16px;
+				line-height: 1.6;
 			}
-			h4 {
-				color: #666;
-				font: 20px "Open Sans", sans-serif;
-				margin: 0;
-				padding: 0;
-				padding-bottom: 7px;
+			div {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
 			}
-			p {
-				font-size: 14px;
-				line-height: 1.5;
-				margin: 15px 0;
-				line-height: 25px;
-				padding: 10px;
-				text-align:left;
+			img {
+				display: block;
+				margin: 0 auto;
+			}
+			h1 {
+				font-size: 1.4em;
+				font-family: -apple-system,BlinkMacSystemFont,"Segoe UI","Roboto","Oxygen-Sans","Ubuntu","Cantarell","Helvetica Neue",sans-serif;
+				font-weight: 400;
+				line-height: 1.6em;
+				margin: 1em 0 .5em;
+				transition: all .5s ease;
+				text-align: center;
+			}
+			p{
+				text-align: center;
 			}
 			a {
-				color: #21759B;
 				text-decoration: none;
 			}
-			a:hover {
-				color: #D54E21;
-			}
-			#error-page {
-				background: #fff;
-				color: #444;
-				font-family: "Open Sans", sans-serif;
-				margin: 2em auto;
-				padding: 1em 2em;
-				max-width: 700px;
-				-webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				margin-top: 50px;
-			}
-			#error-page pre {
-				max-width: 680px;
-				overflow: scroll;
-				padding: 5px;
-				background: none repeat scroll 0 0 #F5F5F5;
-				border-radius:3px;
-				font-family: Consolas, Monaco, monospace;
-			}
-			.error-message {
-				line-height: 26px;
-				padding: 8px;
-				background-color: #f2f2f2;
-				border: 1px solid #ccc;
-				padding: 10px;
-				text-align:center;
-				box-shadow: 0 1px 3px rgba(0,0,0,0.13);
-				margin-top:25px;
-			}
-			.error-hint{
-				margin:0;
-			}
-			#debuginfo {
+			#technical-details-message{
 				display:none;
-				text-align: center;
-				margin: 0;
-				padding: 0;
-				padding-top: 10px;
-				margin-top: 10px;
-				border-top: 1px solid #d2d2d2;
 			}
 		</style>
-		<script>
-			function xi(){ document.getElementById('debuginfo').style.display = 'block'; }
-		</script>
 	</head>
 	<body>
-		<div id="error-page">
-			<table width="100%" border="0">
-				<tr>
-					<td align="center"><img src="<?php echo $assets_base_url ?>alert.png" /></td>
-				</tr>
+		<div>
+			<img src="<?php echo $assets_base_url ?>error-60.png" />
 
-				<tr>
-					<td align="center"><h4><?php _wsl_e("Oops! We ran into an issue", 'wordpress-social-login') ?>.</h4></td>
-				</tr>
+			<h1><?php _wsl_e("We're unable to complete your request", 'wordpress-social-login') ?>!</h1>
 
-				<tr>
-					<td>
-						<div class="error-message">
-							<?php echo $message ; ?>
-						</div>
+			<?php 
+				if(! empty($message) ){ 
+					?>
+						<p><?php echo $message; ?></p>
+					<?php 
+				}
+			?>
 
-						<?php
-							// any hint or extra note?
-							if( $notes )
-							{
-								?>
-									<p class="error-hint"><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
-								<?php
+			<?php 
+				if(! empty($api_error) ){ 
+					?>
+						<p id="technical-details-btn"><a href="javascript:showTechnicals()">Show technical details</a></p>
+
+						<p id="technical-details-message"><code><?php echo htmlentities($api_error); ?></code></p>
+
+						<script>
+							function showTechnicals(){
+								document.getElementById('technical-details-btn').style.display = 'none';
+								document.getElementById('technical-details-message').style.display = 'block';
+
+								return false;
 							}
-						?>
-					</td>
-				</tr>
+						</script>
+					<?php 
+				}
+			?>
 
-				<tr>
-					<td>
-						<p style="padding: 0;">
-							<a href="javascript:xi();" style="float:right"><?php _wsl_e("Details", 'wordpress-social-login') ?></a>
-							<a href="<?php echo home_url(); ?>" style="float:left">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a>
-						</p>
+			<?php
+				// any hint or extra note?
+				if( $notes )
+				{
+					?>
+						<p><?php _wsl_e( $notes, 'wordpress-social-login'); ?></p>
+					<?php
+				}
+			?>
 
-						<br style="clear:both;" />
-
-						<p id="debuginfo">&xi; <?php echo $api_error ?></p>
-					</td>
-				</tr>
-			</table>
+			<p><a href="<?php echo home_url(); ?>">&xlarr; <?php _wsl_e("Back to home", 'wordpress-social-login') ?></a></p>
 		</div>
 
 		<?php
 			// Development mode on?
 			if( get_option( 'wsl_settings_development_mode_enabled' ) )
 			{
+				?><style>div {position: unset; transform: none;}</style><?php
+
 				wsl_render_error_page_debug_section( $php_exception );
 			}
 		?>

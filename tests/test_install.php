@@ -2,8 +2,8 @@
 /*!
 * WordPress Social Login
 *
-* http://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*  (c) 2011-2014 Mohamed Mrassi and contributors | http://wordpress.org/plugins/wordpress-social-login/
+* https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
+*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 class WSL_Test_Install extends WP_UnitTestCase
