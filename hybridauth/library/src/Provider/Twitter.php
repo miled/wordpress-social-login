@@ -101,11 +101,11 @@ class Twitter extends OAuth1
         $userProfile->region        = $data->get('location');
 
         $userProfile->profileURL    = $data->exists('screen_name')
-                                        ? ('http://twitter.com/' . $data->get('screen_name'))
+                                        ? ('https://twitter.com/' . $data->get('screen_name'))
                                         : '';
 
-        $userProfile->photoURL      = $data->exists('profile_image_url')
-                                        ? str_replace('_normal', '', $data->get('profile_image_url'))
+        $userProfile->photoURL      = $data->exists('profile_image_url_https')
+                                        ? str_replace('_normal', '', $data->get('profile_image_url_https'))
                                         : '';
 
         $userProfile->data = [
@@ -170,11 +170,11 @@ class Twitter extends OAuth1
 
         $userContact->identifier  = $item->get('id_str');
         $userContact->displayName = $item->get('name');
-        $userContact->photoURL    = $item->get('profile_image_url');
+        $userContact->photoURL    = $item->get('profile_image_url_https');
         $userContact->description = $item->get('description');
 
         $userContact->profileURL  = $item->exists('screen_name')
-                                        ? ('http://twitter.com/' . $item->get('screen_name'))
+                                        ? ('https://twitter.com/' . $item->get('screen_name'))
                                         : '';
 
         return $userContact;
@@ -245,10 +245,10 @@ class Twitter extends OAuth1
 
         $userActivity->user->identifier   = $item->filter('user')->get('id_str');
         $userActivity->user->displayName  = $item->filter('user')->get('name');
-        $userActivity->user->photoURL     = $item->filter('user')->get('profile_image_url');
+        $userActivity->user->photoURL     = $item->filter('user')->get('profile_image_url_https');
 
         $userActivity->user->profileURL   = $item->filter('user')->get('screen_name')
-                                                ? ('http://twitter.com/' . $item->filter('user')->get('screen_name'))
+                                                ? ('https://twitter.com/' . $item->filter('user')->get('screen_name'))
                                                 : '';
 
         return $userActivity;
