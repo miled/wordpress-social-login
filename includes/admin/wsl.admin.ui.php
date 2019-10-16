@@ -27,7 +27,7 @@ function wsl_admin_main()
 
 	if ( ! current_user_can('manage_options') )
 	{
-		wp_die( 'You do not have sufficient permissions to access this page.' );
+		wp_die( _wsl__( 'You do not have sufficient permissions to access this page.' , 'wordpress-social-login' ) );
 	}
 
 	if( ! wsl_check_requirements() )
@@ -489,7 +489,13 @@ function wsl_render_wp_editor( $name, $content )
 */
 function wsl_admin_menu()
 {
-	add_options_page('WP Social Login', 'WP Social Login', 'manage_options', 'wordpress-social-login', 'wsl_admin_main' );
+	add_options_page(
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
+		'manage_options',
+		'wordpress-social-login',
+		'wsl_admin_main'
+	);
 
 	add_action( 'admin_init', 'wsl_register_setting' );
 }
