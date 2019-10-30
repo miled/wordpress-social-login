@@ -116,7 +116,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 		if( is_wp_error( $user ) )
 		{
 			// we give no useful hint.
-			$account_linking_errors[] = 
+			$account_linking_errors[] =
 								sprintf(
 										_wsl__(
 												'<strong>ERROR</strong>: Invalid username or incorrect password. <a href="%s">Lost your password</a>?',
@@ -262,7 +262,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			}
 			h4 {
 				font-size: 14px;
-				margin-bottom: 10px; 
+				margin-bottom: 10px;
 			}
 			#login {
 				max-width: 620px;
@@ -279,7 +279,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 				padding: 70px 0 15px;
 				position: relative;
 				text-align: center;
-				width: 100%;
+				width: auto;
 			}
 			#avatar {
 				margin-left: -76px;
@@ -473,7 +473,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			function display_mapping_authenticate()
 			{
                 toggleWidth( 'login', 'auto' );
-                
+
 				toggleEl( 'welcome'        , 'none' );
 				toggleEl( 'mapping-options', 'none' );
 
@@ -487,7 +487,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 			function display_mapping_complete_info()
 			{
                 toggleWidth( 'login', 'auto' );
-                
+
 				toggleEl( 'welcome'        , 'none' );
 				toggleEl( 'mapping-options', 'none' );
 
@@ -613,7 +613,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 						<input type="hidden" id="bouncer_account_linking" name="bouncer_account_linking" value="1">
 					</form>
-                    
+
 				<?php endif; ?>
 
 				<?php if( $registration_enabled == 1 ): ?>
@@ -675,7 +675,7 @@ function wsl_process_login_new_users_gateway( $provider, $redirect_to, $hybridau
 						<input type="hidden" id="action" name="action" value="wordpress_social_account_linking">
 						<input type="hidden" id="bouncer_profile_completion" name="bouncer_profile_completion" value="1">
 					</form>
-                    
+
 				<?php endif; ?>
             </div>
 
