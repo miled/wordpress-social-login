@@ -16,7 +16,7 @@ if( ! isset( $provider_id ) || empty( $provider_id ) ){
     die("WSL couldn't continue. Missing required parameters.");
 }
 
-session_start()
+session_start( ['read_and_close' => true] )
     or die("WSL couldn't start new php session.");
 
 if( ! file_exists( __DIR__ . '/../includes/services/wsl.session.php' )
