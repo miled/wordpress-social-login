@@ -70,8 +70,11 @@ $WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.4";
 
 // --------------------------------------------------------------------
 
-session_id() or session_start( ['read_and_close' => true] );
-
+if ( $GLOBALS['pagenow'] === 'wp-login.php' ) {
+	if ( session_status() == PHP_SESSION_NONE ) {
+		session_start();
+	}
+}
 // --------------------------------------------------------------------
 
 /**

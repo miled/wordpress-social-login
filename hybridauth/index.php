@@ -12,7 +12,7 @@
 //  Note: The way we handle errors is a bit messy and should be reworked
 // ------------------------------------------------------------------------
 
-session_start( ['read_and_close' => true] )
+session_start()
     or die("WSL couldn't start new php session.");
 
 if( ! file_exists( __DIR__ . '/library/src/autoload.php' ) ){

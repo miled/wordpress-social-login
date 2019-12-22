@@ -6,7 +6,7 @@
 *   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
-session_start( ['read_and_close' => true] );
+session_start();
 
 global $wpdb;
 
