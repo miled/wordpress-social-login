@@ -621,8 +621,10 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 			// may be that $user_email is empty then we got wp error login can't be empty, so check it now
 			if ( $user_email ) {
 				$user_login = sanitize_user( current( explode( '@', $user_email ) ), true );
-			} else {
+			} elseif ( $hybridauth_user_profile->email ) {
 				$user_login = sanitize_user( current( explode( '@', $hybridauth_user_profile->email ) ), true );
+			} else {
+				$user_login = $provider . '_' . $hybridauth_user_profile->identifier;
 			}
 		}
 	}
