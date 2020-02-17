@@ -54,6 +54,11 @@ class Odnoklassniki extends OAuth2
     /**
     * {@inheritdoc}
     */
+    protected $scope = 'GET_EMAIL';
+
+    /**
+    * {@inheritdoc}
+    */
     public function getUserProfile()
     {
         $fields = array(
