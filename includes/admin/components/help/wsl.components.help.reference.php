@@ -3,7 +3,7 @@
 * WordPress Social Login
 *
 * https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*   (c) 2011-2018 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
+*   (c) 2011-2020 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 /**
@@ -69,7 +69,7 @@ function wsl_component_help_reference()
 <div class="fade updated" style="line-height: 22px;padding: 22px;font-family: monospace;">
     The MIT License (MIT)
     <br />
-    <br />Copyright (C) 2011-2014 Mohamed Mrassi and contributors.
+    <br />Copyright (C) 2011-2020 Mohamed Mrassi and contributors.
     <br />
     <br />Permission is hereby granted, free of charge, to any person obtaining
     <br />a copy of this software and associated documentation files (the
