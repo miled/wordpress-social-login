@@ -184,7 +184,7 @@ function wsl_component_bouncer_setup_user_moderation()
 		<div class="fade error">
 			<p>
 				<b><?php _wsl_e("Warning", 'wordpress-social-login') ?></b>: 
-				<?php echo sprintf( _wsl__("Please be aware that incompatibilities has been reported with <b>Theme My Login Plugin</b>, thus it's no longer recommended to use this option until the reported issues are resolved", 'wordpress-social-login'), $provider_name, $provider_name ) ?>.
+				<?php echo _wsl__("Please be aware that incompatibilities has been reported with <b>Theme My Login Plugin</b>, thus it's no longer recommended to use this option until the reported issues are resolved", 'wordpress-social-login') ?>.
 			</p>
 		</div>
 

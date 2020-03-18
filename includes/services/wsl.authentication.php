@@ -837,7 +837,7 @@ function wsl_process_login_authenticate_wp_user( $user_id, $provider, $redirect_
 
 			// send a new e-mail/activation notification - if TML not enabled, we ensure WSL to keep it quiet
 			$errors = new WP_Error();
-			do_action( 'register_post', $wp_user->user_nicename, $wp_user->$user_email, $errors );
+			do_action( 'register_post', $wp_user->user_nicename, $wp_user->user_email, $errors );
 			@ Theme_My_Login_User_Moderation::new_user_activation_notification( $user_id );
 		}
 
@@ -1039,12 +1039,6 @@ function wsl_process_login_get_redirect_to()
 	if( isset( $_REQUEST[ 'redirect_to' ] ) && $_REQUEST[ 'redirect_to' ] != '' )
 	{
 		$redirect_to = $_REQUEST[ 'redirect_to' ];
-
-		// Redirect to https if user wants ssl
-		if( isset( $secure_cookie ) && $secure_cookie && false !== strpos( $redirect_to, 'wp-admin') )
-		{
-			$redirect_to = preg_replace( '|^http://|', 'https://', $redirect_to );
-		}
 
 		// we don't go there..
 		if( strpos( $redirect_to, 'wp-admin') )

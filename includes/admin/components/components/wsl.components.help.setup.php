@@ -98,7 +98,7 @@ function wsl_component_components_setup()
 								$meta[] = sprintf( _wsl__( '<a href="%s" target="_blank">Visit component site</a>', 'wordpress-social-login' ), $settings["component_url"] );
 							}
 
-							if( $meta )
+							if( ! empty($meta) )
 							{
 								?><p><?php echo implode( ' | ', $meta  ); ?></p><?php 
 							}

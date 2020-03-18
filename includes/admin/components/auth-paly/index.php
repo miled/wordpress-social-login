@@ -26,9 +26,10 @@ function wsl_component_authtest()
 	// HOOKABLE:
 	do_action( "wsl_component_authtest_start" );
 
-	$adapter      = null;
-	$provider_id  = isset( $_REQUEST["provider"] ) ? $_REQUEST["provider"] : null;
-	$user_profile = null;
+	$adapter         = null;
+	$provider_id     = isset( $_REQUEST["provider"] ) ? $_REQUEST["provider"] : null;
+	$user_profile    = null;
+	$assets_base_url = '';
 
 	if ( ! empty( $provider_id ) )
 	{

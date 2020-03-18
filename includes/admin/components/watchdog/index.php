@@ -53,16 +53,16 @@ function wsl_component_watchdog_files()
 
 				$files = scandir( $wsl_path );
 
-				if( $files )
-				foreach( $files as $file )
-				{
-					if( in_array( $file, array( '.', '..', '.htaccess', 'index.html' ) ) )
-					continue;
+				if( ! empty($files) )
+					foreach( $files as $file )
+					{
+						if( in_array( $file, array( '.', '..', '.htaccess', 'index.html' ) ) )
+							continue;
 
-					?>
-						<option value="<?php echo $file; ?>" <?php if( $selected == $file ) echo 'selected'; ?>><?php echo $file; ?></option>
-					<?php
-				}
+						?>
+							<option value="<?php echo $file; ?>" <?php if( $selected == $file ) echo 'selected'; ?>><?php echo $file; ?></option>
+						<?php
+					}
 			?>
 		</select>
 
