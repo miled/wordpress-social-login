@@ -1,3 +1,6 @@
+sudo: false
+dist: trusty
+
 language: php
 
 services:
@@ -6,18 +9,49 @@ services:
 notifications:
   email:
     on_success: never
-    on_failure: never
+    on_failure: change
 
-php:
-    - 7.2
-    - 7.0
-    - 5.6
+branches:
+  only:
+    - master
 
-env:
-    - WP_VERSION=latest WP_MULTISITE=0
-    - WP_VERSION=latest WP_MULTISITE=1
+cache:
+  directories:
+    - vendor
+    - $HOME/.composer/cache
+
+branches:
+  only:
+    - master
+
+matrix:
+  include:
+    - php: 7.4
+      env: WP_VERSION=latest
+    - php: 7.3
+      env: WP_VERSION=latest
+    - php: 7.3
+      env: WP_TRAVISCI=phpcs
+    - php: 7.3
+      env: WP_TRAVISCI=nightly
+    - php: 7.2
+      env: WP_VERSION=latest
 
 before_script:
-    - bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION 
+  - export PATH="$HOME/.composer/vendor/bin:$PATH"
+  - composer install
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      bash bin/install-wp-tests.sh wordpress_test root '' localhost $WP_VERSION
+    fi
 
-script: phpunit
+script:
+  - |
+    if [[ ! -z "$WP_VERSION" ]] ; then
+      composer test
+      WP_MULTISITE=1 composer test
+    fi
+  - |
+    if [[ "$WP_TRAVISCI" == "phpcs" ]] ; then
+      composer lint
+    fi
