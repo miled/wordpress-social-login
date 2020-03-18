@@ -1,24 +1,30 @@
 #
 # Translators:
-# Douglas L Pereira <douglaslpereira@gmail.com>, 2015
-# Guilherme Souza <gestao@suportgc.com.br>, 2016
-# Marcelo Ghelman <marcelo.ghelman@gmail.com>, 2014-2015,2017
-# Marcelo Passadore <marcelo@passadore.net>, 2018
-# RENAN HILINSKI <renanhilinski@hotmail.com>, 2016
-# Romero Carvalho <contato@romerocarvalho.com>, 2016
+# Alnux AP <alnux@ya.ru>, 2018
+# Antonio Rigó <antoniorigo@gmail.com>, 2015
+# Carlos Asensio <guitarraviva@gmail.com>, 2017
+# Carlos Asensio <info@guitarraviva.com>, 2017
+# Claude Martins <claudiomartinsr@yahoo.com>, 2016
+# Issam Natour Muñoz <issinatour90@gmail.com>, 2014
+# Jose Luis Catalan <catalan.jlu@gmail.com>, 2014
+# Layla Qwerty <laylalai123@gmail.com>, 2016
+# Leandro Ortega <leandro@g-ortega.com.ar>, 2016
+# Matias Mouta <matias@paramostudio.com>, 2016
+# Mauricio Navarro Miranda <mautematico@mozilla-mexico.org>, 2016
+# Pedro Miguel Torres <pmtorres@caduceus.es>, 2017
 msgid ""
 msgstr ""
 "Project-Id-Version: WordPress Social Login\n"
-"POT-Creation-Date: 2020-03-18 18:36+0100\n"
-"PO-Revision-Date: 2020-03-18 18:36+0100\n"
-"Last-Translator: Marcelo Passadore <marcelo@passadore.net>\n"
-"Language-Team: Portuguese (Brazil) (http://www.transifex.com/wsl/wordpress-"
-"social-login/language/pt_BR/)\n"
-"Language: pt_BR\n"
+"POT-Creation-Date: 2020-03-18 18:37+0100\n"
+"PO-Revision-Date: 2020-03-18 18:37+0100\n"
+"Last-Translator: Alnux AP <alnux@ya.ru>\n"
+"Language-Team: Spanish (http://www.transifex.com/wsl/wordpress-social-login/"
+"language/es/)\n"
+"Language: es\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Generator: Poedit 2.3\n"
 "X-Poedit-Basepath: ..\n"
 "X-Poedit-KeywordsList: _wsl__;_wsl_e\n"
@@ -27,7 +33,7 @@ msgstr ""
 #: includes/admin/components/auth-paly/index.php:56
 #: includes/admin/components/users/wsl.components.users.profiles.php:36
 msgid "Provider user ID"
-msgstr "ID do provedor"
+msgstr "ID del proveedor del usuario"
 
 #: includes/admin/components/auth-paly/index.php:57
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:89
@@ -35,26 +41,26 @@ msgstr "ID do provedor"
 #: includes/admin/components/users/wsl.components.users.list.php:81
 #: includes/admin/components/users/wsl.components.users.profiles.php:37
 msgid "Profile URL"
-msgstr "URL do perfil"
+msgstr "URL del perfil"
 
 #: includes/admin/components/auth-paly/index.php:58
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:90
 #: includes/admin/components/users/wsl.components.users.profiles.php:38
 msgid "Website URL"
-msgstr "URL do site"
+msgstr "URL del sitio web"
 
 #: includes/admin/components/auth-paly/index.php:59
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:91
 #: includes/admin/components/users/wsl.components.users.profiles.php:39
 msgid "Photo URL"
-msgstr "URL da foto"
+msgstr "URL de la foto"
 
 #: includes/admin/components/auth-paly/index.php:60
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:92
 #: includes/admin/components/users/wsl.components.users.profiles.php:40
 #: includes/admin/components/users/wsl.components.users.profiles.php:99
 msgid "Display name"
-msgstr "Nome a exibir"
+msgstr "Nombre público"
 
 #: includes/admin/components/auth-paly/index.php:61
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:93
@@ -62,25 +68,25 @@ msgstr "Nome a exibir"
 #: includes/admin/components/components/wsl.components.help.setup.php:42
 #: includes/admin/components/users/wsl.components.users.profiles.php:41
 msgid "Description"
-msgstr "Descrição"
+msgstr "Descripción"
 
 #: includes/admin/components/auth-paly/index.php:62
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:94
 #: includes/admin/components/users/wsl.components.users.profiles.php:42
 msgid "First name"
-msgstr "Primeiro nome"
+msgstr "Nombre"
 
 #: includes/admin/components/auth-paly/index.php:63
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:95
 #: includes/admin/components/users/wsl.components.users.profiles.php:43
 msgid "Last name"
-msgstr "Último nome"
+msgstr "Apellido"
 
 #: includes/admin/components/auth-paly/index.php:64
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:96
 #: includes/admin/components/users/wsl.components.users.profiles.php:44
 msgid "Gender"
-msgstr "Gênero"
+msgstr "Género"
 
 #: includes/admin/components/auth-paly/index.php:65
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:97
@@ -92,43 +98,43 @@ msgstr "Idioma"
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:98
 #: includes/admin/components/users/wsl.components.users.profiles.php:46
 msgid "Age"
-msgstr "Idade"
+msgstr "Edad"
 
 #: includes/admin/components/auth-paly/index.php:67
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:99
 #: includes/admin/components/users/wsl.components.users.profiles.php:47
 msgid "Birth day"
-msgstr "Dia do nascimento"
+msgstr "Día de nacimiento"
 
 #: includes/admin/components/auth-paly/index.php:68
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:100
 #: includes/admin/components/users/wsl.components.users.profiles.php:48
 msgid "Birth month"
-msgstr "Mês do nascimento"
+msgstr "Mes de nacimiento"
 
 #: includes/admin/components/auth-paly/index.php:69
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:101
 #: includes/admin/components/users/wsl.components.users.profiles.php:49
 msgid "Birth year"
-msgstr "Ano do nascimento"
+msgstr "Año de nacimiento"
 
 #: includes/admin/components/auth-paly/index.php:70
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:103
 #: includes/admin/components/users/wsl.components.users.profiles.php:50
 msgid "Email"
-msgstr "Email"
+msgstr "Correo electrónico"
 
 #: includes/admin/components/auth-paly/index.php:71
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:104
 #: includes/admin/components/users/wsl.components.users.profiles.php:51
 msgid "Phone"
-msgstr "Telefone"
+msgstr "Teléfono"
 
 #: includes/admin/components/auth-paly/index.php:72
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:105
 #: includes/admin/components/users/wsl.components.users.profiles.php:52
 msgid "Address"
-msgstr "Endereço"
+msgstr "Dirección"
 
 #: includes/admin/components/auth-paly/index.php:73
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:106
@@ -140,13 +146,13 @@ msgstr "País"
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:107
 #: includes/admin/components/users/wsl.components.users.profiles.php:54
 msgid "Region"
-msgstr "Região"
+msgstr "Región"
 
 #: includes/admin/components/auth-paly/index.php:75
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:108
 #: includes/admin/components/users/wsl.components.users.profiles.php:55
 msgid "City"
-msgstr "Cidade"
+msgstr "Ciudad"
 
 #: includes/admin/components/auth-paly/index.php:76
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:109
@@ -156,18 +162,18 @@ msgstr "Código postal"
 
 #: includes/admin/components/auth-paly/index.php:94
 msgid "Connect with a provider to get started"
-msgstr "Conecte-se com um provedor para iniciar"
+msgstr "Conecta un proveedor para comenzar"
 
 #: includes/admin/components/auth-paly/index.php:99
 msgid "Connected adapter specs"
-msgstr "Conectatado aos adptadores especificos"
+msgstr "Especificaciones del conector"
 
 #: includes/admin/components/auth-paly/index.php:104
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:72
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:80
 #: includes/admin/components/users/wsl.components.users.list.php:44
 msgid "Provider"
-msgstr "Provedor"
+msgstr "Proveedor"
 
 #: includes/admin/components/auth-paly/index.php:110
 msgid "OpenID Identifier"
@@ -175,39 +181,39 @@ msgstr "Identificador OpenID"
 
 #: includes/admin/components/auth-paly/index.php:117
 msgid "Scope"
-msgstr "Escopo"
+msgstr "Ámbito"
 
 #: includes/admin/components/auth-paly/index.php:124
 msgid "Application keys"
-msgstr "Chaves do aplicativo"
+msgstr "Claves de la aplicación"
 
 #: includes/admin/components/auth-paly/index.php:135
 msgid "Access token"
-msgstr "Token de acesso"
+msgstr "Token de acceso"
 
 #: includes/admin/components/auth-paly/index.php:142
 msgid "Access token secret"
-msgstr "Token secreto de acesso"
+msgstr "Token secreto de acceso"
 
 #: includes/admin/components/auth-paly/index.php:149
 msgid "Access token expires in"
-msgstr "Token de acesso expira em"
+msgstr "El token de acceso expira en"
 
 #: includes/admin/components/auth-paly/index.php:150
 msgid "second(s)"
-msgstr "segundo(s)"
+msgstr "segundos"
 
 #: includes/admin/components/auth-paly/index.php:156
 msgid "Access token expires at"
-msgstr "Token de acesso expira em"
+msgstr "El token de acceso expirará el"
 
 #: includes/admin/components/auth-paly/index.php:171
 msgid "Connected adapter console"
-msgstr "Conectado ao adaptador do Console"
+msgstr "Adaptador de consola conectada"
 
 #: includes/admin/components/auth-paly/index.php:208
 msgid "Path"
-msgstr "Caminho"
+msgstr "Ruta"
 
 #: includes/admin/components/auth-paly/index.php:212
 msgid "Method"
@@ -215,7 +221,7 @@ msgstr "Método"
 
 #: includes/admin/components/auth-paly/index.php:216
 msgid "Query"
-msgstr "Consulta"
+msgstr "Petición"
 
 #: includes/admin/components/auth-paly/index.php:223
 msgid "Submit"
@@ -223,7 +229,7 @@ msgstr "Enviar"
 
 #: includes/admin/components/auth-paly/index.php:231
 msgid "API Response"
-msgstr "Resposta da API"
+msgstr "Respuesta de la api"
 
 #: includes/admin/components/auth-paly/index.php:240
 msgid "Code PHP"
@@ -231,40 +237,40 @@ msgstr "Código PHP"
 
 #: includes/admin/components/auth-paly/index.php:270
 msgid "Connected adapter debug"
-msgstr "Depuração do adaptador conectado"
+msgstr "Consola del adaptador conectado"
 
 #: includes/admin/components/auth-paly/index.php:278
 msgid "PHP Session"
-msgstr "Sessão PHP"
+msgstr "Sesión PHP"
 
 #: includes/admin/components/auth-paly/index.php:291
 msgid "Connected user social profile"
-msgstr "Perfil de usuário conectado"
+msgstr "Perfil social del usuario conectado"
 
 #: includes/admin/components/auth-paly/index.php:345
 #: includes/admin/components/tools/wsl.components.tools.actions.php:44
 msgid "Authentication Playground"
-msgstr "Sistema de Autenticação"
+msgstr "Autenticación de Playground"
 
 #: includes/admin/components/auth-paly/index.php:349
 msgid ""
 "Authentication Playground will let you authenticate with the enabled social "
 "networks without creating any new user account"
 msgstr ""
-"Sistema de Autenticação permite que você autentique-se com as redes sociais, "
-"sem criar qualquer nova conta de usuário"
+"La autenticación mediante Playground te permitirá autenticarte con la red "
+"social sin crear ninguna nueva cuenta de usuario"
 
 #: includes/admin/components/auth-paly/index.php:352
 msgid ""
 "This tool will also give you a direct access to social networks apis via a "
 "lightweight console"
 msgstr ""
-"Esta ferramenta também lhe dará um acesso directo às redes sociais através "
-"de um console api leve"
+"Esta herramienta  le dará acceso directo a redes sociales a través de las "
+"API de la consola"
 
 #: includes/admin/components/auth-paly/index.php:363
 msgid "Connect with"
-msgstr "Conectar com"
+msgstr "Conectar con"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:47
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:41
@@ -274,11 +280,11 @@ msgstr "Conectar com"
 #: includes/admin/components/tools/wsl.components.tools.actions.php:155
 #: includes/admin/components/tools/wsl.components.tools.actions.php:206
 msgid "Save Settings"
-msgstr "Salvar configurações"
+msgstr "Guardar Ajustes"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:60
 msgid "WSL Widget"
-msgstr "Componente WSL"
+msgstr "Widget WSL"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:64
 msgid ""
@@ -289,16 +295,14 @@ msgid ""
 "passwords (to to achieve that kind of restrictions, you may need to use "
 "another plugin(s) in combination with WSL)."
 msgstr ""
-"Aqui você pode dizer ao Bouncer, se você aceita novos registos e "
-"autenticações de usuários para seu site ou não. Nota-se que Bouncer só "
-"funciona para WSL e não irá interferir com a autenticação de usuários "
-"através do Wordpress, utilizando login ou registro com seus nomes de usuário "
-"e senhas (para utilizar esse tipo de restrição, você pode precisar usar um "
-"outro plugin (s) em combinação com WSL )."
+"Aquí puede indicar al Rebotador si estás aceptando nuevos registros de "
+"usuario y autenticaciones en tu web o no. Nótese que el Rebotador sólo "
+"funciona para WSL y no interfiere con usuarios autenticándose a través del "
+"login y registro se wordpress con sus nombres de usuario y contraseñas."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:68
 msgid "Accept new registration"
-msgstr "Aceitar novo registro"
+msgstr "Aceptar registros nuevos"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:71
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:80
@@ -313,7 +317,7 @@ msgstr "Aceitar novo registro"
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:165
 #: includes/admin/components/networks/wsl.components.networks.setup.php:123
 msgid "Yes"
-msgstr "Sim"
+msgstr "Sí"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:72
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:81
@@ -328,15 +332,15 @@ msgstr "Sim"
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:166
 #: includes/admin/components/networks/wsl.components.networks.setup.php:124
 msgid "No"
-msgstr "Não"
+msgstr "No"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:77
 msgid "Allow authentication"
-msgstr "Permitir autenticação"
+msgstr "Permitir autenticación"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:98
 msgid "Accounts linking"
-msgstr "Links com contas"
+msgstr "Vinculación de cuentas"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:102
 msgid ""
@@ -345,18 +349,18 @@ msgid ""
 "your website with the provider ID they have connected with or to create a "
 "new user account"
 msgstr ""
-"Quando ativado o Bouncer, uma nova tela será exibida aos usuários não "
-"reconhecidos, onde será dada a escolha de associar qualquer conta existente "
-"em seu site, com o ID do provedor utilizado ou para criar uma nova conta de "
-"usuário"
+"Cuando se activa, Se mostrará un popup en una nueva ventana para usuarios no "
+"reconocidos para que ellos puedan elegir o asociar cualquier cuenta "
+"existente en su sitio web con el ID de proveedor con el que se han "
+"conectadoo para crear una nueva cuenta de usuario"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:106
 msgid "Link user account"
-msgstr "Fazer link com conta do usuário"
+msgstr "Vincular cuenta de usuario"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:127
 msgid "Profile Completion"
-msgstr "Conclusão do perfil"
+msgstr "Finalización del perfil"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:131
 msgid ""
@@ -364,9 +368,9 @@ msgid ""
 "will then ask your visitors to fill additional form to provide them when "
 "registering."
 msgstr ""
-"Selecione os campos obrigatórios. Se uma rede social não retornar com as "
-"informações para o Bouncer, então, será solicitado aos seus visitantes que "
-"preencham o formulário adicional para fornecê-las manualmente ao registrar."
+"Seleccionar campos requeridos. Si una red social no los devuelve, el "
+"Rebotador pedirá esos campos adicionales a los usuarios cuando se estén "
+"registrando."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:134
 msgid ""
@@ -374,9 +378,9 @@ msgid ""
 "add any extra registration fields from other plugins (eg: Newsletter, "
 "Register Plus Redux) ."
 msgstr ""
-"Quando <b> Campos de registo extras </b> é definida como Sim, O Bounce "
-"também adicionará todos os campos de registro extras de outros plugins (por "
-"exemplo: Newsletter, Register Plus Redux)."
+"Cuando <b>Enganchar campos de registro extra</b> está activado, el Rebotador "
+"también añadirá cualquier campo de registro extra de otros plugins (ej. "
+"Newsletter, Register Plus Redux)."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:137
 msgid ""
@@ -384,26 +388,26 @@ msgid ""
 "<b>Username</b>, but keep in mind, the idea behind <b>social login</b> is to "
 "avoid forms and to remove the hassle of registration"
 msgstr ""
-"Você pode ativar o <b> Perfil completo </b> para ambos <b> E-mail </b> e <b> "
-"Nome de usuário </b>, mas tenha em mente, a idéia por trás dos <b> login "
-"sociais </b > é evitar formulários e agilizar o trabalho de registro"
+"Puedes activar <b>Finalización del perfil </b>tanto para el <b>e-mail</b> "
+"como para <b>nombre de usuario</b>, pero ten en cuenta que la idea tras los "
+"<b> login sociales </b> es evitar formularios y facilitar el registro."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:141
 msgid "Require E-mail"
-msgstr "Necessita email"
+msgstr "Requerir E-mail"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:150
 msgid "Allow Username change"
-msgstr "Permitir mudança de nome de usuário"
+msgstr "Permitir cambio del nobre del usuario"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:159
 msgid "Hook extra registration fields"
-msgstr "Campos de registo extras"
+msgstr "Enganchar campos de registro extra"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:180
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:213
 msgid "User Moderation"
-msgstr "Moderação de usuários"
+msgstr "Moderación de usuarios"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:186
 msgid "Warning"
@@ -421,28 +425,28 @@ msgid ""
 "<b>User Moderation</b> will define how <b>Bouncer</b> should behave with new "
 "registered users:"
 msgstr ""
-"<b> A moderação do usuário </b> vai definir como os <b> Bouncer </b> devem "
-"comportar-se com novos utilizadores registados:"
+"La <b>moderación de usuario</b> definirá cómo el <b>Rebotador </b> deberá "
+"comportarse con los nuevos usuarios registrados:"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:195
 msgid "<b>None</b>: No moderation required."
-msgstr "<b>Nenhuma</b>: Nenhuma moderação exigida."
+msgstr "<b>Ninguno </b>: no se requiere moderación."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:196
 msgid ""
 "<b>E-mail Confirmation</b>: New users will need to be confirm their e-mail "
 "address before they may log in"
 msgstr ""
-"<b>Confirmação de email</b>: Novos usuários precisarão confirmar seus "
-"endereços de email antes de poderem entrar"
+"<b>Confirmar Correo</b>: Los nuevos usuarios deben verificar su dirección de "
+"correo electrónico para que puedan ingresar."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:197
 msgid ""
 "<b>Admin Approval</b>: New users will need to be approved by an "
 "administrator before they may log in"
 msgstr ""
-"<b>Aprovação de administrador</b>: Novos usuários precisarão ser aprovados "
-"por um administrador antes que possam entrar"
+"<b>Admin Aprobara</b>: Los nuevos usuarios deben ser aprobados por un "
+"administrador para que puedan ingresar"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:200
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:261
@@ -459,9 +463,9 @@ msgid ""
 "\"http://wordpress.org/extend/plugins/theme-my-login/\" target=\"_blank"
 "\">Theme My Login Plugin</a> to be installed"
 msgstr ""
-"Ambos <b>Aprovação de administrador</b> e <b>Confirmação de email</b> "
-"necessita do <a href=\"http://wordpress.org/extend/plugins/theme-my-login/\" "
-"target=\"_blank\">Plugin Theme My Login</a> instalado"
+"Tanto <b>Aprobación del administrador</b> como <b>confirmación de e-mail /b> "
+"requieren que el plugin <a href=\"http://wordpress.org/extend/plugins/theme-"
+"my-login/\" target=\"_blank\">Theme My Login </a> sea instalado"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:205
 msgid ""
@@ -472,10 +476,10 @@ msgid ""
 "is no point to reinvent the wheel"
 msgstr ""
 "<a href=\"http://wordpress.org/extend/plugins/theme-my-login/\" target="
-"\"_blank\">Theme My Login</a> é um plugin gratuito de código aberto. A "
-"<b>moderação de usuários do WordPress Social Login</b> foi feito "
-"propositalmente compatível com ele, pois ele fornece um módulo de "
-"<b>Moderação de usuários</b> sólido e não há motivos para reinventar a roda"
+"\"_blank\">Theme My Login</a>es un plugin gratuito y de código abierto y "
+"<b>WordPress Social Login User Moderation</b> fue hecho compatible con el "
+"porque provee un módulo sólido <b>User Moderation</b> y por tanto no hay "
+"motivo para reinventar la rueda."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:207
 msgid ""
@@ -483,32 +487,32 @@ msgid ""
 "Login</b> settings, then enable <b>User Moderation</b> and set <b>Moderation "
 "Type</b> to the same thing as the box bellow"
 msgstr ""
-"Para isso funcionar corretamente, você precisa ir para as configurações do "
-"<b>Theme My Login</b>, então habilitar <b>Moderação de usuários</b> e "
-"definir <b>Tipo de moderação</b> para o mesmo da caixa abaixo"
+"Para funcionar correctamente, necesitarás ir a las configuraciones de "
+"<b>Theme My Login</b>, activar <b>User Moderation</b> y establecer "
+"<b>Moderation Type</b>a lo mismo que contiene la caja siguiente"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:227
 msgid "None"
-msgstr "Nenhuma"
+msgstr "Ninguno"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:252
 msgid "Membership level"
-msgstr "Nível de associação"
+msgstr "Nivel de membresía"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:256
 msgid ""
 "Here you can define the default role for new users authenticating through WSL"
 msgstr ""
-"Aqui você pode definir o papel padrão para autenticação de novos usuários "
-"através do WSL"
+"Aquí puedes definir el rol por defecto de los nuevos usuarios que se "
+"autentiquen a través de WSL"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:257
 msgid ""
 "Please, be extra carefull with this option, you may be automatically giving "
 "someone elevated roles and capabilities"
 msgstr ""
-"Tome bastante cuidado com esta opção. Você pode estar automaticamente dando "
-"a alguém privilégios e capacidades elevadas"
+"Por favor, sea extremadamente cuidadoso con esta opción. Podría estar "
+"otorgando a alguien elevadas capacidades y roles."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:258
 msgid ""
@@ -517,30 +521,39 @@ msgid ""
 "_Role_Table\" target=\"_blank\">http://codex.wordpress.org/"
 "Roles_and_Capabilities</a>"
 msgstr ""
-"Para mais informações sobre regras de usuários e recursos do WordPress "
-"consulte http://codex.wordpress.org/Roles_and_Capabilities"
+"Para más informació sobre roles de usuarios y capacidades en WordPress vaya "
+"a <a href=\"http://codex.wordpress.org/Roles_and_Capabilities#Capability_vs."
+"_Role_Table\" target=\"_blank\">http://codex.wordpress.org/"
+"Roles_and_Capabilities</a>"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:262
 msgid ""
 "1. If <b>User Moderation</b> is set to <code>Admin Approval</code>, then "
 "<b>Membership level</b> will be ignored"
 msgstr ""
+"1. Si <b>Moderación de Usuario</b> está establecido a <code>Aprobación del "
+"administrador</code>, entonces el <b>Nivel de afiliación</b> será ignorado"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:263
 msgid ""
 "2. To assign the same default role as in your website <b>General Settings</"
 "b>, set this field to <code>Wordpress User Default Role</code>"
 msgstr ""
+"2. Para asignal el mismo rol por defecto de la <b>Configuración general </b> "
+"de tu web, establece este campo <code>Rol por defecto de un usuario "
+"Wordpress</code>"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:264
 msgid ""
 "3. If you are not sure, simply leave this field to <code>No role for this "
 "site</code>"
 msgstr ""
+"3. Si no estás seguro, deja este campo a <code>Sin roles para este sitio</"
+"code>"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:268
 msgid "New WSL users default role"
-msgstr "Novos usuários WSL com função padrão"
+msgstr "Rol por defecto de los nuevos usuarios de WSL"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:271
 msgid "Safe"
@@ -548,15 +561,15 @@ msgstr "Seguro"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:272
 msgid "&mdash; Wordpress User Default Role &mdash;"
-msgstr ""
+msgstr "&mdash; Rol por defecto de un usuario Wordpress &mdash;"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:273
 msgid "&mdash; No role for this site  &mdash;"
-msgstr ""
+msgstr "&mdash; Sin roles para este sitio  &mdash;"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:276
 msgid "Be careful with these"
-msgstr "Tome cuidado com esses"
+msgstr "Ten cuidado con estos"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:306
 #, php-format
@@ -574,17 +587,19 @@ msgstr ""
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:342
 msgid "Filters by emails domains name"
-msgstr ""
+msgstr "Filtra por el nombre de dominio del email."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:346
 msgid "Restrict registration to a limited number of domains name."
-msgstr ""
+msgstr "Restringe el registro a un número limitado de nombres de dominio."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:347
 msgid ""
 "Note that filtration domains name takes priority over filtration by e-mails "
 "addresses and profile urls"
 msgstr ""
+"Tenga en cuenta que el filtro por nombre de dominio tiene prioridad sobre el "
+"filtro por dirección de correo electrónico y urls de perfil."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:348
 msgid ""
@@ -592,6 +607,9 @@ msgid ""
 "<code>gmail.com</code>, without '@'). On <b>Bounce text</b> insert the text "
 "you want to display for rejected users"
 msgstr ""
+"Inserta una dirección de dominio por línea y procura mantener corta esta "
+"lista (ej: <code>gmail.com</code>, sin '@'). En el <b>texto de rebote</b> "
+"inserta el texto que quieras mostrar para usuarios rechazados"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:352
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:397
@@ -605,31 +623,33 @@ msgstr ""
 #: includes/admin/components/networks/wsl.components.networks.setup.php:116
 #: includes/admin/components/tools/wsl.components.tools.actions.php:203
 msgid "Enabled"
-msgstr "Ativado"
+msgstr "Activado"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:361
 msgid "Domains list"
-msgstr "Lista de domínios"
+msgstr "Lista de dominios"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:367
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:412
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:457
 msgid "Bounce text"
-msgstr "Texto Bounce"
+msgstr "Texto de rebote"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:387
 msgid "Filters by e-mails addresses"
-msgstr "Filtros por endereço de email"
+msgstr "Filtro por dirección de correo electrónico"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:391
 msgid "Restrict registration to a limited number of emails addresses."
-msgstr ""
+msgstr "Restringir registro a un determinado número de direcciones de email."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:392
 msgid ""
 "Note that filtration e-mails addresses takes priority over filtration by "
 "profile urls"
 msgstr ""
+"Nótese que el filtro por direcciones de e-mail tiene prioridad sobre el "
+"filtro de URL del perfiles"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:393
 msgid ""
@@ -637,24 +657,30 @@ msgid ""
 "<code>hybridauth@gmail.com</code>). On <b>Bounce text</b> insert the text "
 "you want to display for rejected users"
 msgstr ""
+"Inserta una dirección de e-mail por línea y procura mantener corta esta "
+"lista (ej: <code>hybridauth@gmail.com</code>). En el <b>texto de rebote</b> "
+"inserta el texto que quieras mostrar para usuarios rechazados"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:406
 msgid "E-mails list"
-msgstr "Lista de emails"
+msgstr "Lista de e-mails"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:432
 msgid "Filters by profile urls"
-msgstr ""
+msgstr "Filtros por URL de los perfiles"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:436
 msgid "Restrict registration to a limited number of profile urls"
 msgstr ""
+"Restringir registro a un determinado número limitado de URLs de perfiles"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:437
 msgid ""
 "<b>Note</b>: Some providers like Facebook can have multiples profiles URLs "
 "per user and WSL won't be able to recognize all them"
 msgstr ""
+"<b>Nota</b>: algunos proveedores como Facebook pueden tener múltiples URL "
+"para los perfiles de un usuario y WSL podría no reconocer todos"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:438
 msgid ""
@@ -663,19 +689,23 @@ msgid ""
 "u/0/108839241301472312344</code>). On <b>Bounce text</b> insert the text you "
 "want to display for rejected users"
 msgstr ""
+"Inserta una URL por línea y procura mantener corta esta lista (ej: "
+"<code>https://twitter.com/HybridAuth</code>, <code>https://plus.google.com/"
+"u/0/108839241301472312344</code>). En el <b>texto de rebote</b> inserta el "
+"texto que quieras mostrar para usuarios rechazados"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.setup.php:451
 msgid "Profile urls"
-msgstr "URL do perfil"
+msgstr "URLs de Perfil"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:42
 #: includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:44
 msgid "What's This?"
-msgstr "O que é isso?"
+msgstr "Que es esto?"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:45
 msgid "Hey, meet our friend, the Bouncer"
-msgstr "Olá, aqui está nosso amigo, o Bouncer."
+msgstr "Eh, conoce a nuestro amigo, el Rebotador"
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:48
 msgid ""
@@ -690,8 +720,6 @@ msgid ""
 "This feature is most suited for small businesses and folks running a closed-"
 "door blog between friends or coworkers."
 msgstr ""
-"Esse recurso é mais adequado para pequenas empresas e pessoas que executam "
-"um blog para um grupo fechado entre amigos ou colegas de trabalho."
 
 #: includes/admin/components/bouncer/wsl.components.bouncer.sidebar.php:55
 msgid "IMPORTANT!"
@@ -708,13 +736,10 @@ msgid ""
 "Users authenticating through the regulars Wordpress Login and Register pages "
 "with their usernames and passwords WILL NOT be affected."
 msgstr ""
-"Os usuários que estiverem autenticando através das páginas regulares do "
-"Wordpress Login e Registro com seus nomes de usuários e senhas NÃO serão "
-"afetados."
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:35
 msgid "BuddyPress plugin not found!"
-msgstr "Plugin BuddyPress não encontrado!"
+msgstr "No se encontró el plugin de BuddyPress!"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:40
 msgid ""
@@ -732,17 +757,17 @@ msgstr ""
 #: includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:50
 #: includes/admin/wsl.admin.ui.php:287
 msgid "Report as bug"
-msgstr "Relatar como bug"
+msgstr "Reportar bug"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.notfound.php:51
 #: includes/admin/wsl.admin.ui.php:288
 msgid "Check enabled components"
-msgstr "Verificar componentes habilitados"
+msgstr "Verificar componentes activados"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:54
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:110
 msgid "Users avatars"
-msgstr "Avatares de usuários"
+msgstr "Avatar de los usuarios"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:60
 msgid ""
@@ -765,11 +790,12 @@ msgstr ""
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:87
 msgid "Provider name"
-msgstr "Nome do provedor"
+msgstr "Nombre del proveedor"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:87
 msgid "The the provider or social network name the user used to connected"
 msgstr ""
+"El nombre del proveedor o red social que el usuario ha usado para conectarse"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:88
 msgid "Provider user Identifier"
@@ -785,17 +811,17 @@ msgstr ""
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:89
 #: includes/admin/components/users/wsl.components.users.profiles.php:37
 msgid "Link to the user profile on the provider web site"
-msgstr "Link para o perfil do usuário no site do provedor"
+msgstr "Enlace al perfil de usuario en el sitio web del proveedor"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:90
 #: includes/admin/components/users/wsl.components.users.profiles.php:38
 msgid "User website, blog or web page"
-msgstr "Site, blog ou página web do usuário"
+msgstr "Página web, blog o web del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:91
 #: includes/admin/components/users/wsl.components.users.profiles.php:39
 msgid "Link to user picture or avatar on the provider web site"
-msgstr "Link para a foto do usuário ou avatar no site do provedor"
+msgstr "Enlace a la imagen de perfil o al ávatar en el sitio web del proveedor"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:92
 #: includes/admin/components/users/wsl.components.users.profiles.php:40
@@ -807,27 +833,27 @@ msgstr ""
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:93
 #: includes/admin/components/users/wsl.components.users.profiles.php:41
 msgid "A short about me"
-msgstr "Um pouco sobre mim"
+msgstr "Sobre mí"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:94
 #: includes/admin/components/users/wsl.components.users.profiles.php:42
 msgid "User's first name"
-msgstr "Primeiro nome do usuário"
+msgstr "Nombre del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:95
 #: includes/admin/components/users/wsl.components.users.profiles.php:43
 msgid "User's last name"
-msgstr "Último sobrenome do usuário"
+msgstr "Apellido del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:96
 #: includes/admin/components/users/wsl.components.users.profiles.php:44
 msgid "User's gender. Values are 'female', 'male' or blank"
-msgstr "Gênero do usuário. Os valores são 'feminino', 'masculino' ou vazio"
+msgstr "Sexo del usuario. Valores: hombre, mujer o blanco."
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:97
 #: includes/admin/components/users/wsl.components.users.profiles.php:45
 msgid "User's language"
-msgstr "Idioma do usuário"
+msgstr "Idioma del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:98
 #: includes/admin/components/users/wsl.components.users.profiles.php:46
@@ -835,8 +861,8 @@ msgid ""
 "User' age. Note that WSL do not calculate this field. We return it as it was "
 "provided"
 msgstr ""
-"Idade do usuário. Note que o WSL não calcula este campo. Nós o retornamos "
-"como foi fornecido"
+"Edad del usuario. Nótese que WSL no calcula este campo. Se devuelve tal cual "
+"es provisto."
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:99
 #: includes/admin/components/users/wsl.components.users.profiles.php:47
@@ -844,78 +870,86 @@ msgid ""
 "The day in the month in which the person was born. Not to confuse it with "
 "'Birth date'"
 msgstr ""
-"O dia do mês em que a pessoa nasceu. Não confundir com 'Data de nascimento'"
+"Día del mes en el cual nació la persona. No confundir con 'fecha de "
+"nacimiento'"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:100
 #: includes/admin/components/users/wsl.components.users.profiles.php:48
 msgid "The month in which the person was born"
-msgstr "O mês em que a pessoa nasceu"
+msgstr "El mes en el cual nació la persona"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:101
 #: includes/admin/components/users/wsl.components.users.profiles.php:49
 msgid "The year in which the person was born"
-msgstr "O ano em que a pessoa nasceu"
+msgstr "El año en el cual nació la persona"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:102
 msgid "Birth date"
-msgstr "Data de nascimento"
+msgstr "Fecha de nacimiento"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:102
 msgid "Complete birthday in which the person was born. Format: YYYY-MM-DD"
-msgstr "Data completa do nascimento da pessoa. Formato: AAAA-MM-DD"
+msgstr ""
+"Fecha de nacimiento completa en el cual nació la persona. Formato: AAAA-MM-DD"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:103
 msgid ""
 "User's email address. Not all of provider grant access to the user email"
 msgstr ""
-"Endereço de email do usuário. Nem todos os provedores concedem acesso ao "
-"email do usuário"
+"Dirección de correo del usuario. No todos los proveedores garantizan acceso "
+"al email del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:104
 #: includes/admin/components/users/wsl.components.users.profiles.php:51
 msgid "User's phone number"
-msgstr "Número de telefone do usuário"
+msgstr "Teléfono del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:105
 #: includes/admin/components/users/wsl.components.users.profiles.php:52
 msgid "User's address"
-msgstr "Endereço do usuário"
+msgstr "Dirección del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:106
 #: includes/admin/components/users/wsl.components.users.profiles.php:53
 msgid "User's country"
-msgstr "País do usuário"
+msgstr "País del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:107
 #: includes/admin/components/users/wsl.components.users.profiles.php:54
 msgid "User's state or region"
-msgstr "Estado ou região do usuário"
+msgstr "Región o estado del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:108
 #: includes/admin/components/users/wsl.components.users.profiles.php:55
 msgid "User's city"
-msgstr "Cidade do usuário"
+msgstr "Ciudad del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:109
 #: includes/admin/components/users/wsl.components.users.profiles.php:56
 msgid "User's zipcode"
-msgstr "Código postal do usuário"
+msgstr "CP del usuario"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:114
 msgid "Profile mappings"
-msgstr "Mapeamentos do perfil"
+msgstr "Asignaciones del perfil"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:118
 msgid ""
 "When <b>Profile mapping</b> is enabled, WSL will try to automatically fill "
 "in Buddypress users profiles from their social networks profiles"
 msgstr ""
+"Cuando <b>Asignaciones del perfil</b> está activado, WSL intentará rellenar "
+"atuomáticamente en Buddypress los perfiles de usuario desde sus perfiles de "
+"redes sociales"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:126
 msgid ""
 "<b>Profile mapping</b> will only work for new users. Profile mapping for "
 "returning users will implemented in future version of WSL"
 msgstr ""
+"<b>Asignaciones del perfil</b> sólo funcionará para nuevos usuarios. "
+"Asignaciones del perfil para usuarios ya existentes se implementará en "
+"versiones futuras de WSL"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:128
 msgid ""
@@ -931,7 +965,7 @@ msgstr ""
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:135
 msgid "Enable profile mapping"
-msgstr "Habilitar mapeamento de perfil"
+msgstr "Activar asignaciones del perfil"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:150
 msgid "Fields Map"
@@ -964,7 +998,7 @@ msgstr ""
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:172
 #, php-format
 msgid "Fields Group '%s'"
-msgstr "Grupo de campos '%s'"
+msgstr ""
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.setup.php:214
 msgid ""
@@ -979,7 +1013,7 @@ msgstr ""
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.sidebar.php:42
 msgid "BuddyPress integration"
-msgstr "Integração com BuddyPress"
+msgstr "Integración BuddyPress"
 
 #: includes/admin/components/buddypress/wsl.components.buddypress.sidebar.php:46
 msgid ""
@@ -998,46 +1032,43 @@ msgstr ""
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:38
 msgid "Other Components available"
-msgstr "Outros componentes disponíveis"
+msgstr ""
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:40
 msgid ""
 "These components and add-ons can extend the functionality of WordPress "
 "Social Login"
 msgstr ""
-"estes componentes e complementos podem estender a funcionalidade do "
-"WordPress Social Login"
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:54
 #, php-format
 msgid "<em>By <a href=\"%s\">%s</a></em>"
-msgstr "<em>Por <a href=\"%s\">%s</a></em>"
+msgstr "Por <a href=\"%s\">%s</a></em>"
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:58
 msgid "Get this Component"
-msgstr "Obter este componente"
+msgstr "Obtener este componente"
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:65
 msgid "Build yours"
-msgstr "Construir os seus"
+msgstr "Construir el tuyo"
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:68
 msgid ""
 "Want to build your own custom <b>WordPress Social Login</b> component? It's "
 "pretty easy. Just refer to the online developer documentation."
 msgstr ""
-"Quer construir seu próprio componente <b>WordPress Social Login</b> "
-"personalizado? É bem fácil. Basta consultar a documentação online do "
-"desenvolvedor."
+"¿Quieres contruir tu propio componente <b>WordPress Social Login</b>? Es "
+"sencillo. Simplemente acude a la documentación del desarrollador online."
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:71
 #: includes/admin/wsl.admin.ui.php:405
 msgid "WSL Developer API"
-msgstr "API do desenvolvedor do WSL"
+msgstr "API de desarrolador para WSL"
 
 #: includes/admin/components/components/wsl.components.help.gallery.php:72
 msgid "Submit your WSL Component"
-msgstr "Envie seu componente WSL"
+msgstr ""
 
 #: includes/admin/components/components/wsl.components.help.setup.php:26
 msgid ""
@@ -1055,7 +1086,7 @@ msgstr "Componente"
 #: includes/admin/components/components/wsl.components.help.setup.php:81
 #, php-format
 msgid "Version %s"
-msgstr "Versão %s"
+msgstr "Versión %s"
 
 #: includes/admin/components/components/wsl.components.help.setup.php:88
 #, php-format
@@ -1070,11 +1101,11 @@ msgstr "Por %s"
 #: includes/admin/components/components/wsl.components.help.setup.php:98
 #, php-format
 msgid "<a href=\"%s\" target=\"_blank\">Visit component site</a>"
-msgstr "<a href=\"%s\" target=\"_blank\">Visitar site do componente</a>"
+msgstr "<a href=\"%s\" target=\"_blank\">Visite la web del componente</a>"
 
 #: includes/admin/components/components/wsl.components.help.setup.php:111
 msgid "Disable"
-msgstr "Inibir"
+msgstr "Desabilitar"
 
 #: includes/admin/components/components/wsl.components.help.setup.php:113
 msgid "Enable"
@@ -1082,40 +1113,40 @@ msgstr "Habilitar"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:27
 msgid "WordPress user not found!"
-msgstr "Usuário WordPress não encontrado!"
+msgstr "¡Usuario de WordPress no encontrado!"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:46
 #: includes/admin/components/users/wsl.components.users.profiles.php:64
 msgid "Edit user details"
-msgstr "Editar detalhes do usuário"
+msgstr "Editar detalles de usuario"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:47
 msgid "Show user social profiles"
-msgstr "Exibir perfis sociais do usuário"
+msgstr "Mostrar perfiles sociales del usuario"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:55
 #, php-format
 msgid "%s's contacts list"
-msgstr "Lista de contatos do %s"
+msgstr "Lista de contactos de %s"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:73
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:81
 msgid "Contact Name"
-msgstr "Nome do contato"
+msgstr "Nombre del contacto"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:74
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:82
 msgid "Contact Email"
-msgstr "Email do contato"
+msgstr "Email del contacto"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:75
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:83
 msgid "Contact Profile Url"
-msgstr "Url do perfil do contato"
+msgstr "URL del perfil del contacto"
 
 #: includes/admin/components/contacts/wsl.components.contacts.list.php:94
 msgid "No contacts found"
-msgstr "Nenhum contato encontrado"
+msgstr "No se hallaron contactos"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:54
 msgid "Google"
@@ -1128,6 +1159,10 @@ msgid ""
 "developers.google.com</a>, then <b>APIs &amp; auth</b> &gt; <b>APIs</b> and "
 "enable <b>Contacts API</b>"
 msgstr ""
+"Para importar la lista contactos del usuario de Google tendrás que ir a <a "
+"href=\"https://console.developers.google.com\" target=\"_blank\">https://"
+"console.developers.google.com</a>, después a <b>APIs &amp; auth</b> &gt; "
+"<b>APIs</b> y activar <b>Contacts API</b>"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:63
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:86
@@ -1138,7 +1173,7 @@ msgstr ""
 #: includes/admin/components/tools/wsl.components.tools.actions.php:150
 #: includes/admin/components/tools/wsl.components.tools.actions.php:202
 msgid "Disabled"
-msgstr "Inibido"
+msgstr "Desabilitado"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:77
 msgid "Facebook"
@@ -1149,6 +1184,8 @@ msgid ""
 "When enabled, Facebook's users will be asked for an extra permission to get "
 "access for their friends lists"
 msgstr ""
+"Si está activado, los usuarios de Facebook serán preguntados por permisos "
+"extra para acceder a su lista de amigos."
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:100
 msgid "Twitter"
@@ -1159,6 +1196,8 @@ msgid ""
 "This will only import the Twitter's users followed by the connected user on "
 "your website"
 msgstr ""
+"Esto sólo importa los usuarios de Twitter que están siendo seguidos por el "
+"usuario conectado a la web"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:123
 msgid "LinkedIn"
@@ -1171,6 +1210,9 @@ msgid ""
 "linkedin.com/secure/developer</a>, then <b>Default scope</b> and check "
 "<b>r_network</b>"
 msgstr ""
+"Para importar la lista contactos del usuario de LinkedIn tendrás que ir a <a "
+"href=\"https://www.linkedin.com/secure/developer\" target=\"_blank\">, "
+"después a <b>Default scope</b> y marcar <b>r_network</b>"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.setup.php:146
 msgid "Windows Live"
@@ -1182,13 +1224,15 @@ msgstr "Vkontakte"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:42
 msgid "User contacts import"
-msgstr ""
+msgstr "Importar contactos del usuario"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:46
 msgid ""
 "WordPress Social Login also allow you to import users contact list from "
 "Google Gmail, Facebook, Windows Live, LinkedIn  and Vkontakte"
 msgstr ""
+"WordPress Social Login te permite importar la lista de contactos del usuario "
+"desde Gmail, Facebook, Windows Live, LinkedIn  y Vkontakte"
 
 #: includes/admin/components/contacts/wsl.components.contacts.settings.sidebar.php:50
 msgid ""
@@ -1220,7 +1264,7 @@ msgstr ""
 
 #: includes/admin/components/help/wsl.components.help.reference.php:24
 msgid "Documentation"
-msgstr "Documentação"
+msgstr "Documentación"
 
 #: includes/admin/components/help/wsl.components.help.reference.php:26
 msgid ""
@@ -1243,7 +1287,7 @@ msgstr ""
 #: includes/admin/components/help/wsl.components.help.reference.php:40
 #: includes/admin/wsl.admin.ui.php:192 wp-social-login.php:191
 msgid "Support"
-msgstr "Suporte"
+msgstr "Soporte"
 
 #: includes/admin/components/help/wsl.components.help.reference.php:42
 msgid ""
@@ -1266,7 +1310,7 @@ msgstr ""
 
 #: includes/admin/components/help/wsl.components.help.reference.php:54
 msgid "License"
-msgstr "Licença"
+msgstr "Licencia"
 
 #: includes/admin/components/help/wsl.components.help.reference.php:56
 msgid ""
@@ -1301,13 +1345,15 @@ msgstr ""
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:25
 msgid "About WordPress Social Login"
-msgstr "Sobre o WordPress Social Login"
+msgstr "Sobre WordPress Social Login"
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:29
 msgid ""
 "WordPress Social Login is a free and open source plugin made by the "
 "community, for the community"
 msgstr ""
+"WordPress Social Login es un plugin libre y de código abierto hecho por y "
+"para la comunidad"
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:32
 msgid ""
@@ -1315,16 +1361,21 @@ msgid ""
 "to register and login via social networks such as twitter, facebook and "
 "google but it has much more to offer"
 msgstr ""
+"Basicamente, WordPress Social Login permite a los visitantes y clientes "
+"registrarse en la web mediante redes sociales como Twitter, Facebook y "
+"Google pero tiene mucho más que ofrecer"
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:35
 msgid ""
 "For more information about WordPress Social Login, refer to our online user "
 "guide"
 msgstr ""
+"Para más información sobre WordPress Social Login, vaya a la guía de usuario "
+"online"
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:42
 msgid "Thanks"
-msgstr "Agradecimentos"
+msgstr "Gracias"
 
 #: includes/admin/components/help/wsl.components.help.sidebar.php:46
 msgid ""
@@ -1334,13 +1385,15 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:58
 msgid "Basic Settings"
-msgstr "Configurações básicas"
+msgstr "Configuración básica"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:62
 msgid ""
 "<b>Connect with caption :</b> Change the content of the label to display "
 "above WSL widget"
 msgstr ""
+"<b>Conectar con etiqueta :</b> Cambia el texto de la etiqueta que se muestr "
+"sobre el WSL widget"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:66
 msgid ""
@@ -1388,7 +1441,7 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:131
 msgid "Advanced Settings"
-msgstr "Configurações avançadas"
+msgstr "Configuración avanzada"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:135
 msgid ""
@@ -1426,23 +1479,23 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:156
 msgid "Redirect URL"
-msgstr "Redirecionar URL"
+msgstr "Url de redirección"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:162
 msgid "Force redirection"
-msgstr "Forçar redirecionamento"
+msgstr "Forzar redirección"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:171
 msgid "Authentication display"
-msgstr "Exibição da autenticação"
+msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:174
 msgid "Popup"
-msgstr ""
+msgstr "Popup"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:175
 msgid "In Page"
-msgstr "Na página"
+msgstr "En la página"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:180
 msgid "Widget display"
@@ -1450,15 +1503,15 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:207
 msgid "Notification"
-msgstr "Notificação"
+msgstr "Notificación"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:219
 msgid "No notification"
-msgstr "Sem notificação"
+msgstr "Sin notificación"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:281
 msgid "Custom CSS"
-msgstr "CSS personalizado"
+msgstr "CSS customizado"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.setup.php:285
 msgid ""
@@ -1501,7 +1554,7 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:99
 msgid "Custom integration"
-msgstr "Integração personalizada"
+msgstr "Integración customizada"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:103
 msgid ""
@@ -1532,7 +1585,7 @@ msgstr ""
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:120
 msgid "Tip"
-msgstr "Dica"
+msgstr "Truco"
 
 #: includes/admin/components/login-widget/wsl.components.loginwidget.sidebar.php:122
 msgid ""
@@ -1544,21 +1597,21 @@ msgstr ""
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:133
 msgid "Application ID"
-msgstr "ID do aplicativo"
+msgstr "ID de aplicación"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:135
 #: includes/admin/components/networks/wsl.components.networks.setup.php:141
 #: includes/admin/components/networks/wsl.components.networks.setup.php:149
 msgid "Where do I get this info?"
-msgstr "Onde eu consigo essa informação?"
+msgstr "¿Dónde obtengo esta información?"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:139
 msgid "Application Key"
-msgstr "Chave do aplicativo"
+msgstr "Clave de aplicación"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:147
 msgid "Application Secret"
-msgstr ""
+msgstr "Secreto de aplicación"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:163
 #, php-format
@@ -1623,12 +1676,12 @@ msgstr ""
 #: includes/admin/components/networks/wsl.components.networks.setup.php:205
 #, php-format
 msgid "<b>Done.</b> Nothing more required for <b>%s</b>"
-msgstr ""
+msgstr "<b>Hecho.</b> Nada más requerido por <b>%s</b>"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:209
 #, php-format
 msgid "First go to: <a href=\"%s\" target =\"_blank\">%s</a>"
-msgstr "Primeiro vá para: <a href=\"%s\" target =\"_blank\">%s</a>"
+msgstr "Ir primero a: <a href=\"%s\" target =\"_blank\">%s</a>"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:212
 msgid ""
@@ -1697,7 +1750,7 @@ msgstr ""
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:228
 msgid "Create a new application"
-msgstr "Criar um novo aplicativo"
+msgstr "Crear nueva aplicación"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:229
 msgid ""
@@ -1744,7 +1797,7 @@ msgstr ""
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:264
 msgid "And that's it!"
-msgstr "E é isso!"
+msgstr "Y eso es todo!"
 
 #: includes/admin/components/networks/wsl.components.networks.setup.php:266
 #, php-format
@@ -1759,7 +1812,7 @@ msgstr ""
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:43
 msgid "Welcome to WordPress Social Login"
-msgstr "Bem-vindo ao WordPress Social Login"
+msgstr "Bienvenido a WordPress Social Login"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:47
 msgid ""
@@ -1814,36 +1867,36 @@ msgstr ""
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:143
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:152
 msgid "Conversions"
-msgstr ""
+msgstr "Conversiones"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:146
 msgid "WP users"
-msgstr "Usuários do WP"
+msgstr "Usuarios WP"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:149
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:183
 msgid "WSL users"
-msgstr "Usuários do WSL"
+msgstr "Usuarios WSL"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:160
 msgid "By provider"
-msgstr "pelo provedor"
+msgstr "Por proveedor"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:180
 msgid "WSL profiles"
-msgstr "Perfis do WSL"
+msgstr "Perfiles WSL"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:191
 msgid "By gender"
-msgstr "Por gênero"
+msgstr "Por género"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:214
 msgid "By age"
-msgstr "Por idade"
+msgstr "Por edad"
 
 #: includes/admin/components/networks/wsl.components.networks.sidebar.php:238
 msgid "There's no data yet"
-msgstr "Não há nenhum dado ainda"
+msgstr "No hay datos todavía"
 
 #: includes/admin/components/tools/index.php:41
 msgid "The URL nonce is not valid"
@@ -1852,7 +1905,7 @@ msgstr ""
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:24
 #: includes/admin/components/tools/wsl.components.tools.actions.php:64
 msgid "WordPress Social Login Diagnostics"
-msgstr "Diagnósticos do WordPress Social Login"
+msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:682
 msgid ""
@@ -1870,12 +1923,12 @@ msgstr ""
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:873
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:918
 msgid "Back to Tools"
-msgstr "Voltar para Ferramentas"
+msgstr "Volver a herramientas"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:745
 #: includes/admin/components/tools/wsl.components.tools.actions.php:84
 msgid "System information"
-msgstr "Informações do sistema"
+msgstr "Información de sistema"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:863
 msgid "Repair Wordpress Social Login tables"
@@ -1909,11 +1962,11 @@ msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:912
 msgid "Thank you for using Wordpress Social Login"
-msgstr "Obrigado por usar o Wordpress Social Login"
+msgstr "Gracias por usar Wordpress Social Login"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.job.php:915
 msgid "Good bye"
-msgstr "Até logo"
+msgstr "Adiós"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:48
 msgid ""
@@ -1934,7 +1987,7 @@ msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:71
 msgid "Run WordPress Social Login Diagnostics"
-msgstr "Executar diagnóstico do WordPress Social Login"
+msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:88
 msgid ""
@@ -1945,25 +1998,27 @@ msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:91
 msgid "Display your system information"
-msgstr "Mostrar informações do seu sistema"
+msgstr ""
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:105
 msgid "Repair WSL tables"
-msgstr "Reparar tabelas do WSL"
+msgstr "Reparar tablas WSL"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:109
 msgid ""
 "This will attempt recreate WSL databases tables if they do not exist and "
 "will also add any missing field"
 msgstr ""
+"Esto intentará recrear tablas de bases de datos WSL si no existen y también "
+"agregará cualquier campo faltante"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:112
 msgid "Repair WordPress Social Login databases tables"
-msgstr "Reparar tabelas do banco de dados do WordPress Social Login"
+msgstr "Reparar las tablas de bases de datos de WSL"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:127
 msgid "Debug mode"
-msgstr "Modo debug"
+msgstr "Debug mode"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:131
 msgid ""
@@ -1972,6 +2027,10 @@ msgid ""
 "when debugging this plugin but note that it is highly technical and not "
 "documented"
 msgstr ""
+"El <b>Debug mode</b> es una herramienta de desarrollo interno creada para "
+"rastrear cada acción realizada por WSL durante el proceso de autenticación, "
+"que puede ser útil al depurar este complemento, pero tenga en cuenta que es "
+"altamente técnico y no está documentado."
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:135
 msgid ""
@@ -1979,6 +2038,9 @@ msgid ""
 "WSL will attempt to generate its log files under <em>/wp-content/uploads/"
 "wordpress-social-login</em>"
 msgstr ""
+"Cuando el modo Debug está habilitado y configurado <code>Log actions in a "
+"file</code>, WSL intentará generar sus archivos de registro en <em>/wp-"
+"content/uploads/wordpress-social-login</em>"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:139
 msgid ""
@@ -1986,6 +2048,9 @@ msgid ""
 "will create a new database table <code>wslwatchdog</code> and insert all "
 "actions names and arguments"
 msgstr ""
+"Cuando el modo Debug está habilitado y configurado en <code>Log actions to "
+"database</code>, creará una nueva tabla de base de datos <code>wslwatchdog</"
+"code> e insertará todos los nombres y argumentos de las acciones"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:143
 msgid ""
@@ -1993,23 +2058,27 @@ msgid ""
 "Troubleshooting &gt; <a href=\"http://miled.github.io/wordpress-social-login/"
 "troubleshooting-advanced.html\" target=\"_blank\">Debug Mode</a>"
 msgstr ""
+"Para más información, consulte la documentación de WSL en la sección de "
+"Solución de Problemas Avanzada &gt; <a href=\"http://miled.github.io/"
+"wordpress-social-login/troubleshooting-advanced.html\" target=\"_blank"
+"\">Modo de Desarrollo</a>"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:151
 msgid "Enabled &mdash; Log actions in a file"
-msgstr "Habilitado &mdash; Logar ações em um arquivo"
+msgstr "Activado &mdash; Acciones de registro en un archivo"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:152
 msgid "Enabled &mdash; Log actions to database"
-msgstr "Habilitado &mdash; Logar ações no banco de dados"
+msgstr "Activado &mdash; Registrar acciones en la base de datos"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:158
 #: includes/admin/wsl.admin.ui.php:167
 msgid "View WSL logs"
-msgstr "Ver registros do WSL"
+msgstr "Ver Registros de WSL"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:175
 msgid "Development mode"
-msgstr "Modo desenvolvimento"
+msgstr "Modo de desarrollo"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:179
 msgid ""
@@ -2019,24 +2088,36 @@ msgid ""
 "wrong. This report can help you figure out the root of the issues you may "
 "runs into"
 msgstr ""
+"Cuando el <b>Modo de desarrollo</b> está habilitado, este complemento "
+"mostrará un área de depuración en el pie de las interfaces de "
+"administración. El <b>Modo de desarrollo</b> también intentará generar y "
+"mostrar informes técnicos cuando algo salga mal. Este informe le puede "
+"ayudar a averiguar la raíz de los problemas"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:183
 msgid ""
 "Please, do not enable <b>Development Mode</b>, unless you are a developer or "
 "you have basic PHP knowledge"
 msgstr ""
+"Por favor, no habilite el <b>Modo de desarrollo</b>, a menos que sea un "
+"desarrollador o tenga conocimientos básicos de PHP"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:187
 msgid ""
 "For security reasons, <b>Development Mode</b> will auto switch to "
 "<b>Disabled</b> each time the plugin is <b>reactivated</b>"
 msgstr ""
+"Por razones de seguridad, <b>Modo de desarrollo</b> cambiará automáticamente "
+"a <b>Desactivado</b> cada vez que el complemento esté <b>Activado</b>"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:191
 msgid ""
 "It's highly recommended to keep the <b>Development Mode</b> <b style=\"color:"
 "#da4f49\">Disabled</b> on production as it would be a security risk otherwise"
 msgstr ""
+"Es altamente recomendable que mantenga <b>Modo de desarrollo</b> <b style="
+"\"color:#da4f49\">Desactivado</b>, en entornos de producción es muy "
+"arriesgado.javascript:;"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:195
 msgid ""
@@ -2044,42 +2125,53 @@ msgid ""
 "Troubleshooting &gt; <a href=\"http://miled.github.io/wordpress-social-login/"
 "troubleshooting-advanced.html\" target=\"_blank\">Development Mode</a>"
 msgstr ""
+"Consulte la documentación de WSL en la sección de Solución de Problemas "
+"Avanzada &gt; <a href=\"http://miled.github.io/wordpress-social-login/"
+"troubleshooting-advanced.html\" target=\"_blank\">Modo de Desarrollo</a>"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:224
 msgid ""
 "This will permanently delete all Wordpress Social Login tables and stored "
 "options from your WordPress database"
 msgstr ""
+"Esto eliminará de forma permanente todas las tablas de Wordpress Social "
+"Login y las opciones almacenadas de su base de datos de WordPress."
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:225
 msgid ""
 "Once you delete WSL database tables and stored options, there is NO going "
 "back. Please be certain"
 msgstr ""
+"Una vez que elimine las tablas WSL de la base de datos y las opciones "
+"almacenadas, no hay vuelta atrás. Por favor, asegúrese"
 
 #: includes/admin/components/tools/wsl.components.tools.actions.php:228
 msgid "Delete all Wordpress Social Login tables and options"
-msgstr "Excluir todas as tabelas e opções do Wordpress Social Login"
+msgstr "Borrar todas las tablas y opciones de Wordpress Social Login"
 
 #: includes/admin/components/tools/wsl.components.tools.sidebar.php:42
 msgid "WordPress Social Login Tools"
-msgstr "Ferramentas do WordPress Social Login"
+msgstr "Herramientas de WordPress Social Login"
 
 #: includes/admin/components/tools/wsl.components.tools.sidebar.php:46
 msgid ""
 "Here you can found a set of tools to help you find and hopefully fix any "
 "issue you may encounter"
 msgstr ""
+"Aquí puede encontrar un conjunto de herramientas para ayudarle a buscar y "
+"con suerte arreglar cualquier problema que pueda encontrar"
 
 #: includes/admin/components/tools/wsl.components.tools.sidebar.php:49
 msgid ""
 "You can also delete all Wordpress Social Login tables and stored options "
 "from the <b>Uninstall</b> section down below"
 msgstr ""
+"También puede eliminar todas las tablas de Wordpress Social Login y las "
+"opciones almacenadas en la sección <b>Desinstalar</b> abajo"
 
 #: includes/admin/components/users/wsl.components.users.list.php:26
 msgid "View all your website users"
-msgstr "Ver todos os usuários do seu site"
+msgstr "Ver todos los usuarios del sitio web"
 
 #: includes/admin/components/users/wsl.components.users.list.php:46
 #: includes/admin/components/users/wsl.components.users.list.php:67
@@ -2088,32 +2180,32 @@ msgstr "Ver todos os usuários do seu site"
 #: includes/widgets/wsl.users.gateway.php:588
 #: includes/widgets/wsl.users.gateway.php:631
 msgid "Username"
-msgstr "Nome de usuário"
+msgstr "Nombre de usuario"
 
 #: includes/admin/components/users/wsl.components.users.list.php:51
 msgid ""
 "This screen only list the users who have connected through WordPress Social "
 "Login"
 msgstr ""
-"Esta tela lista apenas os usuários que se conectaram através do WordPress "
-"Social Login"
+"Esta pantalla sólo muestra los usuarios que se han conectado a través de "
+"WordPress Social Login"
 
 #: includes/admin/components/users/wsl.components.users.list.php:66
 #: includes/admin/components/users/wsl.components.users.list.php:77
 msgid "Providers"
-msgstr "Provedores"
+msgstr "Proveedores"
 
 #: includes/admin/components/users/wsl.components.users.list.php:68
 #: includes/admin/components/users/wsl.components.users.list.php:79
 msgid "Full Name"
-msgstr "Nome completo"
+msgstr "Nombre completo"
 
 #: includes/admin/components/users/wsl.components.users.list.php:69
 #: includes/admin/components/users/wsl.components.users.list.php:80
 #: includes/admin/components/users/wsl.components.users.profiles.php:100
 #: includes/widgets/wsl.users.gateway.php:639
 msgid "E-mail"
-msgstr "Email"
+msgstr "E-mail"
 
 #: includes/admin/components/users/wsl.components.users.list.php:71
 #: includes/admin/components/users/wsl.components.users.list.php:82
@@ -2121,24 +2213,24 @@ msgstr "Email"
 #: includes/settings/wsl.initialization.php:55
 #: includes/settings/wsl.initialization.php:66
 msgid "Contacts"
-msgstr "Contatos"
+msgstr "Contactos"
 
 #: includes/admin/components/users/wsl.components.users.list.php:72
 #: includes/admin/components/users/wsl.components.users.list.php:83
 msgid "User ID"
-msgstr "ID do usuário"
+msgstr "Id del usuario"
 
 #: includes/admin/components/users/wsl.components.users.list.php:94
 msgid "No users found"
-msgstr "Nenhum usuário encontrado"
+msgstr "No se encontraron usuarios"
 
 #: includes/admin/components/users/wsl.components.users.list.php:139
 msgid "Profiles"
-msgstr "Perfis"
+msgstr "Perfiles"
 
 #: includes/admin/components/users/wsl.components.users.list.php:152
 msgid "Delete"
-msgstr "Excluir"
+msgstr "Borrar"
 
 #: includes/admin/components/users/wsl.components.users.list.php:211
 #: includes/admin/components/users/wsl.components.users.profiles.php:81
@@ -2147,6 +2239,10 @@ msgid ""
 "\n"
 "Note: The associated WordPress user won't be deleted."
 msgstr ""
+"¿Está seguro de querer borrar los perfiles sociales y contactos del "
+"usuario?\n"
+"\n"
+"Nota: El usuario vinculado a WordPress no se eliminará."
 
 #: includes/admin/components/users/wsl.components.users.list.php:238
 #, php-format
@@ -2154,10 +2250,12 @@ msgid ""
 "WSL user ID #%d: <b>%s</b>  profiles and contacts has been deleted. Note "
 "that the associated WordPress user wasn't deleted"
 msgstr ""
+"Se han eliminado los perfiles y contactos del usuario WSL ID #%d: <b>%s</b>. "
+"Tenga en cuenta que el usuario de WordPress asociado no se ha eliminado"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:28
 msgid "This's not a WSL user!"
-msgstr "Este não é um usuário do WSL!"
+msgstr "¡Este no es un usuario de WSL!"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:50
 msgid ""
@@ -2165,26 +2263,27 @@ msgid ""
 "provide verified emails. Users with the same verified email will be "
 "automatically linked"
 msgstr ""
-"E-mail do usuário. Nota: alguns provedores como Facebook e Google podem "
-"fornecer e-mails verificados. Usuários com o mesmo e-mail verificado serão "
-"automaticamente integrados"
+"Dirección de correo electrónico del usuario. Nota: algunos proveedores como "
+"Facebook y Google pueden proporcionar correos electrónicos verificados. Los "
+"usuarios con el mismo correo electrónico verificado se enlazarán "
+"automáticamente"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:65
 msgid "Show user contacts list"
-msgstr "Mostrar lista de contatos do usuário"
+msgstr "Mostrar lista de contactos del usuario"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:86
 #, php-format
 msgid "%s's social profiles"
-msgstr "Perfis sociais do %s"
+msgstr "perfiles sociales de %s"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:97
 msgid "Wordpress User ID"
-msgstr "ID de usuário do Wordpress"
+msgstr "Id de Usuario de Wordpress"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:101
 msgid "Website"
-msgstr "Site"
+msgstr "Sitio web"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:102
 msgid "Registered"
@@ -2192,50 +2291,50 @@ msgstr "Registrado"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:113
 msgid "User profile"
-msgstr "Perfil do usuário"
+msgstr "Perfil del usuario"
 
 #: includes/admin/components/users/wsl.components.users.profiles.php:113
 #, php-format
 msgid "as provided by %s"
-msgstr "como fornecido por %s"
+msgstr "es proveído por %s"
 
 #: includes/admin/components/watchdog/index.php:22
 msgid "<p>Debug mode is disabled.</p>"
-msgstr "<p>Modo debug está desabilitado.</p>"
+msgstr "<p>Modo de depuración está deshabilitado.</p>"
 
 #: includes/admin/components/watchdog/index.php:42
 msgid "Authentication log files viewer"
-msgstr "Visualizador de arquivos de log de autenticação"
+msgstr "Visor de archivos de registro de autenticación"
 
 #: includes/admin/components/watchdog/index.php:46
 msgid "Select a log file to display"
-msgstr "Selecionar um arquivo de log a exibir"
+msgstr "Seleccione un archivo de registro a mostrar"
 
 #: includes/admin/components/watchdog/index.php:69
 msgid "View"
-msgstr "Ver"
+msgstr "Visor"
 
 #: includes/admin/components/watchdog/index.php:101
 msgid "Authentication log viewer - latest activity"
-msgstr "Visualizador de log de autenticação - últimas atividades"
+msgstr "Visor de registro de autenticación: últimas actividades"
 
 #: includes/admin/components/watchdog/index.php:107
 msgid "Delete WSL Log"
-msgstr "Apagar log do WSL"
+msgstr "Borrar Registro WSL"
 
 #: includes/admin/components/watchdog/index.php:117
 msgid "<p>No log found!</p>"
-msgstr "<p>Nenhum log encontrado!</p>"
+msgstr "<p>¡Registro no encontrado!</p>"
 
 #: includes/admin/components/watchdog/index.php:134
 #, php-format
 msgid "<b>%s</b> : %s - %s"
-msgstr "<b>%s</b> : %s - %s"
+msgstr ""
 
 #: includes/admin/wsl.admin.ui.php:30
 #: includes/services/wsl.authentication.php:113
 msgid "You do not have sufficient permissions to access this page."
-msgstr "Você não tem permissão suficiente para acessar esta página."
+msgstr "No tienes suficientes permisos para acceder a esta página."
 
 #: includes/admin/wsl.admin.ui.php:136
 msgid ""
@@ -2243,32 +2342,51 @@ msgid ""
 "saved changes didn't take effect immediately then you might need to empty "
 "the cache"
 msgstr ""
+"<b>Nota:</b> WSL ha detectado que está utilizando un complemento de "
+"almacenamiento en caché. Si los cambios guardados no tuvieron efecto "
+"inmediatamente, es posible que tenga que vaciar la memoria caché"
 
 #: includes/admin/wsl.admin.ui.php:148
+#, fuzzy
+#| msgid ""
+#| "<b>Warning:</b> You are now running WordPress Social Login with "
+#| "DEVELOPMENT MODE enabled. This mode is not intend for live websites as it "
+#| "might raise serious security risks"
 msgid ""
 "<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT "
 "MODE enabled. This mode is not intended for live websites as it might raise "
 "serious security risks"
 msgstr ""
+"<b>Advertencia:</b> Ahora está ejecutando WordPress Social Login con MODO DE "
+"DESARROLLO habilitado. Este modo no es para sitios web en producción, ya que "
+"podría plantear graves riesgos de seguridad"
 
 #: includes/admin/wsl.admin.ui.php:151 includes/admin/wsl.admin.ui.php:166
 msgid "Change this mode"
-msgstr "Mudar este modo"
+msgstr "Cambie este modo"
 
 #: includes/admin/wsl.admin.ui.php:152
 msgid "Read about the development mode"
-msgstr "Saiba mais sobre o modo desenvolvimento"
+msgstr "Lea sobre el modo de desarrollo"
 
 #: includes/admin/wsl.admin.ui.php:163
+#, fuzzy
+#| msgid ""
+#| "<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE "
+#| "enabled. This mode is not intend for live websites as it might add to "
+#| "loading time and store unnecessary data on your server"
 msgid ""
 "<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE "
 "enabled. This mode is not intended for live websites as it might add to "
 "loading time and store unnecessary data on your server"
 msgstr ""
+"<b>Nota:</b> Ahora está ejecutando WordPress Social Login con MODO DE "
+"DEPURACIÓN habilitado. Este modo no es para sitios web en producción, ya que "
+"podría añadir tiempo de carga y almacenar datos innecesarios en su servidor"
 
 #: includes/admin/wsl.admin.ui.php:168
 msgid "Read about the debug mode"
-msgstr "Saiba mais sobre o modo debug"
+msgstr "Leer acerca del modo de depuración"
 
 #: includes/admin/wsl.admin.ui.php:179
 msgid ""
@@ -2291,11 +2409,11 @@ msgstr ""
 #, fuzzy
 #| msgid "Read about the debug mode"
 msgid "Read about the latest update"
-msgstr "Saiba mais sobre o modo debug"
+msgstr "Leer acerca del modo de depuración"
 
 #: includes/admin/wsl.admin.ui.php:191 wp-social-login.php:190
 msgid "Docs"
-msgstr ""
+msgstr "Documentos"
 
 #: includes/admin/wsl.admin.ui.php:193
 msgid "Github"
@@ -2307,17 +2425,19 @@ msgstr "WordPress Social Login"
 
 #: includes/admin/wsl.admin.ui.php:272
 msgid "Oops! We ran into an issue."
-msgstr ""
+msgstr "¡Vaya! Nos topamos con un problema."
 
 #: includes/admin/wsl.admin.ui.php:277
 msgid ""
 "Unknown or Disabled <b>Component</b>! Check the list of enabled components "
 "or the typed URL"
 msgstr ""
+"¡<b>Component</b> Desconocido o Desactivado!. Verifique la lista de "
+"componentes habilitados o la URL escrita."
 
 #: includes/admin/wsl.admin.ui.php:322
 msgid "The minimum server requirements are"
-msgstr "Os requisitos mínimos de servidor são"
+msgstr "Los requisitos mínimos del server son"
 
 #: includes/admin/wsl.admin.ui.php:326
 msgid "PHP >= 5.2.0 installed"
@@ -2325,66 +2445,68 @@ msgstr "PHP >= 5.2.0 instalado"
 
 #: includes/admin/wsl.admin.ui.php:327
 msgid "WSL Endpoint URLs reachable"
-msgstr ""
+msgstr "WSL Endpoint URLs accesibles"
 
 #: includes/admin/wsl.admin.ui.php:328
 msgid "PHP's default SESSION handling"
-msgstr ""
+msgstr "PHP's default SESSION handling"
 
 #: includes/admin/wsl.admin.ui.php:329
 msgid "PHP/CURL/SSL Extension enabled"
-msgstr "Extensão PHP/CURL/SSL habilitada"
+msgstr "PHP/CURL/SSL Extension enabled"
 
 #: includes/admin/wsl.admin.ui.php:330
 msgid "PHP/JSON Extension enabled"
-msgstr "Extensão PHP/JSON habilitada"
+msgstr "PHP/JSON Extension enabled"
 
 #: includes/admin/wsl.admin.ui.php:331
 msgid "PHP/REGISTER_GLOBALS Off"
-msgstr ""
+msgstr "PHP/REGISTER_GLOBALS Off"
 
 #: includes/admin/wsl.admin.ui.php:332
 msgid "jQuery installed on WordPress backoffice"
-msgstr ""
+msgstr "jQuery instalado en WordPress backoffice"
 
 #: includes/admin/wsl.admin.ui.php:383
 msgid "Dismiss"
-msgstr ""
+msgstr "Descartar"
 
 #: includes/admin/wsl.admin.ui.php:389
 msgid "Welcome!"
-msgstr "Bem-vindo!"
+msgstr "¡Bienvenido!"
 
 #: includes/admin/wsl.admin.ui.php:391
 msgid ""
 "If you are still new to WordPress Social Login, we have provided a few "
 "walkthroughs to get you started"
 msgstr ""
+"Si todavía eres nuevo en WordPress Social Login, hemos proporcionado algunos "
+"tutoriales para empezar"
 
 #: includes/admin/wsl.admin.ui.php:398
 msgid "Get Started"
-msgstr ""
+msgstr "Empezar"
 
 #: includes/admin/wsl.admin.ui.php:401
 msgid "Plugin Overview"
-msgstr ""
+msgstr "Descripción del Plugin"
 
 #: includes/admin/wsl.admin.ui.php:402
 msgid "Setup and Configuration"
-msgstr "Instalação e configuração"
+msgstr "Instalación y configuración"
 
 #: includes/admin/wsl.admin.ui.php:403
 msgid "Customize WSL Widgets"
-msgstr ""
+msgstr "Personalizar WSL Widgets"
 
 #: includes/admin/wsl.admin.ui.php:404
 msgid "Manage users and contacts"
-msgstr "Gerenciar usuários e contatos"
+msgstr "Administrar usuarios y contactos"
 
 #: includes/admin/wsl.admin.ui.php:411
 #, php-format
 msgid "What's new on WSL %s"
-msgstr "O que há de novo no WSL %s"
+msgstr "Novedades de WSL %s"
 
 #: includes/admin/wsl.admin.ui.php:415
 msgid "WSL is now fully migrated to Hybridauth 3.2"
@@ -2418,7 +2540,7 @@ msgstr ""
 
 #: includes/admin/wsl.admin.ui.php:450
 msgid "Help us translate WordPress Social Login into your language"
-msgstr "Ajude-nos a traduzir o WordPress Social Login para seu idioma"
+msgstr "Ayúdanos a traducir WordPress Social Login en tu idioma"
 
 #: includes/admin/wsl.admin.ui.php:494 includes/admin/wsl.admin.ui.php:495
 #, fuzzy
@@ -2431,6 +2553,7 @@ msgstr "WordPress Social Login"
 msgid ""
 "You are already logged in as %s. Do you want to <a href='%s'>log out</a>?"
 msgstr ""
+"Ya entraste al sistema como %s. ¿Quieres <a href='%s'>cerrar tu sesión</a>?"
 
 #: includes/services/wsl.authentication.php:107
 #, php-format
@@ -2438,10 +2561,14 @@ msgid ""
 "You have to be logged in to be able to link your existing account. Do you "
 "want to <a href='%s'>login</a>?"
 msgstr ""
+"Debes iniciar sesión para poder vincular tu cuenta existente. ¿Quieres <a "
+"href='%s'>iniciar sesión</a>?"
 
 #: includes/services/wsl.authentication.php:119
 msgid "Authentication through social networks is currently disabled."
 msgstr ""
+"La autenticación a través de las redes sociales está actualmente "
+"deshabilitada."
 
 #: includes/services/wsl.authentication.php:165
 msgid ""
@@ -2449,47 +2576,50 @@ msgid ""
 "href=\"http://miled.github.io/wordpress-social-login/troubleshooting."
 "html#session-error\" target=\"_blank\">Troubleshooting</a>."
 msgstr ""
+"Falta el identificador de sesión.<br />Para más información consulte WSL <a "
+"href=\"http://miled.github.io/wordpress-social-login/troubleshooting."
+"html#session-error\" target=\"_blank\">Troubleshooting</a>."
 
 #: includes/services/wsl.authentication.php:173
 msgid "Bouncer says this makes no sense."
-msgstr ""
+msgstr "Bouncer dice que esto no tiene sentido."
 
 #: includes/services/wsl.authentication.php:191
 #: includes/services/wsl.authentication.php:278
 msgid "Unknown or disabled provider."
-msgstr "Provedor desconhecido ou inibido."
+msgstr "Proveedor desconocido o deshabilitado."
 
 #: includes/services/wsl.authentication.php:300
 #, php-format
 msgid "Your <b>%s ID</b> is already linked to another account on this website."
-msgstr "Seu <b>ID do %s</b> já está integrado a outra conta deste site."
+msgstr "Tu <b>%s ID</b> ya está vinculada a otra cuenta."
 
 #: includes/services/wsl.authentication.php:308
 msgid "Sorry, we couldn't link your account."
-msgstr "Desculpe, não pudemos integrar a sua conta."
+msgstr "Lo sentimos, no pudimos vincular tu cuenta."
 
 #: includes/services/wsl.authentication.php:313
 msgid "Bouncer says no."
-msgstr ""
+msgstr "Bouncer dice no."
 
 #: includes/services/wsl.authentication.php:351
 #, php-format
 msgid "Sorry, we couldn't connect you. <a href=\"%s\">Please try again</a>."
 msgstr ""
-"Desculpe, não pudemos conectá-lo. <a href=\"%s\">Por favor, tente novamente</"
-"a>."
+"Lo sentimos, no pudimos conectarte. <a href=\"%s\">Por favor inténtalo de "
+"nuevo</a>."
 
 #: includes/services/wsl.authentication.php:523
 msgid "Registration is now closed."
-msgstr ""
+msgstr "El registro está cerrado."
 
 #: includes/services/wsl.authentication.php:741
 msgid "An error occurred while creating a new user: "
-msgstr "Ocorreu um erro ao criar um novo usuário: "
+msgstr "Ocurrió un error mientras se creaba el usuario:"
 
 #: includes/services/wsl.authentication.php:744
 msgid "An error occurred while creating a new user!"
-msgstr "Ocorreu um erro ao criar um novo usuário!"
+msgstr "¡Ocurrió un error mientras se creaba un usuario!"
 
 #: includes/services/wsl.authentication.php:984
 #, php-format
@@ -2497,12 +2627,12 @@ msgid ""
 "Sorry, we couldn't connect you with <b>%s</b>. <a href=\"%s\">Please try "
 "again</a>."
 msgstr ""
-"Desculpe, não pudemos conectar você com o <b>%s</b>. <a href=\"%s\">Por "
-"favor, tente novamente</a>."
+"Lo sentimos, no pudimos conectarte con <b>%s</b>.  <a href=\"%s\">Por favor "
+"inténtalo de nuevo</a>."
 
 #: includes/settings/wsl.compatibilities.php:48
 msgid "Connect with:"
-msgstr "Conectar com:"
+msgstr "Conectar con:"
 
 #: includes/settings/wsl.compatibilities.php:119
 #: includes/settings/wsl.compatibilities.php:129
@@ -2513,18 +2643,18 @@ msgid ""
 "this is a mistake, you might want to contact the website owner and request "
 "an invitation.<p>"
 msgstr ""
-"<strong>Este site é restrito apenas a leitores convidados.</strong><p> Não "
-"me parece que você foi convidado para acessa-lo. Se você acha que isso é um "
-"erro, você pode entrar em contato com o dono do site e solicitar um convite."
-"<p>"
+"<strong>Este sitio web está restringido solamente a lectores invitados.</"
+"strong><p>No parece que te hayan invitado a acceder a este sitio. Si piensa "
+"que esto es un error, puede contactar al propietario del sitio web y "
+"solicitar una invitación.</p>"
 
 #: includes/settings/wsl.initialization.php:50
 msgid "WSL Core"
-msgstr "Núcleo WSL"
+msgstr "WSL Core"
 
 #: includes/settings/wsl.initialization.php:50
 msgid "WordPress Social Login core."
-msgstr "Núcleo WordPress Social Login"
+msgstr "WordPress Social Login core."
 
 #: includes/settings/wsl.initialization.php:51
 #: includes/settings/wsl.initialization.php:61
@@ -2533,7 +2663,7 @@ msgstr "Redes"
 
 #: includes/settings/wsl.initialization.php:51
 msgid "Social networks setup."
-msgstr "Configuração de redes sociais."
+msgstr "Configuración de redes sociales."
 
 #: includes/settings/wsl.initialization.php:52
 #: includes/settings/wsl.initialization.php:62
@@ -2542,29 +2672,29 @@ msgstr "Widget"
 
 #: includes/settings/wsl.initialization.php:52
 msgid "Authentication widget customization."
-msgstr "Widget de personalização de autenticação."
+msgstr "Personalización del widget de autenticación."
 
 #: includes/settings/wsl.initialization.php:53
 #: includes/settings/wsl.initialization.php:63
 msgid "Bouncer"
-msgstr "Bouncer"
+msgstr "Rebotador"
 
 #: includes/settings/wsl.initialization.php:53
 msgid "WordPress Social Login advanced configuration."
-msgstr "Configuração avançada do WordPress Social Login."
+msgstr "Configuración avanzada de WordPress Social Login."
 
 #: includes/settings/wsl.initialization.php:54
 #: includes/settings/wsl.initialization.php:65
 msgid "Users"
-msgstr "Usuários"
+msgstr "Usuarios"
 
 #: includes/settings/wsl.initialization.php:54
 msgid "WordPress Social Login users manager."
-msgstr "Gerenciador de usuários do WordPress Social Login."
+msgstr "Administrador de usuarios de WordPress Social Login."
 
 #: includes/settings/wsl.initialization.php:55
 msgid "WordPress Social Login users contacts manager"
-msgstr "Gerenciador de contatos de usuários do WordPress Social Login"
+msgstr "Administrador de contactos de usuarios de WordPress Social Login."
 
 #: includes/settings/wsl.initialization.php:56
 #: includes/settings/wsl.initialization.php:67
@@ -2576,24 +2706,24 @@ msgid ""
 "Makes WordPress Social Login compatible with BuddyPress: Widget integration, "
 "Users avatars and xProfiles mapping."
 msgstr ""
-"Tornar o WordPress Social Login compatível com BuddyPress: Widget de "
-"integração, avatar de usuários e mapeamento xProfiles."
+"Hace que WordPress Social Login sea compatible con BuddyPress: integración "
+"de widgets, avatares de usuarios y mapeo de xProfiles."
 
 #: includes/settings/wsl.initialization.php:69
 msgid "Help"
-msgstr "Ajuda"
+msgstr "Ayuda"
 
 #: includes/settings/wsl.initialization.php:70
 msgid "Tools"
-msgstr "Ferramentas"
+msgstr "Herramientas"
 
 #: includes/settings/wsl.initialization.php:71
 msgid "Log viewer"
-msgstr "Visualizador de log"
+msgstr "Visor de registro"
 
 #: includes/settings/wsl.initialization.php:72
 msgid "Auth test"
-msgstr "Testar Auth"
+msgstr "Prueba de autenticación"
 
 #: includes/settings/wsl.initialization.php:73
 msgid "Components"
@@ -2602,7 +2732,7 @@ msgstr "Componentes"
 #: includes/widgets/wsl.auth.widgets.php:239
 #, php-format
 msgid "Connect with %s"
-msgstr "Conectar com %s"
+msgstr "Conectate con %s"
 
 #: includes/widgets/wsl.auth.widgets.php:255
 msgid ""
@@ -2611,15 +2741,15 @@ msgid ""
 "plugin.<br />For more information, refer to the <a rel=\"nofollow\" href="
 "\"http://miled.github.io/wordpress-social-login\">online user guide</a>."
 msgstr ""
-"<strong>WordPress Social Login não está configurado ainda</strong>.<br/> Por "
-"favor, navegue até <strong>Configurações &gt; WP Social Login</strong> para "
-"configurar este plugin. <br/>Para mais informações, consulte <a rel="
-"\"nofollow\" href=\"http://miled.github.io/wordpress-social-login\">guia do "
-"usuário</a>."
+"<strong>WordPress Social Login no está configurado aún</strong>.<br /"
+">Navegue hasta <strong>Ajustes &gt; WP Social Login</strong> para configurar "
+"este plugin.<br />Para más información, consulte la <a rel=\"nofollow\" href="
+"\"http://miled.github.io/wordpress-social-login\">Guía de usuario en línea</"
+"a>."
 
 #: includes/widgets/wsl.error.pages.php:115
 msgid "Oops! We ran into an issue"
-msgstr "Oops! Houve um problema"
+msgstr "¡Vaya! Nos topamos con un problema"
 
 #: includes/widgets/wsl.error.pages.php:158
 msgid "We're unable to complete your request"
@@ -2631,34 +2761,34 @@ msgstr ""
 
 #: includes/widgets/wsl.error.pages.php:209
 msgid "Back to home"
-msgstr "Voltar para a página inicial"
+msgstr "Volver al inicio"
 
 #: includes/widgets/wsl.error.pages.php:256
 msgid ""
 "<strong>Note:</strong> This debugging area can be disabled from the plugin "
 "settings by setting <b>Development mode</b> to <b>Disabled</b>"
 msgstr ""
-"strong>Nota:</strong>Esta área de depuração pode ser desativado a partir das "
-"configurações do plugin, definindo <b> Modo de Desenvolvimento </b> para <b> "
-"Desativado </b>"
+"<strong>Nota:</strong> Esta área de depuración puede desactivarse desde los "
+"ajustes del plugin estableciendo <b>Modo de desarrollo</b> a <b>Desactivado</"
+"b>"
 
 #: includes/widgets/wsl.loading.screens.php:41
 #: includes/widgets/wsl.loading.screens.php:118
 msgid "Redirecting..."
-msgstr "Redirecionando...."
+msgstr "Redireccionando..."
 
 #: includes/widgets/wsl.loading.screens.php:82
 #, php-format
 msgid "Contacting <b>%s</b>, please wait..."
-msgstr "Conectando com <b>%s</b>, por favor aguarde..."
+msgstr "Contactando a <b>%s</b>, por favor espera..."
 
 #: includes/widgets/wsl.loading.screens.php:185
 msgid "Processing, please wait..."
-msgstr "Processando, por favor aguarde..."
+msgstr "Procesando, espera por favor..."
 
 #: includes/widgets/wsl.users.gateway.php:104
 msgid "Not tonight."
-msgstr "Hoje não."
+msgstr "No esta noche."
 
 #: includes/widgets/wsl.users.gateway.php:122
 #, php-format
@@ -2666,43 +2796,48 @@ msgid ""
 "<strong>ERROR</strong>: Invalid username or incorrect password. <a href=\"%s"
 "\">Lost your password</a>?"
 msgstr ""
-"<strong>ERRO</strong>: Usuário ou senha inválidos. <a href=\"%s\">Esqueceu "
-"sua senha</a>?"
+"<strong>ERROR</strong>: Nombre de usuario o contraseña incorrecta. <a href="
+"\"%s\">¿Ha perdido su contraseña?</a>"
 
 #: includes/widgets/wsl.users.gateway.php:162
 msgid "<strong>ERROR</strong>: Please type your e-mail address."
-msgstr "<strong>ERRO</strong>: Por favor, digite seu e-mail"
+msgstr "<strong>ERROR</strong>: Ingrese su correo electrónico."
 
 #: includes/widgets/wsl.users.gateway.php:167
 msgid "<strong>ERROR</strong>: Please enter a valid email address."
-msgstr "<strong>ERRO</strong>: Por favor insira um endereço de e-mail válido."
+msgstr "<strong>ERROR</strong>: Ingrese un correo electrónico válido."
 
 #: includes/widgets/wsl.users.gateway.php:172
 msgid "<strong>ERROR</strong>: Sorry, that email address is already used!"
 msgstr ""
-"<strong>ERRO</strong>: Desculpe, esse endereço de e-mail já está sendo usado!"
+"<strong>ERROR</strong>: Lo sentimos, esa dirección de email ya esta en uso!"
 
 #: includes/widgets/wsl.users.gateway.php:186
 msgid "<strong>ERROR</strong>: That username is not allowed."
-msgstr "<strong>ERRO</strong>: Este nome de usuário não é permitido"
+msgstr ""
+"<strong>ERROR</strong>: Lo sentimos,  ese nombre de usuario no esta "
+"permitido."
 
 #: includes/widgets/wsl.users.gateway.php:191
 msgid "<strong>ERROR</strong>: Username must be at least 4 characters."
-msgstr "<strong>ERRO</strong>: Usuário deve ter pelo menos 4 caracteres."
+msgstr ""
+"<strong>ERROR</strong>: Lo sentimos, El nombre de usuario debe tener por lo "
+"menos 4 caracteres."
 
 #: includes/widgets/wsl.users.gateway.php:196
 msgid "<strong>ERROR</strong>: Sorry, usernames must have letters too!"
 msgstr ""
-"<strong>ERRO</strong>: Desculpe, nomes de usuários devem ter letras também!"
+"<strong>ERROR</strong>: Lo sentimos, los nombres de usuario deben incluir "
+"letras!"
 
 #: includes/widgets/wsl.users.gateway.php:201
 msgid "<strong>ERROR</strong>: Sorry, that username already exists!"
-msgstr "<strong>ERRO</strong>: Desculpe, este nome já existe!"
+msgstr "<strong>ERROR</strong>: Lo sentimos, ese nombre de usuario ya existe!"
 
 #: includes/widgets/wsl.users.gateway.php:506
 #, php-format
 msgid "Hi %s"
-msgstr "Oi %s"
+msgstr "Hola %s"
 
 #: includes/widgets/wsl.users.gateway.php:507
 #, php-format
@@ -2710,37 +2845,36 @@ msgid ""
 "You're now signed in with your %s account but you are still one step away of "
 "getting into our website"
 msgstr ""
-"Você já está conectado com sua conta do %s, mas você está a apenas um passo "
-"de se registrar em nosso site"
+"Has ingresado con tu cuenta %s, pero aún estas a un paso de entrar al sitio."
 
 #: includes/widgets/wsl.users.gateway.php:516
 #: includes/widgets/wsl.users.gateway.php:580
 msgid "Already have an account"
-msgstr "Já tem uma conta"
+msgstr "Ya tienes una cuenta"
 
 #: includes/widgets/wsl.users.gateway.php:517
 #, php-format
 msgid "Link your existing account on our website to your %s ID."
-msgstr "Integre sua conta já existente em nosso site ao seu ID do %s"
+msgstr "Vincule su cuenta existente en nuestro sitio web a su ID de %s."
 
 #: includes/widgets/wsl.users.gateway.php:523
 #: includes/widgets/wsl.users.gateway.php:621
 msgid "New to our website"
-msgstr "Novo em nosso site"
+msgstr "Nuevo usuario"
 
 #: includes/widgets/wsl.users.gateway.php:524
 #, php-format
 msgid "Create a new account and it will be associated with your %s ID."
-msgstr "Cria uma nova conta, que será associada ao seu ID do %s."
+msgstr "Crear una nueva cuenta y asociar con tu ID de %s."
 
 #: includes/widgets/wsl.users.gateway.php:532
 msgid "Link my account"
-msgstr "Integrar minha conta"
+msgstr "Vincular mi cuenta."
 
 #: includes/widgets/wsl.users.gateway.php:539
 #: includes/widgets/wsl.users.gateway.php:541
 msgid "Create a new account"
-msgstr "Criar nova conta"
+msgstr "Crear nueva cuenta"
 
 #: includes/widgets/wsl.users.gateway.php:582
 #, fuzzy, php-format
@@ -2751,12 +2885,12 @@ msgid ""
 "Please enter your username and password of your existing account on our "
 "website. Once verified, it will linked to your %s ID"
 msgstr ""
-"Por favor, ingresse seu nome de usuário e senha de sua conta já existente em "
-"nosso site. Uma vez verificada, ela será integrada ao seu ID do %"
+"Por favor, ingrese su usuario y contraseña de su cuenta existente en nuestro "
+"sitio web. Una vez verificado, se vinculará tu ID de %s"
 
 #: includes/widgets/wsl.users.gateway.php:594
 msgid "Password"
-msgstr "Senha"
+msgstr "Contraseña"
 
 #: includes/widgets/wsl.users.gateway.php:599
 #: includes/widgets/wsl.users.gateway.php:659
@@ -2774,69 +2908,89 @@ msgid ""
 "Please fill in your information in the form below. Once completed, you will "
 "be able to automatically sign into our website through your %s ID"
 msgstr ""
-"Por favor, preencha a informação no formulário abaixo. Uma vez completado, "
-"você será habilitado a iniciar sessão automaticamente em nosso site através "
-"de sua conta no %s"
+"Por favor, rellene su información. Una vez completo, podrá iniciar sesión "
+"automáticamente en nuestro sitio web a través de su ID de %s"
 
 #: includes/widgets/wsl.users.gateway.php:678
 #, php-format
 msgid "Back to %s"
-msgstr "Voltar para %s"
+msgstr "Volver a %s"
 
 #: wp-social-login.php:192
 msgid "Fork me on Github"
 msgstr ""
 
 #~ msgid "Application Scope"
-#~ msgstr "Escopo do aplicativo"
+#~ msgstr "Ámbito de aplicación"
 
 #~ msgid "Callback URL"
-#~ msgstr "URL de callback"
+#~ msgstr "URL de retorno"
 
 #~ msgid "..."
 #~ msgstr "..."
 
 #~ msgid "Unspecified error!"
-#~ msgstr "Erro não especificado!"
+#~ msgstr "¡Error desconocido!"
 
 #~ msgid "Unspecified error."
-#~ msgstr "Erro não especificado."
+#~ msgstr "Error desconocido."
 
 #~ msgid "WordPress Social Login is not properly configured."
-#~ msgstr "WordPress Social Login não está configurado corretamente."
+#~ msgstr "WordPress Social Login no está configurado correctamente."
 
 #, php-format
 #~ msgid ""
 #~ "WordPress Social Login is not properly configured.<br /> <b>%s</b> "
 #~ "requires your application credentials."
 #~ msgstr ""
-#~ "WordPress Social Login não está configurado corretamente.<br /> <b>%s</b> "
-#~ "necessita das credenciais de sua aplicação."
+#~ "WordPress Social Login no está configurado correctamente.<br /> <b>%s</b> "
+#~ "requiere las credenciales de la aplicación."
+
+#, php-format
+#~ msgid ""
+#~ "<b>What does this error mean ?</b><br />Most likely, you didn't setup the "
+#~ "correct application credentials for this provider. These credentials are "
+#~ "required in order for <b>%s</b> users to access your website and for "
+#~ "WordPress Social Login to work."
+#~ msgstr ""
+#~ "<b>¿Qué significa este error?</b><br />Lo más probable es que no haya "
+#~ "configurado las credenciales de aplicación correctas para este proveedor. "
+#~ "Estas credenciales son necesarias para que los usuarios <b>%s</b> accedan "
+#~ "a su sitio web y para que WordPress Social Login funcione."
+
+#~ msgid ""
+#~ "<br />Instructions for use can be found in the <a href=\"http://miled."
+#~ "github.io/wordpress-social-login/networks.html\" target=\"_blank\">User "
+#~ "Manual</a>."
+#~ msgstr ""
+#~ "<br />Las instrucciones de uso se pueden encontrar en el <a href=\"http://"
+#~ "miled.github.io/wordpress-social-login/networks.html\" target=\"_blank"
+#~ "\">Manual de usuario</a>."
 
 #, php-format
 #~ msgid ""
 #~ "Authentication failed. Either you have cancelled the authentication or <b>"
 #~ "%s</b> refused the connection."
 #~ msgstr ""
-#~ "Falha na autenticação. Você cancelou a autenticação ou <b>%s</b> recusou "
-#~ "a conexão."
+#~ "Error de autenticación. O bien, canceló la autenticación o <b>%s</b> "
+#~ "rechazó la conexión."
 
 #, php-format
 #~ msgid ""
 #~ "Request failed. Either you have cancelled the authentication or <b>%s</b> "
 #~ "refused the connection."
 #~ msgstr ""
-#~ "A solicitação falhou. Ou você cancelou a autenticação ou <b>%s</b> "
-#~ "recusou a conexão."
+#~ "Solicitud fallida. O bien, canceló la autenticación o <b>%s</b> rechazó "
+#~ "la conexión."
 
 #~ msgid "You're not connected to the provider."
-#~ msgstr "Você não está conectado a este provedor."
+#~ msgstr "No está conectado a este proveedor."
 
 #~ msgid "Provider does not support this feature."
-#~ msgstr "Provedor não suporta esta funcionalidade."
+#~ msgstr "Proveedor no admite esta característica."
 
 #~ msgid "Details"
-#~ msgstr "Detalhes"
+#~ msgstr "Detalles"
 
 #~ msgid "Back"
-#~ msgstr "Voltar"
+#~ msgstr "Atrás"
