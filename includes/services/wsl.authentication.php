@@ -1143,8 +1143,6 @@ function wsl_process_login_get_auth_mode()
 function wsl_process_login_clear_user_php_session()
 {
 	$_SESSION["HYBRIDAUTH::STORAGE"] = array(); // used by hybridauth library. to clear as soon as the auth process ends.
-	$_SESSION["HA::STORE"]           = array(); // used by hybridauth library. to clear as soon as the auth process ends.
-	$_SESSION["HA::CONFIG"]          = array(); // used by hybridauth library. to clear as soon as the auth process ends.
 	$_SESSION["wsl::userprofile"]    = array(); // used by wsl to temporarily store the user profile so we don't make unnecessary calls to social apis.
 }
 

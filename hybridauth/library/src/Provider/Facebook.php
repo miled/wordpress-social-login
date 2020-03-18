@@ -47,7 +47,7 @@ class Facebook extends OAuth2
     /**
      * {@inheritdoc}
      */
-    protected $apiBaseUrl = 'https://graph.facebook.com/v2.8/';
+    protected $apiBaseUrl = 'https://graph.facebook.com/v2.12/';
 
     /**
      * {@inheritdoc}
@@ -88,7 +88,21 @@ class Facebook extends OAuth2
      */
     public function getUserProfile()
     {
-        $response = $this->apiRequest('me?fields=id,name,first_name,last_name,link,website,gender,locale,about,email,hometown,verified,birthday');
+        $fields = [
+            'id',
+            'name',
+            'first_name',
+            'last_name',
+            'link',
+            'website',
+            'gender',
+            'locale',
+            'about',
+            'email',
+            'hometown',
+            'birthday',
+        ];
+        $response = $this->apiRequest('me?fields=' . implode(',', $fields));
 
         $data = new Data\Collection($response);
 
@@ -118,9 +132,10 @@ class Facebook extends OAuth2
 
         $photoSize = $this->config->get('photo_size') ?: '150';
 
-        $userProfile->photoURL = $this->apiBaseUrl . $userProfile->identifier . '/picture?width=' . $photoSize . '&height=' . $photoSize;
+        $userProfile->photoURL = $this->apiBaseUrl . $userProfile->identifier;
+        $userProfile->photoURL .= '/picture?width=' . $photoSize . '&height=' . $photoSize;
 
-        $userProfile->emailVerified = $data->get('verified') == 1 ? $userProfile->email : '';
+        $userProfile->emailVerified = $userProfile->email;
 
         $userProfile = $this->fetchUserRegion($userProfile);
 
@@ -235,22 +250,6 @@ class Facebook extends OAuth2
 
     /**
      * {@inheritdoc}
-     *
-     * @deprecated since August 1, 2018. Scheduled for removal before Hybridauth 3.0.0.
-     *   See https://developers.facebook.com/docs/graph-api/changelog/breaking-changes#login-4-24 for more info.
-     */
-    public function setUserStatus($status, $pageId = 'me')
-    {
-        @trigger_error('The ' . __METHOD__ . ' method is deprecated since August 1, 2018 and will be removed in Hybridauth 3.0.0.', E_USER_DEPRECATED);
-        $status = is_string($status) ? ['message' => $status] : $status;
-
-        $response = $this->apiRequest("{$pageId}/feed", 'POST', $status);
-
-        return $response;
-    }
-
-    /**
-     * {@inheritdoc}
      */
     public function setPageStatus($status, $pageId)
     {
@@ -258,7 +257,7 @@ class Facebook extends OAuth2
 
         // Post on user wall.
         if ($pageId === 'me') {
-            return $this->setUserStatus($status, $pageId);
+            return $this->setUserStatus($status);
         }
 
         // Retrieve writable user pages and filter by given one.
@@ -280,8 +279,8 @@ class Facebook extends OAuth2
 
         // Refresh proof for API call.
         $parameters = $status + [
-                'appsecret_proof' => hash_hmac('sha256', $page->access_token, $this->clientSecret),
-            ];
+            'appsecret_proof' => hash_hmac('sha256', $page->access_token, $this->clientSecret),
+        ];
 
         $response = $this->apiRequest("{$pageId}/feed", 'POST', $parameters, $headers);
 
@@ -301,7 +300,7 @@ class Facebook extends OAuth2
 
         // Filter user pages by CREATE_CONTENT permission.
         return array_filter($pages->data, function ($page) {
-            return in_array('CREATE_CONTENT', $page->perms);
+            return in_array('CREATE_CONTENT', $page->tasks);
         });
     }
 
@@ -330,7 +329,9 @@ class Facebook extends OAuth2
     }
 
     /**
+     * @param $item
      *
+     * @return User\Activity
      */
     protected function fetchUserActivity($item)
     {
@@ -359,7 +360,8 @@ class Facebook extends OAuth2
 
             $userActivity->user->profileURL = $this->getProfileUrl($userActivity->user->identifier);
 
-            $userActivity->user->photoURL = $this->apiBaseUrl . $userActivity->user->identifier . '/picture?width=150&height=150';
+            $userActivity->user->photoURL = $this->apiBaseUrl . $userActivity->user->identifier;
+            $userActivity->user->photoURL .= '/picture?width=150&height=150';
         }
 
         return $userActivity;

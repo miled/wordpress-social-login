@@ -191,7 +191,7 @@ function wsl_display_dev_mode_debugging_area( $keyword = 'wsl_' )
 	<table class="wsl-dev-table">
 		<tr>
 			<td colspan="3">
-				1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (http://codex.wordpress.org/Editing_wp-config.php#Save_queries_for_analysis)
+				1. SAVEQUERIES should be defined and set to TRUE in order for the queries to show up (https://wordpress.org/support/article/editing-wp-config-php/#save-queries-for-analysis)
 				<br />
 				2. Calls for get_option() don't necessarily result on a query to the database. WP use both cache and wp_load_alloptions() to load all options at once. Hence, it won't be shown here.
 			</td>

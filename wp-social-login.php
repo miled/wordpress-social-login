@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 3.0.1
+Version: 3.0.2
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
@@ -66,11 +66,19 @@ global $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 global $WORDPRESS_SOCIAL_LOGIN_COMPONENTS;
 global $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
-$WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.1";
+$WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.2";
 
 // --------------------------------------------------------------------
 
-session_id() or session_start();
+if ( headers_sent() )
+{
+	wp_die( __( "HTTP headers already sent to browser and WSL won't be able to start/resume PHP session.", 'wordpress-social-login' ) );
+}
+
+if ( ! session_id() && ! defined( 'DOING_CRON' ) )
+{
+	session_start();
+}
 
 // --------------------------------------------------------------------
 
@@ -255,7 +263,7 @@ require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/widgets/wsl.error.page
 require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/widgets/wsl.loading.screens.php'    ); // Generate WSL loading screens
 
 # WSL Admin interfaces
-if( is_admin() && ( !defined( 'DOING_AJAX' ) || !DOING_AJAX ) )
+if( is_admin() && ( ! defined( 'DOING_AJAX' ) || ! DOING_AJAX ) )
 {
 	require_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . 'includes/admin/wsl.admin.ui.php'         ); // The entry point to WSL Admin interfaces
 }

@@ -67,10 +67,9 @@ class BitBucket extends OAuth2
 
         if (empty($userProfile->email) && strpos($this->scope, 'email') !== false) {
             try {
+                // user email is not mandatory so keep it quite
                 $userProfile = $this->requestUserEmail($userProfile);
-            }
-            // user email is not mandatory so keep it quite
-            catch (\Exception $e) {
+            } catch (\Exception $e) {
             }
         }
 
@@ -78,8 +77,14 @@ class BitBucket extends OAuth2
     }
 
     /**
-    * Request user email
-    */
+     * Request user email
+     *
+     * @param $userProfile
+     *
+     * @return User\Profile
+     *
+     * @throws \Exception
+     */
     protected function requestUserEmail($userProfile)
     {
         $response = $this->apiRequest('user/emails');

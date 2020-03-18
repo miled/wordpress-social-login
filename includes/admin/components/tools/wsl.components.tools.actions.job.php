@@ -252,7 +252,7 @@ function wsl_component_tools_do_diagnostics()
 							</div>
 						</div>
 
-						<p>You may double-check this test manually by clicking this <a href="<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>?test=http://example.com" target="_blank">direct link</a>.</p>
+						<p>You may double-check this test manually by clicking this <a href="<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>?end_points_test=http://example.com" target="_blank">direct link</a>.</p>
 					</td>
 					<td width="60">
 						<span id="end_points">testing..</span>
@@ -260,12 +260,11 @@ function wsl_component_tools_do_diagnostics()
 							jQuery(document).ready(function($) {
 								jQuery.ajax({
 									url: '<?php echo WORDPRESS_SOCIAL_LOGIN_HYBRIDAUTH_ENDPOINT_URL; ?>',
-									data: 'url=http://example.com',
+									data: 'end_points_test=http://example.com',
 									success: function () {
 										jQuery('#end_points').html( '<b style="color:green;">OK!</b>' );
 									},
 									error: function (xhr, ajaxOptions, thrownError) {
-										// console.log( xhr );
 										jQuery('#end_points_error').html( '"<b style="color:red;">' + xhr.status + ' ' + xhr.statusText + '</b>"' );
 										jQuery('#end_points').html( '<b style="color:red;">FAIL!</b>' );
 										jQuery('#end_points_warn').show();

@@ -31,6 +31,7 @@ class Curl implements HttpClientInterface
         CURLOPT_MAXREDIRS      => 5,
         CURLINFO_HEADER_OUT    => true,
         CURLOPT_ENCODING       => 'identity',
+        // phpcs:ignore
         CURLOPT_USERAGENT      => 'HybridAuth, PHP Social Authentication Library (https://github.com/hybridauth/hybridauth)',
     ];
 
@@ -101,7 +102,7 @@ class Curl implements HttpClientInterface
     /**
     * {@inheritdoc}
     */
-    public function request($uri, $method = 'GET', $parameters = [], $headers = [])
+    public function request($uri, $method = 'GET', $parameters = [], $headers = [], $multipart = false)
     {
         $this->requestHeader = array_replace($this->requestHeader, (array) $headers);
 
@@ -114,31 +115,34 @@ class Curl implements HttpClientInterface
 
         $curl = curl_init();
 
-        if ('GET' == $method) {
-            unset($this->curlOptions[CURLOPT_POST]);
-            unset($this->curlOptions[CURLOPT_POSTFIELDS]);
+        switch ($method) {
+            case 'GET':
+            case 'DELETE':
+                unset($this->curlOptions[CURLOPT_POST]);
+                unset($this->curlOptions[CURLOPT_POSTFIELDS]);
 
-            $uri = $uri . (strpos($uri, '?') ? '&' : '?') . http_build_query($parameters);
-        }
+                $uri = $uri . (strpos($uri, '?') ? '&' : '?') . http_build_query($parameters);
+                if ($method === 'DELETE') {
+                    $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'DELETE';
+                }
+                break;
+            case 'PUT':
+            case 'POST':
+            case 'PATCH':
+                $body_content = $multipart ? $parameters : http_build_query($parameters);
+                if (isset($this->requestHeader['Content-Type'])
+                    && $this->requestHeader['Content-Type'] == 'application/json'
+                ) {
+                    $body_content = json_encode($parameters);
+                }
 
-        if ('POST' == $method) {
-            $body_content = http_build_query($parameters);
-            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
-                $body_content = json_encode($parameters);
-            }
-
-            $this->curlOptions[CURLOPT_POST] = true;
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
-        }
-
-        if ('PUT' == $method) {
-            $body_content = http_build_query($parameters);
-            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
-                $body_content = json_encode($parameters);
-            }
-
-            $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'PUT';
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
+                if ($method === 'POST') {
+                    $this->curlOptions[CURLOPT_POST] = true;
+                } else {
+                    $this->curlOptions[CURLOPT_CUSTOMREQUEST] = $method;
+                }
+                $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
+                break;
         }
 
         $this->curlOptions[CURLOPT_URL]            = $uri;
@@ -157,9 +161,11 @@ class Curl implements HttpClientInterface
         $this->responseClientInfo  = curl_getinfo($curl);
 
         if ($this->logger) {
+            // phpcs:ignore
             $this->logger->debug(sprintf('%s::request( %s, %s ), response:', get_class($this), $uri, $method), $this->getResponse());
 
             if (false === $response) {
+                // phpcs:ignore
                 $this->logger->error(sprintf('%s::request( %s, %s ), error:', get_class($this), $uri, $method), [$this->responseClientError]);
             }
         }

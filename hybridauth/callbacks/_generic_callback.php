@@ -3,29 +3,34 @@
 * WordPress Social Login
 *
 * https://miled.github.io/wordpress-social-login/ | https://github.com/miled/wordpress-social-login
-*   (c) 2011-2019 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
+*   (c) 2011-2020 Mohamed Mrassi and contributors | https://wordpress.org/plugins/wordpress-social-login/
 */
 
 // ------------------------------------------------------------------------
 //	Generic WSL End Point
-// ------------------------------------------------------------------------
-//  Note: The way we handle errors is a bit messy and should be reworked
 // ------------------------------------------------------------------------
 
 if( ! isset( $provider_id ) || empty( $provider_id ) ){
     die("WSL couldn't continue. Missing required parameters.");
 }
 
-session_start()
-    or die("WSL couldn't start new php session.");
+if ( headers_sent() ) {
+    die("HTTP headers already sent to browser and WSL won't be able to start/resume PHP session.");
+}
 
-if( ! file_exists( __DIR__ . '/../includes/services/wsl.session.php' )
-    || ! file_exists( __DIR__ . '/library/src/autoload.php' ) ){
+if ( ! session_start() ) {
+    die("WSL couldn't start new PHP session.");
+}
+
+$ha_abspath = __DIR__ . '/../';
+
+if( ! file_exists( $ha_abspath . '../includes/services/wsl.session.php' )
+ || ! file_exists( $ha_abspath . 'library/src/autoload.php' ) ){
     die("WSL couldn't find required files.");
 }
 
-require_once __DIR__ . '/../includes/services/wsl.session.php';
-require_once __DIR__ . '/library/src/autoload.php';
+require_once $ha_abspath . '../includes/services/wsl.session.php';
+require_once $ha_abspath . 'library/src/autoload.php';
 
 $provider_config = wsl_get_provider_config_from_session_storage($provider_id);
 $callback_url    = $provider_config['current_page'];

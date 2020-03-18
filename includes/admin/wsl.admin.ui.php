@@ -145,7 +145,7 @@ function wsl_admin_ui_header( $wslp = null )
 			?>
 				<div class="fade error wsl-error-dev-mode-on" style="margin: 4px 0 20px;">
 					<p>
-						<?php _wsl_e('<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT MODE enabled. This mode is not intend for live websites as it might raise serious security risks', 'wordpress-social-login') ?>.
+						<?php _wsl_e('<b>Warning:</b> You are now running WordPress Social Login with DEVELOPMENT MODE enabled. This mode is not intended for live websites as it might raise serious security risks', 'wordpress-social-login') ?>.
 					</p>
 					<p>
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#dev-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
@@ -160,7 +160,7 @@ function wsl_admin_ui_header( $wslp = null )
 			?>
 				<div class="fade updated wsl-error-debug-mode-on" style="margin: 4px 0 20px;">
 					<p>
-						<?php _wsl_e('<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE enabled. This mode is not intend for live websites as it might add to loading time and store unnecessary data on your server', 'wordpress-social-login') ?>.
+						<?php _wsl_e('<b>Note:</b> You are now running WordPress Social Login with DEBUG MODE enabled. This mode is not intended for live websites as it might add to loading time and store unnecessary data on your server', 'wordpress-social-login') ?>.
 					</p>
 					<p>
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=tools#debug-mode"><?php _wsl_e('Change this mode', 'wordpress-social-login') ?></a>
@@ -412,11 +412,12 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('WSL fully migrated to Hybridauth 3', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Reworked providers Callback URLs', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Added new providers: Amazon, Discord and Spotify to name a few', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('A number of providers are now defunct', 'wordpress-social-login') ?></li>
-					<li><?php _wsl_e('Obligatory minor improvement', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('WSL is now fully migrated to Hybridauth 3.2', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e("Reworked providers Callback URLs and it's a breaking change! See up top notice", 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Added serval new providers: Amazon, Discord and Spotify to name a few', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Removal of a number of currently defunct identity providers ', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('The obligatory "various fixes and minor improvements"', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('Widgets and forms design overhall', 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e('and whatnot.', 'wordpress-social-login') ?></li>
 				</ul>
 			</td>
@@ -490,10 +491,10 @@ function wsl_render_wp_editor( $name, $content )
 function wsl_admin_menu()
 {
 	add_options_page(
-		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
-		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
-		'manage_options',
-		'wordpress-social-login',
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ), 
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ), 
+		'manage_options', 
+		'wordpress-social-login', 
 		'wsl_admin_main'
 	);
 

@@ -116,7 +116,7 @@ class Google extends OAuth2
         $userProfile->language    = $data->get('locale');
         $userProfile->email       = $data->get('email');
 
-        $userProfile->emailVerified = ($data->get('email_verified') === true || $data->get('email_verified') === 1) ? $userProfile->email : '';
+        $userProfile->emailVerified = $data->get('email_verified') ? $userProfile->email : '';
 
         if ($this->config->get('photo_size')) {
             $userProfile->photoURL .= '?sz=' . $this->config->get('photo_size');
@@ -136,11 +136,19 @@ class Google extends OAuth2
         if (false !== strpos($this->scope, '/m8/feeds/') || false !== strpos($this->scope, '/auth/contacts.readonly')) {
             return $this->getGmailContacts($parameters);
         }
+
+        return [];
     }
 
     /**
-    * Retrieve Gmail contacts
-    */
+     * Retrieve Gmail contacts
+     *
+     * @param array $parameters
+     *
+     * @return array
+     *
+     * @throws \Exception
+     */
     protected function getGmailContacts($parameters = [])
     {
         $url = 'https://www.google.com/m8/feeds/contacts/default/full?'
