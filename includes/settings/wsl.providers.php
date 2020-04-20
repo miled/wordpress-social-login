@@ -158,7 +158,7 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 	ARRAY(
 		"provider_id"       => "Odnoklassniki",
 		"provider_name"     => "Odnoklassniki",
-		"require_client_id" => true,
+		"require_client_id" => "both",
 		"callback"          => true,
 		"new_app_link"      => "http://dev.odnoklassniki.ru/",
 	),
