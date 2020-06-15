@@ -227,7 +227,8 @@ function wsl_register_setting()
 			{
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' ); 
 			}
-			else
+			
+            if( !$require_client_id || $require_client_id === 'both' )
 			{
 				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' ); 
 			}
