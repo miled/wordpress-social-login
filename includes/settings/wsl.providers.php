@@ -66,6 +66,13 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"new_app_link"      => "https://developer.yahoo.com/apps/create/",
 	),
 	ARRAY(
+		"provider_id"       => "Line",
+		"provider_name"     => "Line",
+		"require_client_id" => true,
+		"callback"          => true,
+		"new_app_link"      => "https://developers.line.biz/en/services/line-login/",
+	),
+	ARRAY(
 		"provider_id"       => "LinkedIn",
 		"provider_name"     => "LinkedIn",
 		"new_app_link"      => "https://www.linkedin.com/secure/developer",
