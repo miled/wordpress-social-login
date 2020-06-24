@@ -6,10 +6,7 @@
 */
 namespace Hybridauth\Provider;
 
-require_once __DIR__ . '/../../vendor/autoload.php';
-
 use Hybridauth\Thirdparty\JWT;
-
 use Hybridauth\Adapter\OAuth2;
 use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
