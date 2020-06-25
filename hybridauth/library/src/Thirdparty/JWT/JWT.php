@@ -1,6 +1,6 @@
 <?php
 
-namespace Hybridauth\Thirdpart\JWT;
+namespace Hybridauth\Thirdparty\JWT;
 
 use \DomainException;
 use \InvalidArgumentException;

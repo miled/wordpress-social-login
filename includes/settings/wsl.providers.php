@@ -31,7 +31,6 @@ $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG = ARRAY(
 		"require_client_id" => true,
 		"callback"          => true,
 		"new_app_link"      => "https://developers.facebook.com/apps",
-
 		"default_network"   => true,
 	),
 	ARRAY(

@@ -1,5 +1,5 @@
 <?php
-namespace Hybridauth\Thirdpart\JWT;
+namespace Hybridauth\Thirdparty\JWT;
 
 class BeforeValidException extends \UnexpectedValueException
 {

@@ -6,7 +6,7 @@
 */
 namespace Hybridauth\Provider;
 
-use Hybridauth\Thirdparty\JWT;
+use Hybridauth\Thirdparty\JWT\JWT;
 use Hybridauth\Adapter\OAuth2;
 use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\Data;
@@ -20,7 +20,7 @@ class Line extends OAuth2
     /**
      * {@inheritdoc}
      */
-    public $scope = 'openid email profile';
+    protected $scope = 'openid email profile';
 
     /**
      * {@inheritdoc}

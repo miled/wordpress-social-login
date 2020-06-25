@@ -936,6 +936,14 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["scope"] = "email, public_profile";
 	}
 
+	// set custom config for facebook
+	if( strtolower( $provider ) == "line" )
+	{
+		$config["providers"][$provider]["display"] = "popup";
+		$config["providers"][$provider]["trustForwarded"] = true;
+		$config["providers"][$provider]["scope"] = "openid email profile";
+	}
+
 	// set custom config for google
 	if( strtolower( $provider ) == "google" )
 	{
