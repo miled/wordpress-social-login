@@ -3,7 +3,7 @@
 Plugin Name: WordPress Social Login
 Plugin URI: http://miled.github.io/wordpress-social-login/
 Description: Allow your visitors to comment and login with social networks such as Twitter, Facebook, Google, Yahoo and more.
-Version: 3.0.2
+Version: 3.0.3
 Author: Miled
 Author URI: https://github.com/miled
 License: MIT License
