@@ -412,7 +412,7 @@ function wsl_admin_welcome_panel()
 				</p>
 
 				<ul style="margin-left:25px;">
-					<li><?php _wsl_e('WSL is now fully migrated to Hybridauth 3.2', 'wordpress-social-login') ?></li>
+					<li><?php _wsl_e('WSL is now fully migrated to Hybridauth 3.4', 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e("Reworked providers Callback URLs and it's a breaking change! See up top notice", 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e('Added serval new providers: Amazon, Discord and Spotify to name a few', 'wordpress-social-login') ?></li>
 					<li><?php _wsl_e('Removal of a number of currently defunct identity providers ', 'wordpress-social-login') ?></li>
@@ -491,10 +491,10 @@ function wsl_render_wp_editor( $name, $content )
 function wsl_admin_menu()
 {
 	add_options_page(
-		_wsl__( 'WP Social Login', 'wordpress-social-login' ), 
-		_wsl__( 'WP Social Login', 'wordpress-social-login' ), 
-		'manage_options', 
-		'wordpress-social-login', 
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
+		_wsl__( 'WP Social Login', 'wordpress-social-login' ),
+		'manage_options',
+		'wordpress-social-login',
 		'wsl_admin_main'
 	);
 

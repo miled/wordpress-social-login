@@ -157,28 +157,28 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 
 			<h1><?php _wsl_e("We're unable to complete your request", 'wordpress-social-login') ?>!</h1>
 
-			<?php 
-				if(! empty($message) ){ 
+			<?php
+				if(! empty($message) ){
 					?>
 						<p><?php echo $message; ?></p>
-					<?php 
+					<?php
 				}
 			?>
 
-			<?php 
-				if(! empty($api_error) ){ 
+			<?php
+				if(! empty($api_error) ){
 					?>
-						<p id="technical-details-btn"><a href="javascript:showTechnicalDetails();">Show technical details</a></p>
+						<p id="technical-details-btn"><a href="javascript:show_technical_details();">Show technical details</a></p>
 
 						<p id="technical-details-message"><code><?php echo htmlentities($api_error); ?></code></p>
 
 						<script>
-							function showTechnicalDetails(){
+							function show_technical_details(){
 								document.getElementById('technical-details-btn').style.display = 'none';
 								document.getElementById('technical-details-message').style.display = 'block';
 							}
 						</script>
-					<?php 
+					<?php
 				}
 			?>
 
@@ -195,7 +195,7 @@ if( ! function_exists( 'wsl_render_error_page' ) )
 			<p>
 				<?php
 					// get Widget::Authentication display
-					$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );	
+					$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
 
 					if( $wsl_settings_use_popup == 1 )
 					{
