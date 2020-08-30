@@ -1,4 +1,4 @@
-## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.2-dev
+## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.3-dev
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
@@ -6,9 +6,9 @@ Basically, WordPress Social Login allow your website visitors and customers to r
 
 For more information about WordPress Social Login, refer to our [online user guide](http://miled.github.io/wordpress-social-login/).
 
-    Note: This repository is for development only. 
+    Note: This repository is for development only.
     The official release is distributed through WordPress website.
-    
+
     Important: As of WSL 3.0.1, I'm attempting to migrate WSL to work with hybridauth 3,
     hence this repo is unusuable until further notice.
 
@@ -30,13 +30,13 @@ For more information about WordPress Social Login, refer to our [online user gui
 - Modular design easily extended.
 - Comprehensive documentation.
 
-#### License 
+#### License
 
 MIT — That's short for do whatever you want.
 
 #### Thanks
 
-Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum. 
+Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum.
 
 #### Screenshots
 ![screenshot](https://raw.githubusercontent.com/miled/wordpress-social-login/master/assets/screenshot-2.png)

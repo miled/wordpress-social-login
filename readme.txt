@@ -2,8 +2,8 @@
 Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
-Tested up to: 4.9.6
-Stable tag: 3.0.1
+Tested up to: 5.5
+Stable tag: 3.0.3
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -12,7 +12,7 @@ WordPress Social Login allow your visitors to comment and login with social netw
 
 == Description ==
 
-<strong>Wordpress Social Login</strong> allow your website readers and customers to register on using their existing social accounts IDs, eliminating the need to fill out registration forms and remember usernames and passwords. 
+<strong>Wordpress Social Login</strong> allow your website readers and customers to register on using their existing social accounts IDs, eliminating the need to fill out registration forms and remember usernames and passwords.
 
 Wordpress Social Login also allow you to import users contact list from Google Gmail, Facebook, Windows Live and LinkedIn.
 
@@ -75,11 +75,11 @@ The user guide and frequently asked questions can be found at http://miled.githu
 
 == Changelog ==
 
-= 3.0.1 = 
+= 3.0.1 =
 
 * ..
 
-= 2.3.0 = 
+= 2.3.0 =
 
 * Accounts linking/mapping.
 * Improved Profile Completion.
@@ -91,7 +91,7 @@ The user guide and frequently asked questions can be found at http://miled.githu
 * Remove hardcoded plugin directories.
 * Reduce Twitch TV requested permissions.
 
-= 2.2.3 = 
+= 2.2.3 =
 
 WSL 2.2.3 fixes a critical issue found on WSL 2.2.2 that could potentially allow multiple accounts and prevent contacts import. We recommend that users upgrade to this latest version.
 
@@ -146,7 +146,7 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * Authentication display now fall back to In Page when WSL is used on a mobile device.
 * WSL admin interfaces have been reworked and can be now extended with hooks.
 * Bouncer Membership level can be now set to any user role.
-* WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues. 
+* WSL Diagnostics has been reworked and can check the minimum system requirements and for few common issues.
 * Added "Repair WSL tables" under Tools tab.
 * Added "Debug mode" under Tools tab (namely whatchdog).
 * Added "Authentication Playground" under Tools tab (namely auth-paly).
@@ -168,20 +168,20 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * Deprecated css selectors, in wsl widget, have been removed.
 * Updated the API documentation for WSL authentication process
 * Updated the API documentation for WSL widget generator
-* Updated the API documentation for pluggable WSL functions 
+* Updated the API documentation for pluggable WSL functions
 * Added a list of code snippets to WSL documentation
 * Added documentation for social apis access (through php code)
 * Added documentation for basic troubleshooting (common issues)
 * Added documentation for advanced troubleshooting (internal tools)
 
-= 2.2.2 = 
+= 2.2.2 =
 
 * Fix an issue where wsl did not display the right user avatar.
 * Fix an issue where providers icons wasn't showing in sites using https.
 * Fix an issue with basic insights, where users counts by age wasn't showing.
 * Add WordPress to list of supported provider.
 
-= 2.2.1 = 
+= 2.2.1 =
 
 * WSL can be fully integrated with your BuddyPress installation: display of users avatars and xprofiles mapping.
 * WSL is now updated to work with the latest apis changes of the supported social networks.
@@ -190,14 +190,14 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * WSL Hooks has been reworked and few hooks have been depreciated in favour of new ones. For more information, see: http://hybridauth.sourceforge.net/wsl/developer.html
 * A number of bugfixes, small enhancements and visual updates.
 
-= 2.1.3 = 
+= 2.1.3 =
 
 * In a similar way to WordPress plugins, WSL uses Components,
 * Email Validation is replaced with Profile Completion,
 * User Moderation made compatible with Theme My Login plugin,
 * A number of enhancements and new options now available but who care
 
-= 2.0.3 = 
+= 2.0.3 =
 
 * Managing WSL users,
 * Import WSL users contact list from Google Gmail, Facebook, Live and LinkedIn,
@@ -212,7 +212,7 @@ Upon reaching WSL 3.0 as a major milestone, our priorities will flip to maintena
 * Code re-factoring
 * add Widget display on advanced settings
 * RIP Gowalla
-* WordPress Social Login is now licensed under The MIT License only (should be GPL compatible) 
+* WordPress Social Login is now licensed under The MIT License only (should be GPL compatible)
 
 = 0.0.0 =
 
