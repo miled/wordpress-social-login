@@ -942,6 +942,12 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["scope"] = "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email";
 	}
 
+	// set custom config for linkedin
+	if( strtolower( $provider ) == "linkedin" )
+	{
+		$config["providers"][$provider]["scope"] = "r_liteprofile r_emailaddress";
+	}
+
 	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ;
 
 	// HOOKABLE: allow to overwrite scopes
