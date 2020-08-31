@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-	<title>Install - WordPress Social Login</title>
+	<title>Developer api components - WordPress Social Login</title>
 
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -50,35 +50,18 @@
 		<div class="block row">
 			<div class="col col-md-12">
 
-<h1>WSL Installation</h1>
+<h1>Migrating to WSL 3.x</h1>
 
-<p>Every Wordpress user should know how to install plugins, but just in case here is how to install WSL.</p>
-
-<h3>1. Install WSL the hard way, <small>Seriously tho, Who on earth would do that!</small></h3>
+<p>In WordPress Social Login 3.0 we have reworked the IDPs <b>Callback URLs</b>. To make sure the plugin will keep working correctly, you can either create a new application for each enabled provider, or simply update the already created application with the newly generated callback urls:</p>
 
 <ol>
-	<li>Download, Unzip and drop the extention on <b>/wp-content/plugins/</b> directory,</li>
-	<li>As administrator, activate the plugin through the 'Plugins' menu in WordPress,</li>
-	<li>Goto the <strong>Settings</strong> > <strong>WP Social Login</strong> to get started.</li>
+  <li>First, browse to your WordPress administration dashboard, and then go to <b>WSL Settting > Networks</b> tab,</li>
+  <li>Next, refer to <b>Where do I get this info?</b> section for a given provider to copy its new auto generated callback url,</li>
+  <li>Finally, update that link on the provider developer website.</li>
 </ol>
 
-<h3>2. Install WSL the easy way, <small>Click Click Click.</small></h3>
+<p>It's also important to note that a number of providers are now made obsolete in WSL 3.0, while a few other were added</p>
 
-<ol>
-	<li>As administrator, goto 'Plugins' then Click on 'Add New',</li>
-	<li>Search for 'WordPress Social Login' then Click on 'Install Now',</li>
-	<li>Wait for it to download, Unpack and to install,</li>
-	<li>Activate the plugin by Clicking on 'Activate Plugin'</li>
-	<li>Goto the <strong>Settings</strong> > <strong>WP Social Login</strong> to get started.</li>
-</ol>
-
-<br />
-
-<div style="text-align: center;"><img src="assets/img/screenshot-4.jpg" ></div>
-
-
-				<br />
-				<br />
 			</div>
 		</div>
 	</div>
@@ -96,6 +79,15 @@
 			</div>
 		</div>
 	</footer>
+
+  <style>
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 70px;
+   }
+  </style>
 
 	<script>
 		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

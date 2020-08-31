@@ -11,13 +11,13 @@
 
 	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
 
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="assets/css/prettify.css" rel="stylesheet"> 
-	<link href="assets/css/style.css" rel="stylesheet">   
+	<link href="assets/css/prettify.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/prettify.js"></script>
 	<script type="text/javascript" src="assets/js/script.js"></script>
 </head>
@@ -29,10 +29,10 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right"> 
+				<ul class="nav navbar-nav navbar-right">
 					<li><a href="./overview.html">Overview</a></li>
 					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./getinvolved.html">Get involved</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
 					<li style="margin-right:10px">
@@ -45,7 +45,7 @@
 		</nav>
 	</header>
 
- 
+
 	<div id="content" class="container container-documentation">
 		<div class="block row">
 			<div class="col col-md-12">
@@ -63,7 +63,7 @@
 <h3>1. Access through PHP code</h3>
 
 <p>
-	Expect for the OpenID ones, to access any of the social networks apis, you may invoke the Hybridauth library at any point during the second phase of the authentication process (see, <a href="developer-api-authentication.html">Authentication Process</a>). 
+	Expect for the OpenID ones, to access any of the social networks apis, you may invoke the Hybridauth library at any point during the second phase of the authentication process (see, <a href="developer-api-authentication.html">Authentication Process</a>).
 </p>
 
 <p>
@@ -86,7 +86,7 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( 'Twitter' ); 
+        $provider = Hybrid_Auth::getAdapter( 'Twitter' );
 
         # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
         $response = $provider->api()->get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
@@ -99,7 +99,7 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
 add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitter_timeline', 10, 3 );
 </pre>
 
-<br /> 
+<br />
 <pre class="prettyprint linenums">
 function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
 {
@@ -112,7 +112,7 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
+        $provider = Hybrid_Auth::getAdapter( 'Facebook' );
 
         # https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed
         $response = $provider->api()->post( 'https://graph.facebook.com/v2.0/me/feed', array(
@@ -137,7 +137,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 
 <h3>2. Authentication Playground</h3>
 
-<p> 
+<p>
 	This tool will also give you a direct access to social networks apis via a lightweight console.
 </p>
 
@@ -151,7 +151,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div> 
+				</div>
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -174,16 +174,14 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 
 	<footer>
 		<div class="container">
-			<div class="row"> 
+			<div class="row">
 				<ul>
 					<li><a href="./index.html">Home</a></li>
 					<li><a href="./overview.html">Overview</a></li>
-					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./documentation.html">Documentation</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
-					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
-				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 10, 2014</span>
+				</ul>
 			</div>
 		</div>
 	</footer>

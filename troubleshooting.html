@@ -11,13 +11,13 @@
 
 	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
 
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="assets/css/prettify.css" rel="stylesheet"> 
-	<link href="assets/css/style.css" rel="stylesheet">   
+	<link href="assets/css/prettify.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/prettify.js"></script>
 	<script type="text/javascript" src="assets/js/script.js"></script>
 </head>
@@ -29,10 +29,10 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right"> 
+				<ul class="nav navbar-nav navbar-right">
 					<li><a href="./overview.html">Overview</a></li>
 					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./getinvolved.html">Get involved</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
 					<li style="margin-right:10px">
@@ -45,7 +45,7 @@
 		</nav>
 	</header>
 
- 
+
 	<div id="content" class="container container-documentation">
 		<div class="block row">
 			<div class="col col-md-12">
@@ -170,7 +170,7 @@ wp-content/plugins/wordpress-social-login/hybridauth/index.php
 <pre>
 wp-login.php
 wp-content/plugins/wordpress-social-login/hybridauth/
-</pre>		
+</pre>
 
 		<p>For advanced users who are using Varnish, they may edit their VLC script. (This solution is by <a href="https://wordpress.org/support/topic/varnish-and-wsl-anyone?replies=4#post-4834572" target="_blank">Boris Kuzmanovic</a>).</p>
 <pre>
@@ -190,7 +190,7 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 		<p><b>PHP's SESSION have been renamed.<b></p>
 		<p>This one is the least probable one and the hardest to tell unless for someone who know his ways with a web server. It's just listed here, so you know.</p>
 	</li>
-	
+
 </ol>
 
 <a name="authentication-display"></a>
@@ -198,10 +198,10 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 <h4>When I click on the icons nothing happen.</h4>
 
 <p>
-	Most likely an issue with Javascript. 
+	Most likely an issue with Javascript.
 </p>
 <p>
-	Goto <b>Widget &gt; Advanced Settings</b> and change <b>"Authentication display"</b> to <b>"In Page"</b>. 
+	Goto <b>Widget &gt; Advanced Settings</b> and change <b>"Authentication display"</b> to <b>"In Page"</b>.
 </p>
 
 <a name="infinite-loop"></a>
@@ -228,7 +228,7 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 </p>
 
 <div style="text-align: center;"><img src="assets/img/500.png" ></div>
-<br /> 
+<br />
 
 <a name="http-40x"></a>
 <br />
@@ -236,7 +236,7 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 
 <p>This issue usually happen when :</p>
 
-<ol> 
+<ol>
 <li><p>There is a <b>.htaccess</b> file who prevent direct access to the WordPress plugins directory.</p>
 <li><p>Your web host uses <b>mod_security</b> to block requests containing URLs (eg. hosts like HostGator, GoDaddy and The Planet).</p></li>
 </li>
@@ -246,12 +246,12 @@ if (<b>req.url ~ "^/wp-content/plugins/wordpress-social-login/hybridauth/\?"</b>
 wp-content/plugins/wordpress-social-login/hybridauth/
 </pre>
 
-<a name="http-500"></a>			
+<a name="http-500"></a>
 <br />
 <h4>500 HTTP Error.</h4>
 
 <p>
-	500 Internal Server Error is a GENERIC error message, given when an unexpected condition was encountered. This error is mostly caused by a PHP error in the code and to be able to fix the issue causing the internal server error, we MUST know the REAL error message, which is usually stored on an error log file on your web server, otherwise we will be left in the dark about the problem you having. 
+	500 Internal Server Error is a GENERIC error message, given when an unexpected condition was encountered. This error is mostly caused by a PHP error in the code and to be able to fix the issue causing the internal server error, we MUST know the REAL error message, which is usually stored on an error log file on your web server, otherwise we will be left in the dark about the problem you having.
 </p>
 
 <p>
@@ -263,7 +263,7 @@ wp-content/plugins/wordpress-social-login/hybridauth/
 	<li><a target="_blank" href="http://premium.wpmudev.org/blog/your-complete-guide-to-troubleshooting-wordpress/#plesk">Finding Your Error Logs in Plesk</a></li>
 	<li><a target="_blank" href="http://premium.wpmudev.org/blog/your-complete-guide-to-troubleshooting-wordpress/#cpanel">Finding Your Error Logs in CPanel</a>, or watch this <a target="_blank" href="https://www.youtube.com/watch?v=pzO1UNHZjZo">Video</a>.</li>
 </ol>
-				
+
 <br />
 <h4>406, 412, or 410 HTTP Error.</h4>
 
@@ -284,7 +284,7 @@ wp-content/plugins/wordpress-social-login/hybridauth/
 </p>
 
 <script>
-	$(function () { 
+	$(function () {
 		window.addEventListener("scroll", function() {
 			if ( window.scrollY > 500 ) {
 				$('.navbar').css( 'opacity', 0.5 )
@@ -304,16 +304,14 @@ wp-content/plugins/wordpress-social-login/hybridauth/
 
 	<footer>
 		<div class="container">
-			<div class="row"> 
+			<div class="row">
 				<ul>
 					<li><a href="./index.html">Home</a></li>
 					<li><a href="./overview.html">Overview</a></li>
-					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./documentation.html">Documentation</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
-					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
-				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 10, 2014</span>
+				</ul>
 			</div>
 		</div>
 	</footer>

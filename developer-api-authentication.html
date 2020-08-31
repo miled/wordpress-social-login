@@ -11,13 +11,13 @@
 
 	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
 
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="assets/css/prettify.css" rel="stylesheet"> 
-	<link href="assets/css/style.css" rel="stylesheet">   
+	<link href="assets/css/prettify.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/prettify.js"></script>
 	<script type="text/javascript" src="assets/js/script.js"></script>
 </head>
@@ -29,10 +29,10 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right"> 
+				<ul class="nav navbar-nav navbar-right">
 					<li><a href="./overview.html">Overview</a></li>
 					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./getinvolved.html">Get involved</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
 					<li style="margin-right:10px">
@@ -45,7 +45,7 @@
 		</nav>
 	</header>
 
- 
+
 	<div id="content" class="container container-documentation">
 		<div class="block row">
 			<div class="col col-md-12">
@@ -207,12 +207,12 @@ body pre * {
 
 <h1>The Authentication Process <small>Developer API</small></h1>
 
-<p> 
-	As shown in the picture below, when a visitor click on one of providers icons, WSL will take the user in a short journey to the selected social network to ask for his permission to access his profile. 
+<p>
+	As shown in the picture below, when a visitor click on one of providers icons, WSL will take the user in a short journey to the selected social network to ask for his permission to access his profile.
 	If he does, and if everything goes as expected, WSL will create a new account for the user if he doesn't have one already, authenticate him within WordPress, then redirect him back to where he come from (<span style="color:blue">/wordpress/2014/10/hello-world/</span> in the example below).
 </p>
 
-<p> 
+<p>
 	Note: Initiating the right authentication or authorisation protocol (whether OpenID, OAuth1 or OAuth2) is delegated to Hybridauth library, so all that boring stuff is dealt with.
 </p>
 
@@ -222,7 +222,7 @@ body pre * {
 
 <hr />
 
-<p> 
+<p>
 	To sum things up, here is the major steps that WSL will do during the authentication process:
 </p>
 
@@ -255,14 +255,14 @@ do_action('init')
 .       .       .       .       wsl_process_login_request_user_social_profile()
 .       .       .       .       .       Hybrid_Auth::getUserProfile()
 .       .       .       .       wsl_process_login_complete_registration()
-.       .       .       
+.       .       .
 .       .       .       wsl_process_login_create_wp_user()
-.       .       .       
+.       .       .
 .       .       .       wsl_process_login_update_wsl_user_data()
 .       .       .       .       wsl_store_hybridauth_user_profile()
 .       .       .       .       wsl_buddypress_xprofile_mapping()
 .       .       .       .       wsl_store_hybridauth_user_contacts()
-.       .       .       
+.       .       .
 .       .       .       wsl_process_login_authenticate_wp_user()
 </pre>
 
@@ -302,11 +302,11 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		</div>
 	  </div>
 	</li>
-	
+
 </ul>
 <hr />
 <ul class="timeline">
-	
+
 	<li style="margin-top: 50px;">
 	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
 	  <div class="timeline-panel">
@@ -345,7 +345,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Display a loading screen while hybridauth is redirecting the user to the selected provider. This function is pluggable, see <a href="developer-api-functions.html">Pluggable Functions</a>.</p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
 	  <div class="timeline-panel">
@@ -356,7 +356,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Reset the selected provider ID.</p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge"><i class="fa fa-bars"></i></div>
 	  <div class="timeline-panel">
@@ -367,7 +367,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Build the required hybridauth configuration for the given provider (keys, scopes, callback url, etc.) .</p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
 	  <div class="timeline-panel">
@@ -378,7 +378,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Reset (overwrite) the requested scopes (permissions). For usage, refer to <a href="developer-api-snippets.html">Code Snippets</a>.</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge success"><i class="fa fa-filter"></i></div>
 	  <div class="timeline-panel">
@@ -389,7 +389,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Reset (overwrite) the selected provider config. For usage, refer to <a href="developer-api-snippets.html">Code Snippets</a>.</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
@@ -411,8 +411,8 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>
 			Start the authentication process via hybridauth libray.
 			<br />
-			If not already connected <code>hybridauth::authenticate()</code> will redirect the user to the selected <code>$provider</code> API, 
-			where he will be asked for his consent (most providers ask for consent only once). 
+			If not already connected <code>hybridauth::authenticate()</code> will redirect the user to the selected <code>$provider</code> API,
+			where he will be asked for his consent (most providers ask for consent only once).
 			If the user gives his authorisation to your application, the provider will redirect the user back to this same point,
 			and this time <code>hybridauth::authenticate()</code> will just return the provider <code>$adapter</code>.
 		  </p>
@@ -440,7 +440,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Display a loading screen after a user come back from provider and while WSL is procession his profile, contacts, etc. This function is pluggable, see <a href="developer-api-functions.html">Pluggable Functions</a>.</p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 
 </ul>
 <hr />
@@ -491,7 +491,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 </ul>
 <hr />
 <ul class="timeline">
-	
+
 	<li style="margin-top: 50px;">
 	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
 	  <div class="timeline-panel">
@@ -510,7 +510,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  </p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
@@ -547,7 +547,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>...</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge"><i class="fa fa-refresh fa-spin"></i></div>
 	  <div class="timeline-panel">
@@ -563,7 +563,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 </ul>
 <hr />
 <ul class="timeline">
-	
+
 	<li style="margin-top: 50px;">
 	  <div class="timeline-badge warning"><i class="fa fa-bell-o"></i></div>
 	  <div class="timeline-panel">
@@ -574,7 +574,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>This function will attempt to create a new WordPress user. This function will only kick in for new users.</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
@@ -596,7 +596,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>Reset the array of user data. See: <a href="http://codex.wordpress.org/Function_Reference/wp_insert_user#Parameters" target="_blank">http://codex.wordpress.org/Function_Reference/wp_insert_user#Parameters</a>.</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
@@ -618,7 +618,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>This action runs just before creating a new wordpress user, it delegate user insert to a custom function. If this filter returns a valid <code>$user_id</code>, WSL will not use <code>wp_insert_user()</code>.</p>
 		</div>
 	  </div>
-	</li>  
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge primary"><i class="fa fa-database"></i></div>
 	  <div class="timeline-panel">
@@ -664,7 +664,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  </p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
@@ -724,7 +724,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		  <p>This function will attempt to log the user withing WordPress.</p>
 		</div>
 	  </div>
-	</li> 
+	</li>
 	<li class="timeline-inverted">
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
@@ -756,8 +756,8 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		</div>
 		<div class="timeline-body">
 		  <p>When enabled, WSL will check for the current user role. If equal to <code>pending</code> then Bouncer will do the following :
-		  <br /> 1) Halt the authentication process, 
-		  <br /> 2) Skip setting the authentication cookies for the user, 
+		  <br /> 1) Halt the authentication process,
+		  <br /> 2) Skip setting the authentication cookies for the user,
 		  <br /> 3) Reset the <code>Redirect URL</code> to the appropriate Theme My Login page.
 		  </p>
 		</div>
@@ -801,7 +801,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 		</div>
 		<div class="timeline-body">
 		  <p>
-			To keep things standard with the WordPress way of doing things, WSL will trigger the  builtin action hook <code>wp_login</code>: 
+			To keep things standard with the WordPress way of doing things, WSL will trigger the  builtin action hook <code>wp_login</code>:
 			The <code>wp_login</code> action hook is triggered when a user logs in by the <code>wp_signon()</code> function. It is the very last action taken in the function, immediately following the <code>wp_set_auth_cookie()</code> call.
 		  </p>
 		</div>
@@ -811,7 +811,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 	  <div class="timeline-badge info"><i class="fa fa-anchor"></i></div>
 	  <div class="timeline-panel">
 		<div class="timeline-heading">
-		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_wp_safe_redirect" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_wp_safe_redirect</h4> 
+		  <h4 class="timeline-title"><a class="pull-right" href="https://github.com/miled/wordpress-social-login/search?q=wsl_hook_process_login_before_wp_safe_redirect" target="_blank"><i class="fa fa-github"></i></a> wsl_hook_process_login_before_wp_safe_redirect</h4>
 		</div>
 		<div class="timeline-body">
 		  <p>
@@ -842,7 +842,7 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div> 
+				</div>
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -865,16 +865,14 @@ Legend : <i class="fa fa-anchor"></i> action &mdash; <i class="fa fa-filter"></i
 
 	<footer>
 		<div class="container">
-			<div class="row"> 
+			<div class="row">
 				<ul>
 					<li><a href="./index.html">Home</a></li>
 					<li><a href="./overview.html">Overview</a></li>
-					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./documentation.html">Documentation</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
-					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
-				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 10, 2014</span>
+				</ul>
 			</div>
 		</div>
 	</footer>

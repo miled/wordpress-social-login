@@ -11,13 +11,13 @@
 
 	<link href="http://fonts.googleapis.com/css?family=Roboto:100,200,300,400,700|Roboto+Condensed:400,700" rel="stylesheet" type="text/css">
 
-	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet"> 
+	<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet">
 	<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
-	<link href="assets/css/prettify.css" rel="stylesheet"> 
-	<link href="assets/css/style.css" rel="stylesheet">   
+	<link href="assets/css/prettify.css" rel="stylesheet">
+	<link href="assets/css/style.css" rel="stylesheet">
 
 	<script type="text/javascript" src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
-	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script> 
+	<script type="text/javascript" src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 	<script type="text/javascript" src="assets/js/prettify.js"></script>
 	<script type="text/javascript" src="assets/js/script.js"></script>
 </head>
@@ -29,10 +29,10 @@
 			</div>
 
 			<div class="collapse navbar-collapse">
-				<ul class="nav navbar-nav navbar-right"> 
+				<ul class="nav navbar-nav navbar-right">
 					<li><a href="./overview.html">Overview</a></li>
 					<li class="active"><a href="./documentation.html">Documentation</a></li>
-					<li><a href="./getinvolved.html">Get involved</a></li> 
+					<li><a href="./getinvolved.html">Get involved</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
 					<li style="margin-right:10px">
@@ -45,7 +45,7 @@
 		</nav>
 	</header>
 
- 
+
 	<div id="content" class="container container-documentation">
 		<div class="block row">
 			<div class="col col-md-12">
@@ -88,13 +88,13 @@ function wsl_lower_default_permissons( $provider_scope, $provider )
 
     return $provider_scope;
 }
- 
+
 add_filter( 'wsl_hook_alter_provider_scope', 'wsl_lower_default_permissons', 10, 2 );
 </pre>
 			</div>
 		</div>
 	</div>
-	
+
 
 <!-- collapse_fontawesome_icons -->
 	<div class="panel panel-default">
@@ -110,11 +110,11 @@ add_filter( 'wsl_hook_alter_provider_scope', 'wsl_lower_default_permissons', 10,
 function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_url )
 {
    ?&gt;
-   &lt;a 
+   &lt;a
       rel           = &quot;nofollow&quot;
       href          = &quot;&lt;?php echo $authenticate_url; ?&gt;&quot;
       data-provider = &quot;&lt;?php echo $provider_id ?&gt;&quot;
-      class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot; 
+      class         = &quot;wp-social-login-provider wp-social-login-provider-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;
     &gt;
       &lt;span&gt;
          &lt;i class=&quot;fa fa-&lt;?php echo strtolower( $provider_id ); ?&gt;&quot;&gt;&lt;/i&gt;
@@ -123,15 +123,15 @@ function wsl_use_fontawesome_icons( $provider_id, $provider_name, $authenticate_
    &lt;/a&gt;
 &lt;?php
 }
- 
+
 add_filter( 'wsl_render_auth_widget_alter_provider_icon_markup', 'wsl_use_fontawesome_icons', 10, 3 );
 </pre>
 			</div>
 		</div>
 	</div>
 
-	
-	
+
+
 <!-- collapse_woocommerce -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -157,10 +157,10 @@ add_action( 'woocommerce_before_checkout_form'      , 'wsl_action_wordpress_soci
 function custom_override_checkout_fields( $fields )
 {
 	$current_user = wp_get_current_user();
-	
+
 	$fields['billing']['billing_first_name']['default'] = $current_user-&gt;user_firstname;
 	$fields['billing']['billing_last_name']['default']  = $current_user-&gt;user_lastname;
-	
+
  	return $fields;
 }
 
@@ -169,7 +169,7 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 			</div>
 		</div>
 	</div>
-	
+
 <!-- collapse_edd -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -178,7 +178,7 @@ add_filter( 'woocommerce_checkout_fields' , 'custom_override_checkout_fields' );
 			</h4>
 		</div>
 		<div id="collapse_edd" class="panel-collapse collapse">
-			<div class="panel-body"> 
+			<div class="panel-body">
 <p>
 	This is a very basic integration. The code below will add WSL widget into EDD login and register forms.
 </p>
@@ -189,7 +189,7 @@ add_action( 'edd_register_account_fields_after', 'wsl_action_wordpress_social_lo
 			</div>
 		</div>
 	</div>
-	
+
 <!-- collapse_mycred_signup -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -223,9 +223,9 @@ add_action( 'wsl_hook_process_login_after_create_wp_user', 'mycred_award_wsl_use
 			</div>
 		</div>
 	</div>
-	
-	
-	
+
+
+
 <!-- get_user_oauth_tokens -->
 	<div class="panel panel-default">
 		<div class="panel-heading">
@@ -242,7 +242,7 @@ function get_access_tokens( $user_id, $provider, $hybridauth_user_profile )
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( $provider ); 
+        $provider = Hybrid_Auth::getAdapter( $provider );
 
         # oauth 1 and 2
         $access_token = $provider-&gt;adapter-&gt;token( 'access_token' );
@@ -260,10 +260,10 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_access_toke
 			</div>
 		</div>
 	</div>
-	
-	
-	
-<!-- get_user_twitter_timeline  
+
+
+
+<!-- get_user_twitter_timeline
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -271,7 +271,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_access_toke
 			</h4>
 		</div>
 		<div id="get_user_twitter_timeline" class="panel-collapse collapse">
-			<div class="panel-body"> 
+			<div class="panel-body">
 <p>
 	This function use <code>wsl_hook_process_login_before_wp_set_auth_cookie</code> which runs every time a user successfully login with Twitter.
 </p>
@@ -287,7 +287,7 @@ function get_user_twitter_timeline( $user_id, $provider, $hybridauth_user_profil
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( 'Twitter' ); 
+        $provider = Hybrid_Auth::getAdapter( 'Twitter' );
 
         # https://dev.twitter.com/rest/reference/get/statuses/user_timeline
         $response = $provider-&gt;api()-&gt;get( 'https://api.twitter.com/1.1/statuses/user_timeline.json' );
@@ -302,10 +302,10 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitte
 			</div>
 		</div>
 	</div>
-	
-	
-	
-<!-- get_post_to_user_facebook_wall 
+
+
+
+<!-- get_post_to_user_facebook_wall
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -315,7 +315,7 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_user_twitte
 		<div id="get_post_to_user_facebook_wall" class="panel-collapse collapse">
 			<div class="panel-body">
 <p>
-	This function use <code>wsl_hook_process_login_before_wp_set_auth_cookie</code> which runs EVERY TIME a user successfully login with Facebook. This snippet will also ask users for an extra permission to post to theirs walls. 
+	This function use <code>wsl_hook_process_login_before_wp_set_auth_cookie</code> which runs EVERY TIME a user successfully login with Facebook. This snippet will also ask users for an extra permission to post to theirs walls.
 </p>
 <pre class="prettyprint linenums">
 function wsl_request_extra_permisson( $provider_scope, $provider )
@@ -328,7 +328,7 @@ function wsl_request_extra_permisson( $provider_scope, $provider )
 
     return $provider_scope;
 }
- 
+
 add_filter( 'wsl_hook_alter_provider_scope', 'wsl_request_extra_permisson', 10, 2 );
 
 function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_profile )
@@ -342,7 +342,7 @@ function get_post_to_user_facebook_wall( $user_id, $provider, $hybridauth_user_p
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( 'Facebook' ); 
+        $provider = Hybrid_Auth::getAdapter( 'Facebook' );
 
         # https://developers.facebook.com/docs/graph-api/reference/v2.2/user/feed
         $response = $provider-&gt;api()-&gt;post( 'https://graph.facebook.com/v2.0/me/feed', array(
@@ -359,8 +359,8 @@ add_filter( 'wsl_hook_process_login_before_wp_set_auth_cookie', 'get_post_to_use
 			</div>
 		</div>
 	</div>
-	
-get_publish_to_facebook 
+
+get_publish_to_facebook
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -389,8 +389,8 @@ function wsl_store_facebook_access_token( $user_id, $provider, $hybridauth_user_
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( $provider ); 
- 
+        $provider = Hybrid_Auth::getAdapter( $provider );
+
         $access_token = $provider-&gt;adapter-&gt;token( 'access_token' );
 
         update_user_meta( $user_id, 'facebook_access_token', $access_token );
@@ -410,25 +410,25 @@ function wsl_post_to_facebook( $post_id )
     {
         return;
     }
-    
+
     $access_token = get_user_meta( {SET_YOUR_WORDPRESS_ADMIN_USER_ID_HERE}, 'facebook_access_token' );
-    
+
     if ( ! $access_token )
     {
         return;
     }
-    
+
     $post_title = get_the_title( $post_id );
-    $post_url   = get_permalink( $post_id ); 
-    
+    $post_url   = get_permalink( $post_id );
+
     $message  = &quot;A post has been updated on your website:\n\n&quot;;
     $message .= $post_title . &quot;: &quot; . $post_url;
-    
+
     include_once( WORDPRESS_SOCIAL_LOGIN_ABS_PATH . '/hybridauth/Hybrid/Auth.php' );
 
     try
     {
-        $provider = Hybrid_Auth::getAdapter( $provider ); 
+        $provider = Hybrid_Auth::getAdapter( $provider );
 
         $adapter-&gt;adapter-&gt;token( 'access_token', $access_token );
 
@@ -452,7 +452,7 @@ add_action( 'save_post', 'wsl_post_to_facebook' );
 	</div>
 -->
 
-<!-- collapse_github 
+<!-- collapse_github
 	<div class="panel panel-default">
 		<div class="panel-heading">
 			<h4 class="panel-title">
@@ -510,7 +510,7 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 					<h4 style="border: 0px none; margin: 12px;">Please, do not submit issues here.</h4>
 
 					<p>This comment section is for a general question and feedback. If you want to report a bug, please refer to the <a href="support.html">Support</a> section.</p>
-				</div> 
+				</div>
 				<br />
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
@@ -533,16 +533,14 @@ add_action( 'wsl_process_login_update_wsl_user_data_start', 'fork_repo', 10, 5 )
 
 	<footer>
 		<div class="container">
-			<div class="row"> 
+			<div class="row">
 				<ul>
 					<li><a href="./index.html">Home</a></li>
 					<li><a href="./overview.html">Overview</a></li>
-					<li><a href="./documentation.html">Documentation</a></li> 
+					<li><a href="./documentation.html">Documentation</a></li>
 					<li><a href="./support.html">Support</a></li>
 					<li><a href="./faq.html">FAQ</a></li>
-					<li><a href="https://wordpress.org/plugins/wordpress-social-login/" target="_blank">Download</a></li> 
-				</ul> 
-				<span class="pull-right footer-extra-info">Generated on November 10, 2014</span>
+				</ul>
 			</div>
 		</div>
 	</footer>
