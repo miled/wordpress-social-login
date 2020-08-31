@@ -34,7 +34,7 @@ function wsl_database_install()
 
 	require_once( ABSPATH . 'wp-admin/includes/upgrade.php' );
 
-	$sql = "CREATE TABLE $wslusersprofiles ( 
+	$sql = "CREATE TABLE $wslusersprofiles (
 			id int(11) NOT NULL AUTO_INCREMENT,
 			user_id int(11) NOT NULL,
 			provider varchar(50) NOT NULL,
@@ -91,7 +91,7 @@ function wsl_database_uninstall()
 
 	// 1. Delete wslusersprofiles, wsluserscontacts and wslwatchdog
 
-	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wslusersprofiles" ); 
+	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wslusersprofiles" );
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wsluserscontacts" );
 	$wpdb->query( "DROP TABLE IF EXISTS {$wpdb->prefix}wslwatchdog" );
 
@@ -102,10 +102,11 @@ function wsl_database_uninstall()
 
 	// 3. Delete registered options
 
-	delete_option('wsl_database_migration_version' ); 
+	delete_option('wsl_database_migration_version' );
 
-	delete_option('wsl_settings_development_mode_enabled' ); 
-	delete_option('wsl_settings_debug_mode_enabled' ); 
+	delete_option('wsl_settings_development_mode_enabled' );
+	delete_option('wsl_settings_migration_notice_is_read' );
+	delete_option('wsl_settings_debug_mode_enabled' );
 	delete_option('wsl_settings_welcome_panel_enabled' );
 
 	delete_option('wsl_components_core_enabled' );
@@ -132,7 +133,7 @@ function wsl_database_uninstall()
 	delete_option('wsl_settings_bouncer_linking_accounts_enabled' );
 	delete_option('wsl_settings_bouncer_profile_completion_require_email' );
 	delete_option('wsl_settings_bouncer_profile_completion_change_email' );
-	delete_option('wsl_settings_bouncer_profile_completion_change_username' );  
+	delete_option('wsl_settings_bouncer_profile_completion_change_username' );
 	delete_option('wsl_settings_bouncer_new_users_moderation_level' );
 	delete_option('wsl_settings_bouncer_new_users_membership_default_role' );
 	delete_option('wsl_settings_bouncer_new_users_restrict_domain_enabled' );
