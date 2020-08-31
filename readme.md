@@ -6,12 +6,6 @@ Basically, WordPress Social Login allow your website visitors and customers to r
 
 For more information about WordPress Social Login, refer to our [online user guide](http://miled.github.io/wordpress-social-login/).
 
-    Note: This repository is for development only.
-    The official release is distributed through WordPress website.
-
-    Important: As of WSL 3.0.1, I'm attempting to migrate WSL to work with hybridauth 3,
-    hence this repo is unusuable until further notice.
-
 ![WSL Authentication Widget](https://raw.githubusercontent.com/miled/wordpress-social-login/master/assets/screenshot-1.png)
 
 ### Key Features

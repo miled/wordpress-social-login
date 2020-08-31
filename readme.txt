@@ -75,9 +75,14 @@ The user guide and frequently asked questions can be found at http://miled.githu
 
 == Changelog ==
 
-= 3.0.1 =
+= 3.0.3 =
 
-* ..
+* WSL is now fully migrated to Hybridauth 3.4.
+* Reworked providers Callback URLs and it's a breaking change! More at http://miled.github.io/wordpress-social-login/migrating-to-3.0.html
+* Added serval new providers: Amazon, Discord and Spotify to name a few.
+* Removal of a number of currently defunct identity providers.
+* Authentication widgets and forms design overhall.
+* Various fixes and minor improvements.
 
 = 2.3.0 =
 
