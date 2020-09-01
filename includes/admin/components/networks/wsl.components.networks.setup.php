@@ -25,17 +25,62 @@ function wsl_component_networks_setup()
 
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
 
-	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/16x16/';
+	$assets_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/';
 	$assets_setup_base_url = WORDPRESS_SOCIAL_LOGIN_PLUGIN_URL . 'assets/img/setup/';
 
 	// save settings?
-	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] )
+	if( isset( $_REQUEST["enable"] ) && $_REQUEST["enable"] && ! isset( $_REQUEST["settings-updated"] ))
 	{
 		$provider_id = $_REQUEST["enable"];
 
-		update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
+        update_option( 'wsl_settings_' . $provider_id . '_enabled', 1 );
 	}
 ?>
+<div class="postbox">
+	<div class="inside">
+		<h3><?php _wsl_e("Add more providers", 'wordpress-social-login') ?></h3>
+
+		<div style="padding:0 20px;">
+			<p style="padding:0;margin:0 0 12px;">
+				<?php _wsl_e('We have enabled <b>Facebook</b>, <b>Google</b> and <b>Twitter</b> by default, however you may add even more. <b>Just Click</b> on the icons and we will guide you through', 'wordpress-social-login') ?>.
+			</p>
+
+			<div style="padding: 10px; border: 1px solid #ddd; background-color: #fff; text-align: center;">
+				<?php
+					$nb_used = count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG );
+
+					foreach( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG AS $item )
+					{
+						$provider_id   = isset( $item["provider_id"]   ) ? $item["provider_id"]   : '';
+						$provider_name = isset( $item["provider_name"] ) ? $item["provider_name"] : '';
+
+						if( isset( $item["default_network"] ) && $item["default_network"] )
+						{
+							continue;
+						}
+
+						if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) )
+						{
+							?>
+								<a href="options-general.php?page=wordpress-social-login&wslp=networks&enable=<?php echo $provider_id ?>&_=<?php echo time(); ?>#setup<?php echo strtolower( $provider_id ) ?>"><img src="<?php echo $assets_base_url . '32x32/icondock/' . strtolower( $provider_id ) . '.png' ?>" alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" /></a>
+							<?php
+
+							$nb_used--;
+						}
+					}
+
+					if( $nb_used == count( $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG ) )
+					{
+						_wsl_e("Well! none left.", 'wordpress-social-login');
+					}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- -->
+
 <script>
 	function toggleproviderkeys(idp)
 	{
@@ -106,7 +151,7 @@ function wsl_component_networks_setup()
 		<div class="stuffbox" id="namediv">
 			<h3>
 				<label class="wp-neworks-label">
-					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php _wsl_e( $provider_name, 'wordpress-social-login' ) ?>
+					<img alt="<?php echo $provider_name ?>" title="<?php echo $provider_name ?>" src="<?php echo $assets_base_url . '16x16/' . strtolower( $provider_id ) . '.png' ?>" style="vertical-align: top;width:16px;height:16px;" /> <?php _wsl_e( $provider_name, 'wordpress-social-login' ) ?>
 				</label>
 			</h3>
 			<div class="inside">
@@ -135,7 +180,7 @@ function wsl_component_networks_setup()
 									<td><a href="javascript:void(0)" onClick="toggleproviderhelp('<?php echo $provider_id; ?>')"><?php _wsl_e("Where do I get this info?", 'wordpress-social-login') ?></a></td>
 								</tr>
 							<?php } ?>
-							
+
 							<?php if( !$require_client_id || $require_client_id === 'both' ) { ?>
 								<tr valign="top" <?php if( ! get_option( 'wsl_settings_' . $provider_id . '_enabled' ) ) echo 'style="display:none"'; ?> class="wsl_tr_settings_<?php echo $provider_id; ?>" >
 									<td><?php _wsl_e("Application Key", 'wordpress-social-login') ?>:</td>
@@ -210,62 +255,23 @@ function wsl_component_networks_setup()
 						<?php if ( $provider_new_app_link  ) : ?>
 							<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php echo sprintf( _wsl__( 'First go to: <a href="%s" target ="_blank">%s</a>', 'wordpress-social-login'), $provider_new_app_link, $provider_new_app_link ) ?></p>
 
-							<?php if ( $provider_id == "Google" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('On the <b>Dashboard sidebar</b> click on <b>Project</b> then click <em style="color:#0147bb;">&ldquo;Create Project&rdquo;</em>', 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once the project is created. Select that project, then <b>APIs & auth</b> &gt; <b>Consent screen</b> and fill the required information", 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Then <b>APIs & auth</b> &gt; <b>APIs</b> and enable <em style="color:#0147bb;">&ldquo;Google+ API&rdquo;</em>. If you want to import the user contatcs enable <em style="color:#0147bb;">&ldquo;Contacts API&rdquo;</em> as well', 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("After that you will need to create an new application: <b>APIs & auth</b> &gt; <b>Credentials</b> and then click <em style=\"color:#0147bb;\">&ldquo;Create new Client ID&rdquo;</em>", 'wordpress-social-login') ?>.</p>
-								</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("On the <b>&ldquo;Create Client ID&rdquo;</b> popup", 'wordpress-social-login') ?> :</p>
-								<ul style="margin-left:35px">
-									<li><?php _wsl_e('Select <em style="color:#0147bb;">&ldquo;Web application&rdquo;</em> as your application type', 'wordpress-social-login') ?>.</li>
-									<li><?php _wsl_e("Put your website domain in the <b>Authorized JavaScript origins</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</li>
-									<li><?php _wsl_e("Provide this URL as the <b>Authorized redirect URI</b> for your application", 'wordpress-social-login') ?>: <br /><?php echo $provider_callback_url ?></li>
-								</ul>
-							<?php elseif ( $provider_id == "Facebook" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Select <b>Add a New App</b> from the <b>Apps</b> menu at the top", 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out Display Name, Namespace, choose a category and click <b>Create App</b>", 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go to Settings page and click on <b>Add Platform</b>. Choose website and enter in the new screen your website url in <b>App Domains</b> and <b>Site URL</b> fields", 'wordpress-social-login') ?>.
-							<?php else: ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application", 'wordpress-social-login') ?>.</p>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Fill out any required fields such as the application name and description", 'wordpress-social-login') ?>.</p>
-							<?php endif; ?>
+                            <p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Create a new application and fill out any required fields such as the application name, description, your domanin name, etc", 'wordpress-social-login') ?>.</p>
 
-							<?php if ( $provider_callback_url && $provider_id != "Google" ) : ?>
-								<p>
-									<?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Provide this URL as the <b>Callback URL</b> for your application", 'wordpress-social-login') ?>:
-									<br />
-									<?php echo $provider_callback_url ?>
-								</p>
-							<?php endif; ?>
+                            <p>
+                                <?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("If asked about an authorized <b>Callback URL</b> for your application, you may provide this link", 'wordpress-social-login') ?>:
+                                <br />
+                                <?php echo $provider_callback_url ?>
+                            </p>
 
-							<?php if ( $provider_id == "Live" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Put your website domain in the <b>Redirect Domain</b> field. This should match with the current hostname", 'wordpress-social-login') ?> <em style="color:#CB4B16;"><?php echo $_SERVER["SERVER_NAME"]; ?></em>.</p>
-							<?php endif; ?>
-
-							<?php if ( $provider_id == "LinkedIn" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e('Choose <b>Live</b> on <b>Live Status</b>.', 'wordpress-social-login') ?></p>
-							<?php endif; ?>
-
-							<?php if ( $provider_id == "Google" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered past the created application credentials (Client ID and Secret) into the boxes above", 'wordpress-social-login') ?>.</p>
-							<?php elseif ( $provider_id == "Twitter" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials (Consumer Key and Secret) into the boxes above", 'wordpress-social-login') ?>.</p>
-							<?php elseif ( $provider_id == "Facebook" ) : ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Go back to the <b>Dashboard</b> page and past the created application credentials (APP ID and Secret) into the boxes above", 'wordpress-social-login') ?>.</p>
-							<?php else: ?>
-								<p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials into the boxes above", 'wordpress-social-login') ?>.</p>
-							<?php endif; ?>
-
+                            <p><?php echo "<b>" . ++$setupsteps . "</b>." ?> <?php _wsl_e("Once you have registered, past the created application credentials into the boxes above", 'wordpress-social-login') ?>.</p>
 						<?php endif; ?>
 					</div>
 
 					<?php if ( $provider_new_app_link  ) : ?>
 						<hr />
 						<p>
-							<b><?php _wsl_e("And that's it!", 'wordpress-social-login') ?></b>
-							<br />
-							<?php echo sprintf( _wsl__( 'If for some reason you still can\'t manage to create an application for %s, first try to <a href="https://www.google.com/search?q=%s API create application" target="_blank">Google it</a>, then check it on <a href="http://www.youtube.com/results?search_query=%s API create application " target="_blank">Youtube</a>, and if nothing works <a href="options-general.php?page=wordpress-social-login&wslp=help">ask for support</a>', 'wordpress-social-login'), $provider_name, $provider_name, $provider_name ) ?>.
+							<?php _wsl_e("And that's pretty much all.", 'wordpress-social-login') ?>
+							<?php echo sprintf( _wsl__( 'If for whatever reason you can\'t manage to create an application for %s, first try to <a href="https://www.google.com/search?q=%s API create application" target="_blank">Google it</a>, then check it on <a href="http://www.youtube.com/results?search_query=%s API create application " target="_blank">Youtube</a>, and if nothing works you may ask the WordPress community for <a href="http://miled.github.io/wordpress-social-login/support.html" target="_blank">Help & Support</a>', 'wordpress-social-login'), $provider_name, $provider_name, $provider_name ) ?>.
 						</p>
 					<?php endif; ?>
 				</div>
@@ -275,6 +281,8 @@ function wsl_component_networks_setup()
 	endforeach;
 ?>
 	<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" />
+
+    &nbsp; <a href="javascript:window.scrollTo(0, 0);"><?php _wsl_e("↑ Scroll back to top", 'wordpress-social-login') ?></a>
 <?php
 	// HOOKABLE:
 	do_action( "wsl_component_networks_setup_end" );

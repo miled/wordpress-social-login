@@ -18,7 +18,8 @@ function wsl_component_networks_sidebar()
 
 	$sections = array(
 		'what_is_this'   => 'wsl_component_networks_sidebar_what_is_this',
-		'add_more_idps'  => 'wsl_component_networks_sidebar_add_more_idps',
+        // DEPRECIATED: as of 3.0.3
+        // 'add_more_idps'  => 'wsl_component_networks_sidebar_add_more_idps',
 		'basic_insights' => 'wsl_component_networks_sidebar_basic_insights',
 	);
 
@@ -65,6 +66,8 @@ add_action( 'wsl_component_networks_sidebar_what_is_this', 'wsl_component_networ
 
 // --------------------------------------------------------------------
 
+// DEPRECIATED: as of 3.0.3
+// adding idps is now located in top of "networks" setup form
 function wsl_component_networks_sidebar_add_more_idps()
 {
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_PROVIDERS_CONFIG;
