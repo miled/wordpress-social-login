@@ -178,13 +178,21 @@ function wsl_admin_ui_header( $wslp = null )
 		if( ! get_option( 'wsl_settings_migration_notice_is_read' ) )
 		{
 			?>
-				<div class="fade updated" style="margin: 4px 0 20px; border-left-color: #ffc107;">
+                <div class="fade updated" style="margin: 4px 0 20px; border-left-color: #ffc107;">
+                    <p><b><?php _wsl_e("Breaking changes notice", 'wordpress-social-login') ?>:</b></p>
+
+                    <p><?php _wsl_e("In WordPress Social Login 3.0 we have reworked the identity provider's <b>Callback URLs</b>. To make sure the plugin will keep working correctly, you can either create a new application for each enabled provider, or simply update the already created application with the newly generated callback urls:", 'wordpress-social-login') ?></p>
+
+                    <ol>
+                        <li><?php _wsl_e("First, navigate to <b>WSL Settting > Networks</b> tab", 'wordpress-social-login') ?>,</li>
+                        <li><?php _wsl_e("Next, refer to <b>Where do I get this info?</b> section for each enabled provider and copy its new auto generated callback url", 'wordpress-social-login') ?>,</li>
+                        <li><?php _wsl_e("Finally, update that link on the provider developer website", 'wordpress-social-login') ?>.</li>
+                    </ol>
+
+                    <p><?php _wsl_e("It's also important to note that a number of providers are now made obsolete in WSL 3.0, while a few other were added, and cetain providers has changed their requirements", 'wordpress-social-login') ?>.</p>
+
 					<p>
-						<?php _wsl_e("<b>Breaking Changes Notice:</b> In WordPress Social Login 3.0 we have reworked the IDPs <b>Callback URLs</b>. To make sure the plugin will keep working correctly, you can either create a new application for each enabled provider, or simply update the already created application with the newly generated callback urls (First, go to <b>Networks</b> tab, then refer to <b>Where do I get this info?</b> section to copy the new callback url, and finally update that link in the provider developer website). It's also important to note that a number of providers are now made obsolete in WSL 3.0, while a few other were added", 'wordpress-social-login') ?>.
-					</p>
-					<p>
-						<a class="button-secondary" style="background-color: #ffc107; border-color: #e3ab02; color: #fff;min-width: 95px;text-align: center;" href="options-general.php?page=wordpress-social-login&wslp=networks&wsldmn=1"><?php _wsl_e('OK', 'wordpress-social-login') ?></a>
-						<a class="button-secondary" style="border-color: #e3ab02; color: #222;" href="http://miled.github.io/wordpress-social-login/migrating-to-3.0.html" target="_blank"><?php _wsl_e('Read about the latest update', 'wordpress-social-login') ?></a>
+						<a class="button-secondary" style="background-color: #ffc107; border-color: #e3ab02; color: #fff;min-width: 95px;text-align: center;" href="options-general.php?page=wordpress-social-login&wslp=networks&wsldmn=1"><?php _wsl_e('Okey, dismiss this notice', 'wordpress-social-login') ?></a>
 					</p>
 				</div>
 			<?php
