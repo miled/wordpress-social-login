@@ -70,15 +70,11 @@ $WORDPRESS_SOCIAL_LOGIN_VERSION = "3.0.3";
 
 // --------------------------------------------------------------------
 
-if ( headers_sent() )
-{
-	wp_die( __( "HTTP headers already sent to browser and WSL won't be able to start/resume PHP session.", 'wordpress-social-login' ) );
-}
-
-if ( ! session_id() && ! defined( 'DOING_CRON' ) )
-{
-	session_start();
-}
+/**
+* Initialize PHP sessions
+* see implementation in includes/services/wsl.session.php
+*/
+add_action('init', 'wsl_init_php_session');
 
 // --------------------------------------------------------------------
 

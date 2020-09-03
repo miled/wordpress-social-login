@@ -8,9 +8,37 @@
 
 // --------------------------------------------------------------------
 
-if( session_id() )
+/**
+* Attempts to initialize a PHP session when needed
+*/
+function wsl_init_php_session()
 {
-    wsl_init_php_session_storage();
+	// > check for wsl actions/page
+	$action = isset( $_REQUEST['action'] ) ? $_REQUEST['action'] : null;
+	$page = isset( $_GET['page'] ) ? $_GET['page'] : null;
+
+    if(
+        ! in_array( $action, array( "wordpress_social_authenticate", "wordpress_social_profile_completion", "wordpress_social_account_linking", "wordpress_social_authenticated" ) )
+        && ! in_array( $page, array( "wordpress-social-login" ) )
+    )
+	{
+		return false;
+	}
+
+    if ( headers_sent() )
+    {
+        wp_die( __( "HTTP headers already sent to browser and WSL won't be able to start/resume PHP session.", 'wordpress-social-login' ) );
+    }
+
+    if ( ! session_id() && ! defined( 'DOING_CRON' ) )
+    {
+        session_start();
+    }
+
+    if( session_id() )
+    {
+        wsl_init_php_session_storage();
+    }
 }
 
 // --------------------------------------------------------------------
