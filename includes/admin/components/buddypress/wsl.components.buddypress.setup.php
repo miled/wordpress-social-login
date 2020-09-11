@@ -38,7 +38,9 @@ function wsl_component_buddypress_setup()
 	<br />
 
 	<div style="margin-left:5px;margin-top:-20px;">
-		<input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" />
+        <input type="submit" class="button-primary" value="<?php _wsl_e("Save Settings", 'wordpress-social-login') ?>" />
+
+        &nbsp; <a href="javascript:window.scrollTo(0, 0);"><?php _wsl_e("↑ Scroll back to top", 'wordpress-social-login') ?></a>
 	</div>
 </div>
 <?php

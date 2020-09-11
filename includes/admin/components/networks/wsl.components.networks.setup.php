@@ -235,7 +235,7 @@ function wsl_component_networks_setup()
 				<br />
 				<div
 					class="wsl_div_settings_help_<?php echo $provider_id; ?>"
-					style="<?php if( isset( $_REQUEST["enable"] ) && ! isset( $_REQUEST["settings-updated"] ) && $_REQUEST["enable"] == $provider_id ) echo "-"; // <= lolz ?>display:none;"
+					style="<?php if( isset( $_REQUEST["enable"] ) && ! isset( $_REQUEST["settings-updated"] ) && $_REQUEST["enable"] == $provider_id ) echo "-"; // <= lolz ?>display:none;padding-left: 12px;padding-right: 12px;"
 				>
 					<hr class="wsl" />
 					<?php if (  $provider_id == "Steam" ) : ?>

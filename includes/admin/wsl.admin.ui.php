@@ -171,7 +171,7 @@ function wsl_admin_ui_header( $wslp = null )
 						<a class="button-secondary" href="options-general.php?page=wordpress-social-login&wslp=watchdog"><?php _wsl_e('View WSL logs', 'wordpress-social-login') ?></a>
 						<a class="button-secondary" href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank"><?php _wsl_e('Read about the debug mode', 'wordpress-social-login') ?></a>
 					</p>
-				</div>x
+				</div>
 			<?php
 		}
 

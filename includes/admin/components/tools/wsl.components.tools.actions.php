@@ -7,9 +7,9 @@
 */
 
 // Exit if accessed directly
-if ( !defined( 'ABSPATH' ) ) exit; 
+if ( !defined( 'ABSPATH' ) ) exit;
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_sections()
 {
@@ -34,7 +34,7 @@ function wsl_component_tools_sections()
 	do_action( 'wsl_component_tools_sections' );
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_auth_playground()
 {
@@ -43,18 +43,18 @@ function wsl_component_tools_auth_playground()
 	<h3>
 		<label><?php _wsl_e("Authentication Playground", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
-			<?php _wsl_e('Authentication Playground will let you authenticate with the enabled social networks without creating any new user account. This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('Authentication Playground will let you authenticate with the enabled social networks without creating any new user account. This tool will also give you a direct access to social networks apis via a lightweight console', 'wordpress-social-login') ?>.
 		</p>
 
-		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=auth-paly'); ?>"><?php _wsl_e("Go to the authentication playground", 'wordpress-social-login') ?></a>  
+		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=auth-paly'); ?>"><?php _wsl_e("Go to the authentication playground", 'wordpress-social-login') ?></a>
 	</div>
 </div>
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_diagnostics()
 {
@@ -63,18 +63,18 @@ function wsl_component_tools_diagnostics()
 	<h3>
 		<label><?php _wsl_e("WordPress Social Login Diagnostics", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
 			<?php _wsl_e('This tool will check for the common issues and for the minimum system requirements', 'wordpress-social-login') ?>.
 		</p>
 
-		<a class="button-primary" href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=diagnostics'); ?>"><?php _wsl_e("Run WordPress Social Login Diagnostics", 'wordpress-social-login') ?></a>  
+		<a class="button-primary" href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=diagnostics'); ?>"><?php _wsl_e("Run WordPress Social Login Diagnostics", 'wordpress-social-login') ?></a>
 	</div>
 </div>
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_system_information()
 {
@@ -83,18 +83,18 @@ function wsl_component_tools_system_information()
 	<h3>
 		<label><?php _wsl_e("System information", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
-			<?php _wsl_e('This tool will gather and display your website and server info. Please include these information when posting support requests, it will help me immensely to better understand any issues', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('This tool will gather and display your website and server info. Please include these information when posting support requests, it will help me immensely to better understand any issues', 'wordpress-social-login') ?>.
 		</p>
 
-		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=sysinfo'); ?>"><?php _wsl_e("Display your system information", 'wordpress-social-login') ?></a>  
+		<a class="button-primary"  href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=sysinfo'); ?>"><?php _wsl_e("Display your system information", 'wordpress-social-login') ?></a>
 	</div>
 </div>
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_repair_wsl_tables()
 {
@@ -104,9 +104,9 @@ function wsl_component_tools_repair_wsl_tables()
 	<h3>
 		<label><?php _wsl_e("Repair WSL tables", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
-			<?php _wsl_e('This will attempt recreate WSL databases tables if they do not exist and will also add any missing field', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('This will attempt recreate WSL databases tables if they do not exist and will also add any missing field', 'wordpress-social-login') ?>.
 		</p>
 
 		<a class="button-primary" href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=repair'); ?>"><?php _wsl_e("Repair WordPress Social Login databases tables", 'wordpress-social-login') ?></a>
@@ -115,11 +115,11 @@ function wsl_component_tools_repair_wsl_tables()
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_debug_mode()
 {
-	$wsl_settings_debug_mode_enabled = get_option( 'wsl_settings_debug_mode_enabled' ); 
+	$wsl_settings_debug_mode_enabled = get_option( 'wsl_settings_debug_mode_enabled' );
 ?>
 <a name="debug-mode"></a>
 <div class="stuffbox">
@@ -143,11 +143,11 @@ function wsl_component_tools_debug_mode()
 			<?php _wsl_e('For more information, refer to WSL documentation under Advanced Troubleshooting &gt; <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Debug Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
-		<form method="post" id="wsl_setup_form" action="options.php">  
+		<form method="post" id="wsl_setup_form" action="options.php">
 			<?php settings_fields( 'wsl-settings-group-debug' ); ?>
 
 			<select name="wsl_settings_debug_mode_enabled">
-				<option <?php if(    ! $wsl_settings_debug_mode_enabled ) echo "selected"; ?> value="0"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
+				<option <?php if(    ! $wsl_settings_debug_mode_enabled ) echo "selected"; ?> value="0"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option>
 				<option <?php if( $wsl_settings_debug_mode_enabled == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled &mdash; Log actions in a file", 'wordpress-social-login') ?></option>
 				<option <?php if( $wsl_settings_debug_mode_enabled == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("Enabled &mdash; Log actions to database", 'wordpress-social-login') ?></option>
 			</select>
@@ -159,22 +159,22 @@ function wsl_component_tools_debug_mode()
 			<?php endif; ?>
 		</form>
 	</div>
-</div>	
+</div>
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_development_mode()
 {
-	$wsl_settings_development_mode_enabled = get_option( 'wsl_settings_development_mode_enabled' ); 
+	$wsl_settings_development_mode_enabled = get_option( 'wsl_settings_development_mode_enabled' );
 ?>
 <a name="dev-mode"></a>
 <div class="stuffbox">
 	<h3>
 		<label><?php _wsl_e("Development mode", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
 			<?php _wsl_e('When <b>Development Mode</b> is enabled, this plugin will display a debugging area on the footer of admin interfaces. <b>Development Mode</b> will also try generate and display a technical reports when something goes wrong. This report can help you figure out the root of the issues you may runs into', 'wordpress-social-login') ?>.
 		</p>
@@ -195,11 +195,11 @@ function wsl_component_tools_development_mode()
 			<?php _wsl_e('For more information, refer to WSL documentation under Advanced Troubleshooting &gt; <a href="http://miled.github.io/wordpress-social-login/troubleshooting-advanced.html" target="_blank">Development Mode</a>', 'wordpress-social-login') ?>.
 		</p>
 
-		<form method="post" id="wsl_setup_form" action="options.php" <?php if( ! $wsl_settings_development_mode_enabled ) { ?>onsubmit="return confirm('Do you really want to enable Development Mode?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"<?php } ?>>  
+		<form method="post" id="wsl_setup_form" action="options.php" <?php if( ! $wsl_settings_development_mode_enabled ) { ?>onsubmit="return confirm('Do you really want to enable Development Mode?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"<?php } ?>>
 			<?php settings_fields( 'wsl-settings-group-development' ); ?>
 
 			<select name="wsl_settings_development_mode_enabled">
-				<option <?php if( ! $wsl_settings_development_mode_enabled ) echo "selected"; ?> value="0"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option> 
+				<option <?php if( ! $wsl_settings_development_mode_enabled ) echo "selected"; ?> value="0"><?php _wsl_e("Disabled", 'wordpress-social-login') ?></option>
 				<option <?php if(   $wsl_settings_development_mode_enabled ) echo "selected"; ?> value="1"><?php _wsl_e("Enabled", 'wordpress-social-login') ?></option>
 			</select>
 
@@ -210,7 +210,7 @@ function wsl_component_tools_development_mode()
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
 
 function wsl_component_tools_uninstall()
 {
@@ -219,10 +219,10 @@ function wsl_component_tools_uninstall()
 	<h3>
 		<label><?php _wsl_e("Uninstall", 'wordpress-social-login') ?></label>
 	</h3>
-	<div class="inside"> 
+	<div class="inside">
 		<p>
-			<?php _wsl_e('This will permanently delete all Wordpress Social Login tables and stored options from your WordPress database', 'wordpress-social-login') ?>. 
-			<?php _wsl_e('Once you delete WSL database tables and stored options, there is NO going back. Please be certain', 'wordpress-social-login') ?>. 
+			<?php _wsl_e('This will permanently delete all Wordpress Social Login tables and stored options from your WordPress database', 'wordpress-social-login') ?>.
+			<?php _wsl_e('Once you delete WSL database tables and stored options, there is NO going back. Please be certain', 'wordpress-social-login') ?>.
 		</p>
 
 		<a class="button-danger" href="<?php echo wp_nonce_url( 'options-general.php?page=wordpress-social-login&wslp=tools&do=uninstall'); ?>" onClick="return confirm('Do you really want to Delete all Wordpress Social Login tables and options?\n\nPlease confirm that you have read and understood the abovementioned by clicking OK.');"><?php _wsl_e("Delete all Wordpress Social Login tables and options", 'wordpress-social-login') ?></a>
@@ -231,4 +231,4 @@ function wsl_component_tools_uninstall()
 <?php
 }
 
-// --------------------------------------------------------------------	
+// --------------------------------------------------------------------
