@@ -14,8 +14,8 @@
 /**
 * bind on click event to idps icons
 */
-(function($){ 
-	$(function(){ 
+(function($){
+	$(function(){
 		$(document).on( 'click', 'a.wp-social-login-provider', function(){
 			popupurl = $( '#wsl_popup_base_url' ).val();
 
@@ -26,7 +26,7 @@
 			var top    = ( screen.height / 2 ) - ( height / 2 ) - 50;
 			var left   = ( screen.width  / 2 ) - ( width  / 2 );
 
-			window.open( popupurl + 'provider=' + provider, 'hybridauth_social_sing_on', 'location=1,status=0,scrollbars=0,height=' + height + ',width=' + width + ',top=' + top + ',left=' + left);
+			window.open( popupurl + '&provider=' + provider, 'hybridauth_social_sing_on', 'location=1,status=0,scrollbars=0,height=' + height + ',width=' + width + ',top=' + top + ',left=' + left);
 		});
 	});
 })(jQuery);
@@ -55,11 +55,11 @@ window.wsl_wordpress_social_login = function( config ){
 		}
 	}
 
-	jQuery.each( config, function( key, value ){ 
+	jQuery.each( config, function( key, value ){
 		jQuery( '#' + key ).remove();
 
 		jQuery( form_id ).append( '<input type="hidden" id="' + key + '" name="' + key + '" value="' + value + '">' );
-	});  
+	});
 
 	if( jQuery( '#simplemodal-login-form' ).length )
 	{

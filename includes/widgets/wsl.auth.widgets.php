@@ -109,25 +109,37 @@ function wsl_render_auth_widget( $args = array() )
 	}
 
 	// build the authentication url which will call for wsl_process_login() : action=wordpress_social_authenticate
-	$authenticate_base_url = add_query_arg( 
+	$authenticate_base_url = add_query_arg(
 		array(
 			'action' => 'wordpress_social_authenticate',
 			'mode'   => 'login',
-		), 
-		site_url( 'wp-login.php', 'login_post' ) 
+		),
+		site_url( 'wp-login.php', 'login_post' )
 	);
 
 	// if not in mode login, we overwrite the auth base url
 	// > admin auth playground
 	if( $auth_mode == 'test' )
 	{
-		$authenticate_base_url = home_url() . "/?action=wordpress_social_authenticate&mode=test&";
+		$authenticate_base_url = add_query_arg(
+            array(
+                'action' => 'wordpress_social_authenticate',
+                'mode'   => 'test',
+            ),
+            home_url()
+        );
 	}
 
 	// > account linking
 	elseif( $auth_mode == 'link' )
 	{
-		$authenticate_base_url = home_url() . "/?action=wordpress_social_authenticate&mode=link&";
+		$authenticate_base_url = add_query_arg(
+            array(
+                'action' => 'wordpress_social_authenticate',
+                'mode'   => 'link',
+            ),
+            home_url()
+        );
 	}
 
 	// Connect with caption
@@ -204,12 +216,12 @@ function wsl_render_auth_widget( $args = array() )
 			}
 
 			// build authentication url
-			$authenticate_url = add_query_arg( 
+			$authenticate_url = add_query_arg(
 				array(
 					'provider'    => $provider_id,
 					'redirect_to' => urlencode( $redirect_to ),
-				), 
-				$authenticate_base_url 
+				),
+				$authenticate_base_url
 			);
 
 			// http://codex.wordpress.org/Function_Reference/esc_url
@@ -533,7 +545,7 @@ add_action( 'login_enqueue_scripts', 'wsl_add_stylesheets' );
 function wsl_add_javascripts()
 {
 	$wsl_settings_use_popup = get_option( 'wsl_settings_use_popup' );
-    
+
     // if a user is visiting using a mobile device, WSL will fall back to more in page
 	$wsl_settings_use_popup = function_exists( 'wp_is_mobile' ) ? wp_is_mobile() ? 2 : $wsl_settings_use_popup : $wsl_settings_use_popup;
 
