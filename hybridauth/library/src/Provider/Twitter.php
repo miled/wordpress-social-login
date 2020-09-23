@@ -13,14 +13,16 @@ use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * Twitter provider adapter.
+ * Twitter OAuth1 provider adapter.
+ * Uses OAuth1 not OAuth2 because many Twitter endpoints are built around OAuth1.
  *
  * Example:
  *
  *   $config = [
  *       'callback'  => Hybridauth\HttpClient\Util::getCurrentUrl(),
  *       'keys'      => [ 'key' => '', 'secret' => '' ], // OAuth1 uses 'key' not 'id'
- *       'authorize' => true
+ *       'authorize' => true // Needed to perform actions on behalf of users (see below link)
+ *         // https://developer.twitter.com/en/docs/authentication/oauth-1-0a/obtaining-user-access-tokens
  *   ];
  *
  *   $adapter = new Hybridauth\Provider\Twitter( $config );

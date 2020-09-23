@@ -14,6 +14,17 @@ use Hybridauth\Exception\UnexpectedApiResponseException;
 /**
  * Telegram provider adapter.
  *
+ * To set up Telegram you need to interactively create a bot using the
+ * Telegram mobile app, talking to botfather. The minimum conversation
+ * will look like:
+ *
+ * /newbot
+ * My Bot Title
+ * nameofmynewbot
+ * /setdomain
+ * @nameofmynewbot
+ * mydomain.com
+ *
  * Example:
  *
  *   $config = [
@@ -34,12 +45,16 @@ use Hybridauth\Exception\UnexpectedApiResponseException;
  */
 class Telegram extends AbstractAdapter implements AdapterInterface
 {
-
     protected $botId = '';
 
     protected $botSecret = '';
 
     protected $callbackUrl = '';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $apiDocumentation = 'https://core.telegram.org/bots';
 
     /**
      * {@inheritdoc}
@@ -82,9 +97,17 @@ class Telegram extends AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
+    public function isConnected()
+    {
+        return !empty($this->getStoredData('auth_data'));
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getUserProfile()
     {
-        $data = new Collection($this->parseAuthData());
+        $data = new Collection($this->getStoredData('auth_data'));
 
         if (!$data->exists('id')) {
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
@@ -97,6 +120,11 @@ class Telegram extends AbstractAdapter implements AdapterInterface
         $userProfile->lastName      = $data->get('last_name');
         $userProfile->displayName   = $data->get('username');
         $userProfile->photoURL      = $data->get('photo_url');
+        $username = $data->get('username');
+        if (!empty($username)) {
+            // Only some accounts have usernames.
+            $userProfile->profileURL = "https://t.me/{$username}";
+        }
 
         return $userProfile;
     }
@@ -144,10 +172,14 @@ class Telegram extends AbstractAdapter implements AdapterInterface
     {
         $this->logger->debug(sprintf('%s::authenticateBegin(), redirecting user to:', get_class($this)));
 
+        $nonce = $this->config->get('nonce');
+        $nonce_code = empty($nonce) ? '' : "nonce=\"{$nonce}\"";
+
         exit(
             <<<HTML
 <center>
     <script async src="https://telegram.org/js/telegram-widget.js?7"
+            {$nonce_code}
             data-telegram-login="{$this->botId}"
             data-size="large"
             data-auth-url="{$this->callbackUrl}"
@@ -164,6 +196,9 @@ HTML
             sprintf('%s::authenticateFinish(), callback url:', get_class($this)),
             [Util::getCurrentUrl(true)]
         );
+
+        $this->storeData('auth_data', $this->parseAuthData());
+
         $this->initialize();
     }
 

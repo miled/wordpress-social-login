@@ -215,9 +215,14 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
         }
 
         try {
-            if (! $this->getStoredData('request_token')) {
+            if (!$this->getStoredData('request_token')) {
+                // Start a new flow.
                 $this->authenticateBegin();
-            } elseif (! $this->getStoredData('access_token')) {
+            } elseif (empty($_GET['oauth_token']) && empty($_GET['denied'])) {
+                // A previous authentication was not finished, and this request is not finishing it.
+                $this->authenticateBegin();
+            } else {
+                // Finish a flow.
                 $this->authenticateFinish();
             }
         } catch (Exception $exception) {
@@ -227,6 +232,14 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
         }
 
         return null;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isConnected()
+    {
+        return (bool)$this->getStoredData('access_token');
     }
 
     /**
@@ -278,7 +291,7 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
 
         if ($oauth_problem) {
             throw new InvalidOauthTokenException(
-                'Provider returned an invalid oauth_token. oauth_problem: ' . htmlentities($oauth_problem)
+                'Provider returned an error. oauth_problem: ' . htmlentities($oauth_problem)
             );
         }
 
@@ -397,7 +410,7 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
 
         if (! $collection->exists('oauth_token')) {
             throw new InvalidOauthTokenException(
-                'Provider returned an invalid access_token: ' . htmlentities($response)
+                'Provider returned no oauth_token: ' . htmlentities($response)
             );
         }
 
@@ -495,7 +508,7 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
 
         if (! $collection->exists('oauth_token')) {
             throw new InvalidAccessTokenException(
-                'Provider returned an invalid access_token: ' . htmlentities($response)
+                'Provider returned no access_token: ' . htmlentities($response)
             );
         }
 
@@ -593,7 +606,7 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
             $multipart
         );
 
-        $this->validateApiResponse('Signed API request has returned an error');
+        $this->validateApiResponse('Signed API request to ' . $uri . ' has returned an error');
 
         return $response;
     }

@@ -15,13 +15,16 @@ use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * Vkontakte provider adapter.
+ * Vkontakte OAuth2 provider adapter.
  *
  * Example:
  *
  *   $config = [
  *       'callback'  => Hybridauth\HttpClient\Util::getCurrentUrl(),
- *       'keys'      => ['id' => '', 'secret' => ''],
+ *       'keys'      => [
+ *           'id' => '', // App ID
+ *           'secret' => '' // Secure key
+ *       ],
  *   ];
  *
  *   $adapter = new Hybridauth\Provider\Vkontakte($config);
@@ -39,7 +42,6 @@ use Hybridauth\User;
  */
 class Vkontakte extends OAuth2
 {
-
     const API_VERSION = '5.95';
 
     const URL = 'https://vk.com/';
@@ -63,6 +65,11 @@ class Vkontakte extends OAuth2
      * {@inheritdoc}
      */
     protected $scope = 'email,offline';
+
+    /**
+     * {@inheritdoc}
+     */
+    protected $apiDocumentation = ''; // Not available
 
     /**
      * {@inheritdoc}
@@ -92,11 +99,15 @@ class Vkontakte extends OAuth2
     /**
      * {@inheritdoc}
      */
-    public function hasAccessTokenExpired()
+    public function hasAccessTokenExpired($time = null)
     {
-        // As we using offline scope, $expired will be false.
+        if ($time === null) {
+            $time = time();
+        }
+
+        // If we are using offline scope, $expired will be false.
         $expired = $this->getStoredData('expires_in')
-            ? $this->getStoredData('expires_at') <= time()
+            ? $this->getStoredData('expires_at') <= $time
             : false;
 
         return $expired;
