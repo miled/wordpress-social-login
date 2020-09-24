@@ -948,10 +948,15 @@ function wsl_process_login_build_provider_config( $provider )
 		$config["providers"][$provider]["scope"] = "r_liteprofile r_emailaddress";
 	}
 
-	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : '' ;
+	$provider_scope = isset( $config["providers"][$provider]["scope"] ) ? $config["providers"][$provider]["scope"] : null ;
 
 	// HOOKABLE: allow to overwrite scopes
-	$config["providers"][$provider]["scope"] = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
+    $provider_scope = apply_filters( 'wsl_hook_alter_provider_scope', $provider_scope, $provider );
+
+    // XXX: Scope needs to be diffrent than null.
+    if($provider_scope !== null){
+        $config["providers"][$provider]["scope"] = $provider_scope;
+    }
 
 	// HOOKABLE: allow to overwrite hybridauth config for the selected provider
 	$config["providers"][$provider] = apply_filters( 'wsl_hook_alter_provider_config', $config["providers"][$provider], $provider );
