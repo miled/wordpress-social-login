@@ -3,7 +3,7 @@ Contributors: miled
 Tags: login, register, comment, social login, social networks, facebook, google, twitter, reddit, linkedin, instagram, vkontakte, github, steam, dribbble, twitch.tv
 Requires at least: 3.0
 Tested up to: 5.5
-Stable tag: 3.0.3
+Stable tag: 3.0.4
 License: MIT License
 License URI: http://opensource.org/licenses/MIT
 Donate link: https://www.redcross.org/quickdonate/index.jsp
@@ -29,14 +29,6 @@ Facebook, Google, Twitter, Windows Live, Yahoo!, LinkedIn, Reddit, Disqus, Tumbl
 
 <strong>Free, unlimited and white-label</strong> <br>
 Wordpress Social Login is open-source and completely free. The source code is publicly available on [GitHub](https://github.com/hybridauth/WordPress-Social-Login) for anyone to help and contribute. You are free to use a Wordpress Social Login in commercial projects as long as the copyright header is left intact.
-
-<strong>Special thanks to:</strong>
-
-* [Thenbrent](http://profiles.wordpress.org/users/thenbrent/) the talented developer behind the Social Connect plugin.
-* [Pat Anvil](http://patanvil.com) for adding Goodreads.
-* [Ayrat Belyaev](https://github.com/xbreaker) for adding Mail.ru, Yandex and Odnoklassniki.
-* [Social Login plugin](https://wordpress.org/plugins/oa-social-login/) for many borrowed functions.
-* [Query Monitor plugin](https://wordpress.org/plugins/query-monitor/) - A must have for Wordpress plugins developers.
 
 Big thanks to everyone who have contributed to WordPress Social Login by submitting Patches, Ideas, Reviews and by Helping in the support forum.
 
@@ -74,6 +66,10 @@ The user guide and frequently asked questions can be found at http://miled.githu
 9. WSL components and add-ons manager.
 
 == Changelog ==
+
+= 3.0.4 =
+
+* Hotfix an issue with default scopes of a certain identity providers.
 
 = 3.0.3 =
 

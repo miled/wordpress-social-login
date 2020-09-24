@@ -1,4 +1,4 @@
-## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.3-dev
+## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.4-dev
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
