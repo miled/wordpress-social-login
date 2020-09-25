@@ -9,7 +9,7 @@
 // ------------------------------------------------------------------------
 //	Handles (or rather attemps to handdle) LEGACY WSL End Points (of v2)
 // ------------------------------------------------------------------------
-// This is supposedly a temporary measure until users could migrate their 
+// This is supposedly a temporary measure until users could migrate their
 // existing callbacks, and it's to be removed in a subsequent release.
 // ------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@ if ( ! session_start() ) {
     die("WSL couldn't start new PHP session.");
 }
 
-$ha_abspath = __DIR__ . '/../';
+$ha_abspath = __DIR__ . '/';
 
 if( ! file_exists( $ha_abspath . 'library/src/autoload.php' ) ){
     die("WSL couldn't find required files.");
@@ -49,7 +49,9 @@ if ( ! empty( $hauth_done ) ) {
 
 $end_points_test = filter_input(INPUT_GET, 'end_points_test', FILTER_SANITIZE_SPECIAL_CHARS);
 
-if ( empty( $end_points_test ) ) {
-	header("HTTP/1.0 403 Forbidden");
-	die;
+if ( strcmp($end_points_test, 'http://example.com') === 0 ) {
+    die('WSL end-points test succeeded.');
 }
+
+header("HTTP/1.0 403 Forbidden");
+die;
