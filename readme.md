@@ -1,3 +1,5 @@
+An amazong project
+
 ## [WordPress Social Login](https://wordpress.org/plugins/wordpress-social-login/) 3.0.5-dev
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
