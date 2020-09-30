@@ -2,7 +2,7 @@
 
 **WordPress Social Login** is a free and open source plugin made by the community, for the community.
 
-Basically, WordPress Social Login allow your website visitors and customers to register and login via social networks such as twitter, facebook and google but it has much more to offer.
+Basically, WordPress Social Login allow your website visitors and customers to register and login via social media networks such as twitter, facebook and google, But it has much more to offer.
 
 For more information about WordPress Social Login, refer to our [online user guide](http://miled.github.io/wordpress-social-login/).
 
@@ -10,7 +10,7 @@ For more information about WordPress Social Login, refer to our [online user gui
 
 ### Key Features
 
-- No premium features.
+- No premium yet great features.
 - One-click social login.
 - Absolute privacy of your website users data.
 - Wide variety of identities providers.
