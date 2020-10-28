@@ -13,34 +13,34 @@ use Hybridauth\Data;
 use Hybridauth\User;
 
 /**
- * DeviantArt OAuth2 provider adapter.
+ * Medium OAuth2 provider adapter.
  */
-class DeviantArt extends OAuth2
+class Medium extends OAuth2
 {
     /**
      * {@inheritdoc}
      */
-    protected $scope = 'user';
+    protected $scope = 'basicProfile';
 
     /**
      * {@inheritdoc}
      */
-    protected $apiBaseUrl = 'https://www.deviantart.com/api/v1/oauth2/';
+    protected $apiBaseUrl = 'https://api.medium.com/v1/';
 
     /**
      * {@inheritdoc}
      */
-    protected $authorizeUrl = 'https://www.deviantart.com/oauth2/authorize';
+    protected $authorizeUrl = 'https://medium.com/m/oauth/authorize';
 
     /**
      * {@inheritdoc}
      */
-    protected $accessTokenUrl = 'https://www.deviantart.com/oauth2/token';
+    protected $accessTokenUrl = 'https://api.medium.com/v1/tokens';
 
     /**
      * {@inheritdoc}
      */
-    protected $apiDocumentation = 'https://www.deviantart.com/developers/http/v1/20200519';
+    protected $apiDocumentation = 'https://github.com/Medium/medium-api-docs';
 
     /**
      * {@inheritdoc}
@@ -60,31 +60,28 @@ class DeviantArt extends OAuth2
     /**
      * {@inheritdoc}
      *
-     * See: https://www.deviantart.com/developers/http/v1/20200519/user_whoami/2413749853e66c5812c9beccc0ab3495
+     * See: https://github.com/Medium/medium-api-docs#getting-the-authenticated-users-details
      */
     public function getUserProfile()
     {
-        $response = $this->apiRequest('user/whoami');
+        $response = $this->apiRequest('me');
 
         $data = new Data\Collection($response);
 
         $userProfile = new User\Profile();
+        $data = $data->filter('data');
 
-        $full_name = explode(' ', $data->filter('profile')->get('real_name'));
+        $full_name = explode(' ', $data->get('name'));
         if (count($full_name) < 2) {
             $full_name[1] = '';
         }
 
-        $userProfile->identifier = $data->get('userid');
+        $userProfile->identifier = $data->get('id');
         $userProfile->displayName = $data->get('username');
-        $userProfile->profileURL = $data->get('usericon');
-        $userProfile->webSiteURL = $data->filter('profile')->get('website');
+        $userProfile->profileURL = $data->get('imageUrl');
         $userProfile->firstName = $full_name[0];
         $userProfile->lastName = $full_name[1];
-        $userProfile->profileURL = $data->filter('profile')->filter('profile_pic')->get('url');
-        $userProfile->gender = $data->filter('details')->get('sex');
-        $userProfile->age = $data->filter('details')->get('age');
-        $userProfile->country = $data->filter('geo')->get('country');
+        $userProfile->profileURL = $data->get('url');
 
         return $userProfile;
     }
