@@ -62,11 +62,11 @@ function wsl_component_components_setup()
 				<tr id="<?php echo $name ?>" class="<?php echo $name ?> <?php echo $plugin_tr_class ?>"> 
 					<td class="component-label" style="width: 190px;"> &nbsp;
 						<?php if( $settings["type"] == "core" ): ?>
-							<div class="icon16 icon-generic"></div>
+							<span class="dashicons-before dashicons-admin-generic toggle-indicator alignleft" aria-hidden="true"></span>
 						<?php elseif( $settings["type"] == "addon" ): ?>
-							<div class="icon16 icon-plugins"></div>
+							<span class="dashicons-before dashicons-admin-plugins toggle-indicator alignleft" aria-hidden="true"></span>
 						<?php else: ?>
-							<div class="icon16 icon-appearance"></div>
+							<span class="dashicons-before dashicons-admin-appearance toggle-indicator alignleft" aria-hidden="true"></span>
 						<?php endif; ?>
 						
 						<strong><?php _wsl_e( $settings["label"], 'wordpress-social-login' ) ?></strong> 
