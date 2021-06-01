@@ -24,6 +24,42 @@ For more information about WordPress Social Login, refer to our [online user gui
 - Modular design easily extended.
 - Comprehensive documentation.
 
+
+### Supported Social Networks
+- Amazon
+- Authentiq
+- BitBucket
+- Blizzard
+- Discord
+- Disqus
+- Dribbble
+- EventBrite
+- Facebook
+- Foursquare 
+- Github.com 
+- GitLab
+- Google
+- Instagram
+- Line
+- LinkedIn
+- Mail.ru
+- Odnoklassniki
+- Reddit
+- Spotify
+- StackExchange
+- Stackoverflow
+- Steam
+- SteemConnect
+- Tumblr
+- Twitch.tv
+- Twitter
+- VKontakte
+- WeChat
+- Windows Live
+- WordPress.com
+- Yahoo
+- Yandex
+
 #### License
 
 MIT — That's short for do whatever you want.
