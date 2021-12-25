@@ -69,7 +69,8 @@ The user guide and frequently asked questions can be found at http://miled.githu
 
 = 3.0.5 =
 
-* ...
+* Update Hybridauth 3.7.1-dev
+* Minor fixes and improvements.
 
 = 3.0.4 =
 
