@@ -134,6 +134,7 @@ class Guzzle implements HttpClientInterface
                     ]);
                     break;
                 case 'PUT':
+                case 'PATCH':
                 case 'POST':
                     $body_type = $multipart ? 'multipart' : 'form_params';
 
@@ -190,7 +191,9 @@ class Guzzle implements HttpClientInterface
     }
 
     /**
-     * {@inheritdoc}
+     * Get response details
+     *
+     * @return array Map structure of details
      */
     public function getResponse()
     {

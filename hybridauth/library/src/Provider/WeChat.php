@@ -82,9 +82,11 @@ class WeChat extends OAuth2
         unset($this->tokenExchangeParameters['client_id']);
         unset($this->tokenExchangeParameters['client_secret']);
 
-        $this->tokenRefreshParameters += [
-            'appid' => $this->clientId
-        ];
+        if ($this->isRefreshTokenAvailable()) {
+            $this->tokenRefreshParameters += [
+                'appid' => $this->clientId,
+            ];
+        }
 
         $this->apiRequestParameters = [
             'appid' => $this->clientId,
@@ -127,7 +129,8 @@ class WeChat extends OAuth2
         $userProfile->city = $data->get('city');
         $userProfile->region = $data->get('province');
         $userProfile->country = $data->get('country');
-        $userProfile->gender = ['', 'male', 'female'][(int)$data->get('sex')];
+        $genders = ['', 'male', 'female'];
+        $userProfile->gender = $genders[(int)$data->get('sex')];
 
         return $userProfile;
     }
