@@ -663,7 +663,14 @@ function wsl_process_login_create_wp_user( $provider, $hybridauth_user_profile, 
 		}
 	}
 
-	$display_name = $hybridauth_user_profile->displayName;
+	if( get_option( 'wsl_settings_bouncer_profile_completion_login_as_the_display_name' ) == 1 )
+	{
+		$display_name = $user_login;
+	}
+	else
+	{
+		$display_name = $hybridauth_user_profile->displayName;
+	}
 
 	if( empty( $display_name ) )
 	{

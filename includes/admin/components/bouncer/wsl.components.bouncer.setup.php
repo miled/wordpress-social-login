@@ -157,6 +157,15 @@ function wsl_component_bouncer_setup_profile_completion()
 				</select>
 			</td>
 		  </tr>
+          <tr>
+			<td width="200" align="right"><strong><?php _wsl_e("Login as the display name on registration", 'wordpress-social-login') ?> :</strong></td>
+			<td>
+				<select name="wsl_settings_bouncer_profile_completion_login_as_the_display_name">
+					<option <?php if( get_option( 'wsl_settings_bouncer_profile_completion_login_as_the_display_name' ) == 1 ) echo "selected"; ?> value="1"><?php _wsl_e("Yes", 'wordpress-social-login') ?></option>
+					<option <?php if( get_option( 'wsl_settings_bouncer_profile_completion_login_as_the_display_name' ) == 2 ) echo "selected"; ?> value="2"><?php _wsl_e("No", 'wordpress-social-login') ?></option>
+				</select>
+			</td>
+		  </tr>
 		  <tr>
 			<td width="200" align="right"><strong><?php _wsl_e("Hook extra registration fields", 'wordpress-social-login') ?> :</strong></td>
 			<td>
