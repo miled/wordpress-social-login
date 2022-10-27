@@ -7,7 +7,7 @@
 */
 
 /**
-* Check WSL requirements and register WSL settings 
+* Check WSL requirements and register WSL settings
 */
 
 // Exit if accessed directly
@@ -57,7 +57,7 @@ $WORDPRESS_SOCIAL_LOGIN_COMPONENTS = ARRAY(
 );
 
 /** list of WSL admin tabs */
-$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(  
+$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 	"networks"     => array( "label" => _wsl__("Networks"      , 'wordpress-social-login') , "visible" => true  , "component" => "networks"       , "default" => true ),
 	"login-widget" => array( "label" => _wsl__("Widget"        , 'wordpress-social-login') , "visible" => true  , "component" => "login-widget"   ),
 	"bouncer"      => array( "label" => _wsl__("Bouncer"       , 'wordpress-social-login') , "visible" => true  , "component" => "bouncer"        ),
@@ -76,7 +76,7 @@ $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS = ARRAY(
 // --------------------------------------------------------------------
 
 /**
-* Register a new WSL component 
+* Register a new WSL component
 */
 function wsl_register_component( $component, $label, $description, $version, $author, $author_url, $component_url )
 {
@@ -100,8 +100,8 @@ function wsl_register_component( $component, $label, $description, $version, $au
 /**
 * Register new WSL admin tab
 */
-function wsl_register_admin_tab( $component, $tab, $label, $action, $visible = false, $pull_right = false ) 
-{ 
+function wsl_register_admin_tab( $component, $tab, $label, $action, $visible = false, $pull_right = false )
+{
 	GLOBAL $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS;
 
 	$config = array();
@@ -121,7 +121,7 @@ function wsl_register_admin_tab( $component, $tab, $label, $action, $visible = f
 * Check if a component is enabled
 */
 function wsl_is_component_enabled( $component )
-{ 
+{
 	if( get_option( "wsl_components_" . $component . "_enabled" ) == 1 )
 	{
 		return true;
@@ -145,7 +145,7 @@ function wsl_register_components()
 
 	foreach( $WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS as $tab => $config )
 	{
-		$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = false; 
+		$WORDPRESS_SOCIAL_LOGIN_ADMIN_TABS[ $tab ][ "enabled" ] = false;
 	}
 
 	foreach( $WORDPRESS_SOCIAL_LOGIN_COMPONENTS as $component => $config )
@@ -153,7 +153,7 @@ function wsl_register_components()
 		$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] = false;
 
 		$is_component_enabled = get_option( "wsl_components_" . $component . "_enabled" );
-		
+
 		if( $is_component_enabled == 1 )
 		{
 			$WORDPRESS_SOCIAL_LOGIN_COMPONENTS[ $component ][ "enabled" ] = true;
@@ -225,12 +225,12 @@ function wsl_register_setting()
 			// api key or id ?
 			if( $require_client_id )
 			{
-				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' ); 
+				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_id' );
 			}
-			
+
             if( !$require_client_id || $require_client_id === 'both' )
 			{
-				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' ); 
+				register_setting( 'wsl-settings-group', 'wsl_settings_' . $provider_id . '_app_key' );
 			}
 
 			// api secret
@@ -238,50 +238,51 @@ function wsl_register_setting()
 		}
 	}
 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_connect_with_label'                               ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_social_icon_set'                                  ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_users_avatars'                                    ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_use_popup'                                        ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_widget_display'                                   ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_redirect_url'                                     ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_force_redirect_url'                               ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_users_notification'                               ); 
-	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_authentication_widget_css'                        ); 
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_connect_with_label'                                     );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_social_icon_set'                                        );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_users_avatars'                                          );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_use_popup'                                              );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_widget_display'                                         );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_redirect_url'                                           );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_force_redirect_url'                                     );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_users_notification'                                     );
+	register_setting( 'wsl-settings-group-customize'        , 'wsl_settings_authentication_widget_css'                              );
 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_facebook'                         ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_google'                           ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_twitter'                          ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_linkedin'                         ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_live'                             ); 
-	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_vkontakte'                        ); 
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_facebook'                               );
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_google'                                 );
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_twitter'                                );
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_linkedin'                               );
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_live'                                   );
+	register_setting( 'wsl-settings-group-contacts-import'  , 'wsl_settings_contacts_import_vkontakte'                              );
 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_registration_enabled'                     ); 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_authentication_enabled'                   ); 
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_registration_enabled'                           );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_authentication_enabled'                         );
 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_accounts_linking_enabled'                 );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_accounts_linking_enabled'                       );
 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_require_email'         );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_change_username'       );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_hook_extra_fields'     );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_require_email'               );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_change_username'             );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_login_as_the_display_name'   );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_profile_completion_hook_extra_fields'           );
 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_moderation_level'               );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_membership_default_role'        );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_moderation_level'                     );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_membership_default_role'              );
 
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_enabled'        );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_list'           );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce'    );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_enabled'         );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_list'            );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_text_bounce'     );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_enabled'       );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_list'          );
-	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce'   );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_enabled'              );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_list'                 );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_domain_text_bounce'          );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_enabled'               );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_list'                  );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_email_text_bounce'           );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_enabled'             );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_list'                );
+	register_setting( 'wsl-settings-group-bouncer'          , 'wsl_settings_bouncer_new_users_restrict_profile_text_bounce'         );
 
-	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_enable_mapping' ); 
-	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_xprofile_map' ); 
+	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_enable_mapping' );
+	register_setting( 'wsl-settings-group-buddypress'       , 'wsl_settings_buddypress_xprofile_map' );
 
-	register_setting( 'wsl-settings-group-debug'            , 'wsl_settings_debug_mode_enabled' ); 
-	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' ); 
+	register_setting( 'wsl-settings-group-debug'            , 'wsl_settings_debug_mode_enabled' );
+	register_setting( 'wsl-settings-group-development'      , 'wsl_settings_development_mode_enabled' );
 }
 
 // --------------------------------------------------------------------

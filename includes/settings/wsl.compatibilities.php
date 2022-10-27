@@ -95,6 +95,11 @@ function wsl_update_compatibilities()
 		update_option( 'wsl_settings_bouncer_profile_completion_change_username', 2 );
 	}
 
+	if( ! get_option( 'wsl_settings_bouncer_profile_completion_login_as_the_display_name' ) )
+	{
+		update_option( 'wsl_settings_bouncer_profile_completion_login_as_the_display_name', 2 );
+	}
+
 	if( ! get_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields' ) )
 	{
 		update_option( 'wsl_settings_bouncer_profile_completion_hook_extra_fields', 2 );

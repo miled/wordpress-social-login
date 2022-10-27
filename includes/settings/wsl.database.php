@@ -134,6 +134,7 @@ function wsl_database_uninstall()
 	delete_option('wsl_settings_bouncer_profile_completion_require_email' );
 	delete_option('wsl_settings_bouncer_profile_completion_change_email' );
 	delete_option('wsl_settings_bouncer_profile_completion_change_username' );
+	delete_option('wsl_settings_bouncer_profile_completion_login_as_the_display_name' );
 	delete_option('wsl_settings_bouncer_new_users_moderation_level' );
 	delete_option('wsl_settings_bouncer_new_users_membership_default_role' );
 	delete_option('wsl_settings_bouncer_new_users_restrict_domain_enabled' );
